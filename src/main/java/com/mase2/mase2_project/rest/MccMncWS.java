@@ -30,7 +30,7 @@ import com.mase2.mase2_project.model.MccMnc;
 @Produces({ "application/xml", "application/json" })
 @Consumes({ "application/xml", "application/json" })
 public class MccMncWS {
-
+	
 	/**
 	* @param mccmnc
 	* @return
