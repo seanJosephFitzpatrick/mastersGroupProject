@@ -1,5 +1,6 @@
 package com.mase2.mase2_project.model;
 
+import java.awt.List;
 import java.io.Serializable;
 import javax.persistence.*;
 
