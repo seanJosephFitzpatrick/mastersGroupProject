@@ -18,5 +18,4 @@
          <property name="jbossHome">/path/to/jboss/as</property>
       </configuration>
    </container>
-
 </arquillian>
