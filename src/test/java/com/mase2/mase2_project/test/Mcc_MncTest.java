@@ -35,7 +35,7 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 
 	//	@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 		@RunWith(Arquillian.class)
-		public class IntegrationTest {
+		public class Mcc_MncTest {
 			
 			@Deployment
 			public static Archive<?> createTestArchive() {
