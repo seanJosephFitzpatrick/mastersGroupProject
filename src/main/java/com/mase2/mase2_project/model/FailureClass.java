@@ -23,7 +23,9 @@ public class FailureClass implements Serializable {
 	private String description;
 
 	//bi-directional many-to-one association to BaseData
+
 	@OneToMany(fetch = FetchType.EAGER,mappedBy="failureClassBean")
+
 	private List<BaseData> baseData;
 
 	public FailureClass() {

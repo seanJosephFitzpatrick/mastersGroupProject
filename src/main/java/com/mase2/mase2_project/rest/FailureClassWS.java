@@ -19,9 +19,6 @@ import javax.ws.rs.core.Response;
 import com.mase2.mase2_project.data.FailureClassDAO;
 import com.mase2.mase2_project.model.FailureClass;
 
-
-
-
 @Path("/failureclass")
 @Stateless
 @LocalBean

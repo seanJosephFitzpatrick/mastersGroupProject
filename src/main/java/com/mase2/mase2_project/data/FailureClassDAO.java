@@ -10,9 +10,6 @@ import javax.persistence.Query;
 
 import com.mase2.mase2_project.model.FailureClass;
 
-
-
-
 @Stateless
 @LocalBean
 public class FailureClassDAO {
