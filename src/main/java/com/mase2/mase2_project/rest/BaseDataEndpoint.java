@@ -5,6 +5,8 @@ package com.mase2.mase2_project.rest;
 
 import java.util.List;
 
+import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -27,10 +29,10 @@ import com.mase2.mase2_project.model.BaseData;
  * @author A00248115
  *
  */
-@RequestScoped
+
 @Path("/basedatas")
-@Produces({ "application/xml", "application/json" })
-@Consumes({ "application/xml", "application/json" })
+@Stateless
+@LocalBean
 public class BaseDataEndpoint {
 
 	/**

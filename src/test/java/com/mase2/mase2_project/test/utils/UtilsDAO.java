@@ -26,5 +26,11 @@ public class UtilsDAO {
 		.executeUpdate();
 		
 	}
+	public void deleteTableBaseData(){
+		em.createQuery("DELETE FROM BaseData").executeUpdate();
+		em.createNativeQuery("ALTER TABLE base_data AUTO_INCREMENT=1")
+		.executeUpdate();
+		
+	}
       
 }
