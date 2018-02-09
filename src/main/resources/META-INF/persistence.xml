@@ -4,11 +4,9 @@
    xsi:schemaLocation="
         http://java.sun.com/xml/ns/persistence
         http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
-<<<<<<< HEAD
+
    <persistence-unit name="mase2DB">
-=======
-   <persistence-unit name="main">
->>>>>>> branch 'master' of https://eleanordillon@bitbucket.org/mase2/group_project.git
+
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
         <jta-data-source>java:/MySQLMase2DS</jta-data-source>
         <class>com.mase2.mase2_project.model.MccMnc</class>
