@@ -16,8 +16,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.mase2.mase2_project.data.Mcc_MncDAO;
 import com.mase2.mase2_project.model.MccMnc;
-import com.mase2.mase2_project.model.Mcc_MncDAO;
 
 @Path("/mcc_mnc")
 @Stateless

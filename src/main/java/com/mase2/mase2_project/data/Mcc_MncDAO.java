@@ -1,4 +1,4 @@
-package com.mase2.mase2_project.model;
+package com.mase2.mase2_project.data;
 
 import java.util.List;
 
@@ -7,6 +7,8 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+
+import com.mase2.mase2_project.model.MccMnc;
 
 
 
