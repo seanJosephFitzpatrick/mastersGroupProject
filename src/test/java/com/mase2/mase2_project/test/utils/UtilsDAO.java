@@ -26,11 +26,17 @@ public class UtilsDAO {
 		.executeUpdate();
 		
 	}
-	
+
+	public void deleteTableBaseData(){
+		em.createQuery("DELETE FROM BaseData").executeUpdate();
+		em.createNativeQuery("ALTER TABLE base_data AUTO_INCREMENT=1").executeUpdate();
+	}
+
 	public void deleteTableFailureClass(){
 		em.createQuery("DELETE FROM FailureClass").executeUpdate();
-		em.createNativeQuery("ALTER TABLE failure_class AUTO_INCREMENT=1")
-		.executeUpdate();
+		em.createNativeQuery("ALTER TABLE failure_class AUTO_INCREMENT=1").executeUpdate();
+
+		
 		
 	}
       
