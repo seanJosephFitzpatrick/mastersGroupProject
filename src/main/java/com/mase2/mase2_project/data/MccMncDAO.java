@@ -14,15 +14,18 @@ import com.mase2.mase2_project.model.MccMnc;
 
 @Stateless
 @LocalBean
-public class Mcc_MncDAO {
+public class MccMncDAO {
 	@PersistenceContext
     private EntityManager em;
     
 	public List<MccMnc> getAllMcc_Mncs() {
-    	Query query=em.createQuery("SELECT w FROM MccMnc w");
+    	Query query=em.createQuery("SELECT m FROM MccMnc m");
         return query.getResultList();
     }
 	
+	public void save(MccMnc mccMnc){
+		em.persist(mccMnc);
+	}
 //	public List<MccMnc> getByFailureClass(int failureClass) {
 //    	Query query=em.createQuery("SELECT w FROM MccMnc AS w "+
 //    								"WHERE w.failureClass LIKE ?1");
@@ -40,9 +43,7 @@ public class Mcc_MncDAO {
 //        return em.find(MccMnc.class, failureClass);
 //    }
 //	
-	public void save(MccMnc mccMnc){
-		em.persist(mccMnc);
-	}
+	
 //	
 //	public void update(MccMnc failureClass) {
 //		em.merge(failureClass);
