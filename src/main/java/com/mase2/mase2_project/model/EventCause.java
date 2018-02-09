@@ -22,7 +22,7 @@ public class EventCause implements Serializable {
 	private String description;
 
 	//bi-directional many-to-one association to BaseData
-	@OneToMany(mappedBy="eventCause")
+	@OneToMany(fetch = FetchType.EAGER,mappedBy="eventCause")
 	private List<BaseData> baseData;
 
 	public EventCause() {
