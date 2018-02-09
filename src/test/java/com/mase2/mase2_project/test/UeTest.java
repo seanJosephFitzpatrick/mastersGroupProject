@@ -18,6 +18,7 @@ import org.junit.runner.RunWith;
 
 import com.mase2.mase2_project.data.FailureClassDAO;
 import com.mase2.mase2_project.data.Mcc_MncDAO;
+import com.mase2.mase2_project.data.UeDAO;
 import com.mase2.mase2_project.model.BaseData;
 import com.mase2.mase2_project.model.BaseDataPK;
 import com.mase2.mase2_project.model.EventCause;
@@ -28,26 +29,25 @@ import com.mase2.mase2_project.model.MccMncPK;
 import com.mase2.mase2_project.model.Ue;
 import com.mase2.mase2_project.rest.JaxRsActivator;
 import com.mase2.mase2_project.rest.Mcc_MncWS;
-import com.mase2.mase2_project.test.utils.UtilsDAO;
-
-
+import com.mase2.mase2_project.rest.UeWS;
+import com.mase2.mase2_project.test.utils.UeUtilsDAO;
 
 
 	//	@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 		@RunWith(Arquillian.class)
-		public class Mcc_MncTest {
+		public class UeTest {
 			
 			@Deployment
 			public static Archive<?> createTestArchive() {
 				return ShrinkWrap
-						.create(JavaArchive.class, "Testing.jar")
-						.addClasses(Mcc_MncDAO.class, MccMnc.class,
+						.create(JavaArchive.class, "Test2.jar")
+						.addClasses(MccMnc.class,
 								MccMncPK.class,
-								JaxRsActivator.class,Mcc_MncWS.class,
-								UtilsDAO.class, FailureClassDAO.class, BaseData.class, BaseDataPK.class, EventCause.class, EventCausePK.class, FailureClass.class, Ue.class)
+								JaxRsActivator.class,
+								UeUtilsDAO.class, FailureClassDAO.class, BaseData.class, BaseDataPK.class, EventCause.class, EventCausePK.class, FailureClass.class, Ue.class, UeWS.class, UeDAO.class)
 					//	.addPackage(EventCause.class.getPackage())
 					//	.addPackage(EventCauseDAO.class.getPackage())
-								//this line will pick up the production db
+				// this line will pick up the production db
 						.addAsManifestResource("META-INF/persistence.xml",
 								"persistence.xml")
 						.addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
@@ -56,13 +56,13 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 
 			 
 			@EJB
-			private Mcc_MncWS mcc_mncWS;
+			private com.mase2.mase2_project.rest.UeWS ueWS;
 			
 			@EJB
-			private Mcc_MncDAO mcc_mncDAO;
+			private com.mase2.mase2_project.data.UeDAO ueDAO;
 			
 			@EJB
-			private UtilsDAO utilsDAO;
+			private com.mase2.mase2_project.test.utils.UeUtilsDAO utilsDAO;
 			 
 			@Before
 			public void setUp() {
@@ -70,20 +70,18 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 				//And add one wine
 				//it should be possible to test with an in memory db for efficiency
 				utilsDAO.deleteTable();
-				MccMncPK mccMncPK = new MccMncPK();
-				mccMncPK.setMcc(238);
-				mccMncPK.setMnc(1);
-				MccMnc mccMnc=new MccMnc();
-				mccMnc.setId(mccMncPK);
-				mccMnc.setCountry("Denmark");
-				mccMnc.setOperator("TDC-DK");
-				mcc_mncDAO.save(mccMnc);
+				com.mase2.mase2_project.model.Ue ue=new com.mase2.mase2_project.model.Ue();
+				ue.setTac(1);
+				ue.setMarketingName("test");
+				ue.setManufacturer("test");
+				ue.setAccessCapability("test");
+				ueDAO.save(ue);
 			}
 			
 			@Test
-			public void testGetAllMccMncs() {
-				List<MccMnc> mccMncList = mcc_mncDAO.getAllMcc_Mncs();
-				assertEquals("Data fetch = data persisted", mccMncList.size(), 1);
+			public void testGetAllUes() {
+				List<com.mase2.mase2_project.model.Ue> ueList = ueDAO.getAllUes();
+				assertEquals("Data fetch = data persisted", ueList.size(), 1);
 			}
 			
 			
