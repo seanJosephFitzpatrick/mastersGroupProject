@@ -4,9 +4,9 @@
    xsi:schemaLocation="
         http://java.sun.com/xml/ns/persistence
         http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
-   <persistence-unit name="mase2">
+   <persistence-unit name="main">
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
-        <jta-data-source>java:/MySQLWineDS</jta-data-source>
+        <jta-data-source>java:/MySQLMase2DS</jta-data-source>
         <class>com.mase2.mase2_project.model.MccMnc</class>
         <class>com.mase2.mase2_project.model.MccMncPK</class>
         <class>com.mase2.mase2_project.model.BaseData</class>
