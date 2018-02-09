@@ -17,7 +17,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import com.mase2.mase2_project.data.FailureClassDAO;
-import com.mase2.mase2_project.data.Mcc_MncDAO;
+import com.mase2.mase2_project.data.MccMncDAO;
 import com.mase2.mase2_project.data.UeDAO;
 import com.mase2.mase2_project.model.BaseData;
 import com.mase2.mase2_project.model.BaseDataPK;
@@ -28,62 +28,62 @@ import com.mase2.mase2_project.model.MccMnc;
 import com.mase2.mase2_project.model.MccMncPK;
 import com.mase2.mase2_project.model.Ue;
 import com.mase2.mase2_project.rest.JaxRsActivator;
-import com.mase2.mase2_project.rest.Mcc_MncWS;
+import com.mase2.mase2_project.rest.MccMncWS;
 import com.mase2.mase2_project.rest.UeWS;
 import com.mase2.mase2_project.test.utils.UeUtilsDAO;
 
 
-	//	@FixMethodOrder(MethodSorters.NAME_ASCENDING)
-		@RunWith(Arquillian.class)
-		public class UeTest {
-			
-			@Deployment
-			public static Archive<?> createTestArchive() {
-				return ShrinkWrap
-						.create(JavaArchive.class, "Test2.jar")
-						.addClasses(MccMnc.class,
-								MccMncPK.class,
-								JaxRsActivator.class,
-								UeUtilsDAO.class, FailureClassDAO.class, BaseData.class, BaseDataPK.class, EventCause.class, EventCausePK.class, FailureClass.class, Ue.class, UeWS.class, UeDAO.class)
-					//	.addPackage(EventCause.class.getPackage())
-					//	.addPackage(EventCauseDAO.class.getPackage())
-				// this line will pick up the production db
-						.addAsManifestResource("META-INF/persistence.xml",
-								"persistence.xml")
-						.addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
+    //    @FixMethodOrder(MethodSorters.NAME_ASCENDING)
+        @RunWith(Arquillian.class)
+        public class UeTest {
+            
+            @Deployment
+            public static Archive<?> createTestArchive() {
+                return ShrinkWrap
+                        .create(JavaArchive.class, "Test2.jar")
+                        .addClasses(MccMnc.class,
+                                MccMncPK.class,
+                                JaxRsActivator.class,
+                                UeUtilsDAO.class, FailureClassDAO.class, BaseData.class, BaseDataPK.class, EventCause.class, EventCausePK.class, FailureClass.class, Ue.class, UeWS.class, UeDAO.class)
+                    //    .addPackage(EventCause.class.getPackage())
+                    //    .addPackage(EventCauseDAO.class.getPackage())
+                // this line will pick up the production db
+                        .addAsManifestResource("META-INF/persistence.xml",
+                                "persistence.xml")
+                        .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
 
-			}
+            }
 
-			 
-			@EJB
-			private com.mase2.mase2_project.rest.UeWS ueWS;
-			
-			@EJB
-			private com.mase2.mase2_project.data.UeDAO ueDAO;
-			
-			@EJB
-			private com.mase2.mase2_project.test.utils.UeUtilsDAO utilsDAO;
-			 
-			@Before
-			public void setUp() {
-				//this function means that we start with an empty table
-				//And add one wine
-				//it should be possible to test with an in memory db for efficiency
-				utilsDAO.deleteTable();
-				com.mase2.mase2_project.model.Ue ue=new com.mase2.mase2_project.model.Ue();
-				ue.setTac(1);
-				ue.setMarketingName("test");
-				ue.setManufacturer("test");
-				ue.setAccessCapability("test");
-				ueDAO.save(ue);
-			}
-			
-			@Test
-			public void testGetAllUes() {
-				List<com.mase2.mase2_project.model.Ue> ueList = ueDAO.getAllUes();
-				assertEquals("Data fetch = data persisted", ueList.size(), 1);
-			}
-			
-			
-			
+             
+            @EJB
+            private com.mase2.mase2_project.rest.UeWS ueWS;
+            
+            @EJB
+            private com.mase2.mase2_project.data.UeDAO ueDAO;
+            
+            @EJB
+            private com.mase2.mase2_project.test.utils.UeUtilsDAO utilsDAO;
+             
+            @Before
+            public void setUp() {
+                //this function means that we start with an empty table
+                //And add one wine
+                //it should be possible to test with an in memory db for efficiency
+                utilsDAO.deleteTable();
+                com.mase2.mase2_project.model.Ue ue=new com.mase2.mase2_project.model.Ue();
+                ue.setTac(1);
+                ue.setMarketingName("test");
+                ue.setManufacturer("test");
+                ue.setAccessCapability("test");
+                ueDAO.save(ue);
+            }
+            
+            @Test
+            public void testGetAllUes() {
+                List<com.mase2.mase2_project.model.Ue> ueList = ueDAO.getAllUes();
+                assertEquals("Data fetch = data persisted", ueList.size(), 1);
+            }
+            
+            
+            
 }

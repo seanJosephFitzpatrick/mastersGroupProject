@@ -16,16 +16,16 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.mase2.mase2_project.data.Mcc_MncDAO;
+import com.mase2.mase2_project.data.MccMncDAO;
 import com.mase2.mase2_project.model.MccMnc;
 
 @Path("/mcc_mnc")
 @Stateless
 @LocalBean
-public class Mcc_MncWS {
+public class MccMncWS {
 	
 	@EJB
-	private Mcc_MncDAO mcc_mncDao;
+	private MccMncDAO mcc_mncDao;
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
