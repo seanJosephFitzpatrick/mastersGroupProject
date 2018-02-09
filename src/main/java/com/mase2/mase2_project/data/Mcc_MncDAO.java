@@ -40,9 +40,9 @@ public class Mcc_MncDAO {
 //        return em.find(MccMnc.class, failureClass);
 //    }
 //	
-//	public void save(MccMnc failureClass){
-//		em.persist(failureClass);
-//	}
+	public void save(MccMnc mccMnc){
+		em.persist(mccMnc);
+	}
 //	
 //	public void update(MccMnc failureClass) {
 //		em.merge(failureClass);
