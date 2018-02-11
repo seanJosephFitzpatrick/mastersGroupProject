@@ -21,13 +21,16 @@
 			enable third-party plugin if using Maven < 2.1) -->
 		<maven.build.timestamp.format>yyyyMMdd'T'HHmmss</maven.build.timestamp.format>
 		<!-- Specify the JBoss AS directory to be the JBOSS_HOME environment variable -->
+   		<maven.compiler.source>1.7</maven.compiler.source>
+  		<maven.compiler.target>1.7</maven.compiler.target>
 		<jboss.home>${env.JBOSS_HOME}</jboss.home>
 		<version.jboss.bom>1.0.7.Final</version.jboss.bom>
 		<maven.test.skip>false</maven.test.skip>
         <testng.version>6.8.8</testng.version>
         <java.version>1.7</java.version>
         <surefire.version>2.17</surefire.version>
-        <jacoco.version>0.7.2.201409121644</jacoco.version>
+        <jacoco.version>0.8.0</jacoco.version>
+        <!-- <jacoco.version>0.7.2.201409121644</jacoco.version> -->
 	</properties>
 
 
@@ -218,6 +221,7 @@
 		<!-- Maven will append the version to the finalName (which is the name 
 			given to the generated war, and hence the context root) -->
 		<finalName>${project.artifactId}</finalName>
+	
 		<plugins>
 		<!-- Plugin for JaCoCo Code Coverage for Arquillian Tests -->
 		<!-- 	<plugin>
@@ -304,7 +308,9 @@
                     </execution>
                 </executions>
             </plugin>
+             
 		</plugins>
+		
 	</build>
 
 	<profiles>
@@ -340,6 +346,7 @@
 						</configuration>
 					</plugin>
 				</plugins>
+				
 			</build>
 		</profile>
 

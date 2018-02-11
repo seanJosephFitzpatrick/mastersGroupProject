@@ -67,6 +67,7 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 				//this function means that we start with an empty table
 				//And add one wine
 				//it should be possible to test with an in memory db for efficiency
+				utilsDAO.deleteTableBaseData();
 				utilsDAO.deleteTableEventCause();
 				EventCausePK eventCausePK = new EventCausePK();
 				eventCausePK.setEventId(4097);
