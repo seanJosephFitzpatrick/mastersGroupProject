@@ -2,7 +2,13 @@ package com.mase2.mase2_project.model;
 
 import java.awt.List;
 import java.io.Serializable;
+import java.util.ArrayList;
+
 import javax.persistence.*;
+
+import jxl.Cell;
+import jxl.CellType;
+import jxl.Sheet;
 
 
 /**
@@ -47,6 +53,14 @@ public class MccMnc implements Serializable {
 
 	public void setOperator(String operator) {
 		this.operator = operator;
+	}
+	public void createRow(ArrayList<String> cells){
+		MccMncPK mccMncPk = new MccMncPK();
+		mccMncPk.setMcc(Integer.parseInt(cells.get(0)));
+		mccMncPk.setMnc(Integer.parseInt(cells.get(1)));
+        this.setId(mccMncPk);
+        this.setCountry(cells.get(2));
+        this.setOperator(cells.get(3));
 	}
 
 }

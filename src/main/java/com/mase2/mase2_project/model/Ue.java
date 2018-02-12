@@ -1,7 +1,10 @@
 package com.mase2.mase2_project.model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -64,6 +67,15 @@ public class Ue implements Serializable {
 
 	public void setMarketingName(String marketingName) {
 		this.marketingName = marketingName;
+	}
+
+	public void createRow(ArrayList<String> cells) {
+		this.setTac(Integer.parseInt(cells.get(0)));
+		this.setMarketingName(cells.get(1));
+		this.setManufacturer(cells.get(2));
+		this.setAccessCapability(cells.get(3));
+		
+		
 	}
 
 }
