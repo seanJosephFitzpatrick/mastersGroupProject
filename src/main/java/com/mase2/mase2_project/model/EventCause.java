@@ -1,7 +1,10 @@
 package com.mase2.mase2_project.model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -64,6 +67,15 @@ public class EventCause implements Serializable {
 		baseData.setEventCause(null);
 
 		return baseData;
+	}
+
+	public void createRow(ArrayList<String> cells) {
+		EventCausePK eventCausePK = new EventCausePK();
+		eventCausePK.setEventCode(Integer.parseInt(cells.get(0)));
+		eventCausePK.setEventId(Integer.parseInt(cells.get(1)));
+		this.setId(eventCausePK);
+		this.setDescription(cells.get(2));
+		
 	}
 
 }

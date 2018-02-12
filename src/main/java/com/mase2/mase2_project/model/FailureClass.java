@@ -1,7 +1,10 @@
 package com.mase2.mase2_project.model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -67,6 +70,12 @@ public class FailureClass implements Serializable {
 		baseData.setFailureClassBean(null);
 
 		return baseData;
+	}
+
+	public void createRow(ArrayList<String> cells) {
+		this.setFailureClass(Integer.parseInt(cells.get(0)));
+		this.setDescription(cells.get(1));
+		
 	}
 
 }
