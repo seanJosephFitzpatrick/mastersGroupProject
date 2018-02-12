@@ -54,7 +54,9 @@ public class ExcelReader {
 	}
 	
 	public void importData(){
-        File f = new File("C:\\Users\\A00248213\\Downloads\\elle\\test.xls");
+
+        File f = new File("C:\\Users\\a00199480\\Downloads\\test.xls");
+
         
        
         
