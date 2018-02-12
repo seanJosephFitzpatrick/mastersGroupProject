@@ -39,10 +39,6 @@ public class ExcelReader {
 	@EJB
 	private MccMncDAO mcc_mncDao;
 	@EJB
-	private UtilsDAO utilsDAO;
-	@EJB
-	private UeUtilsDAO ueUtilsDAO;
-	@EJB
 	private UeDAO ueDAO;
 	@EJB
 	private FailureClassDAO failureClassDAO;
@@ -58,7 +54,7 @@ public class ExcelReader {
 	}
 	
 	public void importData(){
-        File f = new File("C:\\Users\\joehu\\Downloads\\test.xls");
+        File f = new File("C:\\Users\\a00248115\\Downloads\\test.xls");
         
        
         
@@ -66,6 +62,7 @@ public class ExcelReader {
             Workbook wb=Workbook.getWorkbook(f);
             Sheet s = wb.getSheet(4);
             this.importDataMccMnc(s);
+           
             s=wb.getSheet(3);
             this.importDataUE(s);
             s=wb.getSheet(2);
@@ -73,7 +70,7 @@ public class ExcelReader {
             s=wb.getSheet(1);
             this.importDataEventCause(s);
             
-            s=wb.getSheet(0);
+            //s=wb.getSheet(0);
             
             
             
@@ -90,12 +87,13 @@ public class ExcelReader {
     }
 
 	private void importDataEventCause(Sheet s) {
-		utilsDAO.deleteTableEventCause();
+		//utilsDAO.deleteTableEventCause();
 		int row = s.getRows();
 		int col = s.getColumns();
 		ArrayList<String> cells = new ArrayList<String>();
 
 		for(int i1=1; i1<row;i1++) {
+			cells.clear();
 			EventCause eventCause = new EventCause();
 		    for(int j=0;j<col;j++) {
 		        Cell c =s.getCell(j, i1);
@@ -109,12 +107,13 @@ public class ExcelReader {
 	}
 
 	private void importDataFailureClass(Sheet s) {
-		utilsDAO.deleteTableFailureClass();
+		//utilsDAO.deleteTableFailureClass();
 		int row = s.getRows();
 		int col = s.getColumns();
 		ArrayList<String> cells = new ArrayList<String>();
 
 		for(int i1=1; i1<row;i1++) {
+			cells.clear();
 			FailureClass failureClass = new FailureClass();
 		    for(int j=0;j<col;j++) {
 		        Cell c =s.getCell(j, i1);
@@ -128,12 +127,13 @@ public class ExcelReader {
 	}
 
 	private void importDataUE(Sheet s) {
-		ueUtilsDAO.deleteTable();
+		//ueUtilsDAO.deleteTable();
 		int row = s.getRows();
 		int col = s.getColumns();
 		ArrayList<String> cells = new ArrayList<String>();
 
 		for(int i1=1; i1<row;i1++) {
+			cells.clear();
 			Ue ue = new Ue();
 		    for(int j=0;j<col;j++) {
 		        Cell c =s.getCell(j, i1);
@@ -147,12 +147,13 @@ public class ExcelReader {
 	}
 
 	private void importDataMccMnc(Sheet s) {
-		utilsDAO.deleteTable();
+		//utilsDAO.deleteTable();
 		int row = s.getRows();
 		int col = s.getColumns();
 		ArrayList<String> cells = new ArrayList<String>();
 
 		for(int i1=1; i1<row;i1++) {
+			cells.clear();
 			MccMnc mccMnc = new MccMnc();
 		    for(int j=0;j<col;j++) {
 		        Cell c =s.getCell(j, i1);

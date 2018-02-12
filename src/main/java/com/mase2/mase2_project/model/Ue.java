@@ -21,13 +21,13 @@ public class Ue implements Serializable {
 	@Column(unique=true, nullable=false)
 	private int tac;
 
-	@Column(name="access_capability", length=120)
+	@Column(name="access_capability", length=140)
 	private String accessCapability;
 
-	@Column(length=45)
+	@Column(length=50)
 	private String manufacturer;
 
-	@Column(name="marketing_name", length=45)
+	@Column(name="marketing_name", length=50)
 	private String marketingName;
 
 	//bi-directional many-to-one association to BaseData
