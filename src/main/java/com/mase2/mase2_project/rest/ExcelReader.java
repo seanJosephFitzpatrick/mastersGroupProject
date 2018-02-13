@@ -24,8 +24,7 @@ import com.mase2.mase2_project.model.EventCause;
 import com.mase2.mase2_project.model.FailureClass;
 import com.mase2.mase2_project.model.MccMnc;
 import com.mase2.mase2_project.model.Ue;
-import com.mase2.mase2_project.test.utils.UeUtilsDAO;
-import com.mase2.mase2_project.test.utils.UtilsDAO;
+
 
 import jxl.Cell;
 import jxl.CellType;
@@ -56,7 +55,7 @@ public class ExcelReader {
 	public void importData(){
 
         File f = new File("C:\\Users\\a00199480\\Downloads\\test.xls");
-        //joe
+        
         
        
         
