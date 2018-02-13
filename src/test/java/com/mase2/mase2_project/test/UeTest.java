@@ -31,6 +31,7 @@ import com.mase2.mase2_project.rest.JaxRsActivator;
 import com.mase2.mase2_project.rest.MccMncWS;
 import com.mase2.mase2_project.rest.UeWS;
 import com.mase2.mase2_project.test.utils.UeUtilsDAO;
+import com.mase2.mase2_project.test.utils.UtilsDAO;
 
 
     //    @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -44,7 +45,7 @@ import com.mase2.mase2_project.test.utils.UeUtilsDAO;
                         .addClasses(MccMnc.class,
                                 MccMncPK.class,
                                 JaxRsActivator.class,
-                                UeUtilsDAO.class, FailureClassDAO.class, BaseData.class, BaseDataPK.class, EventCause.class, EventCausePK.class, FailureClass.class, Ue.class, UeWS.class, UeDAO.class)
+                                UeUtilsDAO.class,UtilsDAO.class, FailureClassDAO.class, BaseData.class, BaseDataPK.class, EventCause.class, EventCausePK.class, FailureClass.class, Ue.class, UeWS.class, UeDAO.class)
                     //    .addPackage(EventCause.class.getPackage())
                     //    .addPackage(EventCauseDAO.class.getPackage())
                 // this line will pick up the production db
@@ -62,14 +63,18 @@ import com.mase2.mase2_project.test.utils.UeUtilsDAO;
             private com.mase2.mase2_project.data.UeDAO ueDAO;
             
             @EJB
-            private com.mase2.mase2_project.test.utils.UeUtilsDAO utilsDAO;
+            private com.mase2.mase2_project.test.utils.UeUtilsDAO uetilsDAO;
+            
+            @EJB
+            private UtilsDAO utilsDao;
              
             @Before
             public void setUp() {
                 //this function means that we start with an empty table
                 //And add one wine
                 //it should be possible to test with an in memory db for efficiency
-                utilsDAO.deleteTable();
+            	utilsDao.deleteTableBaseData();
+                uetilsDAO.deleteTable();
                 com.mase2.mase2_project.model.Ue ue=new com.mase2.mase2_project.model.Ue();
                 ue.setTac(1);
                 ue.setMarketingName("test");

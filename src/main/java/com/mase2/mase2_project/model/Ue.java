@@ -1,7 +1,10 @@
 package com.mase2.mase2_project.model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,13 +21,13 @@ public class Ue implements Serializable {
 	@Column(unique=true, nullable=false)
 	private int tac;
 
-	@Column(name="access_capability", length=120)
+	@Column(name="access_capability", length=140)
 	private String accessCapability;
 
-	@Column(length=45)
+	@Column(length=50)
 	private String manufacturer;
 
-	@Column(name="marketing_name", length=45)
+	@Column(name="marketing_name", length=50)
 	private String marketingName;
 
 	//bi-directional many-to-one association to BaseData
@@ -64,6 +67,15 @@ public class Ue implements Serializable {
 
 	public void setMarketingName(String marketingName) {
 		this.marketingName = marketingName;
+	}
+
+	public void createRow(ArrayList<String> cells) {
+		this.setTac(Integer.parseInt(cells.get(0)));
+		this.setMarketingName(cells.get(1));
+		this.setManufacturer(cells.get(2));
+		this.setAccessCapability(cells.get(3));
+		
+		
 	}
 
 }

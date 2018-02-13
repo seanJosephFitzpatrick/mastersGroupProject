@@ -66,6 +66,7 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 			 
 			@Before
 			public void setUp() {
+				utilsDAO.deleteTableBaseData();
 				utilsDAO.deleteTable();
 				MccMncPK mccMncPK = new MccMncPK();
 				mccMncPK.setMcc(238);
