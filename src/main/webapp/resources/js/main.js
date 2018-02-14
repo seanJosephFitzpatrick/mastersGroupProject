@@ -1,5 +1,5 @@
 // JavaScript Document
-var rootUrl="http://localhost:8080/mase2-project/rest/mcc_mncs";
+var rootUrl="http://localhost:8080/mase2-project/rest/mcc_mnc";
 var findAll=function(){
 	$.ajax({
 		   type:'GET',
@@ -11,7 +11,7 @@ var findAll=function(){
 
 var renderList=function(data){
 	$.each(data, function(index,mcc_mnc){
-	$('#mcc_mncList').append('<li><a href="#" mcc="'+mcc_mnc.mcc+
+	$('#mcc_mncList').append('<li><a href="#" id="'+mcc_mnc.mcc+
 						  '">'+mcc_mnc.mnc+mcc_mnc.country+mcc_mnc.operator+'</a></li>');
 						  });
 }
