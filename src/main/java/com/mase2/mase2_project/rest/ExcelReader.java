@@ -53,8 +53,15 @@ public class ExcelReader {
 	}
 	
 	public void importData(){
-
-        File f = new File("C:\\Users\\a00199480\\Downloads\\test.xls");
+		 	String filePath="";
+	        String absolutePath = new File(".").getAbsolutePath();//Get path of your Project Folder
+			int last = absolutePath.length()-1;
+			absolutePath = absolutePath.substring(0, last);//Remove dot from path
+			String file =  "test.xls";
+			filePath = (absolutePath + file);
+			filePath = filePath.replace("\\", "/");
+			System.out.println(filePath);
+			File f = new File(filePath);
         
         
        
