@@ -1,14 +1,12 @@
 package com.mase2.mase2_project.model;
 
-import java.awt.List;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.persistence.*;
 
-import jxl.Cell;
-import jxl.CellType;
-import jxl.Sheet;
+
 
 
 /**
