@@ -38,12 +38,12 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 
     //    @FixMethodOrder(MethodSorters.NAME_ASCENDING)
         @RunWith(Arquillian.class)
-        public class UeTest {
+        public class UeWSTest {
             
             @Deployment
             public static Archive<?> createTestArchive() {
                 return ShrinkWrap
-                        .create(JavaArchive.class, "Test.jar")
+                        .create(JavaArchive.class, "Test2.jar")
                         .addClasses(MccMnc.class,
                                 MccMncPK.class,
                                 JaxRsActivator.class,
@@ -87,9 +87,13 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
             
             @Test
             public void testGetAllUes() {
-                List<com.mase2.mase2_project.model.Ue> ueList = ueDAO.getAllUes();
-                assertEquals("Data fetch = data persisted", ueList.size(), 1);
-				
+                Response response = ueWS.findAllUes();
+				List<Ue> uEList = (List<Ue>) response.getEntity();
+				assertEquals(HttpStatus.SC_OK, response.getStatus());				
+				assertEquals("Data fetch = data persisted", uEList.size(), 1);
+				Ue uE = uEList.get(0);
+				assertEquals("Mitsubishi", uE.getManufacturer());
+
             }
             
             
