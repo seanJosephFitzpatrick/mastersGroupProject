@@ -15,6 +15,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriBuilder;
@@ -22,12 +23,6 @@ import javax.ws.rs.core.UriBuilder;
 import com.mase2.mase2_project.data.EventCauseDAO;
 import com.mase2.mase2_project.model.EventCause;
 
-/**
- * @author A00248114
- *
- */
-
-//@RequestScoped
 @Path("/eventcauses")
 @Stateless
 @LocalBean
@@ -39,11 +34,13 @@ public class EventCauseEndpoint {
 	private EventCauseDAO eventCauseDAO;
 	
 	@GET
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response listAll(@QueryParam("start") final Integer startPosition,
 			@QueryParam("max") final Integer maxResult) {
 		List<EventCause> eventCause=eventCauseDAO.getAllEventCauses();
 		return Response.status(200).entity(eventCause).build();
 	}
+	
 	/*
 	@POST
 	public Response create(final EventCause eventcause) {
@@ -64,8 +61,6 @@ public class EventCauseEndpoint {
 		}
 		return Response.ok(eventcause).build();
 	}
-
-
 
 	@PUT
 	@Path("/{id:[0-9][0-9]*}")
