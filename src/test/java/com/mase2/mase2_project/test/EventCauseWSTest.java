@@ -25,7 +25,7 @@ import com.mase2.mase2_project.model.FailureClass;
 import com.mase2.mase2_project.model.MccMnc;
 import com.mase2.mase2_project.model.MccMncPK;
 import com.mase2.mase2_project.model.Ue;
-import com.mase2.mase2_project.rest.FailureClassWS;
+import com.mase2.mase2_project.rest.EventCauseEndpoint;
 import com.mase2.mase2_project.rest.JaxRsActivator;
 import com.mase2.mase2_project.test.utils.UtilsDAO;
 
@@ -33,19 +33,21 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
  * @author A00248114
  *
  */
-	
+
+	//	@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 		@RunWith(Arquillian.class)
-		public class FailureClassWSTest {
+		public class EventCauseWSTest {
 			
 			@Deployment
 			public static Archive<?> createTestArchive() {
 				return ShrinkWrap
-						.create(JavaArchive.class, "TestFailureClassWS.jar")
-						.addClasses(FailureClassDAO.class, FailureClass.class,
-								JaxRsActivator.class, FailureClassWS.class,
-								UtilsDAO.class, EventCauseDAO.class, BaseData.class, MccMnc.class, MccMncPK.class, BaseDataPK.class, EventCause.class, EventCausePK.class, Ue.class)
-					//	.addPackage(FailureClass.class.getPackage())
-					//	.addPackage(FailureClassDAO.class.getPackage())
+						.create(JavaArchive.class, "TestEventCauseWS.jar")
+						.addClasses(EventCauseDAO.class, EventCause.class,
+								EventCausePK.class,
+								JaxRsActivator.class,EventCauseEndpoint.class,
+								UtilsDAO.class, FailureClassDAO.class, BaseData.class, MccMnc.class, MccMncPK.class, BaseDataPK.class, EventCause.class, EventCausePK.class, FailureClass.class, Ue.class)
+					//	.addPackage(EventCause.class.getPackage())
+					//	.addPackage(EventCauseDAO.class.getPackage())
 								//this line will pick up the production db
 						.addAsManifestResource("META-INF/persistence.xml",
 								"persistence.xml")
@@ -55,10 +57,10 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 
 			 
 			@EJB
-			private FailureClassWS failureClassWS;
+			private EventCauseEndpoint eventCauseEndpoint;
 			
 			@EJB
-			private FailureClassDAO failureClassDAO;
+			private EventCauseDAO eventCauseDAO;
 			
 			@EJB
 			private UtilsDAO utilsDAO;
@@ -66,25 +68,30 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 			@Before
 			public void setUp() {
 				//this function means that we start with an empty table
-				//And add one Failure Class and description
+				//And add one wine
 				//it should be possible to test with an in memory db for efficiency
 				utilsDAO.deleteTableBaseData();
-				utilsDAO.deleteTableFailureClass();
-				FailureClass failureClass=new FailureClass();
-				failureClass.setFailureClass(2);
-				failureClass.setDescription("MT ACCESS");
-				failureClassDAO.save(failureClass);
+				utilsDAO.deleteTableEventCause();
+				EventCausePK eventCausePK = new EventCausePK();
+				eventCausePK.setEventId(4097);
+				eventCausePK.setEventCode(3);
+				EventCause eventCause=new EventCause();
+				eventCause.setId(eventCausePK);
+				eventCause.setDescription("RRC CONN SETUP-EUTRAN GENERATED REASON");
+				eventCauseDAO.save(eventCause);
 			}
 			
 			@Test
-			public void testGetAllFailureClassWS() {
-				Response response = failureClassWS.findAllFailureClasses();
-				List<FailureClass> failureClassList = (List<FailureClass>) response.getEntity();
+			public void testGetAllEventCauses() {
+				Response response = eventCauseEndpoint.listAll();
+				List<EventCause> eventCauseList = (List<EventCause>) response.getEntity();
 				assertEquals(HttpStatus.SC_OK, response.getStatus());				
-				assertEquals("Data fetch = data persisted", failureClassList.size(), 1);
-				FailureClass failureClass = failureClassList.get(0);
-				assertEquals("MT ACCESS",failureClass.getDescription());
-			
+				assertEquals("Data fetch = data persisted", eventCauseList.size(), 1);
+				EventCause eventCause = eventCauseList.get(0);
+				assertEquals("RRC CONN SETUP-EUTRAN GENERATED REASON", eventCause.getDescription());
+				
 			}
-					
+			
+			
+			
 }
