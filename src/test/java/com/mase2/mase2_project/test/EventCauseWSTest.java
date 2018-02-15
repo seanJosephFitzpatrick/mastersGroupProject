@@ -3,6 +3,9 @@ package com.mase2.mase2_project.test;
 import static org.junit.Assert.assertEquals;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.ws.rs.core.Response;
+
+import org.apache.commons.httpclient.HttpStatus;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
@@ -33,12 +36,12 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 
 	//	@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 		@RunWith(Arquillian.class)
-		public class IntegrationTestTableEventCause {
+		public class EventCauseWSTest {
 			
 			@Deployment
 			public static Archive<?> createTestArchive() {
 				return ShrinkWrap
-						.create(JavaArchive.class, "TestEventCause.jar")
+						.create(JavaArchive.class, "TestEventCauseWS.jar")
 						.addClasses(EventCauseDAO.class, EventCause.class,
 								EventCausePK.class,
 								JaxRsActivator.class,EventCauseEndpoint.class,
@@ -80,8 +83,13 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 			
 			@Test
 			public void testGetAllEventCauses() {
-				List<EventCause> eventCauseList = eventCauseDAO.getAllEventCauses();
+				Response response = eventCauseEndpoint.listAll();
+				List<EventCause> eventCauseList = (List<EventCause>) response.getEntity();
+				assertEquals(HttpStatus.SC_OK, response.getStatus());				
 				assertEquals("Data fetch = data persisted", eventCauseList.size(), 1);
+				EventCause eventCause = eventCauseList.get(0);
+				assertEquals("RRC CONN SETUP-EUTRAN GENERATED REASON", eventCause.getDescription());
+				
 			}
 			
 			

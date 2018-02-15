@@ -22,6 +22,11 @@ public class FailureClassDAO {
         return query.getResultList();
     }
 	
+	public void save(FailureClass failureClass){
+		em.persist(failureClass);
+	}
+	
+	/*
 	public List<FailureClass> getByFailureClass(int failureClass) {
     	Query query=em.createQuery("SELECT w FROM FailureClass AS w "+
     								"WHERE w.failureClass LIKE ?1");
@@ -39,10 +44,6 @@ public class FailureClassDAO {
         return em.find(FailureClass.class, failureClass);
     }
 	
-	public void save(FailureClass failureClass){
-		em.persist(failureClass);
-	}
-	
 	public void update(FailureClass failureClass) {
 		em.merge(failureClass);
 	}
@@ -53,5 +54,6 @@ public class FailureClassDAO {
 	public void deleteTable(){
 		em.createQuery("DELETE FROM FailureClass").executeUpdate();
 	}
+	*/
 
 }

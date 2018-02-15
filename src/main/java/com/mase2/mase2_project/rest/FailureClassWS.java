@@ -34,7 +34,7 @@ public class FailureClassWS {
 		return Response.status(200).entity(failureClasses).build();
 	}
 	
-
+	/*
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
 	@Path("/{id}")
@@ -75,5 +75,6 @@ public class FailureClassWS {
 		List<FailureClass> failureclasses=failureClassDao.getByDescription(query);
 		return Response.status(200).entity(failureclasses).build();
 	}
+	*/
 
 }

@@ -8,11 +8,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import com.mase2.mase2_project.model.EventCause;
 
-/**
- * @author A00248114
- *
- */
-
 @Stateless
 @LocalBean
 public class EventCauseDAO {
@@ -24,6 +19,11 @@ public class EventCauseDAO {
     	Query query=em.createQuery("SELECT w FROM EventCause w");
         return query.getResultList();
     }
+	
+	public void save(EventCause eventCause){
+		em.persist(eventCause);
+	}
+	
 	/*
 	public EventCause getById(int id) {
         return em.find(EventCause.class, id);
@@ -39,11 +39,7 @@ public class EventCauseDAO {
 	public EventCause getEventCause(int id ) {
         return em.find(EventCause.class, id);
     }
-	*/
-	public void save(EventCause eventCause){
-		em.persist(eventCause);
-	}
-	/*
+	
 	public void update(EventCause eventCause) {
 		em.merge(eventCause);
 	}
