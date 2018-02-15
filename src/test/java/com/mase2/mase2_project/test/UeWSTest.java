@@ -27,7 +27,6 @@ import com.mase2.mase2_project.model.MccMncPK;
 import com.mase2.mase2_project.model.Ue;
 import com.mase2.mase2_project.rest.JaxRsActivator;
 import com.mase2.mase2_project.rest.UeWS;
-import com.mase2.mase2_project.test.utils.UeUtilsDAO;
 import com.mase2.mase2_project.test.utils.UtilsDAO;
 
 
@@ -42,7 +41,7 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
                         .addClasses(MccMnc.class,
                                 MccMncPK.class,
                                 JaxRsActivator.class,
-                                UeUtilsDAO.class,UtilsDAO.class, FailureClassDAO.class, BaseData.class, BaseDataPK.class, EventCause.class, EventCausePK.class, FailureClass.class, Ue.class, UeWS.class, UeDAO.class)
+                                UtilsDAO.class, FailureClassDAO.class, BaseData.class, BaseDataPK.class, EventCause.class, EventCausePK.class, FailureClass.class, Ue.class, UeWS.class, UeDAO.class)
                     //    .addPackage(EventCause.class.getPackage())
                     //    .addPackage(EventCauseDAO.class.getPackage())
                 // this line will pick up the production db
@@ -60,9 +59,6 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
             private com.mase2.mase2_project.data.UeDAO ueDAO;
             
             @EJB
-            private com.mase2.mase2_project.test.utils.UeUtilsDAO uetilsDAO;
-            
-            @EJB
             private UtilsDAO utilsDao;
              
             @Before
@@ -71,7 +67,7 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
                 //And add one wine
                 //it should be possible to test with an in memory db for efficiency
             	utilsDao.deleteTableBaseData();
-                uetilsDAO.deleteTable();
+            	utilsDao.deleteTableUe();
                 Ue ue=new Ue();
                 ue.setTac(100100);
                 ue.setMarketingName("G410");

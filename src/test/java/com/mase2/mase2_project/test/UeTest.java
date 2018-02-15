@@ -1,12 +1,9 @@
 package com.mase2.mase2_project.test;
 
 import static org.junit.Assert.assertEquals;
-
 import java.util.List;
-
 import javax.ejb.EJB;
 import javax.ws.rs.core.Response;
-
 import org.apache.commons.httpclient.HttpStatus;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -17,9 +14,7 @@ import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import com.mase2.mase2_project.data.FailureClassDAO;
-import com.mase2.mase2_project.data.MccMncDAO;
 import com.mase2.mase2_project.data.UeDAO;
 import com.mase2.mase2_project.model.BaseData;
 import com.mase2.mase2_project.model.BaseDataPK;
@@ -30,9 +25,7 @@ import com.mase2.mase2_project.model.MccMnc;
 import com.mase2.mase2_project.model.MccMncPK;
 import com.mase2.mase2_project.model.Ue;
 import com.mase2.mase2_project.rest.JaxRsActivator;
-import com.mase2.mase2_project.rest.MccMncWS;
 import com.mase2.mase2_project.rest.UeWS;
-import com.mase2.mase2_project.test.utils.UeUtilsDAO;
 import com.mase2.mase2_project.test.utils.UtilsDAO;
 
 
@@ -47,7 +40,7 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
                         .addClasses(MccMnc.class,
                                 MccMncPK.class,
                                 JaxRsActivator.class,
-                                UeUtilsDAO.class,UtilsDAO.class, FailureClassDAO.class, BaseData.class, BaseDataPK.class, EventCause.class, EventCausePK.class, FailureClass.class, Ue.class, UeWS.class, UeDAO.class)
+                                UtilsDAO.class, FailureClassDAO.class, BaseData.class, BaseDataPK.class, EventCause.class, EventCausePK.class, FailureClass.class, Ue.class, UeWS.class, UeDAO.class)
                     //    .addPackage(EventCause.class.getPackage())
                     //    .addPackage(EventCauseDAO.class.getPackage())
                 // this line will pick up the production db
@@ -65,9 +58,6 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
             private com.mase2.mase2_project.data.UeDAO ueDAO;
             
             @EJB
-            private com.mase2.mase2_project.test.utils.UeUtilsDAO uetilsDAO;
-            
-            @EJB
             private UtilsDAO utilsDao;
              
             @Before
@@ -76,7 +66,7 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
                 //And add one wine
                 //it should be possible to test with an in memory db for efficiency
             	utilsDao.deleteTableBaseData();
-                uetilsDAO.deleteTable();
+            	utilsDao.deleteTableUe();
                 com.mase2.mase2_project.model.Ue ue=new com.mase2.mase2_project.model.Ue();
                 ue.setTac(100100);
                 ue.setMarketingName("G410");
