@@ -1,13 +1,10 @@
 package com.mase2.mase2_project.test;
 
 import static org.junit.Assert.*;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.ejb.EJB;
-
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
@@ -17,7 +14,6 @@ import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import com.mase2.mase2_project.data.BaseDataDAO;
 import com.mase2.mase2_project.data.EventCauseDAO;
 import com.mase2.mase2_project.data.FailureClassDAO;
@@ -35,7 +31,6 @@ import com.mase2.mase2_project.rest.BaseDataEndpoint;
 import com.mase2.mase2_project.rest.EventCauseEndpoint;
 import com.mase2.mase2_project.rest.JaxRsActivator;
 import com.mase2.mase2_project.rest.MccMncWS;
-import com.mase2.mase2_project.test.utils.UeUtilsDAO;
 import com.mase2.mase2_project.test.utils.UtilsDAO;
 
 
@@ -52,7 +47,7 @@ public class BaseDataTest {
 						UtilsDAO.class, FailureClassDAO.class, BaseData.class, 
 						BaseDataPK.class, BaseDataDAO.class,BaseDataEndpoint.class, 
 						EventCause.class, EventCausePK.class,EventCauseDAO.class,
-						EventCauseEndpoint.class, FailureClass.class, Ue.class,UeDAO.class,UeUtilsDAO.class)
+						EventCauseEndpoint.class, FailureClass.class, Ue.class,UeDAO.class)
 			//	.addPackage(EventCause.class.getPackage())
 			//	.addPackage(EventCauseDAO.class.getPackage())
 						//this line will pick up the production db
@@ -65,7 +60,6 @@ public class BaseDataTest {
 	 
 	@EJB
 	private BaseDataEndpoint baseDataEndpoint;
-	
 	@EJB
 	private BaseDataDAO baseDataDao;
 	@EJB
@@ -76,9 +70,6 @@ public class BaseDataTest {
 	private MccMncDAO mcc_mncDAO;
 	@EJB
     private UeDAO ueDAO;
-	@EJB
-    private UeUtilsDAO ueUtilsDAO;
-	
 	@EJB
 	private UtilsDAO utilsDAO;
 	
@@ -116,7 +107,7 @@ public class BaseDataTest {
 		eventCause.setDescription("RRC CONN SETUP-EUTRAN GENERATED REASON");
 		eventCauseDAO.save(eventCause);
 		baseData.setEventCause(eventCause);
-		ueUtilsDAO.deleteTable();
+		utilsDAO.deleteTableUe();
 		Ue ue=new Ue();
         ue.setTac(1);
         ue.setMarketingName("test");
@@ -141,5 +132,4 @@ public class BaseDataTest {
 		assertEquals("Data fetch = data persisted", baseDataList.size(), 1);
 	}
 
-	
 }

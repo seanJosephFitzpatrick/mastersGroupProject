@@ -35,7 +35,6 @@ import com.mase2.mase2_project.rest.FailureClassWS;
 import com.mase2.mase2_project.rest.JaxRsActivator;
 import com.mase2.mase2_project.rest.MccMncWS;
 import com.mase2.mase2_project.rest.UeWS;
-import com.mase2.mase2_project.test.utils.UeUtilsDAO;
 import com.mase2.mase2_project.test.utils.UtilsDAO;
 
 
@@ -52,7 +51,7 @@ public class BaseDataWSTest {
 						UtilsDAO.class, FailureClassDAO.class, BaseData.class, 
 						BaseDataPK.class, BaseDataDAO.class,BaseDataEndpoint.class, UeWS.class, 
 						EventCause.class, EventCausePK.class,EventCauseDAO.class, FailureClassWS.class,
-						EventCauseEndpoint.class, FailureClass.class, Ue.class,UeDAO.class,UeUtilsDAO.class)
+						EventCauseEndpoint.class, FailureClass.class, Ue.class,UeDAO.class)
 			//	.addPackage(EventCause.class.getPackage())
 			//	.addPackage(EventCauseDAO.class.getPackage())
 						//this line will pick up the production db
@@ -74,8 +73,6 @@ public class BaseDataWSTest {
 	private MccMncDAO mcc_mncDAO;
 	@EJB
     private UeDAO ueDAO;
-	@EJB
-    private UeUtilsDAO ueUtilsDAO;
 	@EJB
 	private FailureClassWS failureClassWS;
 	@EJB
@@ -121,7 +118,7 @@ public class BaseDataWSTest {
 		eventCause.setDescription("RRC CONN SETUP-EUTRAN GENERATED REASON");
 		eventCauseDAO.save(eventCause);
 		baseData.setEventCause(eventCause);
-		ueUtilsDAO.deleteTable();
+		utilsDAO.deleteTableUe();
 		Ue ue=new Ue();
         ue.setTac(100100);
         ue.setMarketingName("G410");

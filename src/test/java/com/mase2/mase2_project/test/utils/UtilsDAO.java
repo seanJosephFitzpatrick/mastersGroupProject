@@ -17,14 +17,12 @@ public class UtilsDAO {
 		em.createQuery("DELETE FROM MccMnc").executeUpdate();
 		em.createNativeQuery("ALTER TABLE mcc_mnc AUTO_INCREMENT=1")
 		.executeUpdate();
-		
 	}
 	
 	public void deleteTableEventCause(){
 		em.createQuery("DELETE FROM EventCause").executeUpdate();
 		em.createNativeQuery("ALTER TABLE event_cause AUTO_INCREMENT=1")
-		.executeUpdate();
-		
+		.executeUpdate();		
 	}
 
 	public void deleteTableBaseData(){
@@ -34,10 +32,10 @@ public class UtilsDAO {
 
 	public void deleteTableFailureClass(){
 		em.createQuery("DELETE FROM FailureClass").executeUpdate();
-		em.createNativeQuery("ALTER TABLE failure_class AUTO_INCREMENT=1").executeUpdate();
-
-		
-		
+		em.createNativeQuery("ALTER TABLE failure_class AUTO_INCREMENT=1").executeUpdate();	
 	}
-      
+	
+	public void deleteTableUe(){
+		em.createQuery("DELETE FROM Ue").executeUpdate();		
+	}
 }
