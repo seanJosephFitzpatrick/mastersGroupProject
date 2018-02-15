@@ -47,8 +47,7 @@ public class BaseDataEndpoint {
 	*/
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response listAll(@QueryParam("start") final Integer startPosition,
-			@QueryParam("max") final Integer maxResult) {
+	public Response listAll() {
 		List<BaseData> baseData=baseDataDAO.getAllBaseData();
 		return Response.status(200).entity(baseData).build();
 	}
