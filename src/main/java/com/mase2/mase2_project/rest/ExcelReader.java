@@ -2,6 +2,7 @@ package com.mase2.mase2_project.rest;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
@@ -10,14 +11,17 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 
-
+import com.mase2.mase2_project.data.BaseDataDAO;
 import com.mase2.mase2_project.data.EventCauseDAO;
 import com.mase2.mase2_project.data.FailureClassDAO;
 import com.mase2.mase2_project.data.MccMncDAO;
 import com.mase2.mase2_project.data.UeDAO;
+import com.mase2.mase2_project.model.BaseData;
 import com.mase2.mase2_project.model.EventCause;
+import com.mase2.mase2_project.model.EventCausePK;
 import com.mase2.mase2_project.model.FailureClass;
 import com.mase2.mase2_project.model.MccMnc;
+import com.mase2.mase2_project.model.MccMncPK;
 import com.mase2.mase2_project.model.Ue;
 
 
@@ -37,7 +41,19 @@ public class ExcelReader {
 	private FailureClassDAO failureClassDAO;
 	@EJB
 	private EventCauseDAO eventCauseDAO;
-	
+	@EJB
+	private BaseDataDAO baseDataDAO;
+	private List<FailureClass> failureClassData = new ArrayList<FailureClass>();//temporary data holder to compare foreign check for foreign keys
+	private List<EventCause> eventCauseData = new ArrayList<EventCause>();
+	private List<MccMnc> mccMncData = new ArrayList<MccMnc>();
+	private List<Ue> UeData = new ArrayList<Ue>();
+	private FailureClass failureClassRow= new FailureClass();
+	private EventCause eventCauseRow= new EventCause();
+	private MccMnc mccMncRow= new MccMnc();
+	private Ue ueRow=new Ue();
+	private MccMncPK mccMncPK = new MccMncPK();
+	private EventCausePK eventCausePK = new EventCausePK();
+
 	
 	
 	@POST
@@ -71,8 +87,9 @@ public class ExcelReader {
             this.importDataFailureClass(s);
             s=wb.getSheet(1);
             this.importDataEventCause(s);
-            
-            //s=wb.getSheet(0);
+            s=wb.getSheet(0);
+            this.retrieveParentTableData();
+            this.importDataBaseData(s);
             
             
             
@@ -83,10 +100,111 @@ public class ExcelReader {
             
         
         }catch(Exception e2){
-        	System.out.println("Exception");
+        	e2.printStackTrace();
         	
         }
     }
+
+	private void retrieveParentTableData() {
+		if(failureClassData.size()!=0){
+			return;
+		}
+		failureClassData=failureClassDAO.getAllFailureClasses();
+		eventCauseData=eventCauseDAO.getAllEventCauses();
+		UeData=ueDAO.getAllUes();
+		mccMncData=mcc_mncDao.getAllMcc_Mncs();	
+	}
+
+	public void importDataBaseData(Sheet s) {
+		int row = s.getRows();
+		int col = s.getColumns();
+		ArrayList<String> cells = new ArrayList<String>();
+
+		for(int i1=1; i1<row;i1++) {
+			cells.clear();
+			BaseData baseData = new BaseData();
+		    for(int j=0;j<col;j++) {
+		        Cell c =s.getCell(j, i1);
+		        cells.add(c.getContents());
+		        
+		    }
+		    if(checkForeignKeysExist(cells)){
+		    System.out.println("boooooooooom");
+		    baseData.createRow(cells,eventCauseRow,failureClassRow,ueRow,mccMncRow);
+		    baseDataDAO.save(baseData);
+		    }
+		}
+		
+	}
+
+	private boolean checkForeignKeysExist(ArrayList<String> cells) {
+		if(checkFailureClassForeignKeys(cells)){
+			System.out.println("First check");
+			if(checkEventCauseForeignKeys(cells)){
+				System.out.println("Second check");
+				if(checkUeTypeForeignKeys(cells)){
+					System.out.println("Third check");
+					if(checkMccMncForeignKeys(cells)){
+						System.out.println("Fourth check");
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+		
+		
+		
+		
+	}
+
+	private boolean checkMccMncForeignKeys(ArrayList<String> cells) {
+		for (MccMnc mccMnc : mccMncData) {
+			if(cells.get(4).equalsIgnoreCase(Integer.toString(mccMnc.getId().getMcc()))){
+				if(cells.get(5).equalsIgnoreCase(Integer.toString(mccMnc.getId().getMnc()))){
+					mccMncRow=mccMnc;
+					return true;	
+				}
+				
+			}
+				
+		}
+		return false;
+	}
+
+	private boolean checkUeTypeForeignKeys(ArrayList<String> cells) {
+		for (Ue ue : UeData) {
+			if(cells.get(3).equalsIgnoreCase(Integer.toString(ue.getTac()))){
+				ueRow=ue;
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean checkFailureClassForeignKeys(ArrayList<String> cells) {
+		for (FailureClass failureClass : failureClassData) {
+			if(cells.get(2).equalsIgnoreCase(Integer.toString(failureClass.getFailureClass()))){
+				System.out.println("Inside failure class check");
+				failureClassRow=failureClass;
+				return true;
+			}
+		}
+		return false;
+
+	}
+
+	private boolean checkEventCauseForeignKeys(ArrayList<String> cells) {
+		for (EventCause eventCause : eventCauseData) {
+			if(cells.get(1).equalsIgnoreCase(Integer.toString(eventCause.getId().getEventId()))){
+				if(cells.get(8).equalsIgnoreCase(Integer.toString(eventCause.getId().getEventCode()))){
+					eventCauseRow=eventCause;
+					return true;
+				}
+			}	
+		}
+		return false;
+	}
 
 	private void importDataEventCause(Sheet s) {
 		//utilsDAO.deleteTableEventCause();
