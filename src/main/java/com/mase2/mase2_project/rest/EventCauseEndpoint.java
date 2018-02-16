@@ -20,8 +20,6 @@ import com.mase2.mase2_project.model.EventCause;
 @Path("/eventcauses")
 @Stateless
 @LocalBean
-@Produces({ "application/xml", "application/json" })
-@Consumes({ "application/xml", "application/json" })
 public class EventCauseEndpoint {
 	
 	@EJB
@@ -29,7 +27,8 @@ public class EventCauseEndpoint {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response listAll() {
+	public Response listAll(@QueryParam("start") final Integer startPosition,
+			@QueryParam("max") final Integer maxResult) {
 		List<EventCause> eventCause=eventCauseDAO.getAllEventCauses();
 		return Response.status(200).entity(eventCause).build();
 	}
