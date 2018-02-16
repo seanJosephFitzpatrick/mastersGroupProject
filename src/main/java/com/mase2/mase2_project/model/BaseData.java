@@ -165,6 +165,10 @@ public class BaseData implements Serializable {
 	}
 
 	public void createRow(ArrayList<String> cells, EventCause eventCauseRow, FailureClass failureClassRow, Ue ueRow, MccMnc mccMncRow) {
+		BaseDataPK baseDataPK = new BaseDataPK();
+		baseDataPK.setEventId(eventCauseRow.getId().getEventId());
+		baseDataPK.setCauseCode(eventCauseRow.getId().getEventCode());
+		this.setId(baseDataPK);
 		this.setEventCause(eventCauseRow);
 		this.setFailureClassBean(failureClassRow);
 		this.setMccMnc(mccMncRow);

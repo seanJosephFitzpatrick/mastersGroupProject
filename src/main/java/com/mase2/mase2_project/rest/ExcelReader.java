@@ -18,8 +18,10 @@ import com.mase2.mase2_project.data.MccMncDAO;
 import com.mase2.mase2_project.data.UeDAO;
 import com.mase2.mase2_project.model.BaseData;
 import com.mase2.mase2_project.model.EventCause;
+import com.mase2.mase2_project.model.EventCausePK;
 import com.mase2.mase2_project.model.FailureClass;
 import com.mase2.mase2_project.model.MccMnc;
+import com.mase2.mase2_project.model.MccMncPK;
 import com.mase2.mase2_project.model.Ue;
 
 
@@ -45,10 +47,12 @@ public class ExcelReader {
 	private List<EventCause> eventCauseData = new ArrayList<EventCause>();
 	private List<MccMnc> mccMncData = new ArrayList<MccMnc>();
 	private List<Ue> UeData = new ArrayList<Ue>();
-	private FailureClass failureClassRow;
-	private EventCause eventCauseRow;
-	private MccMnc mccMncRow;
-	private Ue ueRow;
+	private FailureClass failureClassRow= new FailureClass();
+	private EventCause eventCauseRow= new EventCause();
+	private MccMnc mccMncRow= new MccMnc();
+	private Ue ueRow=new Ue();
+	private MccMncPK mccMncPK = new MccMncPK();
+	private EventCausePK eventCausePK = new EventCausePK();
 
 	
 	
@@ -96,7 +100,7 @@ public class ExcelReader {
             
         
         }catch(Exception e2){
-        	System.out.println("Exception");
+        	e2.printStackTrace();
         	
         }
     }
@@ -125,6 +129,7 @@ public class ExcelReader {
 		        
 		    }
 		    if(checkForeignKeysExist(cells)){
+		    System.out.println("boooooooooom");
 		    baseData.createRow(cells,eventCauseRow,failureClassRow,ueRow,mccMncRow);
 		    baseDataDAO.save(baseData);
 		    }
@@ -133,62 +138,72 @@ public class ExcelReader {
 	}
 
 	private boolean checkForeignKeysExist(ArrayList<String> cells) {
-		checkEventCauseForeignKeys(cells);
-		checkFailureClassForeignKeys(cells);
-		checkUeTypeForeignKeys(cells);
-		checkMccMncForeignKeys(cells);
-		return true;
+		if(checkFailureClassForeignKeys(cells)){
+			System.out.println("First check");
+			if(checkEventCauseForeignKeys(cells)){
+				System.out.println("Second check");
+				if(checkUeTypeForeignKeys(cells)){
+					System.out.println("Third check");
+					if(checkMccMncForeignKeys(cells)){
+						System.out.println("Fourth check");
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+		
+		
+		
+		
 	}
 
-	private void checkMccMncForeignKeys(ArrayList<String> cells) {
+	private boolean checkMccMncForeignKeys(ArrayList<String> cells) {
 		for (MccMnc mccMnc : mccMncData) {
-			
-			if(cells.get(5).equalsIgnoreCase(Integer.toString(mccMnc.getId().getMcc()))){
-				if(cells.get(6).equalsIgnoreCase(Integer.toString(mccMnc.getId().getMnc()))){
+			if(cells.get(4).equalsIgnoreCase(Integer.toString(mccMnc.getId().getMcc()))){
+				if(cells.get(5).equalsIgnoreCase(Integer.toString(mccMnc.getId().getMnc()))){
 					mccMncRow=mccMnc;
-					break;	
+					return true;	
 				}
 				
 			}
-			mccMncRow=null;
-			
+				
 		}
+		return false;
 	}
 
-	private void checkUeTypeForeignKeys(ArrayList<String> cells) {
+	private boolean checkUeTypeForeignKeys(ArrayList<String> cells) {
 		for (Ue ue : UeData) {
-			if(cells.get(4).equalsIgnoreCase(Integer.toString(ue.getTac()))){
+			if(cells.get(3).equalsIgnoreCase(Integer.toString(ue.getTac()))){
 				ueRow=ue;
-				break;
+				return true;
 			}
-		ueRow=null;	
 		}
-	
+		return false;
 	}
 
-	private void checkFailureClassForeignKeys(ArrayList<String> cells) {
+	private boolean checkFailureClassForeignKeys(ArrayList<String> cells) {
 		for (FailureClass failureClass : failureClassData) {
-			if(cells.get(3).equalsIgnoreCase(Integer.toString(failureClass.getFailureClass()))){
+			if(cells.get(2).equalsIgnoreCase(Integer.toString(failureClass.getFailureClass()))){
+				System.out.println("Inside failure class check");
 				failureClassRow=failureClass;
-				break;
+				return true;
 			}
-			failureClassRow=null;
 		}
+		return false;
 
 	}
 
-	private void checkEventCauseForeignKeys(ArrayList<String> cells) {
-	
+	private boolean checkEventCauseForeignKeys(ArrayList<String> cells) {
 		for (EventCause eventCause : eventCauseData) {
-			
-			if(cells.get(2).equalsIgnoreCase(Integer.toString(eventCause.getId().getEventId()))){
-				if(cells.get(9).equalsIgnoreCase(Integer.toString(eventCause.getId().getEventCode()))){
+			if(cells.get(1).equalsIgnoreCase(Integer.toString(eventCause.getId().getEventId()))){
+				if(cells.get(8).equalsIgnoreCase(Integer.toString(eventCause.getId().getEventCode()))){
 					eventCauseRow=eventCause;
+					return true;
 				}
-			}
-			eventCauseRow=null;	
+			}	
 		}
-
+		return false;
 	}
 
 	private void importDataEventCause(Sheet s) {
