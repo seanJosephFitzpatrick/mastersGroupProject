@@ -129,44 +129,15 @@ public class ExcelReader {
 	}
 
 	private boolean checkForeignKeysExist(ArrayList<String> cells) {
-		int flag=0;
-		String eventIDForeignKey=null;
-		String eventCodeForeignKey=null;
-		for (EventCause eventCause : eventCauseData) {
-			
-			if(cells.get(2).equalsIgnoreCase(Integer.toString(eventCause.getId().getEventId()))){
-				eventIDForeignKey = Integer.toString(eventCause.getId().getEventId());
-				flag++;
-			}
-			if(cells.get(9).equalsIgnoreCase(Integer.toString(eventCause.getId().getEventCode()))){
-				eventCodeForeignKey = Integer.toString(eventCause.getId().getEventCode());
-				flag++;
-			}
-			if(flag==2){
-				break;
-			}
-			
-		}
-		cells.set(2, eventIDForeignKey);
-		cells.set(9, eventCodeForeignKey);
-		String faliureClassForeignKey=null;
-		for (FailureClass faliureClass : failureClassData) {
-			if(cells.get(3).equalsIgnoreCase(Integer.toString(faliureClass.getFailureClass()))){
-				faliureClassForeignKey=Integer.toString(faliureClass.getFailureClass());
-				break;
-			}
-			
-		}
-		cells.set(3, faliureClassForeignKey);
-		String ueTypeForeignKey=null;
-		for (Ue ue : UeData) {
-			if(cells.get(4).equalsIgnoreCase(Integer.toString(ue.getTac()))){
-				ueTypeForeignKey=Integer.toString(ue.getTac());
-				break;
-			}
-			
-		}
-		cells.set(4, ueTypeForeignKey);
+		checkEventCauseForeignKeys(cells);
+		checkFailureClassForeignKeys(cells);
+		checkUeTypeForeignKeys(cells);
+		checkMccMncForeignKeys(cells);
+		return true;
+	}
+
+	private void checkMccMncForeignKeys(ArrayList<String> cells) {
+		int flag;
 		flag=0;
 		String marketForeignKey=null;
 		String operatorForeignKey=null;
@@ -187,7 +158,53 @@ public class ExcelReader {
 		}
 		cells.set(5, marketForeignKey);
 		cells.set(6, operatorForeignKey);
-		return true;
+	}
+
+	private void checkUeTypeForeignKeys(ArrayList<String> cells) {
+		String ueTypeForeignKey=null;
+		for (Ue ue : UeData) {
+			if(cells.get(4).equalsIgnoreCase(Integer.toString(ue.getTac()))){
+				ueTypeForeignKey=Integer.toString(ue.getTac());
+				break;
+			}
+			
+		}
+		cells.set(4, ueTypeForeignKey);
+	}
+
+	private void checkFailureClassForeignKeys(ArrayList<String> cells) {
+		String faliureClassForeignKey=null;
+		for (FailureClass faliureClass : failureClassData) {
+			if(cells.get(3).equalsIgnoreCase(Integer.toString(faliureClass.getFailureClass()))){
+				faliureClassForeignKey=Integer.toString(faliureClass.getFailureClass());
+				break;
+			}
+			
+		}
+		cells.set(3, faliureClassForeignKey);
+	}
+
+	private void checkEventCauseForeignKeys(ArrayList<String> cells) {
+		int flag=0;
+		String eventIDForeignKey=null;
+		String eventCodeForeignKey=null;
+		for (EventCause eventCause : eventCauseData) {
+			
+			if(cells.get(2).equalsIgnoreCase(Integer.toString(eventCause.getId().getEventId()))){
+				eventIDForeignKey = Integer.toString(eventCause.getId().getEventId());
+				flag++;
+			}
+			if(cells.get(9).equalsIgnoreCase(Integer.toString(eventCause.getId().getEventCode()))){
+				eventCodeForeignKey = Integer.toString(eventCause.getId().getEventCode());
+				flag++;
+			}
+			if(flag==2){
+				break;
+			}
+			
+		}
+		cells.set(2, eventIDForeignKey);
+		cells.set(9, eventCodeForeignKey);
 	}
 
 	private void importDataEventCause(Sheet s) {
