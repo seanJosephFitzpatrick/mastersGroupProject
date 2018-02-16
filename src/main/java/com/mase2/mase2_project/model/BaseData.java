@@ -3,6 +3,7 @@ package com.mase2.mase2_project.model;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 
 
 /**
@@ -161,6 +162,14 @@ public class BaseData implements Serializable {
 
 	public void setFailureClassBean(FailureClass failureClassBean) {
 		this.failureClassBean = failureClassBean;
+	}
+
+	public void createRow(ArrayList<String> cells) {
+//		this.setDataTime(cells.get(1));
+//		this.set;
+//		this.setDescription(cells.get(2));
+		
+		
 	}
 
 }
