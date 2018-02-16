@@ -83,7 +83,10 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 				assertEquals(HttpStatus.SC_OK, response.getStatus());				
 				assertEquals("Data fetch = data persisted", uEList.size(), 1);
 				Ue uE = uEList.get(0);
+				assertEquals(100100, uE.getTac());
+				assertEquals("G410", uE.getMarketingName());
 				assertEquals("Mitsubishi", uE.getManufacturer());
+				assertEquals("GSM 1800, GSM 900", uE.getAccessCapability());
 
             }
             

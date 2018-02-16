@@ -77,8 +77,8 @@ public class BaseDataTest {
 	public void setUp() {
 		utilsDAO.deleteTableBaseData();
 		BaseDataPK baseDataPK = new BaseDataPK();
-		baseDataPK.setCauseCode(3);
-		baseDataPK.setEventId(4);
+		baseDataPK.setCauseCode(1);
+		baseDataPK.setEventId(4098);
 		BaseData baseData = new BaseData();
 		baseData.setId(baseDataPK);
 		baseData.setCellId(123);
@@ -88,31 +88,33 @@ public class BaseDataTest {
 		baseData.setHier3Id(new BigDecimal(333333333));
 		baseData.setImsi(new BigDecimal(1232456));
 		baseData.setNeVersion("joe");
+		
+		
 		utilsDAO.deleteTable();
 		MccMncPK mccMncPK = new MccMncPK();
 		mccMncPK.setMcc(238);
 		mccMncPK.setMnc(1);
 		MccMnc mccMnc=new MccMnc();
 		mccMnc.setId(mccMncPK);
-		mccMnc.setCountry("Sweden");
+		mccMnc.setCountry("Denmark");
 		mccMnc.setOperator("TDC-DK");
 		mcc_mncDAO.save(mccMnc);
 		baseData.setMccMnc(mccMnc);
 		utilsDAO.deleteTableEventCause();
 		EventCausePK eventCausePK = new EventCausePK();
-		eventCausePK.setEventId(4);
-		eventCausePK.setEventCode(3);
+		eventCausePK.setEventId(4098);
+		eventCausePK.setEventCode(1);
 		EventCause eventCause=new EventCause();
 		eventCause.setId(eventCausePK);
-		eventCause.setDescription("RRC CONN SETUP-EUTRAN GENERATED REASON");
+		eventCause.setDescription("S1 SIG CONN SETUP-S1 INTERFACE DOWN");
 		eventCauseDAO.save(eventCause);
 		baseData.setEventCause(eventCause);
 		utilsDAO.deleteTableUe();
 		Ue ue=new Ue();
-        ue.setTac(1);
-        ue.setMarketingName("test");
-        ue.setManufacturer("test");
-        ue.setAccessCapability("test"); 
+        ue.setTac(100100);
+        ue.setMarketingName("G410");
+        ue.setManufacturer("Mitsubishi");
+        ue.setAccessCapability("GSM 1800, GSM 900"); 
         ueDAO.save(ue);
 		baseData.setUe(ue);
 		utilsDAO.deleteTableFailureClass();

@@ -58,10 +58,8 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 			 
 			@EJB
 			private EventCauseEndpoint eventCauseEndpoint;
-			
 			@EJB
 			private EventCauseDAO eventCauseDAO;
-			
 			@EJB
 			private UtilsDAO utilsDAO;
 			 
@@ -73,11 +71,11 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 				utilsDAO.deleteTableBaseData();
 				utilsDAO.deleteTableEventCause();
 				EventCausePK eventCausePK = new EventCausePK();
-				eventCausePK.setEventId(4097);
-				eventCausePK.setEventCode(3);
+				eventCausePK.setEventId(4098);
+				eventCausePK.setEventCode(1);
 				EventCause eventCause=new EventCause();
 				eventCause.setId(eventCausePK);
-				eventCause.setDescription("RRC CONN SETUP-EUTRAN GENERATED REASON");
+				eventCause.setDescription("S1 SIG CONN SETUP-S1 INTERFACE DOWN");
 				eventCauseDAO.save(eventCause);
 			}
 			
@@ -88,7 +86,9 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 				assertEquals(HttpStatus.SC_OK, response.getStatus());				
 				assertEquals("Data fetch = data persisted", eventCauseList.size(), 1);
 				EventCause eventCause = eventCauseList.get(0);
-				assertEquals("RRC CONN SETUP-EUTRAN GENERATED REASON", eventCause.getDescription());
+				assertEquals(4098, eventCause.getId().getEventId());
+				assertEquals(1, eventCause.getId().getEventCode());
+				assertEquals("S1 SIG CONN SETUP-S1 INTERFACE DOWN", eventCause.getDescription());
 				
 			}
 			

@@ -3,8 +3,6 @@ package com.mase2.mase2_project.test;
 import static org.junit.Assert.assertEquals;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.ws.rs.core.Response;
-import org.apache.commons.httpclient.HttpStatus;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
