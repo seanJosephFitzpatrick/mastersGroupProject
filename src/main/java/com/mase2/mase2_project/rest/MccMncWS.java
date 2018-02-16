@@ -28,6 +28,7 @@ public class MccMncWS {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response findAllMccMncs() {
+		System.out.println("Get all mcc_mnc");
 		List<MccMnc> mccMncs=mcc_mncDao.getAllMcc_Mncs();
 		return Response.status(200).entity(mccMncs).build();
 	}
