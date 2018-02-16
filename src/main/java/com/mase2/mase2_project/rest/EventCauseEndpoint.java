@@ -27,8 +27,7 @@ public class EventCauseEndpoint {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response listAll(@QueryParam("start") final Integer startPosition,
-			@QueryParam("max") final Integer maxResult) {
+	public Response listAll() {
 		List<EventCause> eventCause=eventCauseDAO.getAllEventCauses();
 		return Response.status(200).entity(eventCause).build();
 	}
