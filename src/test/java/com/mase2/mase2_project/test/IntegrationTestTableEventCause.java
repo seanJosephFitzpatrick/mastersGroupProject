@@ -70,11 +70,11 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 				utilsDAO.deleteTableBaseData();
 				utilsDAO.deleteTableEventCause();
 				EventCausePK eventCausePK = new EventCausePK();
-				eventCausePK.setEventId(4097);
-				eventCausePK.setEventCode(3);
+				eventCausePK.setEventId(4098);
+				eventCausePK.setEventCode(1);
 				EventCause eventCause=new EventCause();
 				eventCause.setId(eventCausePK);
-				eventCause.setDescription("RRC CONN SETUP-EUTRAN GENERATED REASON");
+				eventCause.setDescription("S1 SIG CONN SETUP-S1 INTERFACE DOWN");
 				eventCauseDAO.save(eventCause);
 			}
 			

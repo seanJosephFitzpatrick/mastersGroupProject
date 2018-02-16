@@ -88,8 +88,8 @@ public class BaseDataWSTest {
 	public void setUp() {
 		utilsDAO.deleteTableBaseData();
 		BaseDataPK baseDataPK = new BaseDataPK();
-		baseDataPK.setCauseCode(3);
-		baseDataPK.setEventId(4097);
+		baseDataPK.setCauseCode(1);
+		baseDataPK.setEventId(4098);
 		BaseData baseData = new BaseData();
 		baseData.setId(baseDataPK);
 		baseData.setCellId(4);
@@ -111,11 +111,11 @@ public class BaseDataWSTest {
 		baseData.setMccMnc(mccMnc);
 		utilsDAO.deleteTableEventCause();
 		EventCausePK eventCausePK = new EventCausePK();
-		eventCausePK.setEventId(4097);
-		eventCausePK.setEventCode(3);
+		eventCausePK.setEventId(4098);
+		eventCausePK.setEventCode(1);
 		EventCause eventCause=new EventCause();
 		eventCause.setId(eventCausePK);
-		eventCause.setDescription("RRC CONN SETUP-EUTRAN GENERATED REASON");
+		eventCause.setDescription("S1 SIG CONN SETUP-S1 INTERFACE DOWN");
 		eventCauseDAO.save(eventCause);
 		baseData.setEventCause(eventCause);
 		utilsDAO.deleteTableUe();
@@ -154,7 +154,9 @@ public class BaseDataWSTest {
 		assertEquals(HttpStatus.SC_OK, response.getStatus());				
 		assertEquals("Data fetch = data persisted", eventCauseList.size(), 1);
 		EventCause eventCause = eventCauseList.get(0);
-		assertEquals("RRC CONN SETUP-EUTRAN GENERATED REASON", eventCause.getDescription());	
+		assertEquals(4098, eventCause.getId().getEventId());
+		assertEquals(1, eventCause.getId().getEventCode());
+		assertEquals("S1 SIG CONN SETUP-S1 INTERFACE DOWN", eventCause.getDescription());	
 	}
 	
 	@Test
@@ -164,6 +166,9 @@ public class BaseDataWSTest {
 		assertEquals(HttpStatus.SC_OK, response.getStatus());				
 		assertEquals("Data fetch = data persisted", mccMncList.size(), 1);
 		MccMnc mccMnc = mccMncList.get(0);
+		assertEquals(238,mccMnc.getId().getMcc());
+		assertEquals(1,mccMnc.getId().getMnc());
+		assertEquals("Denmark",mccMnc.getCountry());
 		assertEquals("TDC-DK",mccMnc.getOperator());
 	}
 	
@@ -174,7 +179,10 @@ public class BaseDataWSTest {
 		assertEquals(HttpStatus.SC_OK, response.getStatus());				
 		assertEquals("Data fetch = data persisted", uEList.size(), 1);
 		Ue uE = uEList.get(0);
+		assertEquals(100100, uE.getTac());
+		assertEquals("G410", uE.getMarketingName());
 		assertEquals("Mitsubishi", uE.getManufacturer());
+		assertEquals("GSM 1800, GSM 900", uE.getAccessCapability());
     }
 	
 	@Test
@@ -184,6 +192,7 @@ public class BaseDataWSTest {
 		assertEquals(HttpStatus.SC_OK, response.getStatus());				
 		assertEquals("Data fetch = data persisted", failureClassList.size(), 1);
 		FailureClass failureClass = failureClassList.get(0);
+		assertEquals(2,failureClass.getFailureClass());
 		assertEquals("MT ACCESS",failureClass.getDescription());
 	}
 	

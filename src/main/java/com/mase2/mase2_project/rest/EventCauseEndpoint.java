@@ -20,8 +20,6 @@ import com.mase2.mase2_project.model.EventCause;
 @Path("/eventcauses")
 @Stateless
 @LocalBean
-@Produces({ "application/xml", "application/json" })
-@Consumes({ "application/xml", "application/json" })
 public class EventCauseEndpoint {
 	
 	@EJB
