@@ -41,7 +41,7 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 			@Deployment
 			public static Archive<?> createTestArchive() {
 				return ShrinkWrap
-						.create(JavaArchive.class, "TestEventCauseWS.jar")
+						.create(JavaArchive.class, "EventCauseWSTest.jar")
 						.addClasses(EventCauseDAO.class, EventCause.class,
 								EventCausePK.class,
 								JaxRsActivator.class,EventCauseEndpoint.class,

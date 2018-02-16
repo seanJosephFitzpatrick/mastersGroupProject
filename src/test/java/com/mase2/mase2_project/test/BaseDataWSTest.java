@@ -44,7 +44,7 @@ public class BaseDataWSTest {
 	@Deployment
 	public static Archive<?> createTestArchive() {
 		return ShrinkWrap
-				.create(JavaArchive.class, "BaseDataTest.jar")
+				.create(JavaArchive.class, "BaseDataWSTest.jar")
 				.addClasses(MccMncDAO.class, MccMnc.class,
 						MccMncPK.class,
 						JaxRsActivator.class,MccMncWS.class,

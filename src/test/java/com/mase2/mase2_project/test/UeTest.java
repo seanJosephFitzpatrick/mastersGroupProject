@@ -34,7 +34,7 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
             @Deployment
             public static Archive<?> createTestArchive() {
                 return ShrinkWrap
-                        .create(JavaArchive.class, "Test.jar")
+                        .create(JavaArchive.class, "TestUe.jar")
                         .addClasses(MccMnc.class,
                                 MccMncPK.class,
                                 JaxRsActivator.class,
