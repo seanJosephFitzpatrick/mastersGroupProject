@@ -19,16 +19,13 @@ public class FailureClass implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="failure_class", unique=true, nullable=false)
+	@Column(name="failure_class")
 	private int failureClass;
 
-	@Column(length=45)
 	private String description;
 
 	//bi-directional many-to-one association to BaseData
-
-	@OneToMany(fetch = FetchType.EAGER,mappedBy="failureClassBean")
-
+	@OneToMany(mappedBy="failureClassBean")
 	private List<BaseData> baseData;
 
 	public FailureClass() {
@@ -71,7 +68,6 @@ public class FailureClass implements Serializable {
 
 		return baseData;
 	}
-
 	public void createRow(ArrayList<String> cells) {
 		this.setFailureClass(Integer.parseInt(cells.get(0)));
 		this.setDescription(cells.get(1));

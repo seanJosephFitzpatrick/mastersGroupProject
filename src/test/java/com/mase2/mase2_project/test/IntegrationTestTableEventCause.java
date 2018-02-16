@@ -15,7 +15,6 @@ import org.junit.runner.RunWith;
 import com.mase2.mase2_project.data.EventCauseDAO;
 import com.mase2.mase2_project.data.FailureClassDAO;
 import com.mase2.mase2_project.model.BaseData;
-import com.mase2.mase2_project.model.BaseDataPK;
 import com.mase2.mase2_project.model.EventCause;
 import com.mase2.mase2_project.model.EventCausePK;
 import com.mase2.mase2_project.model.FailureClass;
@@ -42,7 +41,7 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 						.addClasses(EventCauseDAO.class, EventCause.class,
 								EventCausePK.class,
 								JaxRsActivator.class,EventCauseEndpoint.class,
-								UtilsDAO.class, FailureClassDAO.class, BaseData.class, MccMnc.class, MccMncPK.class, BaseDataPK.class, EventCause.class, EventCausePK.class, FailureClass.class, Ue.class)
+								UtilsDAO.class, FailureClassDAO.class, BaseData.class, MccMnc.class, MccMncPK.class, EventCause.class, EventCausePK.class, FailureClass.class, Ue.class)
 					//	.addPackage(EventCause.class.getPackage())
 					//	.addPackage(EventCauseDAO.class.getPackage())
 								//this line will pick up the production db

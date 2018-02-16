@@ -21,11 +21,10 @@ public class EventCause implements Serializable {
 	@EmbeddedId
 	private EventCausePK id;
 
-	@Column(length=90)
 	private String description;
 
 	//bi-directional many-to-one association to BaseData
-	@OneToMany(fetch = FetchType.EAGER,mappedBy="eventCause")
+	@OneToMany(mappedBy="eventCause")
 	private List<BaseData> baseData;
 
 	public EventCause() {
@@ -68,7 +67,6 @@ public class EventCause implements Serializable {
 
 		return baseData;
 	}
-
 	public void createRow(ArrayList<String> cells) {
 		EventCausePK eventCausePK = new EventCausePK();
 		eventCausePK.setEventCode(Integer.parseInt(cells.get(0)));

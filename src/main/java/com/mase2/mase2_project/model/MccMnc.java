@@ -1,12 +1,11 @@
 package com.mase2.mase2_project.model;
 
-
 import java.io.Serializable;
-import java.util.ArrayList;
 
 import javax.persistence.*;
 
-
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -25,6 +24,10 @@ public class MccMnc implements Serializable {
 	private String country;
 
 	private String operator;
+
+	//bi-directional many-to-one association to BaseData
+	@OneToMany(mappedBy="mccMnc")
+	private List<BaseData> baseData;
 
 	public MccMnc() {
 	}
@@ -51,6 +54,28 @@ public class MccMnc implements Serializable {
 
 	public void setOperator(String operator) {
 		this.operator = operator;
+	}
+
+	public List<BaseData> getBaseData() {
+		return this.baseData;
+	}
+
+	public void setBaseData(List<BaseData> baseData) {
+		this.baseData = baseData;
+	}
+
+	public BaseData addBaseData(BaseData baseData) {
+		getBaseData().add(baseData);
+		baseData.setMccMnc(this);
+
+		return baseData;
+	}
+
+	public BaseData removeBaseData(BaseData baseData) {
+		getBaseData().remove(baseData);
+		baseData.setMccMnc(null);
+
+		return baseData;
 	}
 	public void createRow(ArrayList<String> cells){
 		MccMncPK mccMncPk = new MccMncPK();

@@ -22,7 +22,6 @@ import com.mase2.mase2_project.data.FailureClassDAO;
 import com.mase2.mase2_project.data.MccMncDAO;
 import com.mase2.mase2_project.data.UeDAO;
 import com.mase2.mase2_project.model.BaseData;
-import com.mase2.mase2_project.model.BaseDataPK;
 import com.mase2.mase2_project.model.EventCause;
 import com.mase2.mase2_project.model.EventCausePK;
 import com.mase2.mase2_project.model.FailureClass;
@@ -49,7 +48,7 @@ public class BaseDataWSTest {
 						MccMncPK.class,
 						JaxRsActivator.class,MccMncWS.class,
 						UtilsDAO.class, FailureClassDAO.class, BaseData.class, 
-						BaseDataPK.class, BaseDataDAO.class,BaseDataEndpoint.class, UeWS.class, 
+					    BaseDataDAO.class,BaseDataEndpoint.class, UeWS.class, 
 						EventCause.class, EventCausePK.class,EventCauseDAO.class, FailureClassWS.class,
 						EventCauseEndpoint.class, FailureClass.class, Ue.class,UeDAO.class)
 			//	.addPackage(EventCause.class.getPackage())
@@ -87,11 +86,7 @@ public class BaseDataWSTest {
 	@Before
 	public void setUp() {
 		utilsDAO.deleteTableBaseData();
-		BaseDataPK baseDataPK = new BaseDataPK();
-		baseDataPK.setCauseCode(3);
-		baseDataPK.setEventId(4097);
 		BaseData baseData = new BaseData();
-		baseData.setId(baseDataPK);
 		baseData.setCellId(4);
 		baseData.setDuration(1000);
 		baseData.setHier321Id(new BigDecimal(1150480000));

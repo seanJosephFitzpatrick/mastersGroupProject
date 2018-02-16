@@ -1,10 +1,14 @@
 package com.mase2.mase2_project.test;
 
 import static org.junit.Assert.*;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
 import javax.ejb.EJB;
+
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
@@ -14,13 +18,13 @@ import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
 import com.mase2.mase2_project.data.BaseDataDAO;
 import com.mase2.mase2_project.data.EventCauseDAO;
 import com.mase2.mase2_project.data.FailureClassDAO;
 import com.mase2.mase2_project.data.MccMncDAO;
 import com.mase2.mase2_project.data.UeDAO;
 import com.mase2.mase2_project.model.BaseData;
-import com.mase2.mase2_project.model.BaseDataPK;
 import com.mase2.mase2_project.model.EventCause;
 import com.mase2.mase2_project.model.EventCausePK;
 import com.mase2.mase2_project.model.FailureClass;
@@ -45,7 +49,7 @@ public class BaseDataTest {
 						MccMncPK.class,
 						JaxRsActivator.class,MccMncWS.class,
 						UtilsDAO.class, FailureClassDAO.class, BaseData.class, 
-						BaseDataPK.class, BaseDataDAO.class,BaseDataEndpoint.class, 
+						BaseDataDAO.class,BaseDataEndpoint.class, 
 						EventCause.class, EventCausePK.class,EventCauseDAO.class,
 						EventCauseEndpoint.class, FailureClass.class, Ue.class,UeDAO.class)
 			//	.addPackage(EventCause.class.getPackage())
@@ -76,11 +80,9 @@ public class BaseDataTest {
 	@Before
 	public void setUp() {
 		utilsDAO.deleteTableBaseData();
-		BaseDataPK baseDataPK = new BaseDataPK();
-		baseDataPK.setCauseCode(3);
-		baseDataPK.setEventId(4);
 		BaseData baseData = new BaseData();
-		baseData.setId(baseDataPK);
+		//baseData.setBaseDataId(1);
+		baseData.setDateTime(new Date());
 		baseData.setCellId(123);
 		baseData.setDuration(12);
 		baseData.setHier321Id(new BigDecimal(111111111));

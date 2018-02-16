@@ -3,6 +3,7 @@ package com.mase2.mase2_project.model;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Date;
 
 
 /**
@@ -15,34 +16,39 @@ import java.math.BigDecimal;
 public class BaseData implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	private BaseDataPK id;
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="base_data_id")
+	private int baseDataId;
 
 	@Column(name="cell_id")
 	private int cellId;
 
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="date_time")
+	private Date dateTime;
+
 	private int duration;
 
-	@Column(name="hier3_id", precision=10)
+	@Column(name="hier3_id")
 	private BigDecimal hier3Id;
 
-	@Column(name="hier32_id", precision=10)
+	@Column(name="hier32_id")
 	private BigDecimal hier32Id;
 
-	@Column(name="hier321_id", precision=10)
+	@Column(name="hier321_id")
 	private BigDecimal hier321Id;
 
-	@Column(precision=10)
 	private BigDecimal imsi;
 
-	@Column(name="ne_version", length=5)
+	@Column(name="ne_version")
 	private String neVersion;
 
 	//bi-directional many-to-one association to EventCause
 	@ManyToOne
 	@JoinColumns({
-		@JoinColumn(name="cause_code", referencedColumnName="event_code", nullable=false, insertable=false, updatable=false),
-		@JoinColumn(name="event_id", referencedColumnName="event_id", nullable=false, insertable=false, updatable=false)
+		@JoinColumn(name="cause_code", referencedColumnName="event_code"),
+		@JoinColumn(name="event_id", referencedColumnName="event_id")
 		})
 	private EventCause eventCause;
 
@@ -67,12 +73,12 @@ public class BaseData implements Serializable {
 	public BaseData() {
 	}
 
-	public BaseDataPK getId() {
-		return this.id;
+	public int getBaseDataId() {
+		return this.baseDataId;
 	}
 
-	public void setId(BaseDataPK id) {
-		this.id = id;
+	public void setBaseDataId(int baseDataId) {
+		this.baseDataId = baseDataId;
 	}
 
 	public int getCellId() {
@@ -81,6 +87,14 @@ public class BaseData implements Serializable {
 
 	public void setCellId(int cellId) {
 		this.cellId = cellId;
+	}
+
+	public Date getDateTime() {
+		return this.dateTime;
+	}
+
+	public void setDateTime(Date dateTime) {
+		this.dateTime = dateTime;
 	}
 
 	public int getDuration() {

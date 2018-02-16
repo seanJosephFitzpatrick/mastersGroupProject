@@ -1,9 +1,13 @@
 package com.mase2.mase2_project.test;
 
 import static org.junit.Assert.assertEquals;
+
+import java.util.ArrayList;
 import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ws.rs.core.Response;
+
 import org.apache.commons.httpclient.HttpStatus;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -14,10 +18,10 @@ import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
 import com.mase2.mase2_project.data.FailureClassDAO;
 import com.mase2.mase2_project.data.UeDAO;
 import com.mase2.mase2_project.model.BaseData;
-import com.mase2.mase2_project.model.BaseDataPK;
 import com.mase2.mase2_project.model.EventCause;
 import com.mase2.mase2_project.model.EventCausePK;
 import com.mase2.mase2_project.model.FailureClass;
@@ -40,7 +44,7 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
                         .addClasses(MccMnc.class,
                                 MccMncPK.class,
                                 JaxRsActivator.class,
-                                UtilsDAO.class, FailureClassDAO.class, BaseData.class, BaseDataPK.class, EventCause.class, EventCausePK.class, FailureClass.class, Ue.class, UeWS.class, UeDAO.class)
+                                UtilsDAO.class, FailureClassDAO.class, BaseData.class, EventCause.class, EventCausePK.class, FailureClass.class, Ue.class, UeWS.class, UeDAO.class)
                     //    .addPackage(EventCause.class.getPackage())
                     //    .addPackage(EventCauseDAO.class.getPackage())
                 // this line will pick up the production db
@@ -72,6 +76,7 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
                 ue.setMarketingName("G410");
                 ue.setManufacturer("Mitsubishi");
                 ue.setAccessCapability("GSM 1800, GSM 900");
+                ue.setBaseData(new ArrayList<BaseData>());
                 ueDAO.save(ue);
             }
             
