@@ -18,6 +18,7 @@ import org.junit.runner.RunWith;
 
 import com.mase2.mase2_project.data.FailureClassDAO;
 import com.mase2.mase2_project.data.MccMncDAO;
+import com.mase2.mase2_project.data.UeDAO;
 import com.mase2.mase2_project.model.BaseData;
 import com.mase2.mase2_project.model.BaseDataPK;
 import com.mase2.mase2_project.model.EventCause;
@@ -28,12 +29,12 @@ import com.mase2.mase2_project.model.MccMncPK;
 import com.mase2.mase2_project.model.Ue;
 import com.mase2.mase2_project.rest.JaxRsActivator;
 import com.mase2.mase2_project.rest.MccMncWS;
+import com.mase2.mase2_project.rest.UeWS;
 import com.mase2.mase2_project.test.utils.UtilsDAO;
 
 
 
 
-	//	@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 		@RunWith(Arquillian.class)
 		public class MccMncTest {
 			
@@ -44,14 +45,11 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 						.addClasses(MccMncDAO.class, MccMnc.class,
 								MccMncPK.class,
 								JaxRsActivator.class,MccMncWS.class,
-								UtilsDAO.class, FailureClassDAO.class, BaseData.class, BaseDataPK.class, EventCause.class, EventCausePK.class, FailureClass.class, Ue.class)
-					//	.addPackage(EventCause.class.getPackage())
-					//	.addPackage(EventCauseDAO.class.getPackage())
+								UtilsDAO.class,FailureClassDAO.class, BaseData.class, BaseDataPK.class, EventCause.class, EventCausePK.class, FailureClass.class, Ue.class, UeWS.class, UeDAO.class)
 								//this line will pick up the production db
 						.addAsManifestResource("META-INF/persistence.xml",
 								"persistence.xml")
 						.addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
-
 			}
 
 			 
