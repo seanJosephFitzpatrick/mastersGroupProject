@@ -164,11 +164,18 @@ public class BaseData implements Serializable {
 		this.failureClassBean = failureClassBean;
 	}
 
-	public void createRow(ArrayList<String> cells) {
-//		this.setDataTime(cells.get(1));
-//		this.set;
-//		this.setDescription(cells.get(2));
-		
+	public void createRow(ArrayList<String> cells, EventCause eventCauseRow, FailureClass failureClassRow, Ue ueRow, MccMnc mccMncRow) {
+		this.setEventCause(eventCauseRow);
+		this.setFailureClassBean(failureClassRow);
+		this.setMccMnc(mccMncRow);
+		this.setUe(ueRow);
+		this.setCellId(Integer.parseInt(cells.get(6)));
+		this.setDuration(Integer.parseInt(cells.get(7)));
+		this.setNeVersion(cells.get(9));
+		this.setImsi(new BigDecimal(cells.get(10)));
+		this.setHier3Id(new BigDecimal(cells.get(11)));
+		this.setHier32Id(new BigDecimal(cells.get(12)));
+		this.setHier321Id(new BigDecimal(cells.get(13)));
 		
 	}
 
