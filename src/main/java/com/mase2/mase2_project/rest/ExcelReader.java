@@ -1,12 +1,14 @@
 package com.mase2.mase2_project.rest;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
@@ -25,9 +27,12 @@ import com.mase2.mase2_project.model.MccMncPK;
 import com.mase2.mase2_project.model.Ue;
 
 
+
+
 import jxl.Cell;
 import jxl.Sheet;
 import jxl.Workbook;
+import jxl.read.biff.BiffException;
 
 @Path("/importdata")
 @Stateless
@@ -51,36 +56,39 @@ public class ExcelReader {
 	private EventCause eventCauseRow= new EventCause();
 	private MccMnc mccMncRow= new MccMnc();
 	private Ue ueRow=new Ue();
-	private MccMncPK mccMncPK = new MccMncPK();
-	private EventCausePK eventCausePK = new EventCausePK();
 
-	
-	
-	@POST
-	public Response create() {
-		this.importData();
-		 
+
+	@GET
+	@Path("/all")
+	public Response importAllData() {
+		this.importExcelData(); 
+		return Response.noContent().build();
+	}
+	@GET
+	@Path("/basedata")
+	public Response importBaseData() {
+		File f = initiateExcelFile();
+		Workbook wb;
+		try {
+			wb = Workbook.getWorkbook(f);
+			Sheet s=wb.getSheet(0);
+			this.retrieveParentTableData();
+			this.importDataBaseData(s);
+		} catch (BiffException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return Response.noContent().build();
 	}
 	
-	public void importData(){
-	    String filePath="";
-        String absolutePath = new File(".").getAbsolutePath();//Get path of your Project Folder
-		int last = absolutePath.length()-1;
-		absolutePath = absolutePath.substring(0, last);//Remove dot from path
-		String file =  "test.xls";
-		filePath = (absolutePath + file);
-		filePath = filePath.replace("\\", "/");
-		System.out.println(filePath);
-		File f = new File(filePath);
-        
-       
+	public void importExcelData(){
+	    File f = initiateExcelFile();
         
         try {
             Workbook wb=Workbook.getWorkbook(f);
             Sheet s = wb.getSheet(4);
             this.importDataMccMnc(s);
-           
             s=wb.getSheet(3);
             this.importDataUE(s);
             s=wb.getSheet(2);
@@ -89,21 +97,26 @@ public class ExcelReader {
             this.importDataEventCause(s);
             s=wb.getSheet(0);
             this.retrieveParentTableData();
-            this.importDataBaseData(s);
-            
-            
-            
-
-           
-                
-               
-            
-        
-        }catch(Exception e2){
-        	e2.printStackTrace();
-        	
-        }
+            this.importDataBaseData(s);    
+        } catch (BiffException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
+
+	private File initiateExcelFile() {
+		String filePath="";
+        String absolutePath = new File(".").getAbsolutePath();//Get path of your Project Folder
+		int last = absolutePath.length()-1;
+		absolutePath = absolutePath.substring(0, last);//Remove dot from path
+		String file =  "test.xls";
+		filePath = (absolutePath + file);
+		filePath = filePath.replace("\\", "/");
+		System.out.println(filePath);
+		File f = new File(filePath);
+		return f;
+	}
 
 	private void retrieveParentTableData() {
 		if(failureClassData.size()!=0){
@@ -129,7 +142,6 @@ public class ExcelReader {
 		        
 		    }
 		    if(checkForeignKeysExist(cells)){
-		    System.out.println("boooooooooom");
 		    baseData.createRow(cells,eventCauseRow,failureClassRow,ueRow,mccMncRow);
 		    baseDataDAO.save(baseData);
 		    }
@@ -139,13 +151,9 @@ public class ExcelReader {
 
 	private boolean checkForeignKeysExist(ArrayList<String> cells) {
 		if(checkFailureClassForeignKeys(cells)){
-			System.out.println("First check");
 			if(checkEventCauseForeignKeys(cells)){
-				System.out.println("Second check");
 				if(checkUeTypeForeignKeys(cells)){
-					System.out.println("Third check");
 					if(checkMccMncForeignKeys(cells)){
-						System.out.println("Fourth check");
 						return true;
 					}
 				}
@@ -185,7 +193,6 @@ public class ExcelReader {
 	private boolean checkFailureClassForeignKeys(ArrayList<String> cells) {
 		for (FailureClass failureClass : failureClassData) {
 			if(cells.get(2).equalsIgnoreCase(Integer.toString(failureClass.getFailureClass()))){
-				System.out.println("Inside failure class check");
 				failureClassRow=failureClass;
 				return true;
 			}

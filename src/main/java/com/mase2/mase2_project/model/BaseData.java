@@ -3,6 +3,8 @@ package com.mase2.mase2_project.model;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ArrayList;
 
@@ -180,10 +182,12 @@ public class BaseData implements Serializable {
 	}
 
 	public void createRow(ArrayList<String> cells, EventCause eventCauseRow, FailureClass failureClassRow, Ue ueRow, MccMnc mccMncRow) {
-		//BaseDataPK baseDataPK = new BaseDataPK();
-//		baseDataPK.setEventId(eventCauseRow.getId().getEventId());
-//		baseDataPK.setCauseCode(eventCauseRow.getId().getEventCode());
-//		this.setId(baseDataPK);
+		try {
+			this.setDateTime(new SimpleDateFormat("dd/MM/yy HH:mm").parse(cells.get(0)));
+		} catch (ParseException e) {
+			this.setDateTime(new Date());
+			e.printStackTrace();
+		}
 		this.setEventCause(eventCauseRow);
 		this.setFailureClassBean(failureClassRow);
 		this.setMccMnc(mccMncRow);
