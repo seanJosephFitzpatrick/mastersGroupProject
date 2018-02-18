@@ -195,8 +195,8 @@ public class ExcelReader {
 
 	private boolean checkFailureClassForeignKeys(ArrayList<String> cells) {
 //		if(cells.get(2).equalsIgnoreCase("(null)")){
-//			//failureClassRow=null;
-//			failureClassRow=failureClassNull;
+//			failureClassRow=null;
+//			//failureClassRow=failureClassNull;
 //			return true;
 //		}else
 //		{
@@ -213,10 +213,13 @@ public class ExcelReader {
 
 	private boolean checkEventCauseForeignKeys(ArrayList<String> cells) {
 //		if(cells.get(8).equalsIgnoreCase("(null)")){
-//			eventCauseRow=eventCauseNull;
-//			return true;
+//			if(cells.get(1).equalsIgnoreCase("4099")){
+//
+//				eventCauseRow=null;
+//				return true;
+//			}
 //		}else
-//		{
+		//{
 			for (EventCause eventCause : eventCauseData) {
 				if(cells.get(1).equalsIgnoreCase(eventCause.getId().getEventId())){
 					if(cells.get(8).equalsIgnoreCase(eventCause.getId().getEventCode())){
@@ -225,95 +228,95 @@ public class ExcelReader {
 					}
 				}	
 			}
-//		}
-		return false;
-	}
-
-	private void importDataEventCause(Sheet s) {
-		//utilsDAO.deleteTableEventCause();
-		int row = s.getRows();
-		int col = s.getColumns();
-		ArrayList<String> cells = new ArrayList<String>();
-
-		for(int i1=1; i1<row;i1++) {
-			cells.clear();
-			EventCause eventCause = new EventCause();
-			for(int j=0;j<col;j++) {
-				Cell c =s.getCell(j, i1);
-				cells.add(c.getContents());
-
-			}
-			eventCause.createRow(cells);
-			eventCauseDAO.save(eventCause);
-		}
-		eventCausePK.setEventId("4099");
-		eventCausePK.setEventCode("(null)");
-		eventCauseNull.setId(eventCausePK);
-		eventCauseNull.setDescription("");
-		eventCauseDAO.save(eventCauseNull);
-
-	}
-
-	private void importDataFailureClass(Sheet s) {
-		//utilsDAO.deleteTableFailureClass();
-		int row = s.getRows();
-		int col = s.getColumns();
-		ArrayList<String> cells = new ArrayList<String>();
-
-		for(int i1=1; i1<row;i1++) {
-			cells.clear();
-			FailureClass failureClass = new FailureClass();
-			for(int j=0;j<col;j++) {
-				Cell c =s.getCell(j, i1);
-				cells.add(c.getContents());
-
-			}
-			failureClass.createRow(cells);
-			failureClassDAO.save(failureClass);
-		}
-		failureClassNull.setFailureClass("(null)");
-		failureClassNull.setDescription("");
-		failureClassDAO.save(failureClassNull);
-
-	}
-
-	private void importDataUE(Sheet s) {
-		//ueUtilsDAO.deleteTable();
-		int row = s.getRows();
-		int col = s.getColumns();
-		ArrayList<String> cells = new ArrayList<String>();
-
-		for(int i1=1; i1<row;i1++) {
-			cells.clear();
-			Ue ue = new Ue();
-			for(int j=0;j<col;j++) {
-				Cell c =s.getCell(j, i1);
-				cells.add(c.getContents());
-
-			}
-			ue.createRow(cells);
-			ueDAO.save(ue);
+		//}
+			return false;
 		}
 
-	}
+		private void importDataEventCause(Sheet s) {
+			//utilsDAO.deleteTableEventCause();
+			int row = s.getRows();
+			int col = s.getColumns();
+			ArrayList<String> cells = new ArrayList<String>();
 
-	private void importDataMccMnc(Sheet s) {
-		//utilsDAO.deleteTable();
-		int row = s.getRows();
-		int col = s.getColumns();
-		ArrayList<String> cells = new ArrayList<String>();
+			for(int i1=1; i1<row;i1++) {
+				cells.clear();
+				EventCause eventCause = new EventCause();
+				for(int j=0;j<col;j++) {
+					Cell c =s.getCell(j, i1);
+					cells.add(c.getContents());
 
-		for(int i1=1; i1<row;i1++) {
-			cells.clear();
-			MccMnc mccMnc = new MccMnc();
-			for(int j=0;j<col;j++) {
-				Cell c =s.getCell(j, i1);
-				cells.add(c.getContents());
-
+				}
+				eventCause.createRow(cells);
+				eventCauseDAO.save(eventCause);
 			}
-			mccMnc.createRow(cells);
-			mcc_mncDao.save(mccMnc);
-		}
-	}
+			eventCausePK.setEventId("4099");
+			eventCausePK.setEventCode("(null)");
+			eventCauseNull.setId(eventCausePK);
+			eventCauseNull.setDescription("");
+			eventCauseDAO.save(eventCauseNull);
 
-}
+		}
+
+		private void importDataFailureClass(Sheet s) {
+			//utilsDAO.deleteTableFailureClass();
+			int row = s.getRows();
+			int col = s.getColumns();
+			ArrayList<String> cells = new ArrayList<String>();
+
+			for(int i1=1; i1<row;i1++) {
+				cells.clear();
+				FailureClass failureClass = new FailureClass();
+				for(int j=0;j<col;j++) {
+					Cell c =s.getCell(j, i1);
+					cells.add(c.getContents());
+
+				}
+				failureClass.createRow(cells);
+				failureClassDAO.save(failureClass);
+			}
+			failureClassNull.setFailureClass("(null)");
+			failureClassNull.setDescription("");
+			failureClassDAO.save(failureClassNull);
+
+		}
+
+		private void importDataUE(Sheet s) {
+			//ueUtilsDAO.deleteTable();
+			int row = s.getRows();
+			int col = s.getColumns();
+			ArrayList<String> cells = new ArrayList<String>();
+
+			for(int i1=1; i1<row;i1++) {
+				cells.clear();
+				Ue ue = new Ue();
+				for(int j=0;j<col;j++) {
+					Cell c =s.getCell(j, i1);
+					cells.add(c.getContents());
+
+				}
+				ue.createRow(cells);
+				ueDAO.save(ue);
+			}
+
+		}
+
+		private void importDataMccMnc(Sheet s) {
+			//utilsDAO.deleteTable();
+			int row = s.getRows();
+			int col = s.getColumns();
+			ArrayList<String> cells = new ArrayList<String>();
+
+			for(int i1=1; i1<row;i1++) {
+				cells.clear();
+				MccMnc mccMnc = new MccMnc();
+				for(int j=0;j<col;j++) {
+					Cell c =s.getCell(j, i1);
+					cells.add(c.getContents());
+
+				}
+				mccMnc.createRow(cells);
+				mcc_mncDao.save(mccMnc);
+			}
+		}
+
+	}

@@ -12,8 +12,8 @@ public class EventCausePK implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
-	@Column(name="event_id")
-	private String eventId;
+	@Column(name="event_id", columnDefinition="varchar(4) not null default '4099'")
+	private String eventId="4099";
 
 	@Column(name="event_code")
 	private String eventCode;

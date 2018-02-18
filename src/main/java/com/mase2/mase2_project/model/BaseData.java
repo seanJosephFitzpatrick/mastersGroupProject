@@ -52,7 +52,7 @@ public class BaseData implements Serializable {
 	@ManyToOne
 	@JoinColumns({
 		@JoinColumn(name="cause_code", referencedColumnName="event_code"),
-		@JoinColumn(name="event_id", referencedColumnName="event_id")
+		@JoinColumn(name="event_id", referencedColumnName="event_id", columnDefinition="varchar(4) not null default '4099'")
 	})
 	private EventCause eventCause;
 
