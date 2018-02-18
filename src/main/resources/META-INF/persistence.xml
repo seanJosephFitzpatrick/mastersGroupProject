@@ -9,13 +9,12 @@
 
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
         <jta-data-source>java:/MySQLMase2DS</jta-data-source>
-        <class>com.mase2.mase2_project.model.MccMnc</class>
-        <class>com.mase2.mase2_project.model.MccMncPK</class>
         <class>com.mase2.mase2_project.model.BaseData</class>
-        <class>com.mase2.mase2_project.model.BaseDataPK</class>
         <class>com.mase2.mase2_project.model.EventCause</class>
         <class>com.mase2.mase2_project.model.EventCausePK</class>
         <class>com.mase2.mase2_project.model.FailureClass</class>
+        <class>com.mase2.mase2_project.model.MccMnc</class>
+        <class>com.mase2.mase2_project.model.MccMncPK</class>
         <class>com.mase2.mase2_project.model.Ue</class>
         <properties>
             <property name="hibernate.archive.autodetection" value="class" />

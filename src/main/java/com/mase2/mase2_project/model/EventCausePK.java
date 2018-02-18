@@ -12,24 +12,24 @@ public class EventCausePK implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
-	@Column(name="event_id", unique=true, nullable=false)
-	private int eventId;
+	@Column(name="event_id", columnDefinition="varchar(4) not null default '4099'")
+	private String eventId="4099";
 
-	@Column(name="event_code", unique=true, nullable=false)
-	private int eventCode;
+	@Column(name="event_code")
+	private String eventCode;
 
 	public EventCausePK() {
 	}
-	public int getEventId() {
+	public String getEventId() {
 		return this.eventId;
 	}
-	public void setEventId(int eventId) {
+	public void setEventId(String eventId) {
 		this.eventId = eventId;
 	}
-	public int getEventCode() {
+	public String getEventCode() {
 		return this.eventCode;
 	}
-	public void setEventCode(int eventCode) {
+	public void setEventCode(String eventCode) {
 		this.eventCode = eventCode;
 	}
 
@@ -42,15 +42,15 @@ public class EventCausePK implements Serializable {
 		}
 		EventCausePK castOther = (EventCausePK)other;
 		return 
-			(this.eventId == castOther.eventId)
-			&& (this.eventCode == castOther.eventCode);
+			this.eventId.equals(castOther.eventId)
+			&& this.eventCode.equals(castOther.eventCode);
 	}
 
 	public int hashCode() {
 		final int prime = 31;
 		int hash = 17;
-		hash = hash * prime + this.eventId;
-		hash = hash * prime + this.eventCode;
+		hash = hash * prime + this.eventId.hashCode();
+		hash = hash * prime + this.eventCode.hashCode();
 		
 		return hash;
 	}

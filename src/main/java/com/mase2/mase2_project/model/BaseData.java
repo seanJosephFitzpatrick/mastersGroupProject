@@ -1,8 +1,13 @@
 package com.mase2.mase2_project.model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
-import java.math.BigDecimal;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
 
 /**
@@ -15,35 +20,40 @@ import java.math.BigDecimal;
 public class BaseData implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	private BaseDataPK id;
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="base_data_id")
+	private int baseDataId;
 
 	@Column(name="cell_id")
-	private int cellId;
+	private String cellId;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="date_time")
+	private Date dateTime;
 
 	private int duration;
 
-	@Column(name="hier3_id", precision=10)
-	private BigDecimal hier3Id;
+	@Column(name="hier3_id")
+	private String hier3Id;
 
-	@Column(name="hier32_id", precision=10)
-	private BigDecimal hier32Id;
+	@Column(name="hier32_id")
+	private String hier32Id;
 
-	@Column(name="hier321_id", precision=10)
-	private BigDecimal hier321Id;
+	@Column(name="hier321_id")
+	private String hier321Id;
 
-	@Column(precision=10)
-	private BigDecimal imsi;
+	private String imsi;
 
-	@Column(name="ne_version", length=5)
+	@Column(name="ne_version")
 	private String neVersion;
 
 	//bi-directional many-to-one association to EventCause
 	@ManyToOne
 	@JoinColumns({
-		@JoinColumn(name="cause_code", referencedColumnName="event_code", nullable=false, insertable=false, updatable=false),
-		@JoinColumn(name="event_id", referencedColumnName="event_id", nullable=false, insertable=false, updatable=false)
-		})
+		@JoinColumn(name="cause_code", referencedColumnName="event_code"),
+		@JoinColumn(name="event_id", referencedColumnName="event_id", columnDefinition="varchar(4) not null default '4099'")
+	})
 	private EventCause eventCause;
 
 	//bi-directional many-to-one association to Ue
@@ -56,7 +66,7 @@ public class BaseData implements Serializable {
 	@JoinColumns({
 		@JoinColumn(name="market", referencedColumnName="mcc"),
 		@JoinColumn(name="operator", referencedColumnName="mnc")
-		})
+	})
 	private MccMnc mccMnc;
 
 	//bi-directional many-to-one association to FailureClass
@@ -67,20 +77,28 @@ public class BaseData implements Serializable {
 	public BaseData() {
 	}
 
-	public BaseDataPK getId() {
-		return this.id;
+	public int getBaseDataId() {
+		return this.baseDataId;
 	}
 
-	public void setId(BaseDataPK id) {
-		this.id = id;
+	public void setBaseDataId(int baseDataId) {
+		this.baseDataId = baseDataId;
 	}
 
-	public int getCellId() {
+	public String getCellId() {
 		return this.cellId;
 	}
 
-	public void setCellId(int cellId) {
+	public void setCellId(String cellId) {
 		this.cellId = cellId;
+	}
+
+	public Date getDateTime() {
+		return this.dateTime;
+	}
+
+	public void setDateTime(Date dateTime) {
+		this.dateTime = dateTime;
 	}
 
 	public int getDuration() {
@@ -91,35 +109,35 @@ public class BaseData implements Serializable {
 		this.duration = duration;
 	}
 
-	public BigDecimal getHier3Id() {
+	public String getHier3Id() {
 		return this.hier3Id;
 	}
 
-	public void setHier3Id(BigDecimal hier3Id) {
+	public void setHier3Id(String hier3Id) {
 		this.hier3Id = hier3Id;
 	}
 
-	public BigDecimal getHier32Id() {
+	public String getHier32Id() {
 		return this.hier32Id;
 	}
 
-	public void setHier32Id(BigDecimal hier32Id) {
+	public void setHier32Id(String hier32Id) {
 		this.hier32Id = hier32Id;
 	}
 
-	public BigDecimal getHier321Id() {
+	public String getHier321Id() {
 		return this.hier321Id;
 	}
 
-	public void setHier321Id(BigDecimal hier321Id) {
+	public void setHier321Id(String hier321Id) {
 		this.hier321Id = hier321Id;
 	}
 
-	public BigDecimal getImsi() {
+	public String getImsi() {
 		return this.imsi;
 	}
 
-	public void setImsi(BigDecimal imsi) {
+	public void setImsi(String imsi) {
 		this.imsi = imsi;
 	}
 
@@ -161,6 +179,29 @@ public class BaseData implements Serializable {
 
 	public void setFailureClassBean(FailureClass failureClassBean) {
 		this.failureClassBean = failureClassBean;
+	}
+
+	public void createRow(ArrayList<String> cells, EventCause eventCauseRow,
+			FailureClass failureClassRow, Ue ueRow, MccMnc mccMncRow) {
+		try {
+			this.setDateTime(new SimpleDateFormat("dd/MM/yy HH:mm").parse(cells.get(0)));
+
+		} catch (ParseException e) {
+			this.setDateTime(new Date());
+			e.printStackTrace();
+		}
+		this.setEventCause(eventCauseRow);
+		this.setFailureClassBean(failureClassRow);
+		this.setMccMnc(mccMncRow);
+		this.setUe(ueRow);
+		this.setCellId(cells.get(6));
+		this.setDuration(Integer.parseInt(cells.get(7)));
+		this.setNeVersion(cells.get(9));
+		this.setImsi(cells.get(10));
+		this.setHier3Id(cells.get(11));
+		this.setHier32Id(cells.get(12));
+		this.setHier321Id(cells.get(13));
+
 	}
 
 }

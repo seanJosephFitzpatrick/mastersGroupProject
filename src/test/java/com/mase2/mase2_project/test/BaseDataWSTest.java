@@ -22,7 +22,6 @@ import com.mase2.mase2_project.data.FailureClassDAO;
 import com.mase2.mase2_project.data.MccMncDAO;
 import com.mase2.mase2_project.data.UeDAO;
 import com.mase2.mase2_project.model.BaseData;
-import com.mase2.mase2_project.model.BaseDataPK;
 import com.mase2.mase2_project.model.EventCause;
 import com.mase2.mase2_project.model.EventCausePK;
 import com.mase2.mase2_project.model.FailureClass;
@@ -49,7 +48,7 @@ public class BaseDataWSTest {
 						MccMncPK.class,
 						JaxRsActivator.class,MccMncWS.class,
 						UtilsDAO.class, FailureClassDAO.class, BaseData.class, 
-						BaseDataPK.class, BaseDataDAO.class,BaseDataEndpoint.class, UeWS.class, 
+					    BaseDataDAO.class,BaseDataEndpoint.class, UeWS.class, 
 						EventCause.class, EventCausePK.class,EventCauseDAO.class, FailureClassWS.class,
 						EventCauseEndpoint.class, FailureClass.class, Ue.class,UeDAO.class)
 			//	.addPackage(EventCause.class.getPackage())
@@ -87,22 +86,18 @@ public class BaseDataWSTest {
 	@Before
 	public void setUp() {
 		utilsDAO.deleteTableBaseData();
-		BaseDataPK baseDataPK = new BaseDataPK();
-		baseDataPK.setCauseCode(1);
-		baseDataPK.setEventId(4098);
 		BaseData baseData = new BaseData();
-		baseData.setId(baseDataPK);
-		baseData.setCellId(4);
+		baseData.setCellId("4");
 		baseData.setDuration(1000);
-		baseData.setHier321Id(new BigDecimal(1150480000));
-		baseData.setHier32Id(new BigDecimal(822680000));
-		baseData.setHier3Id(new BigDecimal(4809000));
-		baseData.setImsi(new BigDecimal(344930011));
+		baseData.setHier321Id("1150480000");
+		baseData.setHier32Id("822680000");
+		baseData.setHier3Id("4809000");
+		baseData.setImsi("344930011");
 		baseData.setNeVersion("11B");
 		utilsDAO.deleteTable();
 		MccMncPK mccMncPK = new MccMncPK();
-		mccMncPK.setMcc(238);
-		mccMncPK.setMnc(1);
+		mccMncPK.setMcc("238");
+		mccMncPK.setMnc("1");
 		MccMnc mccMnc=new MccMnc();
 		mccMnc.setId(mccMncPK);
 		mccMnc.setCountry("Denmark");
@@ -111,8 +106,8 @@ public class BaseDataWSTest {
 		baseData.setMccMnc(mccMnc);
 		utilsDAO.deleteTableEventCause();
 		EventCausePK eventCausePK = new EventCausePK();
-		eventCausePK.setEventId(4098);
-		eventCausePK.setEventCode(1);
+		eventCausePK.setEventId("4097");
+		eventCausePK.setEventCode("3");
 		EventCause eventCause=new EventCause();
 		eventCause.setId(eventCausePK);
 		eventCause.setDescription("S1 SIG CONN SETUP-S1 INTERFACE DOWN");
@@ -120,7 +115,7 @@ public class BaseDataWSTest {
 		baseData.setEventCause(eventCause);
 		utilsDAO.deleteTableUe();
 		Ue ue=new Ue();
-        ue.setTac(100100);
+        ue.setTac("100100");
         ue.setMarketingName("G410");
         ue.setManufacturer("Mitsubishi");
         ue.setAccessCapability("GSM 1800, GSM 900");
@@ -128,7 +123,7 @@ public class BaseDataWSTest {
 		baseData.setUe(ue);
 		utilsDAO.deleteTableFailureClass();
 		FailureClass failureClass=new FailureClass();
-		failureClass.setFailureClass(2);
+		failureClass.setFailureClass("2");
 		failureClass.setDescription("MT ACCESS");
 		baseData.setFailureClassBean(failureClass);
 		failureClassDAO.save(failureClass);

@@ -12,22 +12,22 @@ public class MccMncPK implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
-	private int mcc;
+	private String mcc;
 
-	private int mnc;
+	private String mnc;
 
 	public MccMncPK() {
 	}
-	public int getMcc() {
+	public String getMcc() {
 		return this.mcc;
 	}
-	public void setMcc(int mcc) {
+	public void setMcc(String mcc) {
 		this.mcc = mcc;
 	}
-	public int getMnc() {
+	public String getMnc() {
 		return this.mnc;
 	}
-	public void setMnc(int mnc) {
+	public void setMnc(String mnc) {
 		this.mnc = mnc;
 	}
 
@@ -40,15 +40,15 @@ public class MccMncPK implements Serializable {
 		}
 		MccMncPK castOther = (MccMncPK)other;
 		return 
-			(this.mcc == castOther.mcc)
-			&& (this.mnc == castOther.mnc);
+			this.mcc.equals(castOther.mcc)
+			&& this.mnc.equals(castOther.mnc);
 	}
 
 	public int hashCode() {
 		final int prime = 31;
 		int hash = 17;
-		hash = hash * prime + this.mcc;
-		hash = hash * prime + this.mnc;
+		hash = hash * prime + this.mcc.hashCode();
+		hash = hash * prime + this.mnc.hashCode();
 		
 		return hash;
 	}

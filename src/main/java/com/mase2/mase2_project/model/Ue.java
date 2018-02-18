@@ -7,27 +7,25 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * The persistent class for the ue database table.
  * 
  */
 @Entity
-@Table(name="ue")
 @NamedQuery(name="Ue.findAll", query="SELECT u FROM Ue u")
 public class Ue implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(unique=true, nullable=false)
-	private int tac;
+	private String tac;
 
-	@Column(name="access_capability", length=140)
+	@Column(name="access_capability")
 	private String accessCapability;
 
-	@Column(length=50)
 	private String manufacturer;
 
-	@Column(name="marketing_name", length=50)
+	@Column(name="marketing_name")
 	private String marketingName;
 
 	//bi-directional many-to-one association to BaseData
@@ -37,11 +35,11 @@ public class Ue implements Serializable {
 	public Ue() {
 	}
 
-	public int getTac() {
+	public String getTac() {
 		return this.tac;
 	}
 
-	public void setTac(int tac) {
+	public void setTac(String tac) {
 		this.tac = tac;
 	}
 
@@ -69,12 +67,33 @@ public class Ue implements Serializable {
 		this.marketingName = marketingName;
 	}
 
+	public List<BaseData> getBaseData() {
+		return this.baseData;
+	}
+
+	public void setBaseData(List<BaseData> baseData) {
+		this.baseData = baseData;
+	}
+
+	public BaseData addBaseData(BaseData baseData) {
+		getBaseData().add(baseData);
+		baseData.setUe(this);
+
+		return baseData;
+	}
+
+	public BaseData removeBaseData(BaseData baseData) {
+		getBaseData().remove(baseData);
+		baseData.setUe(null);
+
+		return baseData;
+	}
+
 	public void createRow(ArrayList<String> cells) {
-		this.setTac(Integer.parseInt(cells.get(0)));
+		this.setTac(cells.get(0));
 		this.setMarketingName(cells.get(1));
 		this.setManufacturer(cells.get(2));
 		this.setAccessCapability(cells.get(3));
-		
 		
 	}
 

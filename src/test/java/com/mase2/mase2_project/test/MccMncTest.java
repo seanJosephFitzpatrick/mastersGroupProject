@@ -20,7 +20,6 @@ import com.mase2.mase2_project.data.FailureClassDAO;
 import com.mase2.mase2_project.data.MccMncDAO;
 import com.mase2.mase2_project.data.UeDAO;
 import com.mase2.mase2_project.model.BaseData;
-import com.mase2.mase2_project.model.BaseDataPK;
 import com.mase2.mase2_project.model.EventCause;
 import com.mase2.mase2_project.model.EventCausePK;
 import com.mase2.mase2_project.model.FailureClass;
@@ -45,7 +44,9 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 						.addClasses(MccMncDAO.class, MccMnc.class,
 								MccMncPK.class,
 								JaxRsActivator.class,MccMncWS.class,
-								UtilsDAO.class,FailureClassDAO.class, BaseData.class, BaseDataPK.class, EventCause.class, EventCausePK.class, FailureClass.class, Ue.class, UeWS.class, UeDAO.class)
+								UtilsDAO.class, FailureClassDAO.class, BaseData.class, EventCause.class, EventCausePK.class, FailureClass.class, Ue.class)
+					//	.addPackage(EventCause.class.getPackage())
+					//	.addPackage(EventCauseDAO.class.getPackage())
 								//this line will pick up the production db
 						.addAsManifestResource("META-INF/persistence.xml",
 								"persistence.xml")
@@ -67,8 +68,8 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 				utilsDAO.deleteTableBaseData();
 				utilsDAO.deleteTable();
 				MccMncPK mccMncPK = new MccMncPK();
-				mccMncPK.setMcc(238);
-				mccMncPK.setMnc(1);
+				mccMncPK.setMcc("238");
+				mccMncPK.setMnc("1");
 				MccMnc mccMnc=new MccMnc();
 				mccMnc.setId(mccMncPK);
 				mccMnc.setCountry("Sweden");
