@@ -3,6 +3,7 @@ package com.mase2.mase2_project.model;
 import java.io.Serializable;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 import java.util.ArrayList;
 import java.util.List;

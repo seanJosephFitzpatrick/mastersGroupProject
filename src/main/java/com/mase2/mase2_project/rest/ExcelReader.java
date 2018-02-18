@@ -58,6 +58,7 @@ public class ExcelReader {
 	private Ue ueRow=new Ue();
 	private EventCause eventCauseNull = new EventCause();
 	private FailureClass failureClassNull = new FailureClass();
+	private EventCausePK eventCausePK = new EventCausePK();
 
 
 	@GET
@@ -124,15 +125,6 @@ public class ExcelReader {
 		if(failureClassData.size()!=0){
 			return;
 		}
-		failureClassNull.setFailureClass("(null)");
-		failureClassNull.setDescription("");
-		failureClassDAO.save(failureClassNull);
-		EventCausePK eventCausePK = new EventCausePK();
-		eventCausePK.setEventId("4099");
-		eventCausePK.setEventCode("(null)");
-		eventCauseNull.setId(eventCausePK);
-		eventCauseNull.setDescription("");
-		eventCauseDAO.save(eventCauseNull);
 		failureClassData=failureClassDAO.getAllFailureClasses();
 		eventCauseData=eventCauseDAO.getAllEventCauses();
 		UeData=ueDAO.getAllUes();
@@ -202,28 +194,29 @@ public class ExcelReader {
 	}
 
 	private boolean checkFailureClassForeignKeys(ArrayList<String> cells) {
-		if(cells.get(2).equalsIgnoreCase("(null)")){
-			failureClassRow=failureClassNull;
-			return true;
-		}else
-		{
+//		if(cells.get(2).equalsIgnoreCase("(null)")){
+//			//failureClassRow=null;
+//			failureClassRow=failureClassNull;
+//			return true;
+//		}else
+//		{
 			for (FailureClass failureClass : failureClassData) {
 				if(cells.get(2).equalsIgnoreCase(failureClass.getFailureClass())){
 					failureClassRow=failureClass;
 					return true;
 				}
 			}
-		}
+		//}
 		return false;
 
 	}
 
 	private boolean checkEventCauseForeignKeys(ArrayList<String> cells) {
-		if(cells.get(8).equalsIgnoreCase("(null)")){
-			eventCauseRow=eventCauseNull;
-			return true;
-		}else
-		{
+//		if(cells.get(8).equalsIgnoreCase("(null)")){
+//			eventCauseRow=eventCauseNull;
+//			return true;
+//		}else
+//		{
 			for (EventCause eventCause : eventCauseData) {
 				if(cells.get(1).equalsIgnoreCase(eventCause.getId().getEventId())){
 					if(cells.get(8).equalsIgnoreCase(eventCause.getId().getEventCode())){
@@ -232,7 +225,7 @@ public class ExcelReader {
 					}
 				}	
 			}
-		}
+//		}
 		return false;
 	}
 
@@ -253,6 +246,11 @@ public class ExcelReader {
 			eventCause.createRow(cells);
 			eventCauseDAO.save(eventCause);
 		}
+		eventCausePK.setEventId("4099");
+		eventCausePK.setEventCode("(null)");
+		eventCauseNull.setId(eventCausePK);
+		eventCauseNull.setDescription("");
+		eventCauseDAO.save(eventCauseNull);
 
 	}
 
@@ -273,6 +271,9 @@ public class ExcelReader {
 			failureClass.createRow(cells);
 			failureClassDAO.save(failureClass);
 		}
+		failureClassNull.setFailureClass("(null)");
+		failureClassNull.setDescription("");
+		failureClassDAO.save(failureClassNull);
 
 	}
 
