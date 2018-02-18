@@ -67,10 +67,11 @@ public class EventCause implements Serializable {
 
 		return baseData;
 	}
+
 	public void createRow(ArrayList<String> cells) {
 		EventCausePK eventCausePK = new EventCausePK();
-		eventCausePK.setEventCode(Integer.parseInt(cells.get(0)));
-		eventCausePK.setEventId(Integer.parseInt(cells.get(1)));
+		eventCausePK.setEventCode(cells.get(0));
+		eventCausePK.setEventId(cells.get(1));
 		this.setId(eventCausePK);
 		this.setDescription(cells.get(2));
 		

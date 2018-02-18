@@ -1,13 +1,13 @@
 package com.mase2.mase2_project.model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
-import java.math.BigDecimal;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.ArrayList;
-
+import java.util.Date;
 
 
 /**
@@ -26,7 +26,7 @@ public class BaseData implements Serializable {
 	private int baseDataId;
 
 	@Column(name="cell_id")
-	private int cellId;
+	private String cellId;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="date_time")
@@ -35,15 +35,15 @@ public class BaseData implements Serializable {
 	private int duration;
 
 	@Column(name="hier3_id")
-	private BigDecimal hier3Id;
+	private String hier3Id;
 
 	@Column(name="hier32_id")
-	private BigDecimal hier32Id;
+	private String hier32Id;
 
 	@Column(name="hier321_id")
-	private BigDecimal hier321Id;
+	private String hier321Id;
 
-	private BigDecimal imsi;
+	private String imsi;
 
 	@Column(name="ne_version")
 	private String neVersion;
@@ -53,7 +53,7 @@ public class BaseData implements Serializable {
 	@JoinColumns({
 		@JoinColumn(name="cause_code", referencedColumnName="event_code"),
 		@JoinColumn(name="event_id", referencedColumnName="event_id")
-		})
+	})
 	private EventCause eventCause;
 
 	//bi-directional many-to-one association to Ue
@@ -66,7 +66,7 @@ public class BaseData implements Serializable {
 	@JoinColumns({
 		@JoinColumn(name="market", referencedColumnName="mcc"),
 		@JoinColumn(name="operator", referencedColumnName="mnc")
-		})
+	})
 	private MccMnc mccMnc;
 
 	//bi-directional many-to-one association to FailureClass
@@ -85,11 +85,11 @@ public class BaseData implements Serializable {
 		this.baseDataId = baseDataId;
 	}
 
-	public int getCellId() {
+	public String getCellId() {
 		return this.cellId;
 	}
 
-	public void setCellId(int cellId) {
+	public void setCellId(String cellId) {
 		this.cellId = cellId;
 	}
 
@@ -109,35 +109,35 @@ public class BaseData implements Serializable {
 		this.duration = duration;
 	}
 
-	public BigDecimal getHier3Id() {
+	public String getHier3Id() {
 		return this.hier3Id;
 	}
 
-	public void setHier3Id(BigDecimal hier3Id) {
+	public void setHier3Id(String hier3Id) {
 		this.hier3Id = hier3Id;
 	}
 
-	public BigDecimal getHier32Id() {
+	public String getHier32Id() {
 		return this.hier32Id;
 	}
 
-	public void setHier32Id(BigDecimal hier32Id) {
+	public void setHier32Id(String hier32Id) {
 		this.hier32Id = hier32Id;
 	}
 
-	public BigDecimal getHier321Id() {
+	public String getHier321Id() {
 		return this.hier321Id;
 	}
 
-	public void setHier321Id(BigDecimal hier321Id) {
+	public void setHier321Id(String hier321Id) {
 		this.hier321Id = hier321Id;
 	}
 
-	public BigDecimal getImsi() {
+	public String getImsi() {
 		return this.imsi;
 	}
 
-	public void setImsi(BigDecimal imsi) {
+	public void setImsi(String imsi) {
 		this.imsi = imsi;
 	}
 
@@ -181,9 +181,11 @@ public class BaseData implements Serializable {
 		this.failureClassBean = failureClassBean;
 	}
 
-	public void createRow(ArrayList<String> cells, EventCause eventCauseRow, FailureClass failureClassRow, Ue ueRow, MccMnc mccMncRow) {
+	public void createRow(ArrayList<String> cells, EventCause eventCauseRow,
+			FailureClass failureClassRow, Ue ueRow, MccMnc mccMncRow) {
 		try {
 			this.setDateTime(new SimpleDateFormat("dd/MM/yy HH:mm").parse(cells.get(0)));
+
 		} catch (ParseException e) {
 			this.setDateTime(new Date());
 			e.printStackTrace();
@@ -192,14 +194,14 @@ public class BaseData implements Serializable {
 		this.setFailureClassBean(failureClassRow);
 		this.setMccMnc(mccMncRow);
 		this.setUe(ueRow);
-		this.setCellId(Integer.parseInt(cells.get(6)));
+		this.setCellId(cells.get(6));
 		this.setDuration(Integer.parseInt(cells.get(7)));
 		this.setNeVersion(cells.get(9));
-		this.setImsi(new BigDecimal(cells.get(10)));
-		this.setHier3Id(new BigDecimal(cells.get(11)));
-		this.setHier32Id(new BigDecimal(cells.get(12)));
-		this.setHier321Id(new BigDecimal(cells.get(13)));
-		
+		this.setImsi(cells.get(10));
+		this.setHier3Id(cells.get(11));
+		this.setHier32Id(cells.get(12));
+		this.setHier321Id(cells.get(13));
+
 	}
 
 }

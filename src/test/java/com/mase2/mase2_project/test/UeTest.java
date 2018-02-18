@@ -72,7 +72,7 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
             	utilsDao.deleteTableBaseData();
             	utilsDao.deleteTableUe();
                 com.mase2.mase2_project.model.Ue ue=new com.mase2.mase2_project.model.Ue();
-                ue.setTac(100100);
+                ue.setTac("100100");
                 ue.setMarketingName("G410");
                 ue.setManufacturer("Mitsubishi");
                 ue.setAccessCapability("GSM 1800, GSM 900");

@@ -72,7 +72,7 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 				utilsDAO.deleteTableBaseData();
 				utilsDAO.deleteTableFailureClass();
 				FailureClass failureClass=new FailureClass();
-				failureClass.setFailureClass(2);
+				failureClass.setFailureClass("2");
 				failureClass.setDescription("MT ACCESS");
 				failureClass.setBaseData(new ArrayList<BaseData>());
 				failureClassDAO.save(failureClass);

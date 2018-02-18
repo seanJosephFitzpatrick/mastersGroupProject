@@ -124,12 +124,12 @@ public class ExcelReader {
 		if(failureClassData.size()!=0){
 			return;
 		}
-		failureClassNull.setFailureClass(7777);
+		failureClassNull.setFailureClass("(null)");
 		failureClassNull.setDescription("");
 		failureClassDAO.save(failureClassNull);
 		EventCausePK eventCausePK = new EventCausePK();
-		eventCausePK.setEventId(7777);
-		eventCausePK.setEventCode(7777);
+		eventCausePK.setEventId("4099");
+		eventCausePK.setEventCode("(null)");
 		eventCauseNull.setId(eventCausePK);
 		eventCauseNull.setDescription("");
 		eventCauseDAO.save(eventCauseNull);
@@ -179,8 +179,8 @@ public class ExcelReader {
 
 	private boolean checkMccMncForeignKeys(ArrayList<String> cells) {
 		for (MccMnc mccMnc : mccMncData) {
-			if(cells.get(4).equalsIgnoreCase(Integer.toString(mccMnc.getId().getMcc()))){
-				if(cells.get(5).equalsIgnoreCase(Integer.toString(mccMnc.getId().getMnc()))){
+			if(cells.get(4).equalsIgnoreCase(mccMnc.getId().getMcc())){
+				if(cells.get(5).equalsIgnoreCase(mccMnc.getId().getMnc())){
 					mccMncRow=mccMnc;
 					return true;	
 				}
@@ -193,7 +193,7 @@ public class ExcelReader {
 
 	private boolean checkUeTypeForeignKeys(ArrayList<String> cells) {
 		for (Ue ue : UeData) {
-			if(cells.get(3).equalsIgnoreCase(Integer.toString(ue.getTac()))){
+			if(cells.get(3).equalsIgnoreCase(ue.getTac())){
 				ueRow=ue;
 				return true;
 			}
@@ -208,7 +208,7 @@ public class ExcelReader {
 		}else
 		{
 			for (FailureClass failureClass : failureClassData) {
-				if(cells.get(2).equalsIgnoreCase(Integer.toString(failureClass.getFailureClass()))){
+				if(cells.get(2).equalsIgnoreCase(failureClass.getFailureClass())){
 					failureClassRow=failureClass;
 					return true;
 				}
@@ -225,8 +225,8 @@ public class ExcelReader {
 		}else
 		{
 			for (EventCause eventCause : eventCauseData) {
-				if(cells.get(1).equalsIgnoreCase(Integer.toString(eventCause.getId().getEventId()))){
-					if(cells.get(8).equalsIgnoreCase(Integer.toString(eventCause.getId().getEventCode()))||cells.get(8).equalsIgnoreCase("(null)")){
+				if(cells.get(1).equalsIgnoreCase(eventCause.getId().getEventId())){
+					if(cells.get(8).equalsIgnoreCase(eventCause.getId().getEventCode())){
 						eventCauseRow=eventCause;
 						return true;
 					}

@@ -81,19 +81,18 @@ public class BaseDataTest {
 	public void setUp() {
 		utilsDAO.deleteTableBaseData();
 		BaseData baseData = new BaseData();
-		//baseData.setBaseDataId(1);
 		baseData.setDateTime(new Date());
-		baseData.setCellId(123);
+		baseData.setCellId("123");
 		baseData.setDuration(12);
-		baseData.setHier321Id(new BigDecimal(111111111));
-		baseData.setHier32Id(new BigDecimal(22222222));
-		baseData.setHier3Id(new BigDecimal(333333333));
-		baseData.setImsi(new BigDecimal(1232456));
+		baseData.setHier321Id("111111111");
+		baseData.setHier32Id("22222222");
+		baseData.setHier3Id("333333333");
+		baseData.setImsi("1232456");
 		baseData.setNeVersion("joe");
 		utilsDAO.deleteTable();
 		MccMncPK mccMncPK = new MccMncPK();
-		mccMncPK.setMcc(238);
-		mccMncPK.setMnc(1);
+		mccMncPK.setMcc("238");
+		mccMncPK.setMnc("1");
 		MccMnc mccMnc=new MccMnc();
 		mccMnc.setId(mccMncPK);
 		mccMnc.setCountry("Sweden");
@@ -102,8 +101,8 @@ public class BaseDataTest {
 		baseData.setMccMnc(mccMnc);
 		utilsDAO.deleteTableEventCause();
 		EventCausePK eventCausePK = new EventCausePK();
-		eventCausePK.setEventId(4);
-		eventCausePK.setEventCode(3);
+		eventCausePK.setEventId("4");
+		eventCausePK.setEventCode("3");
 		EventCause eventCause=new EventCause();
 		eventCause.setId(eventCausePK);
 		eventCause.setDescription("RRC CONN SETUP-EUTRAN GENERATED REASON");
@@ -111,7 +110,7 @@ public class BaseDataTest {
 		baseData.setEventCause(eventCause);
 		utilsDAO.deleteTableUe();
 		Ue ue=new Ue();
-        ue.setTac(1);
+        ue.setTac("1");
         ue.setMarketingName("test");
         ue.setManufacturer("test");
         ue.setAccessCapability("test"); 
@@ -119,7 +118,7 @@ public class BaseDataTest {
 		baseData.setUe(ue);
 		utilsDAO.deleteTableFailureClass();
 		FailureClass failureClass=new FailureClass();
-		failureClass.setFailureClass(2);
+		failureClass.setFailureClass("2");
 		failureClass.setDescription("MT ACCESS");
 		baseData.setFailureClassBean(failureClass);
 		failureClassDAO.save(failureClass);

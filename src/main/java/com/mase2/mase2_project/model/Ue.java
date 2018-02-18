@@ -18,7 +18,7 @@ public class Ue implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int tac;
+	private String tac;
 
 	@Column(name="access_capability")
 	private String accessCapability;
@@ -35,11 +35,11 @@ public class Ue implements Serializable {
 	public Ue() {
 	}
 
-	public int getTac() {
+	public String getTac() {
 		return this.tac;
 	}
 
-	public void setTac(int tac) {
+	public void setTac(String tac) {
 		this.tac = tac;
 	}
 
@@ -88,12 +88,12 @@ public class Ue implements Serializable {
 
 		return baseData;
 	}
+
 	public void createRow(ArrayList<String> cells) {
-		this.setTac(Integer.parseInt(cells.get(0)));
+		this.setTac(cells.get(0));
 		this.setMarketingName(cells.get(1));
 		this.setManufacturer(cells.get(2));
 		this.setAccessCapability(cells.get(3));
-		
 		
 	}
 

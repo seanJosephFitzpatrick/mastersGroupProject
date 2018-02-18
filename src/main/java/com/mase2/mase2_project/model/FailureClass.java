@@ -20,7 +20,7 @@ public class FailureClass implements Serializable {
 
 	@Id
 	@Column(name="failure_class")
-	private int failureClass;
+	private String failureClass;
 
 	private String description;
 
@@ -31,11 +31,11 @@ public class FailureClass implements Serializable {
 	public FailureClass() {
 	}
 
-	public int getFailureClass() {
+	public String getFailureClass() {
 		return this.failureClass;
 	}
 
-	public void setFailureClass(int failureClass) {
+	public void setFailureClass(String failureClass) {
 		this.failureClass = failureClass;
 	}
 
@@ -68,8 +68,9 @@ public class FailureClass implements Serializable {
 
 		return baseData;
 	}
+
 	public void createRow(ArrayList<String> cells) {
-		this.setFailureClass(Integer.parseInt(cells.get(0)));
+		this.setFailureClass(cells.get(0));
 		this.setDescription(cells.get(1));
 		
 	}
