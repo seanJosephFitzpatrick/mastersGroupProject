@@ -85,8 +85,8 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 				assertEquals(HttpStatus.SC_OK, response.getStatus());				
 				assertEquals("Data fetch = data persisted", eventCauseList.size(), 1);
 				EventCause eventCause = eventCauseList.get(0);
-				assertEquals(4098, eventCause.getId().getEventId());
-				assertEquals(1, eventCause.getId().getEventCode());
+				assertEquals("4097", eventCause.getId().getEventId());
+				assertEquals("3", eventCause.getId().getEventCode());
 				assertEquals("S1 SIG CONN SETUP-S1 INTERFACE DOWN", eventCause.getDescription());
 				
 			}

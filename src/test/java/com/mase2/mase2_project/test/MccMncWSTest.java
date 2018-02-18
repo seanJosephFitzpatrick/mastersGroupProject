@@ -86,8 +86,8 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 				assertEquals(HttpStatus.SC_OK, response.getStatus());				
 				assertEquals("Data fetch = data persisted", mccMncList.size(), 1);
 				MccMnc mccMnc = mccMncList.get(0);
-				assertEquals(238,mccMnc.getId().getMcc());
-				assertEquals(1,mccMnc.getId().getMnc());
+				assertEquals("238",mccMnc.getId().getMcc());
+				assertEquals("1",mccMnc.getId().getMnc());
 				assertEquals("Denmark",mccMnc.getCountry());
 				assertEquals("TDC-DK",mccMnc.getOperator());
 

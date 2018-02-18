@@ -82,7 +82,7 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 				assertEquals(HttpStatus.SC_OK, response.getStatus());				
 				assertEquals("Data fetch = data persisted", failureClassList.size(), 1);
 				FailureClass failureClass = failureClassList.get(0);
-				assertEquals(2,failureClass.getFailureClass());
+				assertEquals("2",failureClass.getFailureClass());
 				assertEquals("MT ACCESS",failureClass.getDescription());
 			
 			}

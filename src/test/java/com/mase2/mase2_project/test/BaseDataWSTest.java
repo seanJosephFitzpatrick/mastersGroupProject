@@ -149,8 +149,8 @@ public class BaseDataWSTest {
 		assertEquals(HttpStatus.SC_OK, response.getStatus());				
 		assertEquals("Data fetch = data persisted", eventCauseList.size(), 1);
 		EventCause eventCause = eventCauseList.get(0);
-		assertEquals(4098, eventCause.getId().getEventId());
-		assertEquals(1, eventCause.getId().getEventCode());
+		assertEquals("4097", eventCause.getId().getEventId());
+		assertEquals("3", eventCause.getId().getEventCode());
 		assertEquals("S1 SIG CONN SETUP-S1 INTERFACE DOWN", eventCause.getDescription());	
 	}
 	
@@ -161,8 +161,8 @@ public class BaseDataWSTest {
 		assertEquals(HttpStatus.SC_OK, response.getStatus());				
 		assertEquals("Data fetch = data persisted", mccMncList.size(), 1);
 		MccMnc mccMnc = mccMncList.get(0);
-		assertEquals(238,mccMnc.getId().getMcc());
-		assertEquals(1,mccMnc.getId().getMnc());
+		assertEquals("238",mccMnc.getId().getMcc());
+		assertEquals("1",mccMnc.getId().getMnc());
 		assertEquals("Denmark",mccMnc.getCountry());
 		assertEquals("TDC-DK",mccMnc.getOperator());
 	}
@@ -174,7 +174,7 @@ public class BaseDataWSTest {
 		assertEquals(HttpStatus.SC_OK, response.getStatus());				
 		assertEquals("Data fetch = data persisted", uEList.size(), 1);
 		Ue uE = uEList.get(0);
-		assertEquals(100100, uE.getTac());
+		assertEquals("100100", uE.getTac());
 		assertEquals("G410", uE.getMarketingName());
 		assertEquals("Mitsubishi", uE.getManufacturer());
 		assertEquals("GSM 1800, GSM 900", uE.getAccessCapability());
@@ -187,7 +187,7 @@ public class BaseDataWSTest {
 		assertEquals(HttpStatus.SC_OK, response.getStatus());				
 		assertEquals("Data fetch = data persisted", failureClassList.size(), 1);
 		FailureClass failureClass = failureClassList.get(0);
-		assertEquals(2,failureClass.getFailureClass());
+		assertEquals("2",failureClass.getFailureClass());
 		assertEquals("MT ACCESS",failureClass.getDescription());
 	}
 	
