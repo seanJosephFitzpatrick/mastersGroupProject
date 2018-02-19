@@ -3,6 +3,7 @@ package com.mase2.mase2_project.model;
 import java.io.Serializable;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,26 +20,23 @@ public class FailureClass implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="failure_class", unique=true, nullable=false)
-	private int failureClass;
+	@Column(name="failure_class")
+	private String failureClass;
 
-	@Column(length=45)
 	private String description;
 
 	//bi-directional many-to-one association to BaseData
-
-	@OneToMany(fetch = FetchType.EAGER,mappedBy="failureClassBean")
-
+	@OneToMany(mappedBy="failureClassBean")
 	private List<BaseData> baseData;
 
 	public FailureClass() {
 	}
 
-	public int getFailureClass() {
+	public String getFailureClass() {
 		return this.failureClass;
 	}
 
-	public void setFailureClass(int failureClass) {
+	public void setFailureClass(String failureClass) {
 		this.failureClass = failureClass;
 	}
 
@@ -73,7 +71,7 @@ public class FailureClass implements Serializable {
 	}
 
 	public void createRow(ArrayList<String> cells) {
-		this.setFailureClass(Integer.parseInt(cells.get(0)));
+		this.setFailureClass(cells.get(0));
 		this.setDescription(cells.get(1));
 		
 	}

@@ -18,7 +18,6 @@ import org.junit.runner.RunWith;
 import com.mase2.mase2_project.data.EventCauseDAO;
 import com.mase2.mase2_project.data.FailureClassDAO;
 import com.mase2.mase2_project.model.BaseData;
-import com.mase2.mase2_project.model.BaseDataPK;
 import com.mase2.mase2_project.model.EventCause;
 import com.mase2.mase2_project.model.EventCausePK;
 import com.mase2.mase2_project.model.FailureClass;
@@ -45,7 +44,7 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 						.addClasses(EventCauseDAO.class, EventCause.class,
 								EventCausePK.class,
 								JaxRsActivator.class,EventCauseEndpoint.class,
-								UtilsDAO.class, FailureClassDAO.class, BaseData.class, MccMnc.class, MccMncPK.class, BaseDataPK.class, EventCause.class, EventCausePK.class, FailureClass.class, Ue.class)
+								UtilsDAO.class, FailureClassDAO.class, BaseData.class, MccMnc.class, MccMncPK.class, EventCause.class, EventCausePK.class, FailureClass.class, Ue.class)
 					//	.addPackage(EventCause.class.getPackage())
 					//	.addPackage(EventCauseDAO.class.getPackage())
 								//this line will pick up the production db
@@ -71,8 +70,8 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 				utilsDAO.deleteTableBaseData();
 				utilsDAO.deleteTableEventCause();
 				EventCausePK eventCausePK = new EventCausePK();
-				eventCausePK.setEventId(4098);
-				eventCausePK.setEventCode(1);
+				eventCausePK.setEventId("4097");
+				eventCausePK.setEventCode("3");
 				EventCause eventCause=new EventCause();
 				eventCause.setId(eventCausePK);
 				eventCause.setDescription("S1 SIG CONN SETUP-S1 INTERFACE DOWN");
@@ -86,8 +85,8 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 				assertEquals(HttpStatus.SC_OK, response.getStatus());				
 				assertEquals("Data fetch = data persisted", eventCauseList.size(), 1);
 				EventCause eventCause = eventCauseList.get(0);
-				assertEquals(4098, eventCause.getId().getEventId());
-				assertEquals(1, eventCause.getId().getEventCode());
+				assertEquals("4097", eventCause.getId().getEventId());
+				assertEquals("3", eventCause.getId().getEventCode());
 				assertEquals("S1 SIG CONN SETUP-S1 INTERFACE DOWN", eventCause.getDescription());
 				
 			}

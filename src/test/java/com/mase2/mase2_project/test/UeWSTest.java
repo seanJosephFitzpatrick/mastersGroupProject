@@ -18,7 +18,6 @@ import org.junit.runner.RunWith;
 import com.mase2.mase2_project.data.FailureClassDAO;
 import com.mase2.mase2_project.data.UeDAO;
 import com.mase2.mase2_project.model.BaseData;
-import com.mase2.mase2_project.model.BaseDataPK;
 import com.mase2.mase2_project.model.EventCause;
 import com.mase2.mase2_project.model.EventCausePK;
 import com.mase2.mase2_project.model.FailureClass;
@@ -41,7 +40,7 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
                         .addClasses(MccMnc.class,
                                 MccMncPK.class,
                                 JaxRsActivator.class,
-                                UtilsDAO.class, FailureClassDAO.class, BaseData.class, BaseDataPK.class, EventCause.class, EventCausePK.class, FailureClass.class, Ue.class, UeWS.class, UeDAO.class)
+                                UtilsDAO.class, FailureClassDAO.class, BaseData.class, EventCause.class, EventCausePK.class, FailureClass.class, Ue.class, UeWS.class, UeDAO.class)
                     //    .addPackage(EventCause.class.getPackage())
                     //    .addPackage(EventCauseDAO.class.getPackage())
                 // this line will pick up the production db
@@ -69,7 +68,7 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
             	utilsDao.deleteTableBaseData();
             	utilsDao.deleteTableUe();
                 Ue ue=new Ue();
-                ue.setTac(100100);
+                ue.setTac("100100");
                 ue.setMarketingName("G410");
                 ue.setManufacturer("Mitsubishi");
                 ue.setAccessCapability("GSM 1800, GSM 900");
@@ -83,7 +82,7 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 				assertEquals(HttpStatus.SC_OK, response.getStatus());				
 				assertEquals("Data fetch = data persisted", uEList.size(), 1);
 				Ue uE = uEList.get(0);
-				assertEquals(100100, uE.getTac());
+				assertEquals("100100", uE.getTac());
 				assertEquals("G410", uE.getMarketingName());
 				assertEquals("Mitsubishi", uE.getManufacturer());
 				assertEquals("GSM 1800, GSM 900", uE.getAccessCapability());
