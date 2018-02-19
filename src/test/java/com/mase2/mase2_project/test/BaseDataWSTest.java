@@ -127,8 +127,6 @@ public class BaseDataWSTest {
 		failureClass.setDescription("MT ACCESS");
 		baseData.setFailureClassBean(failureClass);
 		failureClassDAO.save(failureClass);
-		eventCause.setBaseData(new ArrayList<BaseData>());
-		eventCause.addBaseData(baseData);
 		baseDataDao.save(baseData);
 	}
 	

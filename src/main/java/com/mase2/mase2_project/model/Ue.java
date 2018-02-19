@@ -28,9 +28,6 @@ public class Ue implements Serializable {
 	@Column(name="marketing_name")
 	private String marketingName;
 
-	//bi-directional many-to-one association to BaseData
-	@OneToMany(mappedBy="ue")
-	private List<BaseData> baseData;
 
 	public Ue() {
 	}
@@ -67,27 +64,6 @@ public class Ue implements Serializable {
 		this.marketingName = marketingName;
 	}
 
-	public List<BaseData> getBaseData() {
-		return this.baseData;
-	}
-
-	public void setBaseData(List<BaseData> baseData) {
-		this.baseData = baseData;
-	}
-
-	public BaseData addBaseData(BaseData baseData) {
-		getBaseData().add(baseData);
-		baseData.setUe(this);
-
-		return baseData;
-	}
-
-	public BaseData removeBaseData(BaseData baseData) {
-		getBaseData().remove(baseData);
-		baseData.setUe(null);
-
-		return baseData;
-	}
 
 	public void createRow(ArrayList<String> cells) {
 		this.setTac(cells.get(0));
