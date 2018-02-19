@@ -75,7 +75,6 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
                 ue.setMarketingName("G410");
                 ue.setManufacturer("Mitsubishi");
                 ue.setAccessCapability("GSM 1800, GSM 900");
-                ue.setBaseData(new ArrayList<BaseData>());
                 ueDAO.save(ue);
             }
             

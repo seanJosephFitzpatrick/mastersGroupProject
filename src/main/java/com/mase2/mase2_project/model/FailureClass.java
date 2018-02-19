@@ -25,9 +25,6 @@ public class FailureClass implements Serializable {
 
 	private String description;
 
-	//bi-directional many-to-one association to BaseData
-	@OneToMany(mappedBy="failureClassBean")
-	private List<BaseData> baseData;
 
 	public FailureClass() {
 	}
@@ -48,27 +45,7 @@ public class FailureClass implements Serializable {
 		this.description = description;
 	}
 
-	public List<BaseData> getBaseData() {
-		return this.baseData;
-	}
 
-	public void setBaseData(List<BaseData> baseData) {
-		this.baseData = baseData;
-	}
-
-	public BaseData addBaseData(BaseData baseData) {
-		getBaseData().add(baseData);
-		baseData.setFailureClassBean(this);
-
-		return baseData;
-	}
-
-	public BaseData removeBaseData(BaseData baseData) {
-		getBaseData().remove(baseData);
-		baseData.setFailureClassBean(null);
-
-		return baseData;
-	}
 
 	public void createRow(ArrayList<String> cells) {
 		this.setFailureClass(cells.get(0));
