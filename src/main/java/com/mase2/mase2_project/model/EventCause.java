@@ -23,9 +23,6 @@ public class EventCause implements Serializable {
 
 	private String description;
 
-	//bi-directional many-to-one association to BaseData
-	@OneToMany(mappedBy="eventCause")
-	private List<BaseData> baseData;
 
 	public EventCause() {
 	}
@@ -46,27 +43,6 @@ public class EventCause implements Serializable {
 		this.description = description;
 	}
 
-	public List<BaseData> getBaseData() {
-		return this.baseData;
-	}
-
-	public void setBaseData(List<BaseData> baseData) {
-		this.baseData = baseData;
-	}
-
-	public BaseData addBaseData(BaseData baseData) {
-		getBaseData().add(baseData);
-		baseData.setEventCause(this);
-
-		return baseData;
-	}
-
-	public BaseData removeBaseData(BaseData baseData) {
-		getBaseData().remove(baseData);
-		baseData.setEventCause(null);
-
-		return baseData;
-	}
 
 	public void createRow(ArrayList<String> cells) {
 		EventCausePK eventCausePK = new EventCausePK();

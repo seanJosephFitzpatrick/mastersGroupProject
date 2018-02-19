@@ -74,7 +74,6 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 				FailureClass failureClass=new FailureClass();
 				failureClass.setFailureClass("1");
 				failureClass.setDescription("MT ACCESS");
-				failureClass.setBaseData(new ArrayList<BaseData>());
 				failureClassDAO.save(failureClass);
 			}
 			
