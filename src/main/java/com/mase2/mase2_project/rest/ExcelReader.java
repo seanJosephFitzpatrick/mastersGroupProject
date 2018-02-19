@@ -65,7 +65,7 @@ public class ExcelReader {
 	@Path("/all")
 	public Response importAllData() {
 		this.importExcelData(); 
-		return Response.noContent().build();
+		return Response.ok().build();
 	}
 	@GET
 	@Path("/basedata")

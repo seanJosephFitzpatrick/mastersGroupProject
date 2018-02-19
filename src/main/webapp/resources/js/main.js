@@ -12,7 +12,7 @@ var rootUrlImportData = "http://localhost:8080/mase2-project/rest/importdata/all
 var importData = function() {
 	$.ajax({
 		type : 'GET',
-		url : rootUrlFailureClass,
+		url : rootUrlImportData,
 		dataType : "json",
 		success : renderPopUp
 	});
@@ -20,20 +20,13 @@ var importData = function() {
 var renderPopUp = function(data) {
 	$('.container-fluid').html('<div class="alert alert-success alert-dismissable">'
 	  + '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
-	  + '<strong>Success!</strong> Indicates a successful or positive action.'
+	  + '<strong>Success!</strong> Data was successfully imported.'
 	  + '</div> ');
-	
-	alert('<div class="alert alert-success alert-dismissable">'
-			  + '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
-			  + '<strong>Success!</strong> Indicates a successful or positive action.'
-			  + '</div> ');
-	
-	console.log("import");
 	
 }
 
 function importTables() {
-	renderPopUp();
+	importData();
 }
 
 ///////////////////////Tables /////////////////////
