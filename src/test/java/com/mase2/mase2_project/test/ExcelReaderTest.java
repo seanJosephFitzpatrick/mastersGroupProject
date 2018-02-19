@@ -57,18 +57,18 @@ import jxl.Workbook;
                         .addPackages(true, jxl.Sheet.class.getPackage())
                         .addPackages(true, jxl.Workbook.class.getPackage())
                         .addPackages(true, jxl.Cell.class.getPackage())
-                        //.addPackages(true, jxl.biff.BaseCellFeatures.class.getPackage())
+                        .addPackages(true, jxl.biff.BaseCellFeatures.class.getPackage())
                         .addPackages(true, jxl.HeaderFooter.Contents.class.getPackage())
                         .addPackages(true, jxl.HeaderFooter.class.getPackage())
-                        //.addPackages(true, jxl.biff.FontRecord.class.getPackage())
+                        .addPackages(true, jxl.biff.FontRecord.class.getPackage())
                         .addPackages(true, jxl.format.Font.class.getPackage())
                         .addPackages(true, jxl.write.WritableCell.class.getPackage())
                         .addPackages(true, jxl.write.WritableHyperlink.class.getPackage())
                         .addPackages(true, jxl.write.biff.HyperlinkRecord.class.getPackage())
                         .addPackages(true, jxl.read.biff.CellValue.class.getPackage())
                         .addPackages(true, jxl.read.biff.BaseSharedFormulaRecord.class.getPackage())
-                        //.addPackages(true, common.Logger.class.getPackage())
-                       // .addPackages(true, common.log.SimpleLogger.class.getPackage())
+                        .addPackages(true, common.Logger.class.getPackage())
+                        .addPackages(true, common.log.SimpleLogger.class.getPackage())
                         
                         
                 // this line will pick up the production db
@@ -120,31 +120,31 @@ import jxl.Workbook;
             @Test
             public void testGetAllUes() {
                 List<Ue> ueList = ueDAO.getAllUes();
-                assertEquals("Data fetch = data persisted", ueList.size(), 0);
+                assertEquals("Data fetch = data persisted", ueList.size(), 99);
             }
             
         	@Test
         	public void testGetAllBaseData() {
         		List<BaseData> baseDataList = baseDataDao.getAllBaseData();
-        		assertEquals("Data fetch = data persisted", baseDataList.size(), 0);
+        		assertEquals("Data fetch = data persisted", baseDataList.size(), 1000);
         	}
         	
 			@Test
 			public void testGetAllFailureClass() {
 				List<FailureClass> failureClassList = failureClassDAO.getAllFailureClasses();
-				assertEquals("Data fetch = data persisted", failureClassList.size(), 0);
+				assertEquals("Data fetch = data persisted", failureClassList.size(), 6);
 			}
 			
 			@Test
 			public void testGetAllEventCauses() {
 				List<EventCause> eventCauseList = eventCauseDAO.getAllEventCauses();
-				assertEquals("Data fetch = data persisted", eventCauseList.size(), 0);
+				assertEquals("Data fetch = data persisted", eventCauseList.size(), 81);
 			}
 			
 			@Test
 			public void testGetAllMccMncs() {
 				List<MccMnc> mccMncList = mcc_mncDAO.getAllMcc_Mncs();
-				assertEquals("Data fetch = data persisted", mccMncList.size(), 0);
+				assertEquals("Data fetch = data persisted", mccMncList.size(), 41);
 			}
             
 }
