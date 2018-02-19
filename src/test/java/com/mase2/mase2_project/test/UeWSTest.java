@@ -52,10 +52,10 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 
              
             @EJB
-            private com.mase2.mase2_project.rest.UeWS ueWS;
+            private UeWS ueWS;
             
             @EJB
-            private com.mase2.mase2_project.data.UeDAO ueDAO;
+            private UeDAO ueDAO;
             
             @EJB
             private UtilsDAO utilsDao;
