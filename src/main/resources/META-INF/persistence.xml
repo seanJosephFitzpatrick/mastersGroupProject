@@ -20,7 +20,6 @@
             <property name="hibernate.archive.autodetection" value="class" />
             <property name="hibernate.format_sql" value="true" />
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
-            <property name="hibernate.show_sql" value="true" />
         </properties>
     </persistence-unit>
 </persistence>

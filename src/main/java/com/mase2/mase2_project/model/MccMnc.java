@@ -22,10 +22,10 @@ public class MccMnc implements Serializable {
 	@EmbeddedId
 	private MccMncPK id;
 
-	@Pattern(regexp="[a-zA-Z]", message ="{invalid country mcc mnc table}")
+	//@Pattern(regexp="[a-zA-Z]", message ="{invalid country mcc mnc table}")
 	private String country;
 
-	@Pattern(regexp="[a-zA-Z]", message ="{invalid operator mcc mnc table}" )
+	//@Pattern(regexp="[a-zA-Z]", message ="{invalid operator mcc mnc table}" )
 	private String operator;
 
 

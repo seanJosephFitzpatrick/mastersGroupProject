@@ -11,7 +11,12 @@ import javax.ejb.Stateless;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.mase2.mase2_project.data.BaseDataDAO;
 import com.mase2.mase2_project.data.EventCauseDAO;
@@ -25,9 +30,7 @@ import com.mase2.mase2_project.model.FailureClass;
 import com.mase2.mase2_project.model.MccMnc;
 import com.mase2.mase2_project.model.MccMncPK;
 import com.mase2.mase2_project.model.Ue;
-
-
-
+import com.mase2.mase2_project.util.FileLogger;
 
 import jxl.Cell;
 import jxl.Sheet;
@@ -56,38 +59,42 @@ public class ExcelReader {
 	private EventCause eventCauseRow= new EventCause();
 	private MccMnc mccMncRow= new MccMnc();
 	private Ue ueRow=new Ue();
-	private EventCause eventCauseNull = new EventCause();
-	private FailureClass failureClassNull = new FailureClass();
-	private EventCausePK eventCausePK = new EventCausePK();
 
 
 	@GET
 	@Path("/all")
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response importAllData() {
-		this.importExcelData(); 
-		return Response.ok().build();
+		
+		int[] validAndInvalidRows=this.importExcelData();
+	
+		return Response.status(200).entity(validAndInvalidRows).build();
 	}
 	@GET
 	@Path("/basedata")
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response importBaseData() {
 		File f = initiateExcelFile();
+		int[] validAndInvalidRows=null;
 		Workbook wb;
 		try {
 			wb = Workbook.getWorkbook(f);
 			Sheet s=wb.getSheet(0);
 			this.retrieveParentTableData();
-			this.importDataBaseData(s);
+			validAndInvalidRows=this.importDataBaseData(s);
 		} catch (BiffException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Response.noContent().build();
 		}
-		return Response.noContent().build();
+		return Response.status(200).entity(validAndInvalidRows).build();
 	}
 
-	public void importExcelData(){
+	private int[] importExcelData(){
 		File f = initiateExcelFile();
-
 		try {
 			Workbook wb=Workbook.getWorkbook(f);
 			Sheet s = wb.getSheet(4);
@@ -100,12 +107,14 @@ public class ExcelReader {
 			this.importDataEventCause(s);
 			s=wb.getSheet(0);
 			this.retrieveParentTableData();
-			this.importDataBaseData(s);    
+			return this.importDataBaseData(s);    
 		} catch (BiffException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return new int[2];
+
 	}
 
 	private File initiateExcelFile() {
@@ -131,9 +140,11 @@ public class ExcelReader {
 		mccMncData=mcc_mncDao.getAllMcc_Mncs();	
 	}
 
-	public void importDataBaseData(Sheet s) {
+	private int[] importDataBaseData(Sheet s){
 		int row = s.getRows();
 		int col = s.getColumns();
+		int[] validAndInvalidRows=new int[2];
+		FileLogger fileLogger=new FileLogger();
 		ArrayList<String> cells = new ArrayList<String>();
 
 		for(int i1=1; i1<row;i1++) {
@@ -147,8 +158,14 @@ public class ExcelReader {
 			if(checkForeignKeysExist(cells)){
 				baseData.createRow(cells,eventCauseRow,failureClassRow,ueRow,mccMncRow);
 				baseDataDAO.save(baseData);
+				validAndInvalidRows[0]++;
+			}else
+			{
+				validAndInvalidRows[1]++;
+				fileLogger.logToFile("test");
 			}
 		}
+		return validAndInvalidRows;
 
 	}
 
@@ -249,11 +266,6 @@ public class ExcelReader {
 				eventCause.createRow(cells);
 				eventCauseDAO.save(eventCause);
 			}
-			eventCausePK.setEventId("4099");
-			eventCausePK.setEventCode("(null)");
-			eventCauseNull.setId(eventCausePK);
-			eventCauseNull.setDescription("");
-			eventCauseDAO.save(eventCauseNull);
 
 		}
 
@@ -274,9 +286,6 @@ public class ExcelReader {
 				failureClass.createRow(cells);
 				failureClassDAO.save(failureClass);
 			}
-			failureClassNull.setFailureClass("(null)");
-			failureClassNull.setDescription("");
-			failureClassDAO.save(failureClassNull);
 
 		}
 
