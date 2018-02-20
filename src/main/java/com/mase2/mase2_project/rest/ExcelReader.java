@@ -31,6 +31,7 @@ import com.mase2.mase2_project.model.MccMnc;
 import com.mase2.mase2_project.model.MccMncPK;
 import com.mase2.mase2_project.model.Ue;
 import com.mase2.mase2_project.util.FileLogger;
+import com.mase2.mase2_project.util.InvalidEntity;
 
 import jxl.Cell;
 import jxl.Sheet;
@@ -51,37 +52,38 @@ public class ExcelReader {
 	private EventCauseDAO eventCauseDAO;
 	@EJB
 	private BaseDataDAO baseDataDAO;
-	private List<FailureClass> failureClassData = new ArrayList<FailureClass>();//temporary data holder to compare foreign check for foreign keys
+	private List<FailureClass> failureClassData = new ArrayList<FailureClass>();
 	private List<EventCause> eventCauseData = new ArrayList<EventCause>();
 	private List<MccMnc> mccMncData = new ArrayList<MccMnc>();
 	private List<Ue> UeData = new ArrayList<Ue>();
-	private FailureClass failureClassRow= new FailureClass();
-	private EventCause eventCauseRow= new EventCause();
-	private MccMnc mccMncRow= new MccMnc();
-	private Ue ueRow=new Ue();
-
+	private FailureClass failureClassRow = new FailureClass();
+	private EventCause eventCauseRow = new EventCause();
+	private MccMnc mccMncRow = new MccMnc();
+	private Ue ueRow = new Ue();
+	private FileLogger fileLogger = new FileLogger();
 
 	@GET
 	@Path("/all")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response importAllData() {
-		
-		int[] validAndInvalidRows=this.importExcelData();
-	
+
+		int[] validAndInvalidRows = this.importExcelData();
+
 		return Response.status(200).entity(validAndInvalidRows).build();
 	}
+
 	@GET
 	@Path("/basedata")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response importBaseData() {
 		File f = initiateExcelFile();
-		int[] validAndInvalidRows=null;
+		int[] validAndInvalidRows = null;
 		Workbook wb;
 		try {
 			wb = Workbook.getWorkbook(f);
-			Sheet s=wb.getSheet(0);
+			Sheet s = wb.getSheet(0);
 			this.retrieveParentTableData();
-			validAndInvalidRows=this.importDataBaseData(s);
+			validAndInvalidRows = this.importDataBaseData(s);
 		} catch (BiffException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -93,21 +95,21 @@ public class ExcelReader {
 		return Response.status(200).entity(validAndInvalidRows).build();
 	}
 
-	private int[] importExcelData(){
+	private int[] importExcelData() {
 		File f = initiateExcelFile();
 		try {
-			Workbook wb=Workbook.getWorkbook(f);
+			Workbook wb = Workbook.getWorkbook(f);
 			Sheet s = wb.getSheet(4);
 			this.importDataMccMnc(s);
-			s=wb.getSheet(3);
+			s = wb.getSheet(3);
 			this.importDataUE(s);
-			s=wb.getSheet(2);
+			s = wb.getSheet(2);
 			this.importDataFailureClass(s);
-			s=wb.getSheet(1);
+			s = wb.getSheet(1);
 			this.importDataEventCause(s);
-			s=wb.getSheet(0);
+			s = wb.getSheet(0);
 			this.retrieveParentTableData();
-			return this.importDataBaseData(s);    
+			return this.importDataBaseData(s);
 		} catch (BiffException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -118,11 +120,13 @@ public class ExcelReader {
 	}
 
 	private File initiateExcelFile() {
-		String filePath="";
-		String absolutePath = new File(".").getAbsolutePath();//Get path of your Project Folder
-		int last = absolutePath.length()-1;
-		absolutePath = absolutePath.substring(0, last);//Remove dot from path
-		String file =  "test.xls";
+		String filePath = "";
+		String absolutePath = new File(".").getAbsolutePath();// Get path of
+																// your Project
+																// Folder
+		int last = absolutePath.length() - 1;
+		absolutePath = absolutePath.substring(0, last);// Remove dot from path
+		String file = "test.xls";
 		filePath = (absolutePath + file);
 		filePath = filePath.replace("\\", "/");
 		System.out.println(filePath);
@@ -131,38 +135,35 @@ public class ExcelReader {
 	}
 
 	private void retrieveParentTableData() {
-		if(failureClassData.size()!=0){
+		if (failureClassData.size() != 0) {
 			return;
 		}
-		failureClassData=failureClassDAO.getAllFailureClasses();
-		eventCauseData=eventCauseDAO.getAllEventCauses();
-		UeData=ueDAO.getAllUes();
-		mccMncData=mcc_mncDao.getAllMcc_Mncs();	
+		failureClassData = failureClassDAO.getAllFailureClasses();
+		eventCauseData = eventCauseDAO.getAllEventCauses();
+		UeData = ueDAO.getAllUes();
+		mccMncData = mcc_mncDao.getAllMcc_Mncs();
 	}
 
-	private int[] importDataBaseData(Sheet s){
+	private int[] importDataBaseData(Sheet s) {
 		int row = s.getRows();
 		int col = s.getColumns();
-		int[] validAndInvalidRows=new int[2];
-		FileLogger fileLogger=new FileLogger();
+		int[] validAndInvalidRows = new int[2];
+
 		ArrayList<String> cells = new ArrayList<String>();
 
-		for(int i1=1; i1<row;i1++) {
+		for (int i1 = 1; i1 < row; i1++) {
 			cells.clear();
 			BaseData baseData = new BaseData();
-			for(int j=0;j<col;j++) {
-				Cell c =s.getCell(j, i1);
+			for (int j = 0; j < col; j++) {
+				Cell c = s.getCell(j, i1);
 				cells.add(c.getContents());
-
 			}
-			if(checkForeignKeysExist(cells)){
-				baseData.createRow(cells,eventCauseRow,failureClassRow,ueRow,mccMncRow);
+			if (checkForeignKeysExist(cells)) {
+				baseData.createRow(cells, eventCauseRow, failureClassRow, ueRow, mccMncRow);
 				baseDataDAO.save(baseData);
 				validAndInvalidRows[0]++;
-			}else
-			{
+			} else {
 				validAndInvalidRows[1]++;
-				fileLogger.logToFile("test");
 			}
 		}
 		return validAndInvalidRows;
@@ -170,28 +171,36 @@ public class ExcelReader {
 	}
 
 	private boolean checkForeignKeysExist(ArrayList<String> cells) {
-		if(checkFailureClassForeignKeys(cells)){
-			if(checkEventCauseForeignKeys(cells)){
-				if(checkUeTypeForeignKeys(cells)){
-					if(checkMccMncForeignKeys(cells)){
+		InvalidEntity invalidEntity = new InvalidEntity();
+		if (checkFailureClassForeignKeys(cells)) {
+			if (checkEventCauseForeignKeys(cells)) {
+				if (checkUeTypeForeignKeys(cells)) {
+					if (checkMccMncForeignKeys(cells)) {
 						return true;
+					} else {
+						invalidEntity.setErrorDescription("Error - Foreign key doesn't exist in MccMnc Table (market or operator)");
 					}
+				} else {
+					invalidEntity.setErrorDescription("Error - Foreign key doesn't exist in Ue Table (ue_type)");
 				}
+			} else {
+				invalidEntity.setErrorDescription("Error - Foreign key doesn't exist in EventCause Table (event_id or cause_code)");
 			}
+		} else {
+			invalidEntity.setErrorDescription("Error - Foreign key doesn't exist in FailureClass Table (failure_class)");
 		}
+		invalidEntity.setCells(cells);
+		fileLogger.logToFile(invalidEntity.toString());
 		return false;
-
-
-
 
 	}
 
 	private boolean checkMccMncForeignKeys(ArrayList<String> cells) {
 		for (MccMnc mccMnc : mccMncData) {
-			if(cells.get(4).equalsIgnoreCase(mccMnc.getId().getMcc())){
-				if(cells.get(5).equalsIgnoreCase(mccMnc.getId().getMnc())){
-					mccMncRow=mccMnc;
-					return true;	
+			if (cells.get(4).equalsIgnoreCase(mccMnc.getId().getMcc())) {
+				if (cells.get(5).equalsIgnoreCase(mccMnc.getId().getMnc())) {
+					mccMncRow = mccMnc;
+					return true;
 				}
 
 			}
@@ -202,8 +211,8 @@ public class ExcelReader {
 
 	private boolean checkUeTypeForeignKeys(ArrayList<String> cells) {
 		for (Ue ue : UeData) {
-			if(cells.get(3).equalsIgnoreCase(ue.getTac())){
-				ueRow=ue;
+			if (cells.get(3).equalsIgnoreCase(ue.getTac())) {
+				ueRow = ue;
 				return true;
 			}
 		}
@@ -211,121 +220,121 @@ public class ExcelReader {
 	}
 
 	private boolean checkFailureClassForeignKeys(ArrayList<String> cells) {
-//		if(cells.get(2).equalsIgnoreCase("(null)")){
-//			failureClassRow=null;
-//			//failureClassRow=failureClassNull;
-//			return true;
-//		}else
-//		{
+		if (cells.get(2).equalsIgnoreCase("(null)")) {
+			failureClassRow = null;
+			return true;
+		} else {
 			for (FailureClass failureClass : failureClassData) {
-				if(cells.get(2).equalsIgnoreCase(failureClass.getFailureClass())){
-					failureClassRow=failureClass;
+				if (cells.get(2).equalsIgnoreCase(failureClass.getFailureClass())) {
+					failureClassRow = failureClass;
 					return true;
 				}
 			}
-		//}
+		}
 		return false;
 
 	}
 
 	private boolean checkEventCauseForeignKeys(ArrayList<String> cells) {
-//		if(cells.get(8).equalsIgnoreCase("(null)")){
-//			if(cells.get(1).equalsIgnoreCase("4099")){
-//
-//				eventCauseRow=null;
-//				return true;
-//			}
-//		}else
-		//{
+		if (cells.get(8).equalsIgnoreCase("(null)")) {
 			for (EventCause eventCause : eventCauseData) {
-				if(cells.get(1).equalsIgnoreCase(eventCause.getId().getEventId())){
-					if(cells.get(8).equalsIgnoreCase(eventCause.getId().getEventCode())){
-						eventCauseRow=eventCause;
+				if (cells.get(1).equalsIgnoreCase(eventCause.getId().getEventId())) {
+					// placeholder for future datasets
+					eventCauseRow = eventCause;
+					return true;
+
+				}
+			}
+		} else {
+			for (EventCause eventCause : eventCauseData) {
+				if (cells.get(1).equalsIgnoreCase(eventCause.getId().getEventId())) {
+					if (cells.get(8).equalsIgnoreCase(eventCause.getId().getEventCode())) {
+						eventCauseRow = eventCause;
 						return true;
 					}
-				}	
-			}
-		//}
-			return false;
-		}
-
-		private void importDataEventCause(Sheet s) {
-			//utilsDAO.deleteTableEventCause();
-			int row = s.getRows();
-			int col = s.getColumns();
-			ArrayList<String> cells = new ArrayList<String>();
-
-			for(int i1=1; i1<row;i1++) {
-				cells.clear();
-				EventCause eventCause = new EventCause();
-				for(int j=0;j<col;j++) {
-					Cell c =s.getCell(j, i1);
-					cells.add(c.getContents());
-
 				}
-				eventCause.createRow(cells);
-				eventCauseDAO.save(eventCause);
 			}
-
 		}
+		return false;
+	}
 
-		private void importDataFailureClass(Sheet s) {
-			//utilsDAO.deleteTableFailureClass();
-			int row = s.getRows();
-			int col = s.getColumns();
-			ArrayList<String> cells = new ArrayList<String>();
+	private void importDataEventCause(Sheet s) {
+		// utilsDAO.deleteTableEventCause();
+		int row = s.getRows();
+		int col = s.getColumns();
+		ArrayList<String> cells = new ArrayList<String>();
 
-			for(int i1=1; i1<row;i1++) {
-				cells.clear();
-				FailureClass failureClass = new FailureClass();
-				for(int j=0;j<col;j++) {
-					Cell c =s.getCell(j, i1);
-					cells.add(c.getContents());
+		for (int i1 = 1; i1 < row; i1++) {
+			cells.clear();
+			EventCause eventCause = new EventCause();
+			for (int j = 0; j < col; j++) {
+				Cell c = s.getCell(j, i1);
+				cells.add(c.getContents());
 
-				}
-				failureClass.createRow(cells);
-				failureClassDAO.save(failureClass);
 			}
-
-		}
-
-		private void importDataUE(Sheet s) {
-			//ueUtilsDAO.deleteTable();
-			int row = s.getRows();
-			int col = s.getColumns();
-			ArrayList<String> cells = new ArrayList<String>();
-
-			for(int i1=1; i1<row;i1++) {
-				cells.clear();
-				Ue ue = new Ue();
-				for(int j=0;j<col;j++) {
-					Cell c =s.getCell(j, i1);
-					cells.add(c.getContents());
-
-				}
-				ue.createRow(cells);
-				ueDAO.save(ue);
-			}
-
-		}
-
-		private void importDataMccMnc(Sheet s) {
-			//utilsDAO.deleteTable();
-			int row = s.getRows();
-			int col = s.getColumns();
-			ArrayList<String> cells = new ArrayList<String>();
-
-			for(int i1=1; i1<row;i1++) {
-				cells.clear();
-				MccMnc mccMnc = new MccMnc();
-				for(int j=0;j<col;j++) {
-					Cell c =s.getCell(j, i1);
-					cells.add(c.getContents());
-
-				}
-				mccMnc.createRow(cells);
-				mcc_mncDao.save(mccMnc);
-			}
+			eventCause.createRow(cells);
+			eventCauseDAO.save(eventCause);
 		}
 
 	}
+
+	private void importDataFailureClass(Sheet s) {
+		// utilsDAO.deleteTableFailureClass();
+		int row = s.getRows();
+		int col = s.getColumns();
+		ArrayList<String> cells = new ArrayList<String>();
+
+		for (int i1 = 1; i1 < row; i1++) {
+			cells.clear();
+			FailureClass failureClass = new FailureClass();
+			for (int j = 0; j < col; j++) {
+				Cell c = s.getCell(j, i1);
+				cells.add(c.getContents());
+
+			}
+			failureClass.createRow(cells);
+			failureClassDAO.save(failureClass);
+		}
+
+	}
+
+	private void importDataUE(Sheet s) {
+		// ueUtilsDAO.deleteTable();
+		int row = s.getRows();
+		int col = s.getColumns();
+		ArrayList<String> cells = new ArrayList<String>();
+
+		for (int i1 = 1; i1 < row; i1++) {
+			cells.clear();
+			Ue ue = new Ue();
+			for (int j = 0; j < col; j++) {
+				Cell c = s.getCell(j, i1);
+				cells.add(c.getContents());
+
+			}
+			ue.createRow(cells);
+			ueDAO.save(ue);
+		}
+
+	}
+
+	private void importDataMccMnc(Sheet s) {
+		// utilsDAO.deleteTable();
+		int row = s.getRows();
+		int col = s.getColumns();
+		ArrayList<String> cells = new ArrayList<String>();
+
+		for (int i1 = 1; i1 < row; i1++) {
+			cells.clear();
+			MccMnc mccMnc = new MccMnc();
+			for (int j = 0; j < col; j++) {
+				Cell c = s.getCell(j, i1);
+				cells.add(c.getContents());
+
+			}
+			mccMnc.createRow(cells);
+			mcc_mncDao.save(mccMnc);
+		}
+	}
+
+}
