@@ -2,6 +2,7 @@ package com.mase2.mase2_project.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 
 /**
  * The primary key class for the mcc_mnc database table.
@@ -12,8 +13,10 @@ public class MccMncPK implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
+	@Pattern(regexp="[0-9]+", message ="{invalid mcc value mcc mnc table}")
 	private String mcc;
 
+	@Pattern(regexp="[0-9]+", message ="{invalid mnc value mcc mnc table}")
 	private String mnc;
 
 	public MccMncPK() {
