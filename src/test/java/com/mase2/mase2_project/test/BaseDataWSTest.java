@@ -2,7 +2,10 @@ package com.mase2.mase2_project.test;
 
 import static org.junit.Assert.*;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ws.rs.core.Response;
@@ -50,7 +53,7 @@ public class BaseDataWSTest {
 						UtilsDAO.class, FailureClassDAO.class, BaseData.class, 
 					    BaseDataDAO.class,BaseDataEndpoint.class, UeWS.class, 
 						EventCause.class, EventCausePK.class,EventCauseDAO.class, FailureClassWS.class,
-						EventCauseEndpoint.class, FailureClass.class, Ue.class,UeDAO.class)
+						EventCauseEndpoint.class, FailureClass.class, Ue.class,UeDAO.class,java.util.Date.class)
 			//	.addPackage(EventCause.class.getPackage())
 			//	.addPackage(EventCauseDAO.class.getPackage())
 						//this line will pick up the production db
@@ -83,10 +86,19 @@ public class BaseDataWSTest {
 	@EJB
 	private UtilsDAO utilsDAO;
 	
+	private static Calendar calendar;
+	private static EventCause eventCause;
+	private static Ue ue;
+	private static MccMnc mccMnc;
+	private static FailureClass failureClass;
+	
 	@Before
 	public void setUp() {
 		utilsDAO.deleteTableBaseData();
 		BaseData baseData = new BaseData();
+		calendar=Calendar.getInstance();
+		calendar.setTime(new Date());
+		baseData.setDateTime(calendar.getTime());
 		baseData.setCellId("4");
 		baseData.setDuration(1000);
 		baseData.setHier321Id("1150480000");
@@ -98,7 +110,7 @@ public class BaseDataWSTest {
 		MccMncPK mccMncPK = new MccMncPK();
 		mccMncPK.setMcc("238");
 		mccMncPK.setMnc("1");
-		MccMnc mccMnc=new MccMnc();
+		mccMnc=new MccMnc();
 		mccMnc.setId(mccMncPK);
 		mccMnc.setCountry("Denmark");
 		mccMnc.setOperator("TDC-DK");
@@ -108,13 +120,13 @@ public class BaseDataWSTest {
 		EventCausePK eventCausePK = new EventCausePK();
 		eventCausePK.setEventId("4097");
 		eventCausePK.setEventCode("3");
-		EventCause eventCause=new EventCause();
+		eventCause=new EventCause();
 		eventCause.setId(eventCausePK);
 		eventCause.setDescription("S1 SIG CONN SETUP-S1 INTERFACE DOWN");
-		eventCauseDAO.save(eventCause);
 		baseData.setEventCause(eventCause);
+		eventCauseDAO.save(eventCause);
 		utilsDAO.deleteTableUe();
-		Ue ue=new Ue();
+		ue=new Ue();
         ue.setTac("100100");
         ue.setMarketingName("G410");
         ue.setManufacturer("Mitsubishi");
@@ -122,7 +134,7 @@ public class BaseDataWSTest {
         ueDAO.save(ue);
 		baseData.setUe(ue);
 		utilsDAO.deleteTableFailureClass();
-		FailureClass failureClass=new FailureClass();
+		failureClass=new FailureClass();
 		failureClass.setFailureClass("2");
 		failureClass.setDescription("MT ACCESS");
 		baseData.setFailureClassBean(failureClass);
@@ -137,7 +149,17 @@ public class BaseDataWSTest {
 		assertEquals(HttpStatus.SC_OK, responseBaseData.getStatus());				
 		assertEquals("Data fetch = data persisted", baseDataList.size(), 1);
 		BaseData baseData = baseDataList.get(0);
-		assertEquals("11B", baseData.getNeVersion());			
+		assertEquals("11B", baseData.getNeVersion());
+		assertEquals(new SimpleDateFormat("dd/MM/yy HH:mm").format(calendar.getTime()), new SimpleDateFormat("dd/MM/yy HH:mm").format(baseData.getDateTime()));	
+		assertEquals("4", baseData.getCellId());	
+		assertEquals("1150480000", baseData.getHier321Id());	
+		assertEquals("822680000", baseData.getHier32Id());	
+		assertEquals("4809000", baseData.getHier3Id());	
+		assertEquals("344930011", baseData.getImsi());	
+		assertEquals(1000, baseData.getDuration());
+		
+
+
 	}
 	
 	@Test

@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <title>SB Admin - Start Bootstrap Template</title>
+  <title>Network Data Analytics</title>
   <!-- Bootstrap core CSS-->
   <link href="./resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <!-- Custom fonts for this template-->
@@ -28,9 +28,9 @@
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-          <a class="nav-link" href="index.html">
+          <a class="nav-link" href="#" onclick="showDashboard()">
             <i class="fa fa-fw fa-dashboard"></i>
-            <span class="nav-link-text">Dashboard</span>
+            <span class="nav-link-text">Network Data Analytics</span>
           </a>
         </li>
         
@@ -62,7 +62,14 @@
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
           <a class="nav-link" data-toggle="tooltip" href="#navbarResponsive"  data-parent="#exampleAccordion" onclick="importTables()">
             <i class="fa fa-file-excel-o"></i>
-            <span class="nav-link-text">Import Tables</span>
+            <span class="nav-link-text">Import All Data</span>
+          </a>
+
+        </li>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+          <a class="nav-link" data-toggle="tooltip" href="#navbarResponsive"  data-parent="#exampleAccordion" onclick="importBaseDataTable()">
+            <i class="fa fa-file-excel-o"></i>
+            <span class="nav-link-text">Import Base Data</span>
           </a>
 
         </li>

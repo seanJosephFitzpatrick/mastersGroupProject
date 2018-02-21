@@ -3,6 +3,7 @@ package com.mase2.mase2_project.model;
 import java.io.Serializable;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +22,10 @@ public class MccMnc implements Serializable {
 	@EmbeddedId
 	private MccMncPK id;
 
+	//@Pattern(regexp="[a-zA-Z]", message ="{invalid country mcc mnc table}")
 	private String country;
 
+	//@Pattern(regexp="[a-zA-Z]", message ="{invalid operator mcc mnc table}" )
 	private String operator;
 
 
