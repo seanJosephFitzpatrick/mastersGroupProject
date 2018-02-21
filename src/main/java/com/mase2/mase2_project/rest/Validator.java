@@ -3,6 +3,7 @@ package com.mase2.mase2_project.rest;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mase2.mase2_project.model.BaseData;
 import com.mase2.mase2_project.model.EventCause;
 import com.mase2.mase2_project.model.FailureClass;
 import com.mase2.mase2_project.model.MccMnc;
@@ -27,6 +28,16 @@ public class Validator {
 		boolean validMccMnc = false;
 		if((mccMnc.getCountry().matches("^[a-zA-Z -]+$")) && (mccMnc.getOperator().matches("^[a-zA-Z 0-9/&. -]+$")) &&
 				(mccMnc.getId().getMcc().matches("[0-9]+")) && (mccMnc.getId().getMnc().matches("[0-9]+"))){
+			validMccMnc = true;
+		}
+		return validMccMnc;
+		}
+	
+	public boolean validateBase_data(BaseData baseData) {
+		boolean validMccMnc = false;
+		if((baseData.getCellId().matches("[0-9]+")) && (Integer.toString(baseData.getDuration()).matches("[0-9]+")) &&
+			(baseData.getNeVersion().matches("[0-9 a-zA-Z]+")) && (baseData.getImsi().matches("[0-9]+"))
+			&& (baseData.getHier321Id().matches("[0-9]+"))&& (baseData.getHier32Id().matches("[0-9]+"))&& (baseData.getHier3Id().matches("[0-9]+"))){
 			validMccMnc = true;
 		}
 		return validMccMnc;

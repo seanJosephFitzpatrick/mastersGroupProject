@@ -55,7 +55,7 @@ public class ExcelReader {
 	private BaseDataDAO baseDataDAO;
 	@EJB 
 	private TableClearer tableClearer;
-	
+
 	private FileLogger fileLogger = new FileLogger();
 	private Validator validator = new Validator();
 
@@ -98,7 +98,7 @@ public class ExcelReader {
 
 	private int[] importAllExcelData() {
 		File f = initiateExcelFile();
-		
+
 		try {
 			Workbook wb = Workbook.getWorkbook(f);
 			Sheet s = wb.getSheet(4);
@@ -160,8 +160,12 @@ public class ExcelReader {
 			}
 			if (checkForeignKeysExist(cells)) {
 				baseData.createRow(cells, validator.getEventCauseRow(), validator.getFailureClassRow(), validator.getUeRow(), validator.getMccMncRow());
-				baseDataDAO.save(baseData);
-				validAndInvalidRows[0]++;
+				if(validator.validateBase_data(baseData)){
+					baseDataDAO.save(baseData);
+					validAndInvalidRows[0]++;
+				} else {
+					validAndInvalidRows[1]++;
+				}
 			} else {
 				validAndInvalidRows[1]++;
 			}
@@ -210,7 +214,7 @@ public class ExcelReader {
 			}
 			eventCause.createRow(cells);
 			if(validator.validateEventCause(eventCause)){
-			eventCauseDAO.save(eventCause);
+				eventCauseDAO.save(eventCause);
 			}
 		}
 
@@ -232,7 +236,7 @@ public class ExcelReader {
 			}
 			failureClass.createRow(cells);
 			if(validator.validateFailureClass(failureClass)){
-			failureClassDAO.save(failureClass);
+				failureClassDAO.save(failureClass);
 			}
 		}
 
@@ -254,7 +258,7 @@ public class ExcelReader {
 			}
 			ue.createRow(cells);
 			if(validator.validateUe(ue)){
-			ueDAO.save(ue);
+				ueDAO.save(ue);
 			}
 		}
 
@@ -276,7 +280,7 @@ public class ExcelReader {
 			}
 			mccMnc.createRow(cells);
 			if(validator.validateMcc_Mnc(mccMnc)){
-			mcc_mncDao.save(mccMnc);
+				mcc_mncDao.save(mccMnc);
 			}
 		}
 	}
