@@ -55,15 +55,9 @@ public class ExcelReader {
 	private BaseDataDAO baseDataDAO;
 	@EJB 
 	private TableClearer tableClearer;
-	private List<FailureClass> failureClassData = new ArrayList<FailureClass>();
-	private List<EventCause> eventCauseData = new ArrayList<EventCause>();
-	private List<MccMnc> mccMncData = new ArrayList<MccMnc>();
-	private List<Ue> UeData = new ArrayList<Ue>();
-	private FailureClass failureClassRow = new FailureClass();
-	private EventCause eventCauseRow = new EventCause();
-	private MccMnc mccMncRow = new MccMnc();
-	private Ue ueRow = new Ue();
+	
 	private FileLogger fileLogger = new FileLogger();
+	private Validator validator = new Validator();
 
 	@GET
 	@Path("/all")
@@ -129,11 +123,9 @@ public class ExcelReader {
 
 	private File initiateExcelFile() {
 		String filePath = "";
-		String absolutePath = new File(".").getAbsolutePath();// Get path of
-																// your Project
-																// Folder
+		String absolutePath = new File(".").getAbsolutePath();
 		int last = absolutePath.length() - 1;
-		absolutePath = absolutePath.substring(0, last);// Remove dot from path
+		absolutePath = absolutePath.substring(0, last);
 		String file = "test.xls";
 		filePath = (absolutePath + file);
 		filePath = filePath.replace("\\", "/");
@@ -143,13 +135,13 @@ public class ExcelReader {
 	}
 
 	private void retrieveParentTableData() {
-		if (failureClassData.size() != 0) {
+		if (validator.getFailureClassData() != null) {
 			return;
 		}
-		failureClassData = failureClassDAO.getAllFailureClasses();
-		eventCauseData = eventCauseDAO.getAllEventCauses();
-		UeData = ueDAO.getAllUes();
-		mccMncData = mcc_mncDao.getAllMcc_Mncs();
+		validator.setFailureClassData(failureClassDAO.getAllFailureClasses());
+		validator.setEventCauseData(eventCauseDAO.getAllEventCauses());
+		validator.setUeData(ueDAO.getAllUes());
+		validator.setMccMncData(mcc_mncDao.getAllMcc_Mncs());
 	}
 
 	private int[] importDataBaseData(Sheet s) {
@@ -167,7 +159,7 @@ public class ExcelReader {
 				cells.add(c.getContents());
 			}
 			if (checkForeignKeysExist(cells)) {
-				baseData.createRow(cells, eventCauseRow, failureClassRow, ueRow, mccMncRow);
+				baseData.createRow(cells, validator.getEventCauseRow(), validator.getFailureClassRow(), validator.getUeRow(), validator.getMccMncRow());
 				baseDataDAO.save(baseData);
 				validAndInvalidRows[0]++;
 			} else {
@@ -180,10 +172,10 @@ public class ExcelReader {
 
 	private boolean checkForeignKeysExist(ArrayList<String> cells) {
 		InvalidEntity invalidEntity = new InvalidEntity();
-		if (checkFailureClassForeignKeys(cells)) {
-			if (checkEventCauseForeignKeys(cells)) {
-				if (checkUeTypeForeignKeys(cells)) {
-					if (checkMccMncForeignKeys(cells)) {
+		if (validator.checkFailureClassForeignKeys(cells)) {
+			if (validator.checkEventCauseForeignKeys(cells)) {
+				if (validator.checkUeTypeForeignKeys(cells)) {
+					if (validator.checkMccMncForeignKeys(cells)) {
 						return true;
 					} else {
 						invalidEntity.setErrorDescription("Error - Foreign key doesn't exist in MccMnc Table (market or operator)");
@@ -203,71 +195,7 @@ public class ExcelReader {
 
 	}
 
-	private boolean checkMccMncForeignKeys(ArrayList<String> cells) {
-		for (MccMnc mccMnc : mccMncData) {
-			if (cells.get(4).equalsIgnoreCase(mccMnc.getId().getMcc())) {
-				if (cells.get(5).equalsIgnoreCase(mccMnc.getId().getMnc())) {
-					mccMncRow = mccMnc;
-					return true;
-				}
-
-			}
-
-		}
-		return false;
-	}
-
-	private boolean checkUeTypeForeignKeys(ArrayList<String> cells) {
-		for (Ue ue : UeData) {
-			if (cells.get(3).equalsIgnoreCase(ue.getTac())) {
-				ueRow = ue;
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private boolean checkFailureClassForeignKeys(ArrayList<String> cells) {
-		if (cells.get(2).equalsIgnoreCase("(null)")) {
-			failureClassRow = null;
-			return true;
-		} else {
-			for (FailureClass failureClass : failureClassData) {
-				if (cells.get(2).equalsIgnoreCase(failureClass.getFailureClass())) {
-					failureClassRow = failureClass;
-					return true;
-				}
-			}
-		}
-		return false;
-
-	}
-
-	private boolean checkEventCauseForeignKeys(ArrayList<String> cells) {
-		if (cells.get(8).equalsIgnoreCase("(null)")) {
-			for (EventCause eventCause : eventCauseData) {
-				if (cells.get(1).equalsIgnoreCase(eventCause.getId().getEventId())) {
-					// placeholder for future datasets
-					eventCauseRow = eventCause;
-					return true;
-
-				}
-			}
-		} else {
-			for (EventCause eventCause : eventCauseData) {
-				if (cells.get(1).equalsIgnoreCase(eventCause.getId().getEventId())) {
-					if (cells.get(8).equalsIgnoreCase(eventCause.getId().getEventCode())) {
-						eventCauseRow = eventCause;
-						return true;
-					}
-				}
-			}
-		}
-		return false;
-	}
-
 	private void importDataEventCause(Sheet s) {
-		// utilsDAO.deleteTableEventCause();
 		int row = s.getRows();
 		int col = s.getColumns();
 		ArrayList<String> cells = new ArrayList<String>();
