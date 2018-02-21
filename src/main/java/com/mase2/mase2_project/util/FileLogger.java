@@ -9,17 +9,14 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 public class FileLogger {
-	private Logger logger;
+	private static Logger logger;
 
-	public FileLogger() {
-		InitiateLogger();
-	}
 
 	public void logToFile(String logMessage) {
 		logger.info(logMessage);
 	}
 
-	private void InitiateLogger() {
+	static {
 		logger = Logger.getLogger("InvalidEntityLog");
 		FileHandler fh;
 
@@ -43,7 +40,7 @@ public class FileLogger {
 
 	}
 
-	private String initiateLogFile() {
+	private static String initiateLogFile() {
 		String filePath = "";
 		String absolutePath = new File(".").getAbsolutePath();// Get path of
 																// your Project

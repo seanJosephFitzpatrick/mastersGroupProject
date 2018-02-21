@@ -1,10 +1,12 @@
 package com.mase2.mase2_project.test;
 
 import static org.junit.Assert.assertEquals;
+
 import java.io.IOException;
 import java.util.List;
 
 import javax.ejb.EJB;
+
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
@@ -14,6 +16,7 @@ import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
 import com.mase2.mase2_project.data.BaseDataDAO;
 import com.mase2.mase2_project.data.EventCauseDAO;
 import com.mase2.mase2_project.data.FailureClassDAO;
@@ -34,6 +37,10 @@ import com.mase2.mase2_project.rest.JaxRsActivator;
 import com.mase2.mase2_project.rest.MccMncWS;
 import com.mase2.mase2_project.rest.UeWS;
 import com.mase2.mase2_project.test.utils.UtilsDAO;
+import com.mase2.mase2_project.util.FileLogger;
+import com.mase2.mase2_project.util.InvalidEntity;
+import com.mase2.mase2_project.util.TableClearer;
+
 import jxl.Cell;
 import jxl.Sheet;
 import jxl.Workbook;
@@ -53,7 +60,7 @@ import jxl.Workbook;
                                 UtilsDAO.class, FailureClassDAO.class,MccMncDAO.class, BaseData.class, ExcelReader.class, 
                                 EventCause.class, BaseDataEndpoint.class, BaseDataDAO.class, FailureClassWS.class,
                                 MccMncWS.class, EventCauseEndpoint.class,
-                                EventCauseDAO.class, EventCausePK.class, FailureClass.class, Ue.class, UeWS.class, UeDAO.class)
+                                EventCauseDAO.class, EventCausePK.class, FailureClass.class,TableClearer.class,FileLogger.class,InvalidEntity.class, Ue.class, UeWS.class, UeDAO.class)
                         .addPackages(true, jxl.Sheet.class.getPackage())
                         .addPackages(true, jxl.Workbook.class.getPackage())
                         .addPackages(true, jxl.Cell.class.getPackage())
@@ -103,48 +110,34 @@ import jxl.Workbook;
         	private MccMncWS mcc_mncWS;
         	@EJB
         	private EventCauseEndpoint eventCauseEndpoint;
+        	
+        	@Before
+        	public void setup(){
+        		excelReader.importAllData();
+        	}
              
-            @Before
-            public void setUp() throws IOException {
-
-            	utilsDao.deleteTableBaseData();
-            	utilsDao.deleteTableUe();
-            	utilsDao.deleteTableEventCause();
-            	utilsDao.deleteTable();
-            	utilsDao.deleteTableFailureClass();
-     
-                excelReader.importAllData();
-
-            }
             
             @Test
-            public void testGetAllUes() {
+            public void testImportAllData() {
                 List<Ue> ueList = ueDAO.getAllUes();
                 assertEquals("Data fetch = data persisted", ueList.size(), 99);
+        		List<BaseData> baseDataList = baseDataDao.getAllBaseData();
+        		assertEquals("Data fetch = data persisted", baseDataList.size(), 800);
+				List<FailureClass> failureClassList = failureClassDAO.getAllFailureClasses();
+				assertEquals("Data fetch = data persisted", failureClassList.size(), 5);
+				List<EventCause> eventCauseList = eventCauseDAO.getAllEventCauses();
+				assertEquals("Data fetch = data persisted", eventCauseList.size(), 80);
+				List<MccMnc> mccMncList = mcc_mncDAO.getAllMcc_Mncs();
+				assertEquals("Data fetch = data persisted", mccMncList.size(), 41);
             }
             
         	@Test
-        	public void testGetAllBaseData() {
+        	public void testImportBaseData() {
+        		excelReader.importBaseData();
         		List<BaseData> baseDataList = baseDataDao.getAllBaseData();
-        		assertEquals("Data fetch = data persisted", baseDataList.size(), 1000);
+        		assertEquals("Data fetch = data persisted", baseDataList.size(), 800);
+
         	}
-        	
-			@Test
-			public void testGetAllFailureClass() {
-				List<FailureClass> failureClassList = failureClassDAO.getAllFailureClasses();
-				assertEquals("Data fetch = data persisted", failureClassList.size(), 6);
-			}
-			
-			@Test
-			public void testGetAllEventCauses() {
-				List<EventCause> eventCauseList = eventCauseDAO.getAllEventCauses();
-				assertEquals("Data fetch = data persisted", eventCauseList.size(), 81);
-			}
-			
-			@Test
-			public void testGetAllMccMncs() {
-				List<MccMnc> mccMncList = mcc_mncDAO.getAllMcc_Mncs();
-				assertEquals("Data fetch = data persisted", mccMncList.size(), 41);
-			}
+       
             
 }

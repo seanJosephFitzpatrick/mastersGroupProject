@@ -7,6 +7,7 @@ var rootUrlUe = "http://localhost:8080/mase2-project/rest/ue";
 var rootUrlBaseData = "http://localhost:8080/mase2-project/rest/basedatas";
 var rootUrlEventCause = "http://localhost:8080/mase2-project/rest/eventcauses";
 var rootUrlImportData = "http://localhost:8080/mase2-project/rest/importdata/all";
+var rootUrlImportBaseData = "http://localhost:8080/mase2-project/rest/importdata/basedata";
 
 /////////////////////// Import Tables /////////////////////
 var importData = function() {
@@ -17,16 +18,28 @@ var importData = function() {
 		success : renderPopUp
 	});
 };
+var importBaseData = function() {
+	$.ajax({
+		type : 'GET',
+		url : rootUrlImportBaseData,
+		dataType : "json",
+		success : renderPopUp
+	});
+};
 var renderPopUp = function(data) {
 	$('.container-fluid').html('<div class="alert alert-success alert-dismissable">'
 	  + '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
 	  + '<strong>Success!</strong> Data was successfully imported.'
 	  + '</div> ');
 	
-}
+};
 
 function importTables() {
 	importData();
+}
+
+function importBaseDataTable() {
+	importBaseData();
 }
 
 ///////////////////////Tables /////////////////////
@@ -124,7 +137,7 @@ var renderListMcc_Mnc = function(data) {
 		searching: false
 	});
 	document.getElementById('example_info').setAttribute("style", "display:none");
-}
+};
 
 var renderListUe = function(data) {
 	$('.card-header').html('<i class="fa fa-table"></i> <span id="tableTitle">Ue Table</span>');
@@ -153,7 +166,7 @@ var renderListUe = function(data) {
 	});
 	document.getElementById('example_info').setAttribute("style", "display:none");
 
-}
+};
 var renderListFailureClass = function(data) {
 	$('.card-header').html('<i class="fa fa-table"></i> <span id="tableTitle">Failure Class Table</span>');
 
@@ -162,17 +175,14 @@ var renderListFailureClass = function(data) {
 	clearElement('tableBody');
 
 	$('#tableHeader').append(
-			"<th>Failure Class</th>" + "<th>Description</th>"
-					+ "<th>Base Data</th>");
+			"<th>Failure Class</th>" + "<th>Description</th>");
 	$('#tableFooter').append(
-			"<th>Failure Class</th>" + "<th>Description</th>"
-					+ "<th>Base Data</th>");
+			"<th>Failure Class</th>" + "<th>Description</th>");
 	
 	$.each(data, function(index, failure) {
 		$('#tableBody').append(
 				  '<tr><td>' + failure.failureClass 
 				+ '</td><td>' + failure.description 
-				+ '</td><td>' + failure.baseData
 				+ '</td></tr>');
 	});
 	

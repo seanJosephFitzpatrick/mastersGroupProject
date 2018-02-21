@@ -17,6 +17,7 @@
         <class>com.mase2.mase2_project.model.MccMncPK</class>
         <class>com.mase2.mase2_project.model.Ue</class>
         <properties>
+       		<property name="javax.persistence.validation.mode" value="NONE" />
             <property name="hibernate.archive.autodetection" value="class" />
             <property name="hibernate.format_sql" value="true" />
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />

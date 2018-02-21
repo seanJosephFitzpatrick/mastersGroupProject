@@ -32,6 +32,7 @@ import com.mase2.mase2_project.model.MccMncPK;
 import com.mase2.mase2_project.model.Ue;
 import com.mase2.mase2_project.util.FileLogger;
 import com.mase2.mase2_project.util.InvalidEntity;
+import com.mase2.mase2_project.util.TableClearer;
 
 import jxl.Cell;
 import jxl.Sheet;
@@ -52,6 +53,8 @@ public class ExcelReader {
 	private EventCauseDAO eventCauseDAO;
 	@EJB
 	private BaseDataDAO baseDataDAO;
+	@EJB 
+	private TableClearer tableClearer;
 	private List<FailureClass> failureClassData = new ArrayList<FailureClass>();
 	private List<EventCause> eventCauseData = new ArrayList<EventCause>();
 	private List<MccMnc> mccMncData = new ArrayList<MccMnc>();
@@ -66,8 +69,8 @@ public class ExcelReader {
 	@Path("/all")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response importAllData() {
-
-		int[] validAndInvalidRows = this.importExcelData();
+		tableClearer.deleteAllTables();
+		int[] validAndInvalidRows = this.importAllExcelData();
 
 		return Response.status(200).entity(validAndInvalidRows).build();
 	}
@@ -76,27 +79,32 @@ public class ExcelReader {
 	@Path("/basedata")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response importBaseData() {
+		tableClearer.deleteBaseDataTable();
+		int[] validAndInvalidRows = importBaseDataExcelData();
+		return Response.status(200).entity(validAndInvalidRows).build();
+	}
+
+	private int[] importBaseDataExcelData() {
 		File f = initiateExcelFile();
-		int[] validAndInvalidRows = null;
 		Workbook wb;
 		try {
 			wb = Workbook.getWorkbook(f);
 			Sheet s = wb.getSheet(0);
 			this.retrieveParentTableData();
-			validAndInvalidRows = this.importDataBaseData(s);
+			return this.importDataBaseData(s);
 		} catch (BiffException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return Response.noContent().build();
 		}
-		return Response.status(200).entity(validAndInvalidRows).build();
+		return new int[2];
 	}
 
-	private int[] importExcelData() {
+	private int[] importAllExcelData() {
 		File f = initiateExcelFile();
+		
 		try {
 			Workbook wb = Workbook.getWorkbook(f);
 			Sheet s = wb.getSheet(4);
