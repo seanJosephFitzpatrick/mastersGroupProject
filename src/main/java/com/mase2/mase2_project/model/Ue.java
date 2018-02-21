@@ -20,14 +20,15 @@ public class Ue implements Serializable {
 
 	@Id
 	private String tac;
+	
+	@Column(name="marketing_name")
+	private String marketingName;
+
+	@Column(name="manufacturer")
+	private String manufacturer;
 
 	@Column(name="access_capability")
 	private String accessCapability;
-
-	private String manufacturer;
-
-	@Column(name="marketing_name")
-	private String marketingName;
 	
 	@Column(name="model")
 	private String model;

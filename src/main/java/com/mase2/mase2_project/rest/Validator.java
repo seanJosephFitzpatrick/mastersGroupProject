@@ -47,6 +47,15 @@ public class Validator {
 		return validEventCause;
 	}
 	
+	public boolean validateFailureClass(FailureClass failureClass) {
+		boolean validFailureClass = false;
+		if(failureClass.getFailureClass().matches("[0-4]") && (failureClass.getDescription().matches("^[a-zA-Z -]+$"))){
+			validFailureClass = true;
+		}
+		
+		return validFailureClass;
+	} 
+	
 	public boolean validateUe(Ue ue) {
 		boolean validUe = false;
 		if((ue.getTac().matches("[0-9]+")) && (ue.getMarketingName().matches("[a-zA-Z-() 0-9/.]+")) &&
