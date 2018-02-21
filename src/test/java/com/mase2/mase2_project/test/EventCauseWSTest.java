@@ -1,6 +1,9 @@
 package com.mase2.mase2_project.test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ws.rs.core.Response;
@@ -61,6 +64,8 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 			private EventCauseDAO eventCauseDAO;
 			@EJB
 			private UtilsDAO utilsDAO;
+			
+			private EventCause eventCause;
 			 
 			@Before
 			public void setUp() {
@@ -72,7 +77,7 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 				EventCausePK eventCausePK = new EventCausePK();
 				eventCausePK.setEventId("4097");
 				eventCausePK.setEventCode("3");
-				EventCause eventCause=new EventCause();
+				eventCause=new EventCause();
 				eventCause.setId(eventCausePK);
 				eventCause.setDescription("S1 SIG CONN SETUP-S1 INTERFACE DOWN");
 				eventCauseDAO.save(eventCause);
@@ -88,6 +93,25 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 				assertEquals("4097", eventCause.getId().getEventId());
 				assertEquals("3", eventCause.getId().getEventCode());
 				assertEquals("S1 SIG CONN SETUP-S1 INTERFACE DOWN", eventCause.getDescription());
+				
+			}
+			@Test
+			public void testMccMncPKEqual(){
+				EventCausePK eventCausePK = new EventCausePK();
+				eventCausePK.setEventId("4097");
+				eventCausePK.setEventCode("3");
+				assertTrue(eventCausePK.equals(eventCause.getId()));
+				assertTrue(eventCausePK.equals(eventCausePK));
+				
+			}
+			@Test
+			public void testMccMncPKUnequal(){
+				EventCausePK eventCausePK = new EventCausePK();
+				eventCausePK.setEventId("4037");
+				eventCausePK.setEventCode("3");
+				assertFalse(eventCausePK.equals(eventCause.getId()));
+				String test="";
+				assertFalse(eventCausePK.equals(test));
 				
 			}
 			
