@@ -1,6 +1,7 @@
 package com.mase2.mase2_project.rest;
 
 import com.mase2.mase2_project.model.EventCause;
+import com.mase2.mase2_project.model.FailureClass;
 import com.mase2.mase2_project.model.MccMnc;
 
 public class Validator {
@@ -23,6 +24,15 @@ public class Validator {
 		
 		return validEventCause;
 	}
+	
+	public boolean validateFailureClass(FailureClass failureClass) {
+		boolean validFailureClass = false;
+		if(failureClass.getFailureClass().matches("[0-4]") && (failureClass.getDescription().matches("^[a-zA-Z -]+$"))){
+			validFailureClass = true;
+		}
+		
+		return validFailureClass;
+	} 
 	
 	
 	}

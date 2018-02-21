@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import com.mase2.mase2_project.model.EventCause;
 import com.mase2.mase2_project.model.EventCausePK;
+import com.mase2.mase2_project.model.FailureClass;
 import com.mase2.mase2_project.model.MccMnc;
 import com.mase2.mase2_project.model.MccMncPK;
 import com.mase2.mase2_project.rest.Validator;
@@ -61,6 +62,24 @@ public class ValidatorTest {
 		eventCausePk.setEventId("text");
 		eventCause.setId(eventCausePk);
 		assertFalse(validator.validateEventCause(eventCause));
+	}
+	
+	@Test
+	public void testFailureClassValidData() {
+		FailureClass failureClass = new FailureClass();
+		Validator validator = new Validator();
+		failureClass.setDescription("EMERGENCY");
+		failureClass.setFailureClass("3");
+		assertTrue(validator.validateFailureClass(failureClass));
+	}
+	
+	@Test
+	public void testFailureClassInvalidData() {
+		FailureClass failureClass = new FailureClass();
+		Validator validator = new Validator();
+		failureClass.setDescription("EMERGENCY");
+		failureClass.setFailureClass("5");
+		assertFalse(validator.validateFailureClass(failureClass));
 	}
 
 }
