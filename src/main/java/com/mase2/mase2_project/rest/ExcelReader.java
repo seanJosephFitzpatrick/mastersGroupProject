@@ -209,7 +209,9 @@ public class ExcelReader {
 
 			}
 			eventCause.createRow(cells);
+			if(validator.validateEventCause(eventCause)){
 			eventCauseDAO.save(eventCause);
+			}
 		}
 
 	}
@@ -229,7 +231,9 @@ public class ExcelReader {
 
 			}
 			failureClass.createRow(cells);
+			if(validator.validateFailureClass(failureClass)){
 			failureClassDAO.save(failureClass);
+			}
 		}
 
 	}
@@ -249,7 +253,9 @@ public class ExcelReader {
 
 			}
 			ue.createRow(cells);
+			if(validator.validateUe(ue)){
 			ueDAO.save(ue);
+			}
 		}
 
 	}
@@ -269,7 +275,9 @@ public class ExcelReader {
 
 			}
 			mccMnc.createRow(cells);
+			if(validator.validateMcc_Mnc(mccMnc)){
 			mcc_mncDao.save(mccMnc);
+			}
 		}
 	}
 
