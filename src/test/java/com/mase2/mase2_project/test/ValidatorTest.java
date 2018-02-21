@@ -83,6 +83,7 @@ public class ValidatorTest {
 		assertFalse(validator.validateFailureClass(failureClass));
 	}
 	
+	@Test
 	public void testUeValidData() {
 		Ue ue = new Ue();
 		Validator validator = new Validator();
