@@ -47,6 +47,15 @@ public class Validator {
 		return validEventCause;
 	}
 	
+	public boolean validateFailureClass(FailureClass failureClass) {
+		boolean validFailureClass = false;
+		if(failureClass.getFailureClass().matches("[0-4]") && (failureClass.getDescription().matches("^[a-zA-Z -]+$"))){
+			validFailureClass = true;
+		}
+		
+		return validFailureClass;
+	} 
+	
 	
 	public boolean checkMccMncForeignKeys(ArrayList<String> cells) {
 		for (MccMnc mccMnc : mccMncData) {
