@@ -56,7 +56,6 @@ public class Validator {
 		return validFailureClass;
 	} 
 	
-	
 	public boolean checkMccMncForeignKeys(ArrayList<String> cells) {
 		for (MccMnc mccMnc : mccMncData) {
 			if (cells.get(4).equalsIgnoreCase(mccMnc.getId().getMcc())) {
@@ -119,6 +118,18 @@ public class Validator {
 		}
 		return false;
 	}
+	
+	public boolean validateUe(Ue ue) {
+		boolean validUe = false;
+		if((ue.getTac().matches("[0-9]+")) && (ue.getMarketingName().matches("[a-zA-Z-() 0-9/.]+")) &&
+				(ue.getManufacturer().matches("[a-zA-Z-() 0-9/.]+")) && (ue.getAccessCapability().matches("(([a-zA-Z-() 0-9/.])+(,)?)+")) &&
+				(ue.getModel().matches("[a-zA-Z-() 0-9/.]+")) && (ue.getVendorName().matches("[a-zA-Z-() 0-9/.&]+")) &&
+				(ue.getUeType().matches("[a-zA-Z-()]+") || ue.getUeType() == null) && (ue.getOs().matches("[a-zA-Z-()]+") || ue.getOs() == null) && 
+				(ue.getInputType().matches("[a-zA-Z-()]+") || ue.getInputType() == null)){
+			validUe = true;
+		}
+		return validUe;
+		}
 	
 	
 	public FailureClass getFailureClassRow() {
