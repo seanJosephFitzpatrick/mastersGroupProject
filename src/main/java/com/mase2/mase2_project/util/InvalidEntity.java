@@ -13,17 +13,17 @@ public class InvalidEntity {
 	
 	
 
-	public ArrayList<String> getCells() {
-		return cells;
-	}
+//	public ArrayList<String> getCells() {
+//		return cells;
+//	}
 
 	public void setCells(ArrayList<String> cells) {
 		this.cells = cells;
 	}
 
-	public String getErrorDescription() {
-		return errorDescription;
-	}
+//	public String getErrorDescription() {
+//		return errorDescription;
+//	}
 
 	public void setErrorDescription(String errorDescription) {
 		this.errorDescription = errorDescription;

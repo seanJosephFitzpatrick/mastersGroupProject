@@ -1,6 +1,6 @@
 package com.mase2.mase2_project.test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.util.List;
 
@@ -62,6 +62,8 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 			
 			@EJB
 			private UtilsDAO utilsDAO;
+			
+			private MccMnc mccMnc;
 			 
 			@Before
 			public void setUp() {
@@ -70,7 +72,7 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 				MccMncPK mccMncPK = new MccMncPK();
 				mccMncPK.setMcc("238");
 				mccMncPK.setMnc("1");
-				MccMnc mccMnc=new MccMnc();
+				mccMnc=new MccMnc();
 				mccMnc.setId(mccMncPK);
 				mccMnc.setCountry("Sweden");
 				mccMnc.setOperator("TDC-DK");
@@ -81,6 +83,25 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 			public void testGetAllMccMncs() {
 				List<MccMnc> mccMncList = mcc_mncDAO.getAllMcc_Mncs();
 				assertEquals("Data fetch = data persisted", mccMncList.size(), 1);
+			}
+			@Test
+			public void testMccMncPKEqual(){
+				MccMncPK mccMncPK = new MccMncPK();
+				mccMncPK.setMcc("238");
+				mccMncPK.setMnc("1");
+				assertTrue(mccMncPK.equals(mccMnc.getId()));
+				assertTrue(mccMncPK.equals(mccMncPK));
+				
+			}
+			@Test
+			public void testMccMncPKUnequal(){
+				MccMncPK mccMncPK = new MccMncPK();
+				mccMncPK.setMcc("237");
+				mccMncPK.setMnc("1");
+				assertFalse(mccMncPK.equals(mccMnc.getId()));
+				String test="";
+				assertFalse(mccMncPK.equals(test));
+				
 			}
 			
 			
