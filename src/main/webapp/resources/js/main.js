@@ -9,7 +9,13 @@ var rootUrlEventCause = "http://localhost:8080/mase2-project/rest/eventcauses";
 var rootUrlImportData = "http://localhost:8080/mase2-project/rest/importdata/all";
 var rootUrlImportBaseData = "http://localhost:8080/mase2-project/rest/importdata/basedata";
 
-/////////////////////// Import Tables /////////////////////
+// ///////////////////// Dashboard /////////////////////
+function showDashboard() {
+	cleenAllElements();
+	$('.card-header').html("Network Data Analytics");
+
+}
+// ///////////////////// Import Tables /////////////////////
 var importData = function() {
 	$.ajax({
 		type : 'GET',
@@ -27,11 +33,20 @@ var importBaseData = function() {
 	});
 };
 var renderPopUp = function(data) {
-	$('.container-fluid').html('<div class="alert alert-success alert-dismissable">'
-	  + '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
-	  + '<strong>Success!</strong> Data was successfully imported.'
-	  + '</div> ');
+		
+		console.log(data[0]);
+		console.log(data[1]);
 	
+
+	$('.card-header')
+			.html(
+					'<div class="alert alert-success alert-dismissable">'
+							+ '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
+							+ '<strong>Success!</strong> '+data[0]+ ' rows ware imported. '
+							+ data[1]+ ' rows ware excluded'
+							+ '</div> ');
+	cleenAllElements();
+
 };
 
 function importTables() {
@@ -42,7 +57,7 @@ function importBaseDataTable() {
 	importBaseData();
 }
 
-///////////////////////Tables /////////////////////
+// /////////////////////Tables /////////////////////
 var findAllFailureClass = function() {
 	$.ajax({
 		type : 'GET',
@@ -106,17 +121,26 @@ function showTableEventcauses() {
 function showTableBasedatas() {
 	findAllBaseData();
 }
-
-function clearElement(id) {
-	document.getElementById(id).innerHTML = "";
-}
-
-var renderListMcc_Mnc = function(data) {
-	$('.card-header').html('<i class="fa fa-table"></i> <span id="tableTitle" >Mcc Mnn Table</span>');
-
+function cleenAllElements(){
 	clearElement('tableHeader');
 	clearElement('tableFooter');
 	clearElement('tableBody');
+	
+}
+function clearElement(id) {
+	console.log(id);
+	if (id !== null) {
+		document.getElementById(id).innerHTML = "";
+	}
+}
+
+var renderListMcc_Mnc = function(data) {
+	cleenAllElements();
+
+	$('.card-header')
+			.html(
+					'<i class="fa fa-table"></i> <span id="tableTitle" >Mcc Mnn Table</span>');
+
 	$('#tableHeader').append(
 			"<th>Mcc</th>" + "<th>Mnc</th>" + "<th>Country</th>"
 					+ "<th>Operator</th>");
@@ -134,72 +158,82 @@ var renderListMcc_Mnc = function(data) {
 	$('#example').DataTable({
 		destroy : true,
 		paging : false,
-		searching: false
+		searching : false
 	});
-	document.getElementById('example_info').setAttribute("style", "display:none");
+	document.getElementById('example_info').setAttribute("style",
+			"display:none");
 };
 
 var renderListUe = function(data) {
-	$('.card-header').html('<i class="fa fa-table"></i> <span id="tableTitle">Ue Table</span>');
+	$('.card-header')
+			.html(
+					'<i class="fa fa-table"></i> <span id="tableTitle">Ue Table</span>');
 
-	clearElement('tableHeader');
-	clearElement('tableFooter');
-	clearElement('tableBody');
+	cleenAllElements();
 	$('#tableHeader').append(
-			"<th>TAC</th>" + "<th>Access Capability</th>"
-					+ "<th>Manufacturer</th>" + "<th>Marketing Name</th>");
+			"<th>TAC</th>" + "<th>Marketing Name</th>"
+					+ "<th>Manufacturer</th>" + "<th>Access Capability</th>"
+					+ "<th>Model</th>" + "<th>Vendor Name</th>"
+					+ "<th>UE Type</th>" + "<th>OS</th>"
+					+ "<th>Input Type</th>");
+
 	$('#tableFooter').append(
-			"<th>TAC</th>" + "<th>Access Capability</th>"
-					+ "<th>Manufacturer</th>" + "<th>Marketing Name</th>");
+			"<th>TAC</th>" + "<th>Marketing Name</th>"
+					+ "<th>Manufacturer</th>" + "<th>Access Capability</th>"
+					+ "<th>Model</th>" + "<th>Vendor Name</th>"
+					+ "<th>UE Type</th>" + "<th>OS</th>"
+					+ "<th>Input Type</th>");
 
 	$.each(data, function(index, ue) {
 		$('#tableBody').append(
-				'<tr><td>' + ue.tac + '</td><td>' + ue.accessCapability
+				'<tr><td>' + ue.tac + '</td><td>' + ue.marketingName
 						+ '</td><td>' + ue.manufacturer + '</td><td>'
-						+ ue.marketingName + '</td></tr>');
+						+ ue.accessCapability + '</td><td>' + ue.model
+						+ '</td><td>' + ue.vendorName + '</td><td>' + ue.ueType
+						+ '</td><td>' + ue.os + '</td><td>' + ue.inputType
+						+ '</td></tr>');
 
 	});
 	$('#example').DataTable({
 		destroy : true,
 		paging : false,
-		searching: false
+		searching : false
 	});
-	document.getElementById('example_info').setAttribute("style", "display:none");
+	document.getElementById('example_info').setAttribute("style",
+			"display:none");
 
 };
 var renderListFailureClass = function(data) {
-	$('.card-header').html('<i class="fa fa-table"></i> <span id="tableTitle">Failure Class Table</span>');
+	$('.card-header')
+			.html(
+					'<i class="fa fa-table"></i> <span id="tableTitle">Failure Class Table</span>');
 
-	clearElement('tableHeader');
-	clearElement('tableFooter');
-	clearElement('tableBody');
+	cleenAllElements();
 
-	$('#tableHeader').append(
-			"<th>Failure Class</th>" + "<th>Description</th>");
-	$('#tableFooter').append(
-			"<th>Failure Class</th>" + "<th>Description</th>");
-	
+	$('#tableHeader').append("<th>Failure Class</th>" + "<th>Description</th>");
+	$('#tableFooter').append("<th>Failure Class</th>" + "<th>Description</th>");
+
 	$.each(data, function(index, failure) {
 		$('#tableBody').append(
-				  '<tr><td>' + failure.failureClass 
-				+ '</td><td>' + failure.description 
-				+ '</td></tr>');
+				'<tr><td>' + failure.failureClass + '</td><td>'
+						+ failure.description + '</td></tr>');
 	});
-	
+
 	$('#example').DataTable({
 		destroy : true,
 		paging : false,
-		searching: false
+		searching : false
 	});
-	document.getElementById('example_info').setAttribute("style", "display:none");
+	document.getElementById('example_info').setAttribute("style",
+			"display:none");
 }
 
 var renderListEventCause = function(data) {
-	$('.card-header').html('<i class="fa fa-table"></i> <span id="tableTitle">Event Cause Table</span>');
+	$('.card-header')
+			.html(
+					'<i class="fa fa-table"></i> <span id="tableTitle">Event Cause Table</span>');
 
-	clearElement('tableHeader');
-	clearElement('tableFooter');
-	clearElement('tableBody');
+	cleenAllElements();;
 
 	$('#tableHeader').append(
 			"<th>Event Code</th>" + "<th>Event ID</th>"
@@ -214,95 +248,72 @@ var renderListEventCause = function(data) {
 						+ event_cause.id.eventId + '</td><td>'
 						+ event_cause.description + '</td></tr>');
 	});
-	
+
 	$('#example').DataTable({
 		destroy : true,
 		paging : false,
-		searching: false
+		searching : false
 	});
-	document.getElementById('example_info').setAttribute("style", "display:none");
+	document.getElementById('example_info').setAttribute("style",
+			"display:none");
 }
 
 // //////////////////////////
 var renderListBaseData = function(data) {
-	$('.card-header').html('<i class="fa fa-table"></i> <span id="tableTitle">Base Data Table</span>');
+	$('.card-header')
+			.html(
+					'<i class="fa fa-table"></i> <span id="tableTitle">Base Data Table</span>');
 
-	clearElement('tableHeader');
-	clearElement('tableFooter');
-	clearElement('tableBody');
+	cleenAllElements();
 
 	$('#tableHeader').append(
-			 "<th>Id</th>" 
-			+ "<th>Date-Time</th>"
-			+ "<th>Event Id</th>"
-			
-			+ "<th>Failure Class</th>"
-			+ "<th>Ue type</th>"
-			+ "<th>Market</th>"
-			
-			+ "<th>Operator</th>"
-			+ "<th>Cell Id</th>"
-			+ "<th>Duration</th>"
-			
-			+ "<th>Cause Code</th>"
-			+ "<th>neVersion</th>"
-			+ "<th>imsi</th>"
-			
-			+ "<th>hier3Id</th>"
-			+ "<th>hier32Id</th>"
-			+ "<th>hier321Id</th>");
-	
+			"<th>Id</th>" + "<th>Date-Time</th>" + "<th>Event Id</th>"
+
+			+ "<th>Failure Class</th>" + "<th>Ue type</th>" + "<th>Market</th>"
+
+			+ "<th>Operator</th>" + "<th>Cell Id</th>" + "<th>Duration</th>"
+
+			+ "<th>Cause Code</th>" + "<th>neVersion</th>" + "<th>imsi</th>"
+
+			+ "<th>hier3Id</th>" + "<th>hier32Id</th>" + "<th>hier321Id</th>");
+
 	$('#tableFooter').append(
-			  "<th>Id</th>" 
-			+ "<th>Date-Time</th>"
-			+ "<th>Event Id</th>"
-			
-			+ "<th>Failure Class</th>"
-			+ "<th>Ue type</th>"
-			+ "<th>Market</th>"
-			
-			+ "<th>Operator</th>"
-			+ "<th>Cell Id</th>"
-			+ "<th>Duration</th>"
-			
-			+ "<th>Cause Code</th>"
-			+ "<th>neVersion</th>"
-			+ "<th>imsi</th>"
-			
-			+ "<th>hier3Id</th>"
-			+ "<th>hier32Id</th>"
-			+ "<th>hier321Id</th>");
-	
+			"<th>Id</th>" + "<th>Date-Time</th>" + "<th>Event Id</th>"
+
+			+ "<th>Failure Class</th>" + "<th>Ue type</th>" + "<th>Market</th>"
+
+			+ "<th>Operator</th>" + "<th>Cell Id</th>" + "<th>Duration</th>"
+
+			+ "<th>Cause Code</th>" + "<th>neVersion</th>" + "<th>imsi</th>"
+
+			+ "<th>hier3Id</th>" + "<th>hier32Id</th>" + "<th>hier321Id</th>");
+
 	$.each(data, function(index, base_data) {
 		$('#tableBody').append(
-				'<tr><td>' 
-						+ base_data.baseDataId + '</td><td>'
+				'<tr><td>' + base_data.baseDataId + '</td><td>'
 						+ base_data.dateTime + '</td><td>'
-						+ base_data.eventCause.id.eventId + '</td><td>' 
-						
-						+ base_data.failureClassBean.failureClass + '</td><td>' 
-						+ base_data.ue.tac + '</td><td>' 
-						+ base_data.mccMnc.id.mcc + '</td><td>'//market mcc
+						+ base_data.eventCause.id.eventId + '</td><td>'
 
-						+ base_data.mccMnc.id.mnc + '</td><td>'//operator mnc
-						+ base_data.cellId + '</td><td>'
-						+ base_data.duration + '</td><td>' 
+						+ base_data.failureClassBean.failureClass + '</td><td>'
+						+ base_data.ue.tac + '</td><td>'
+						+ base_data.mccMnc.id.mcc + '</td><td>'// market mcc
 
-						+ base_data.eventCause.id.eventCode + '</td><td>' 
-						+ base_data.neVersion + '</td><td>'
-						+ base_data.imsi + '</td><td>' 
-						
-						+ base_data.hier3Id + '</td><td>'
-						+ base_data.hier32Id + '</td><td>'
-						+ base_data.hier321Id  
-						+ '</td></tr>');
+						+ base_data.mccMnc.id.mnc + '</td><td>'// operator mnc
+						+ base_data.cellId + '</td><td>' + base_data.duration
+						+ '</td><td>'
+
+						+ base_data.eventCause.id.eventCode + '</td><td>'
+						+ base_data.neVersion + '</td><td>' + base_data.imsi
+						+ '</td><td>'
+
+						+ base_data.hier3Id + '</td><td>' + base_data.hier32Id
+						+ '</td><td>' + base_data.hier321Id + '</td></tr>');
 	});
 	$('#example').DataTable({
 		destroy : true,
 		paging : false,
-		searching: false
+		searching : false
 	});
-	document.getElementById('example_info').setAttribute("style", "display:none");
+	document.getElementById('example_info').setAttribute("style",
+			"display:none");
 }
-
-
