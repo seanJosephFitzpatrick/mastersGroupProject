@@ -9,6 +9,7 @@ import com.mase2.mase2_project.model.EventCause;
 import com.mase2.mase2_project.model.EventCausePK;
 import com.mase2.mase2_project.model.MccMnc;
 import com.mase2.mase2_project.model.MccMncPK;
+import com.mase2.mase2_project.model.Ue;
 import com.mase2.mase2_project.rest.Validator;
 
 public class ValidatorTest {
@@ -61,6 +62,38 @@ public class ValidatorTest {
 		eventCausePk.setEventId("text");
 		eventCause.setId(eventCausePk);
 		assertFalse(validator.validateEventCause(eventCause));
+	}
+	
+	@Test
+	public void testUeValidData() {
+		Ue ue = new Ue();
+		Validator validator = new Validator();
+		ue.setTac("100100");
+		ue.setMarketingName("G410");
+		ue.setManufacturer("Mitsubishi");
+		ue.setAccessCapability("GSM 1800");
+		ue.setModel("G410");
+		ue.setVendorName("Mitsubishi");
+		ue.setUeType("HANDHELD");
+		ue.setOs("BLACKBERRY");
+		ue.setInputType("QWERTY");
+		assertTrue(validator.validateUe(ue));
+	}
+	
+	@Test
+	public void testUeInvalidData() {
+		Ue ue = new Ue();
+		Validator validator = new Validator();
+		ue.setTac("Wrong");
+		ue.setMarketingName("G41%%0");
+		ue.setManufacturer("Mitsu*&bishi");
+		ue.setAccessCapability("GSM 1800..");
+		ue.setModel("G410");
+		ue.setVendorName("Mitsubishi");
+		ue.setUeType("HANDHELD");
+		ue.setOs("BLACKBERRY");
+		ue.setInputType("012345");
+		assertFalse(validator.validateUe(ue));
 	}
 
 }
