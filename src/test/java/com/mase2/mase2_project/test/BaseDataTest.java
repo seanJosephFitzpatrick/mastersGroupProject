@@ -3,6 +3,7 @@ package com.mase2.mase2_project.test;
 import static org.junit.Assert.*;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -77,6 +78,12 @@ public class BaseDataTest {
 	@EJB
 	private UtilsDAO utilsDAO;
 	
+	private Ue ue;
+	private FailureClass failureClass;
+	private MccMnc mccMnc;
+	private EventCause eventCause;
+	
+	
 	@Before
 	public void setUp() {
 		utilsDAO.deleteTableBaseData();
@@ -95,7 +102,7 @@ public class BaseDataTest {
 		MccMncPK mccMncPK = new MccMncPK();
 		mccMncPK.setMcc("238");
 		mccMncPK.setMnc("1");
-		MccMnc mccMnc=new MccMnc();
+		mccMnc=new MccMnc();
 		mccMnc.setId(mccMncPK);
 		mccMnc.setCountry("Denmark");
 		mccMnc.setOperator("TDC-DK");
@@ -107,13 +114,13 @@ public class BaseDataTest {
 		eventCausePK.setEventCode("1");
 		eventCausePK.setEventId("4");
 		eventCausePK.setEventCode("3");
-		EventCause eventCause=new EventCause();
+		eventCause=new EventCause();
 		eventCause.setId(eventCausePK);
 		eventCause.setDescription("S1 SIG CONN SETUP-S1 INTERFACE DOWN");
 		eventCauseDAO.save(eventCause);
 		baseData.setEventCause(eventCause);
 		utilsDAO.deleteTableUe();
-		Ue ue=new Ue();
+		ue=new Ue();
         ue.setTac("100100");
         ue.setMarketingName("G410");
         ue.setManufacturer("Mitsubishi");
@@ -125,7 +132,7 @@ public class BaseDataTest {
         ueDAO.save(ue);
 		baseData.setUe(ue);
 		utilsDAO.deleteTableFailureClass();
-		FailureClass failureClass=new FailureClass();
+		failureClass=new FailureClass();
 		failureClass.setFailureClass("2");
 		failureClass.setDescription("MT ACCESS");
 		baseData.setFailureClassBean(failureClass);
@@ -137,6 +144,29 @@ public class BaseDataTest {
 	public void testGetAllBaseData() {
 		List<BaseData> baseDataList = baseDataDao.getAllBaseData();
 		assertEquals("Data fetch = data persisted", baseDataList.size(), 1);
+	}
+	
+	@Test
+	public void testCreateRowException() {
+		BaseData baseData = new BaseData();
+		ArrayList<String> cells = new ArrayList<String>();
+		cells.add("test date parse exception");
+		cells.add("test date parse exception");
+		cells.add("test date parse exception");
+		cells.add("test date parse exception");
+		cells.add("test date parse exception");
+		cells.add("test date parse exception");
+		cells.add("11");
+		cells.add("1000");
+		cells.add("");
+		cells.add("12a");
+		cells.add("1111");
+		cells.add("1111");
+		cells.add("1111");
+		cells.add("1111");
+		
+		baseData.createRow(cells, eventCause, failureClass, ue, mccMnc);
+		assertEquals(new SimpleDateFormat("dd/MM/yy").format(baseData.getDateTime()),new SimpleDateFormat("dd/MM/yy").format(new Date()));
 	}
 
 }
