@@ -24,7 +24,7 @@ public class Resources {
    @SuppressWarnings("unused")
    @Produces
    @PersistenceContext
-   private EntityManager em;
+   private EntityManager entityManager;
    
    @Produces
    public Logger produceLog(final InjectionPoint injectionPoint) {
