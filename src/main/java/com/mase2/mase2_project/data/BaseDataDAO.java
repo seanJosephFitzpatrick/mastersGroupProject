@@ -16,15 +16,15 @@ import com.mase2.mase2_project.model.BaseData;
 @LocalBean
 public class BaseDataDAO {
 	@PersistenceContext
-    private EntityManager em;
+    private EntityManager entityManager;
     
 	public List<BaseData> getAllBaseData() {
-    	Query query=em.createQuery("SELECT m FROM BaseData m");
+		final Query query=entityManager.createQuery("SELECT m FROM BaseData m");
         return query.getResultList();
     }
 	
-	public void save(BaseData baseData){
-		em.persist(baseData);
+	public void save(final BaseData baseData){
+		entityManager.persist(baseData);
 	}
 
 }

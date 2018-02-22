@@ -8,6 +8,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -74,8 +75,6 @@ public class BaseData implements Serializable {
 	@JoinColumn(name="failure_class")
 	private FailureClass failureClassBean;
 
-	public BaseData() {
-	}
 
 //	public int getBaseDataId() {
 //		return this.baseDataId;
@@ -89,7 +88,7 @@ public class BaseData implements Serializable {
 		return this.cellId;
 	}
 
-	public void setCellId(String cellId) {
+	public void setCellId(final String cellId) {
 		this.cellId = cellId;
 	}
 
@@ -97,7 +96,7 @@ public class BaseData implements Serializable {
 		return this.dateTime;
 	}
 
-	public void setDateTime(Date dateTime) {
+	public void setDateTime(final Date dateTime) {
 		this.dateTime = dateTime;
 	}
 
@@ -105,7 +104,7 @@ public class BaseData implements Serializable {
 		return this.duration;
 	}
 
-	public void setDuration(int duration) {
+	public void setDuration(final int duration) {
 		this.duration = duration;
 	}
 
@@ -113,7 +112,7 @@ public class BaseData implements Serializable {
 		return this.hier3Id;
 	}
 
-	public void setHier3Id(String hier3Id) {
+	public void setHier3Id(final String hier3Id) {
 		this.hier3Id = hier3Id;
 	}
 
@@ -121,7 +120,7 @@ public class BaseData implements Serializable {
 		return this.hier32Id;
 	}
 
-	public void setHier32Id(String hier32Id) {
+	public void setHier32Id(final String hier32Id) {
 		this.hier32Id = hier32Id;
 	}
 
@@ -129,7 +128,7 @@ public class BaseData implements Serializable {
 		return this.hier321Id;
 	}
 
-	public void setHier321Id(String hier321Id) {
+	public void setHier321Id(final String hier321Id) {
 		this.hier321Id = hier321Id;
 	}
 
@@ -137,7 +136,7 @@ public class BaseData implements Serializable {
 		return this.imsi;
 	}
 
-	public void setImsi(String imsi) {
+	public void setImsi(final String imsi) {
 		this.imsi = imsi;
 	}
 
@@ -145,7 +144,7 @@ public class BaseData implements Serializable {
 		return this.neVersion;
 	}
 
-	public void setNeVersion(String neVersion) {
+	public void setNeVersion(final String neVersion) {
 		this.neVersion = neVersion;
 	}
 
@@ -153,7 +152,7 @@ public class BaseData implements Serializable {
 //		return this.eventCause;
 //	}
 
-	public void setEventCause(EventCause eventCause) {
+	public void setEventCause(final EventCause eventCause) {
 		this.eventCause = eventCause;
 	}
 
@@ -161,7 +160,7 @@ public class BaseData implements Serializable {
 //		return this.ue;
 //	}
 
-	public void setUe(Ue ue) {
+	public void setUe(final Ue ue) {
 		this.ue = ue;
 	}
 
@@ -169,7 +168,7 @@ public class BaseData implements Serializable {
 //		return this.mccMnc;
 //	}
 
-	public void setMccMnc(MccMnc mccMnc) {
+	public void setMccMnc(final MccMnc mccMnc) {
 		this.mccMnc = mccMnc;
 	}
 
@@ -177,12 +176,12 @@ public class BaseData implements Serializable {
 //		return this.failureClassBean;
 //	}
 
-	public void setFailureClassBean(FailureClass failureClassBean) {
+	public void setFailureClassBean(final FailureClass failureClassBean) {
 		this.failureClassBean = failureClassBean;
 	}
 
-	public void createRow(ArrayList<String> cells, EventCause eventCauseRow,
-			FailureClass failureClassRow, Ue ueRow, MccMnc mccMncRow) {
+	public void createRow(final List<String> cells, final EventCause eventCauseRow,
+			final FailureClass failureClassRow, final Ue ueRow, final MccMnc mccMncRow) {
 		try {
 			this.setDateTime(new SimpleDateFormat("dd/MM/yy HH:mm").parse(cells.get(0)));
 

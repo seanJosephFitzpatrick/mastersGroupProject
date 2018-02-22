@@ -3,8 +3,6 @@ package com.mase2.mase2_project.model;
 import java.io.Serializable;
 
 import javax.persistence.*;
-import javax.validation.constraints.Pattern;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,14 +27,11 @@ public class MccMnc implements Serializable {
 	private String operator;
 
 
-	public MccMnc() {
-	}
-
 	public MccMncPK getId() {
 		return this.id;
 	}
 
-	public void setId(MccMncPK id) {
+	public void setId(final MccMncPK id) {
 		this.id = id;
 	}
 
@@ -44,7 +39,7 @@ public class MccMnc implements Serializable {
 		return this.country;
 	}
 
-	public void setCountry(String country) {
+	public void setCountry(final String country) {
 		this.country = country;
 	}
 
@@ -52,12 +47,12 @@ public class MccMnc implements Serializable {
 		return this.operator;
 	}
 
-	public void setOperator(String operator) {
+	public void setOperator(final String operator) {
 		this.operator = operator;
 	}
 
-	public void createRow(ArrayList<String> cells) {
-		MccMncPK mccMncPk = new MccMncPK();
+	public void createRow(final List<String> cells) {
+		final MccMncPK mccMncPk = new MccMncPK();
 		mccMncPk.setMcc(cells.get(0));
 		mccMncPk.setMnc(cells.get(1));
         this.setId(mccMncPk);

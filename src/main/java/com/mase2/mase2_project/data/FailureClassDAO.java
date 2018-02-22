@@ -15,15 +15,15 @@ import com.mase2.mase2_project.model.FailureClass;
 public class FailureClassDAO {
 	
 	@PersistenceContext
-    private EntityManager em;
+    private EntityManager entityManager;
     
 	public List<FailureClass> getAllFailureClasses() {
-    	Query query=em.createQuery("SELECT w FROM FailureClass w");
+		final Query query=entityManager.createQuery("SELECT w FROM FailureClass w");
         return query.getResultList();
     }
 	
-	public void save(FailureClass failureClass){
-		em.persist(failureClass);
+	public void save(final FailureClass failureClass){
+		entityManager.persist(failureClass);
 	}
 	
 	/*

@@ -1,23 +1,18 @@
 package com.mase2.mase2_project.util;
 
-import java.util.ArrayList;
+
+import java.util.List;
 
 public class InvalidEntity {
-	private ArrayList<String> cells;
+	private List<String> cells;
 	String errorDescription;
-	
-	public InvalidEntity(){
-		
-	}
-	
-	
 	
 
 //	public ArrayList<String> getCells() {
 //		return cells;
 //	}
 
-	public void setCells(ArrayList<String> cells) {
+	public void setCells(final List<String> cells) {
 		this.cells = cells;
 	}
 
@@ -25,7 +20,7 @@ public class InvalidEntity {
 //		return errorDescription;
 //	}
 
-	public void setErrorDescription(String errorDescription) {
+	public void setErrorDescription(final String errorDescription) {
 		this.errorDescription = errorDescription;
 	}
 

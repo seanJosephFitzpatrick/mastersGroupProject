@@ -15,10 +15,10 @@ import com.mase2.mase2_project.model.Ue;
 @LocalBean
 public class UeDAO {
 	@PersistenceContext
-    private EntityManager em;
+    private EntityManager entityManager;
     
 	public List<Ue> getAllUes() {
-    	Query query=em.createQuery("SELECT w FROM Ue w");
+		final Query query=entityManager.createQuery("SELECT w FROM Ue w");
         return query.getResultList();
     }
 	
@@ -53,8 +53,8 @@ public class UeDAO {
 //        return em.find(Ue.class, tac);
 //    }
 	
-	public void save(Ue ue){
-		em.persist(ue);
+	public void save(final Ue ue){
+		entityManager.persist(ue);
 	}
 	
 //	public void update(Ue ue) {

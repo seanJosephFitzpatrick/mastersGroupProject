@@ -12,35 +12,33 @@ public class EventCausePK implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
-	@Column(name="event_id", columnDefinition="varchar(4) not null default '4099'")
+	@Column(name="event_id")
 	private String eventId="4099";
 
 	@Column(name="event_code")
 	private String eventCode;
 
-	public EventCausePK() {
-	}
 	public String getEventId() {
 		return this.eventId;
 	}
-	public void setEventId(String eventId) {
+	public void setEventId(final String eventId) {
 		this.eventId = eventId;
 	}
 	public String getEventCode() {
 		return this.eventCode;
 	}
-	public void setEventCode(String eventCode) {
+	public void setEventCode(final String eventCode) {
 		this.eventCode = eventCode;
 	}
 
-	public boolean equals(Object other) {
+	public boolean equals(final Object other) {
 		if (this == other) {
 			return true;
 		}
 		if (!(other instanceof EventCausePK)) {
 			return false;
 		}
-		EventCausePK castOther = (EventCausePK)other;
+		final EventCausePK castOther = (EventCausePK)other;
 		return 
 			this.eventId.equals(castOther.eventId)
 			&& this.eventCode.equals(castOther.eventCode);

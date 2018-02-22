@@ -11,31 +11,31 @@ import javax.persistence.PersistenceContext;
 public class UtilsDAO {
 
     @PersistenceContext
-    private EntityManager em;
+    private EntityManager entityManager;
     
 	public void deleteTable(){
-		em.createQuery("DELETE FROM MccMnc").executeUpdate();
-		em.createNativeQuery("ALTER TABLE mcc_mnc AUTO_INCREMENT=1")
+		entityManager.createQuery("DELETE FROM MccMnc").executeUpdate();
+		entityManager.createNativeQuery("ALTER TABLE mcc_mnc AUTO_INCREMENT=1")
 		.executeUpdate();
 	}
 	
 	public void deleteTableEventCause(){
-		em.createQuery("DELETE FROM EventCause").executeUpdate();
-		em.createNativeQuery("ALTER TABLE event_cause AUTO_INCREMENT=1")
+		entityManager.createQuery("DELETE FROM EventCause").executeUpdate();
+		entityManager.createNativeQuery("ALTER TABLE event_cause AUTO_INCREMENT=1")
 		.executeUpdate();		
 	}
 
 	public void deleteTableBaseData(){
-		em.createQuery("DELETE FROM BaseData").executeUpdate();
-		em.createNativeQuery("ALTER TABLE base_data AUTO_INCREMENT=1").executeUpdate();
+		entityManager.createQuery("DELETE FROM BaseData").executeUpdate();
+		entityManager.createNativeQuery("ALTER TABLE base_data AUTO_INCREMENT=1").executeUpdate();
 	}
 
 	public void deleteTableFailureClass(){
-		em.createQuery("DELETE FROM FailureClass").executeUpdate();
-		em.createNativeQuery("ALTER TABLE failure_class AUTO_INCREMENT=1").executeUpdate();	
+		entityManager.createQuery("DELETE FROM FailureClass").executeUpdate();
+		entityManager.createNativeQuery("ALTER TABLE failure_class AUTO_INCREMENT=1").executeUpdate();	
 	}
 	
 	public void deleteTableUe(){
-		em.createQuery("DELETE FROM Ue").executeUpdate();		
+		entityManager.createQuery("DELETE FROM Ue").executeUpdate();		
 	}
 }

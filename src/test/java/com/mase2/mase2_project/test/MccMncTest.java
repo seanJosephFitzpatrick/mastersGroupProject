@@ -18,7 +18,6 @@ import org.junit.runner.RunWith;
 
 import com.mase2.mase2_project.data.FailureClassDAO;
 import com.mase2.mase2_project.data.MccMncDAO;
-import com.mase2.mase2_project.data.UeDAO;
 import com.mase2.mase2_project.model.BaseData;
 import com.mase2.mase2_project.model.EventCause;
 import com.mase2.mase2_project.model.EventCausePK;
@@ -28,7 +27,6 @@ import com.mase2.mase2_project.model.MccMncPK;
 import com.mase2.mase2_project.model.Ue;
 import com.mase2.mase2_project.rest.JaxRsActivator;
 import com.mase2.mase2_project.rest.MccMncWS;
-import com.mase2.mase2_project.rest.UeWS;
 import com.mase2.mase2_project.test.utils.UtilsDAO;
 
 
@@ -54,8 +52,6 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 			}
 
 			 
-			@EJB
-			private MccMncWS mcc_mncWS;
 			
 			@EJB
 			private MccMncDAO mcc_mncDAO;
@@ -69,7 +65,7 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 			public void setUp() {
 				utilsDAO.deleteTableBaseData();
 				utilsDAO.deleteTable();
-				MccMncPK mccMncPK = new MccMncPK();
+				final MccMncPK mccMncPK = new MccMncPK();
 				mccMncPK.setMcc("238");
 				mccMncPK.setMnc("1");
 				mccMnc=new MccMnc();
@@ -81,12 +77,12 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 			
 			@Test
 			public void testGetAllMccMncs() {
-				List<MccMnc> mccMncList = mcc_mncDAO.getAllMcc_Mncs();
+				final List<MccMnc> mccMncList = mcc_mncDAO.getAllMcc_Mncs();
 				assertEquals("Data fetch = data persisted", mccMncList.size(), 1);
 			}
 			@Test
 			public void testMccMncPKEqual(){
-				MccMncPK mccMncPK = new MccMncPK();
+				final MccMncPK mccMncPK = new MccMncPK();
 				mccMncPK.setMcc("238");
 				mccMncPK.setMnc("1");
 				assertTrue(mccMncPK.equals(mccMnc.getId()));
@@ -95,11 +91,11 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 			}
 			@Test
 			public void testMccMncPKUnequal(){
-				MccMncPK mccMncPK = new MccMncPK();
+				final MccMncPK mccMncPK = new MccMncPK();
 				mccMncPK.setMcc("237");
 				mccMncPK.setMnc("1");
 				assertFalse(mccMncPK.equals(mccMnc.getId()));
-				String test="";
+				final String test="";
 				assertFalse(mccMncPK.equals(test));
 				
 			}

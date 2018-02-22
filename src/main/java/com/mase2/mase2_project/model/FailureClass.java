@@ -3,9 +3,6 @@ package com.mase2.mase2_project.model;
 import java.io.Serializable;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
-
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -25,15 +22,11 @@ public class FailureClass implements Serializable {
 
 	private String description;
 
-
-	public FailureClass() {
-	}
-
 	public String getFailureClass() {
 		return this.failureClass;
 	}
 
-	public void setFailureClass(String failureClass) {
+	public void setFailureClass(final String failureClass) {
 		this.failureClass = failureClass;
 	}
 
@@ -41,13 +34,13 @@ public class FailureClass implements Serializable {
 		return this.description;
 	}
 
-	public void setDescription(String description) {
+	public void setDescription(final String description) {
 		this.description = description;
 	}
 
 
 
-	public void createRow(ArrayList<String> cells) {
+	public void createRow(final List<String> cells) {
 		this.setFailureClass(cells.get(0));
 		this.setDescription(cells.get(1));
 		

@@ -1,6 +1,6 @@
 package com.mase2.mase2_project.rest;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 import com.mase2.mase2_project.model.BaseData;
@@ -8,8 +8,6 @@ import com.mase2.mase2_project.model.EventCause;
 import com.mase2.mase2_project.model.FailureClass;
 import com.mase2.mase2_project.model.MccMnc;
 import com.mase2.mase2_project.model.Ue;
-import com.mase2.mase2_project.util.FileLogger;
-import com.mase2.mase2_project.util.InvalidEntity;
 
 public class Validator {
 
@@ -24,7 +22,7 @@ public class Validator {
 
 
 
-	public boolean validateMcc_Mnc(MccMnc mccMnc) {
+	public boolean validateMcc_Mnc(final MccMnc mccMnc) {
 		boolean validMccMnc = false;
 		if((mccMnc.getCountry().matches("^[a-zA-Z -]+$")) && (mccMnc.getOperator().matches("^[a-zA-Z 0-9/&. -]+$")) &&
 				(mccMnc.getId().getMcc().matches("[0-9]+")) && (mccMnc.getId().getMnc().matches("[0-9]+"))){
@@ -33,7 +31,7 @@ public class Validator {
 		return validMccMnc;
 	}
 
-	public boolean validateBase_data(BaseData baseData) {
+	public boolean validateBase_data(final BaseData baseData) {
 		boolean validMccMnc = false;
 		if((baseData.getCellId().matches("[0-9]+")) && (Integer.toString(baseData.getDuration()).matches("[0-9]+")) &&
 				(baseData.getNeVersion().matches("[0-9 a-zA-Z]+")) && (baseData.getImsi().matches("[0-9]+"))
@@ -43,7 +41,7 @@ public class Validator {
 		return validMccMnc;
 	}
 
-	public boolean validateEventCause(EventCause eventCause) {
+	public boolean validateEventCause(final EventCause eventCause) {
 		boolean validEventCause = false;
 		if((eventCause.getId().getEventCode().matches("[0-9]+")) && (eventCause.getId().getEventId().matches("[0-9]+")) &&
 				(eventCause.getDescription().matches("^[a-zA-Z 0-9 -]+$"))){
@@ -53,7 +51,7 @@ public class Validator {
 		return validEventCause;
 	}
 
-	public boolean validateFailureClass(FailureClass failureClass) {
+	public boolean validateFailureClass(final FailureClass failureClass) {
 		boolean validFailureClass = false;
 		if(failureClass.getFailureClass().matches("[0-4]") && (failureClass.getDescription().matches("^[a-zA-Z -]+$"))){
 			validFailureClass = true;
@@ -62,7 +60,7 @@ public class Validator {
 		return validFailureClass;
 	} 
 
-	public boolean validateUe(Ue ue) {
+	public boolean validateUe(final Ue ue) {
 		boolean validUe = false;
 		if((ue.getTac().matches("[0-9]+")) && (ue.getMarketingName().matches("[a-zA-Z-() 0-9/.]+")) &&
 				(ue.getManufacturer().matches("[a-zA-Z-(),& 0-9/.]+")) && (ue.getAccessCapability().matches("(([a-zA-Z-() 0-9/.])+(,)?)+")) &&
@@ -74,8 +72,8 @@ public class Validator {
 		return validUe;
 	}
 
-	public boolean checkMccMncForeignKeys(ArrayList<String> cells) {
-		for (MccMnc mccMnc : mccMncData) {
+	public boolean checkMccMncForeignKeys(final List<String> cells) {
+		for (final MccMnc mccMnc : mccMncData) {
 			if (cells.get(4).equalsIgnoreCase(mccMnc.getId().getMcc())) {
 				if (cells.get(5).equalsIgnoreCase(mccMnc.getId().getMnc())) {
 					mccMncRow = mccMnc;
@@ -88,8 +86,8 @@ public class Validator {
 		return false;
 	}
 
-	public boolean checkUeTypeForeignKeys(ArrayList<String> cells) {
-		for (Ue ue : ueData) {
+	public boolean checkUeTypeForeignKeys(final List<String> cells) {
+		for (final Ue ue : ueData) {
 			if (cells.get(3).equalsIgnoreCase(ue.getTac())) {
 				ueRow = ue;
 				return true;
@@ -98,12 +96,12 @@ public class Validator {
 		return false;
 	}
 
-	public boolean checkFailureClassForeignKeys(ArrayList<String> cells) {
+	public boolean checkFailureClassForeignKeys(final List<String> cells) {
 		if (cells.get(2).equalsIgnoreCase("(null)")) {
 			failureClassRow = null;
 			return true;
 		} else {
-			for (FailureClass failureClass : failureClassData) {
+			for (final FailureClass failureClass : failureClassData) {
 				if (cells.get(2).equalsIgnoreCase(failureClass.getFailureClass())) {
 					failureClassRow = failureClass;
 					return true;
@@ -114,9 +112,9 @@ public class Validator {
 
 	}
 
-	public boolean checkEventCauseForeignKeys(ArrayList<String> cells) {
+	public boolean checkEventCauseForeignKeys(final List<String> cells) {
 		if (cells.get(8).equalsIgnoreCase("(null)")) {
-			for (EventCause eventCause : eventCauseData) {
+			for (final EventCause eventCause : eventCauseData) {
 				if (cells.get(1).equalsIgnoreCase(eventCause.getId().getEventId())) {
 					// placeholder for future datasets
 					eventCauseRow = eventCause;
@@ -125,7 +123,7 @@ public class Validator {
 				}
 			}
 		} else {
-			for (EventCause eventCause : eventCauseData) {
+			for (final EventCause eventCause : eventCauseData) {
 				if (cells.get(1).equalsIgnoreCase(eventCause.getId().getEventId())) {
 					if (cells.get(8).equalsIgnoreCase(eventCause.getId().getEventCode())) {
 						eventCauseRow = eventCause;
@@ -160,7 +158,7 @@ public class Validator {
 		return failureClassData;
 	}
 
-	public void setFailureClassData(List<FailureClass> failureClassData) {
+	public void setFailureClassData(final List<FailureClass> failureClassData) {
 		this.failureClassData = failureClassData;
 	}
 
@@ -168,7 +166,7 @@ public class Validator {
 //		return eventCauseData;
 //	}
 
-	public void setEventCauseData(List<EventCause> eventCauseData) {
+	public void setEventCauseData(final List<EventCause> eventCauseData) {
 		this.eventCauseData = eventCauseData;
 	}
 
@@ -176,7 +174,7 @@ public class Validator {
 //		return mccMncData;
 //	}
 
-	public void setMccMncData(List<MccMnc> mccMncData) {
+	public void setMccMncData(final List<MccMnc> mccMncData) {
 		this.mccMncData = mccMncData;
 	}
 
@@ -184,7 +182,7 @@ public class Validator {
 //		return ueData;
 //	}
 
-	public void setUeData(List<Ue> ueData) {
+	public void setUeData(final List<Ue> ueData) {
 		this.ueData = ueData;
 	}
 

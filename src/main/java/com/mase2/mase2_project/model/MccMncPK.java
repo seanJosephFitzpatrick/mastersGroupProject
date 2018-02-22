@@ -19,29 +19,27 @@ public class MccMncPK implements Serializable {
 	@Pattern(regexp="[0-9]+", message ="{invalid mnc value mcc mnc table}")
 	private String mnc;
 
-	public MccMncPK() {
-	}
 	public String getMcc() {
 		return this.mcc;
 	}
-	public void setMcc(String mcc) {
+	public void setMcc(final String mcc) {
 		this.mcc = mcc;
 	}
 	public String getMnc() {
 		return this.mnc;
 	}
-	public void setMnc(String mnc) {
+	public void setMnc(final String mnc) {
 		this.mnc = mnc;
 	}
 
-	public boolean equals(Object other) {
+	public boolean equals(final Object other) {
 		if (this == other) {
 			return true;
 		}
 		if (!(other instanceof MccMncPK)) {
 			return false;
 		}
-		MccMncPK castOther = (MccMncPK)other;
+		final MccMncPK castOther = (MccMncPK)other;
 		return 
 			this.mcc.equals(castOther.mcc)
 			&& this.mnc.equals(castOther.mnc);
