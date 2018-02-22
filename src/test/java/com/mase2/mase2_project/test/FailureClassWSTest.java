@@ -69,7 +69,7 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 				//it should be possible to test with an in memory db for efficiency
 				utilsDAO.deleteTableBaseData();
 				utilsDAO.deleteTableFailureClass();
-				FailureClass failureClass=new FailureClass();
+				final FailureClass failureClass=new FailureClass();
 				failureClass.setFailureClass("2");
 				failureClass.setDescription("MT ACCESS");
 				failureClassDAO.save(failureClass);
@@ -77,11 +77,11 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 			
 			@Test
 			public void testGetAllFailureClassWS() {
-				Response response = failureClassWS.findAllFailureClasses();
+				final Response response = failureClassWS.findAllFailureClasses();
 				List<FailureClass> failureClassList = (List<FailureClass>) response.getEntity();
 				assertEquals(HttpStatus.SC_OK, response.getStatus());				
 				assertEquals("Data fetch = data persisted", failureClassList.size(), 1);
-				FailureClass failureClass = failureClassList.get(0);
+				final FailureClass failureClass = failureClassList.get(0);
 				assertEquals("2",failureClass.getFailureClass());
 				assertEquals("MT ACCESS",failureClass.getDescription());
 			

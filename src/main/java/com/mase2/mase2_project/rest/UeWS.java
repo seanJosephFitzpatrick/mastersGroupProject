@@ -33,7 +33,7 @@ public class UeWS {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response findAllUes() {
-		List<Ue> ues=ueDao.getAllUes();
+		final List<Ue> ues=ueDao.getAllUes();
 		return Response.status(200).entity(ues).build();
 	}
 	

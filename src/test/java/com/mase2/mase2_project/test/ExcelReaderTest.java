@@ -2,7 +2,7 @@ package com.mase2.mase2_project.test;
 
 import static org.junit.Assert.assertEquals;
 
-import java.io.IOException;
+
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -41,10 +41,6 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 import com.mase2.mase2_project.util.FileLogger;
 import com.mase2.mase2_project.util.InvalidEntity;
 import com.mase2.mase2_project.util.TableClearer;
-
-import jxl.Cell;
-import jxl.Sheet;
-import jxl.Workbook;
 
 
     //    @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -87,16 +83,11 @@ import jxl.Workbook;
             }
 
              
-            @EJB
-            private UeWS ueWS;
+           
             @EJB
             private UeDAO ueDAO;
             @EJB
-            private UtilsDAO utilsDao;
-            @EJB
             private ExcelReader excelReader;
-        	@EJB
-        	private BaseDataEndpoint baseDataEndpoint;
         	@EJB
         	private BaseDataDAO baseDataDao;
         	@EJB
@@ -105,12 +96,6 @@ import jxl.Workbook;
         	private EventCauseDAO eventCauseDAO;
         	@EJB
         	private MccMncDAO mcc_mncDAO;
-        	@EJB
-        	private FailureClassWS failureClassWS;
-        	@EJB
-        	private MccMncWS mcc_mncWS;
-        	@EJB
-        	private EventCauseEndpoint eventCauseEndpoint;
         	
         	@Before
         	public void setup(){
@@ -120,22 +105,22 @@ import jxl.Workbook;
             
             @Test
             public void testImportAllData() {
-                List<Ue> ueList = ueDAO.getAllUes();
+            	final List<Ue> ueList = ueDAO.getAllUes();
                 assertEquals("Data fetch = data persisted", ueList.size(), 99);
-        		List<BaseData> baseDataList = baseDataDao.getAllBaseData();
+                final List<BaseData> baseDataList = baseDataDao.getAllBaseData();
         		assertEquals("Data fetch = data persisted", baseDataList.size(), 800);
-				List<FailureClass> failureClassList = failureClassDAO.getAllFailureClasses();
+        		final List<FailureClass> failureClassList = failureClassDAO.getAllFailureClasses();
 				assertEquals("Data fetch = data persisted", failureClassList.size(), 5);
-				List<EventCause> eventCauseList = eventCauseDAO.getAllEventCauses();
+				final List<EventCause> eventCauseList = eventCauseDAO.getAllEventCauses();
 				assertEquals("Data fetch = data persisted", eventCauseList.size(), 80);
-				List<MccMnc> mccMncList = mcc_mncDAO.getAllMcc_Mncs();
+				final List<MccMnc> mccMncList = mcc_mncDAO.getAllMcc_Mncs();
 				assertEquals("Data fetch = data persisted", mccMncList.size(), 41);
             }
             
         	@Test
         	public void testImportBaseData() {
         		excelReader.importBaseData();
-        		List<BaseData> baseDataList = baseDataDao.getAllBaseData();
+        		final List<BaseData> baseDataList = baseDataDao.getAllBaseData();
         		assertEquals("Data fetch = data persisted", baseDataList.size(), 800);
 
         	}

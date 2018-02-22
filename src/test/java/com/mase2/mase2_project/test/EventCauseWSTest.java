@@ -74,7 +74,7 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 				//it should be possible to test with an in memory db for efficiency
 				utilsDAO.deleteTableBaseData();
 				utilsDAO.deleteTableEventCause();
-				EventCausePK eventCausePK = new EventCausePK();
+				final EventCausePK eventCausePK = new EventCausePK();
 				eventCausePK.setEventId("4097");
 				eventCausePK.setEventCode("3");
 				eventCause=new EventCause();
@@ -85,11 +85,11 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 			
 			@Test
 			public void testGetAllEventCauses() {
-				Response response = eventCauseEndpoint.listAll();
+				final Response response = eventCauseEndpoint.listAll();
 				List<EventCause> eventCauseList = (List<EventCause>) response.getEntity();
 				assertEquals(HttpStatus.SC_OK, response.getStatus());				
 				assertEquals("Data fetch = data persisted", eventCauseList.size(), 1);
-				EventCause eventCause = eventCauseList.get(0);
+				final EventCause eventCause = eventCauseList.get(0);
 				assertEquals("4097", eventCause.getId().getEventId());
 				assertEquals("3", eventCause.getId().getEventCode());
 				assertEquals("S1 SIG CONN SETUP-S1 INTERFACE DOWN", eventCause.getDescription());
@@ -97,7 +97,7 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 			}
 			@Test
 			public void testMccMncPKEqual(){
-				EventCausePK eventCausePK = new EventCausePK();
+				final EventCausePK eventCausePK = new EventCausePK();
 				eventCausePK.setEventId("4097");
 				eventCausePK.setEventCode("3");
 				assertTrue(eventCausePK.equals(eventCause.getId()));
@@ -106,11 +106,11 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 			}
 			@Test
 			public void testMccMncPKUnequal(){
-				EventCausePK eventCausePK = new EventCausePK();
+				final EventCausePK eventCausePK = new EventCausePK();
 				eventCausePK.setEventId("4037");
 				eventCausePK.setEventCode("3");
 				assertFalse(eventCausePK.equals(eventCause.getId()));
-				String test="";
+				final String test="";
 				assertFalse(eventCausePK.equals(test));
 				
 			}

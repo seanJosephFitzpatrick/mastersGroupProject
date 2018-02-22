@@ -17,9 +17,9 @@ public class ValidatorTest {
 
 	@Test
 	public void testMccMncValidData() {
-		MccMnc mccMnc = new MccMnc();
-		MccMncPK mccMncPK = new MccMncPK();
-		Validator validator = new Validator();
+		final MccMnc mccMnc = new MccMnc();
+		final MccMncPK mccMncPK = new MccMncPK();
+		final Validator validator = new Validator();
 		mccMnc.setCountry("Denmark");
 		mccMnc.setOperator("TDK");
 		mccMncPK.setMcc("123");
@@ -30,9 +30,9 @@ public class ValidatorTest {
 	
 	@Test
 	public void testMccMncInvalidData() {
-		MccMnc mccMnc = new MccMnc();
-		MccMncPK mccMncPK = new MccMncPK();
-		Validator validator = new Validator();
+		final MccMnc mccMnc = new MccMnc();
+		final MccMncPK mccMncPK = new MccMncPK();
+		final Validator validator = new Validator();
 		mccMnc.setCountry("123");
 		mccMnc.setOperator("TDK");
 		mccMncPK.setMcc("123");
@@ -43,9 +43,9 @@ public class ValidatorTest {
 	
 	@Test
 	public void testEventCauseValidData() {
-		EventCause eventCause = new EventCause();
-		EventCausePK eventCausePk = new EventCausePK();
-		Validator validator = new Validator();
+		final EventCause eventCause = new EventCause();
+		final EventCausePK eventCausePk = new EventCausePK();
+		final Validator validator = new Validator();
 		eventCause.setDescription("RRC CONN SETUP-SUCCESS");
 		eventCausePk.setEventCode("7");
 		eventCausePk.setEventId("4097");
@@ -55,9 +55,9 @@ public class ValidatorTest {
 	
 	@Test
 	public void testEventCauseInvalidData() {
-		EventCause eventCause = new EventCause();
-		EventCausePK eventCausePk = new EventCausePK();
-		Validator validator = new Validator();
+		final EventCause eventCause = new EventCause();
+		final EventCausePK eventCausePk = new EventCausePK();
+		final Validator validator = new Validator();
 		eventCause.setDescription("RRC CONN SETUP-SUCCESS");
 		eventCausePk.setEventCode("7");
 		eventCausePk.setEventId("text");
@@ -67,8 +67,8 @@ public class ValidatorTest {
 	
 	@Test
 	public void testFailureClassValidData() {
-		FailureClass failureClass = new FailureClass();
-		Validator validator = new Validator();
+		final FailureClass failureClass = new FailureClass();
+		final Validator validator = new Validator();
 		failureClass.setDescription("EMERGENCY");
 		failureClass.setFailureClass("3");
 		assertTrue(validator.validateFailureClass(failureClass));
@@ -76,8 +76,8 @@ public class ValidatorTest {
 	
 	@Test
 	public void testFailureClassInvalidData() {
-		FailureClass failureClass = new FailureClass();
-		Validator validator = new Validator();
+		final FailureClass failureClass = new FailureClass();
+		final Validator validator = new Validator();
 		failureClass.setDescription("EMERGENCY");
 		failureClass.setFailureClass("5");
 		assertFalse(validator.validateFailureClass(failureClass));
@@ -85,8 +85,8 @@ public class ValidatorTest {
 	
 	@Test
 	public void testUeValidData() {
-		Ue ue = new Ue();
-		Validator validator = new Validator();
+		final Ue ue = new Ue();
+		final Validator validator = new Validator();
 		ue.setTac("100100");
 		ue.setMarketingName("G410");
 		ue.setManufacturer("Mitsubishi");
@@ -101,8 +101,8 @@ public class ValidatorTest {
 	
 	@Test
 	public void testUeInvalidData() {
-		Ue ue = new Ue();
-		Validator validator = new Validator();
+		final Ue ue = new Ue();
+		final Validator validator = new Validator();
 		ue.setTac("Wrong");
 		ue.setMarketingName("G41%%0");
 		ue.setManufacturer("Mitsu*&bishi");

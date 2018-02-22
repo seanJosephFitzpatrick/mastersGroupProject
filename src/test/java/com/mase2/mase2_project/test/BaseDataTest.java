@@ -1,8 +1,6 @@
 package com.mase2.mase2_project.test;
 
 import static org.junit.Assert.*;
-
-import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -63,8 +61,7 @@ public class BaseDataTest {
 	}
 	
 	 
-	@EJB
-	private BaseDataEndpoint baseDataEndpoint;
+	
 	@EJB
 	private BaseDataDAO baseDataDao;
 	@EJB
@@ -87,7 +84,7 @@ public class BaseDataTest {
 	@Before
 	public void setUp() {
 		utilsDAO.deleteTableBaseData();
-		BaseData baseData = new BaseData();
+		final BaseData baseData = new BaseData();
 		baseData.setDateTime(new Date());
 		baseData.setCellId("123");
 		baseData.setDuration(12);
@@ -96,10 +93,8 @@ public class BaseDataTest {
 		baseData.setHier3Id("333333333");
 		baseData.setImsi("1232456");
 		baseData.setNeVersion("joe");
-		
-		
 		utilsDAO.deleteTable();
-		MccMncPK mccMncPK = new MccMncPK();
+		final MccMncPK mccMncPK = new MccMncPK();
 		mccMncPK.setMcc("238");
 		mccMncPK.setMnc("1");
 		mccMnc=new MccMnc();
@@ -109,7 +104,7 @@ public class BaseDataTest {
 		mcc_mncDAO.save(mccMnc);
 		baseData.setMccMnc(mccMnc);
 		utilsDAO.deleteTableEventCause();
-		EventCausePK eventCausePK = new EventCausePK();
+		final EventCausePK eventCausePK = new EventCausePK();
 		eventCausePK.setEventId("4098");
 		eventCausePK.setEventCode("1");
 		eventCausePK.setEventId("4");
@@ -142,14 +137,14 @@ public class BaseDataTest {
 	
 	@Test
 	public void testGetAllBaseData() {
-		List<BaseData> baseDataList = baseDataDao.getAllBaseData();
+		final List<BaseData> baseDataList = baseDataDao.getAllBaseData();
 		assertEquals("Data fetch = data persisted", baseDataList.size(), 1);
 	}
 	
 	@Test
 	public void testCreateRowException() {
-		BaseData baseData = new BaseData();
-		ArrayList<String> cells = new ArrayList<String>();
+		final BaseData baseData = new BaseData();
+		final ArrayList<String> cells = new ArrayList<String>();
 		cells.add("test date parse exception");
 		cells.add("test date parse exception");
 		cells.add("test date parse exception");

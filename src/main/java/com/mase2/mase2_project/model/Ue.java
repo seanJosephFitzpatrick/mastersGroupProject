@@ -3,9 +3,6 @@ package com.mase2.mase2_project.model;
 import java.io.Serializable;
 
 import javax.persistence.*;
-import javax.validation.constraints.Pattern;
-
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -45,14 +42,12 @@ public class Ue implements Serializable {
 	@Column(name="input_mode")
 	private String inputType;
 
-	public Ue() {
-	}
 
 	public String getTac() {
 		return this.tac;
 	}
 
-	public void setTac(String tac) {
+	public void setTac(final String tac) {
 		this.tac = tac;
 	}
 
@@ -60,7 +55,7 @@ public class Ue implements Serializable {
 		return this.accessCapability;
 	}
 
-	public void setAccessCapability(String accessCapability) {
+	public void setAccessCapability(final String accessCapability) {
 		this.accessCapability = accessCapability;
 	}
 
@@ -68,7 +63,7 @@ public class Ue implements Serializable {
 		return this.manufacturer;
 	}
 
-	public void setManufacturer(String manufacturer) {
+	public void setManufacturer(final String manufacturer) {
 		this.manufacturer = manufacturer;
 	}
 
@@ -76,7 +71,7 @@ public class Ue implements Serializable {
 		return this.marketingName;
 	}
 
-	public void setMarketingName(String marketingName) {
+	public void setMarketingName(final String marketingName) {
 		this.marketingName = marketingName;
 	}
 
@@ -84,7 +79,7 @@ public class Ue implements Serializable {
 		return model;
 	}
 
-	public void setModel(String model) {
+	public void setModel(final String model) {
 		this.model = model;
 	}
 
@@ -92,7 +87,7 @@ public class Ue implements Serializable {
 		return vendorName;
 	}
 
-	public void setVendorName(String vendorName) {
+	public void setVendorName(final String vendorName) {
 		this.vendorName = vendorName;
 	}
 
@@ -100,7 +95,7 @@ public class Ue implements Serializable {
 		return ueType;
 	}
 
-	public void setUeType(String ueType) {
+	public void setUeType(final String ueType) {
 		this.ueType = ueType;
 	}
 
@@ -108,7 +103,7 @@ public class Ue implements Serializable {
 		return os;
 	}
 
-	public void setOs(String os) {
+	public void setOs(final String os) {
 		this.os = os;
 	}
 
@@ -116,11 +111,11 @@ public class Ue implements Serializable {
 		return inputType;
 	}
 
-	public void setInputType(String inputType) {
+	public void setInputType(final String inputType) {
 		this.inputType = inputType;
 	}
 
-	public void createRow(ArrayList<String> cells) {
+	public void createRow(final List<String> cells) {
 		this.setTac(cells.get(0));
 		this.setMarketingName(cells.get(1));
 		this.setManufacturer(cells.get(2));

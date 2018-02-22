@@ -51,9 +51,6 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 
 			}
 
-			 
-			@EJB
-			private EventCauseEndpoint eventCauseEndpoint;
 			
 			@EJB
 			private EventCauseDAO eventCauseDAO;
@@ -68,10 +65,10 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 				//it should be possible to test with an in memory db for efficiency
 				utilsDAO.deleteTableBaseData();
 				utilsDAO.deleteTableEventCause();
-				EventCausePK eventCausePK = new EventCausePK();
+				final EventCausePK eventCausePK = new EventCausePK();
 				eventCausePK.setEventId("4097");
 				eventCausePK.setEventCode("3");
-				EventCause eventCause=new EventCause();
+				final EventCause eventCause=new EventCause();
 				eventCause.setId(eventCausePK);
 				eventCause.setDescription("S1 SIG CONN SETUP-S1 INTERFACE DOWN");
 				eventCauseDAO.save(eventCause);
@@ -79,7 +76,7 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 			
 			@Test
 			public void testGetAllEventCauses() {
-				List<EventCause> eventCauseList = eventCauseDAO.getAllEventCauses();
+				final List<EventCause> eventCauseList = eventCauseDAO.getAllEventCauses();
 				assertEquals("Data fetch = data persisted", eventCauseList.size(), 1);
 			}
 			
