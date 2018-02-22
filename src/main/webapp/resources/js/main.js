@@ -42,9 +42,9 @@ var renderPopUp = function(data) {
 			.html(
 					'<div class="alert alert-success alert-dismissable">'
 							+ '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
-							+ '<strong>Success!</strong> '+data[0]+ ' rows ware imported. '
-							+ data[1]+ ' rows ware excluded'
-							+ '</div> ');
+							+ '<strong>Success!</strong> '+data[0]+ ' rows were imported. '
+							+ data[1]+ ' rows were excluded.'
+							+ ' See log file for details</div> ');
 	cleenAllElements();
 
 };

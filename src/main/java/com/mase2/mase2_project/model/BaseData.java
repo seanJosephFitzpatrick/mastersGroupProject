@@ -76,13 +76,13 @@ public class BaseData implements Serializable {
 	private FailureClass failureClassBean;
 
 
-//	public int getBaseDataId() {
-//		return this.baseDataId;
-//	}
-//
-//	public void setBaseDataId(int baseDataId) {
-//		this.baseDataId = baseDataId;
-//	}
+	public int getBaseDataId() {
+		return this.baseDataId;
+	}
+
+	public void setBaseDataId(int baseDataId) {
+		this.baseDataId = baseDataId;
+	}
 
 	public String getCellId() {
 		return this.cellId;
@@ -148,33 +148,33 @@ public class BaseData implements Serializable {
 		this.neVersion = neVersion;
 	}
 
-//	public EventCause getEventCause() {
-//		return this.eventCause;
-//	}
+	public EventCause getEventCause() {
+		return this.eventCause;
+	}
 
 	public void setEventCause(final EventCause eventCause) {
 		this.eventCause = eventCause;
 	}
 
-//	public Ue getUe() {
-//		return this.ue;
-//	}
+	public Ue getUe() {
+		return this.ue;
+	}
 
 	public void setUe(final Ue ue) {
 		this.ue = ue;
 	}
 
-//	public MccMnc getMccMnc() {
-//		return this.mccMnc;
-//	}
+	public MccMnc getMccMnc() {
+		return this.mccMnc;
+	}
 
 	public void setMccMnc(final MccMnc mccMnc) {
 		this.mccMnc = mccMnc;
 	}
 
-//	public FailureClass getFailureClassBean() {
-//		return this.failureClassBean;
-//	}
+	public FailureClass getFailureClassBean() {
+		return this.failureClassBean;
+	}
 
 	public void setFailureClassBean(final FailureClass failureClassBean) {
 		this.failureClassBean = failureClassBean;
