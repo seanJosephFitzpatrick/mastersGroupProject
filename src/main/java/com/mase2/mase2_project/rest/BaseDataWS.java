@@ -27,7 +27,7 @@ import com.mase2.mase2_project.model.BaseData;
 @Path("/basedatas")
 @Stateless
 @LocalBean
-public class BaseDataEndpoint {
+public class BaseDataWS {
 	
 	@EJB
 	private BaseDataDAO baseDataDAO;

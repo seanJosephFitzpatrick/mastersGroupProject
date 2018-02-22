@@ -30,8 +30,8 @@ import com.mase2.mase2_project.model.FailureClass;
 import com.mase2.mase2_project.model.MccMnc;
 import com.mase2.mase2_project.model.MccMncPK;
 import com.mase2.mase2_project.model.Ue;
-import com.mase2.mase2_project.rest.BaseDataEndpoint;
-import com.mase2.mase2_project.rest.EventCauseEndpoint;
+import com.mase2.mase2_project.rest.BaseDataWS;
+import com.mase2.mase2_project.rest.EventCauseWS;
 import com.mase2.mase2_project.rest.JaxRsActivator;
 import com.mase2.mase2_project.rest.MccMncWS;
 import com.mase2.mase2_project.test.utils.UtilsDAO;
@@ -48,9 +48,9 @@ public class BaseDataTest {
 						MccMncPK.class,
 						JaxRsActivator.class,MccMncWS.class,
 						UtilsDAO.class, FailureClassDAO.class, BaseData.class, 
-						BaseDataDAO.class,BaseDataEndpoint.class, 
+						BaseDataDAO.class,BaseDataWS.class, 
 						EventCause.class, EventCausePK.class,EventCauseDAO.class,
-						EventCauseEndpoint.class, FailureClass.class, Ue.class,UeDAO.class)
+						EventCauseWS.class, FailureClass.class, Ue.class,UeDAO.class)
 			//	.addPackage(EventCause.class.getPackage())
 			//	.addPackage(EventCauseDAO.class.getPackage())
 						//this line will pick up the production db

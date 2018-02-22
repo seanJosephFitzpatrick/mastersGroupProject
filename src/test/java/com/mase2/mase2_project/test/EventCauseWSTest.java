@@ -27,7 +27,7 @@ import com.mase2.mase2_project.model.FailureClass;
 import com.mase2.mase2_project.model.MccMnc;
 import com.mase2.mase2_project.model.MccMncPK;
 import com.mase2.mase2_project.model.Ue;
-import com.mase2.mase2_project.rest.EventCauseEndpoint;
+import com.mase2.mase2_project.rest.EventCauseWS;
 import com.mase2.mase2_project.rest.JaxRsActivator;
 import com.mase2.mase2_project.test.utils.UtilsDAO;
 
@@ -46,7 +46,7 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 						.create(JavaArchive.class, "TestEventCauseWS.jar")
 						.addClasses(EventCauseDAO.class, EventCause.class,
 								EventCausePK.class,
-								JaxRsActivator.class,EventCauseEndpoint.class,
+								JaxRsActivator.class,EventCauseWS.class,
 								UtilsDAO.class, FailureClassDAO.class, BaseData.class, MccMnc.class, MccMncPK.class, EventCause.class, EventCausePK.class, FailureClass.class, Ue.class)
 					//	.addPackage(EventCause.class.getPackage())
 					//	.addPackage(EventCauseDAO.class.getPackage())
@@ -59,7 +59,7 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 
 			 
 			@EJB
-			private EventCauseEndpoint eventCauseEndpoint;
+			private EventCauseWS eventCauseEndpoint;
 			@EJB
 			private EventCauseDAO eventCauseDAO;
 			@EJB

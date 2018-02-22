@@ -29,8 +29,8 @@ import com.mase2.mase2_project.model.FailureClass;
 import com.mase2.mase2_project.model.MccMnc;
 import com.mase2.mase2_project.model.MccMncPK;
 import com.mase2.mase2_project.model.Ue;
-import com.mase2.mase2_project.rest.BaseDataEndpoint;
-import com.mase2.mase2_project.rest.EventCauseEndpoint;
+import com.mase2.mase2_project.rest.BaseDataWS;
+import com.mase2.mase2_project.rest.EventCauseWS;
 import com.mase2.mase2_project.rest.ExcelReader;
 import com.mase2.mase2_project.rest.FailureClassWS;
 import com.mase2.mase2_project.rest.JaxRsActivator;
@@ -55,8 +55,8 @@ import com.mase2.mase2_project.util.TableClearer;
                                 MccMncPK.class,
                                 JaxRsActivator.class,
                                 UtilsDAO.class, FailureClassDAO.class,MccMncDAO.class, BaseData.class, ExcelReader.class, 
-                                EventCause.class, BaseDataEndpoint.class, BaseDataDAO.class, FailureClassWS.class,
-                                MccMncWS.class, EventCauseEndpoint.class,
+                                EventCause.class, BaseDataWS.class, BaseDataDAO.class, FailureClassWS.class,
+                                MccMncWS.class, EventCauseWS.class,
                                 EventCauseDAO.class, EventCausePK.class, FailureClass.class,TableClearer.class,FileLogger.class,InvalidEntity.class,Validator.class, Ue.class, UeWS.class, UeDAO.class)
                         .addPackages(true, jxl.Sheet.class.getPackage())
                         .addPackages(true, jxl.Workbook.class.getPackage())

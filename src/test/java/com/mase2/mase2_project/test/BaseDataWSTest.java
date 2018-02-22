@@ -29,8 +29,8 @@ import com.mase2.mase2_project.model.FailureClass;
 import com.mase2.mase2_project.model.MccMnc;
 import com.mase2.mase2_project.model.MccMncPK;
 import com.mase2.mase2_project.model.Ue;
-import com.mase2.mase2_project.rest.BaseDataEndpoint;
-import com.mase2.mase2_project.rest.EventCauseEndpoint;
+import com.mase2.mase2_project.rest.BaseDataWS;
+import com.mase2.mase2_project.rest.EventCauseWS;
 import com.mase2.mase2_project.rest.FailureClassWS;
 import com.mase2.mase2_project.rest.JaxRsActivator;
 import com.mase2.mase2_project.rest.MccMncWS;
@@ -49,9 +49,9 @@ public class BaseDataWSTest {
 						MccMncPK.class,
 						JaxRsActivator.class,MccMncWS.class,
 						UtilsDAO.class, FailureClassDAO.class, BaseData.class, 
-					    BaseDataDAO.class,BaseDataEndpoint.class, UeWS.class, 
+					    BaseDataDAO.class,BaseDataWS.class, UeWS.class, 
 						EventCause.class, EventCausePK.class,EventCauseDAO.class, FailureClassWS.class,
-						EventCauseEndpoint.class, FailureClass.class, Ue.class,UeDAO.class,java.util.Date.class)
+						EventCauseWS.class, FailureClass.class, Ue.class,UeDAO.class,java.util.Date.class)
 			//	.addPackage(EventCause.class.getPackage())
 			//	.addPackage(EventCauseDAO.class.getPackage())
 						//this line will pick up the production db
@@ -62,7 +62,7 @@ public class BaseDataWSTest {
 	}
 	 
 	@EJB
-	private BaseDataEndpoint baseDataEndpoint;
+	private BaseDataWS baseDataEndpoint;
 	@EJB
 	private BaseDataDAO baseDataDao;
 	@EJB
@@ -80,7 +80,7 @@ public class BaseDataWSTest {
 	@EJB
 	private MccMncWS mcc_mncWS;
 	@EJB
-	private EventCauseEndpoint eventCauseEndpoint;
+	private EventCauseWS eventCauseEndpoint;
 	@EJB
 	private UtilsDAO utilsDAO;
 	
