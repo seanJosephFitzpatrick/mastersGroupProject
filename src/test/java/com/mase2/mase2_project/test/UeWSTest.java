@@ -67,7 +67,7 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
                 //it should be possible to test with an in memory db for efficiency
             	utilsDao.deleteTableBaseData();
             	utilsDao.deleteTableUe();
-                Ue ue=new Ue();
+            	final Ue ue=new Ue();
                 ue.setTac("100100");
                 ue.setMarketingName("G410");
                 ue.setManufacturer("Mitsubishi");
@@ -77,11 +77,11 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
             
             @Test
             public void testGetAllUes() {
-                Response response = ueWS.findAllUes();
+            	final Response response = ueWS.findAllUes();
 				List<Ue> uEList = (List<Ue>) response.getEntity();
 				assertEquals(HttpStatus.SC_OK, response.getStatus());				
 				assertEquals("Data fetch = data persisted", uEList.size(), 1);
-				Ue uE = uEList.get(0);
+				final Ue uE = uEList.get(0);
 				assertEquals("100100", uE.getTac());
 				assertEquals("G410", uE.getMarketingName());
 				assertEquals("Mitsubishi", uE.getManufacturer());

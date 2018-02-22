@@ -2,7 +2,6 @@ package com.mase2.mase2_project.test;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -54,9 +53,6 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 
 			}
 
-			 
-			@EJB
-			private FailureClassWS failureClassWS;
 			
 			@EJB
 			private FailureClassDAO failureClassDAO;
@@ -71,7 +67,7 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 				//it should be possible to test with an in memory db for efficiency
 				utilsDAO.deleteTableBaseData();
 				utilsDAO.deleteTableFailureClass();
-				FailureClass failureClass=new FailureClass();
+				final FailureClass failureClass=new FailureClass();
 				failureClass.setFailureClass("1");
 				failureClass.setDescription("MT ACCESS");
 				failureClassDAO.save(failureClass);
@@ -79,7 +75,7 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 			
 			@Test
 			public void testGetAllFailureClass() {
-				List<FailureClass> failureClassList = failureClassDAO.getAllFailureClasses();
+				final List<FailureClass> failureClassList = failureClassDAO.getAllFailureClasses();
 				assertEquals("Data fetch = data persisted", failureClassList.size(), 1);
 			}
 					

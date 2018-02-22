@@ -24,14 +24,12 @@ public class EventCause implements Serializable {
 	private String description;
 
 
-	public EventCause() {
-	}
 
 	public EventCausePK getId() {
 		return this.id;
 	}
 
-	public void setId(EventCausePK id) {
+	public void setId(final EventCausePK id) {
 		this.id = id;
 	}
 
@@ -39,13 +37,13 @@ public class EventCause implements Serializable {
 		return this.description;
 	}
 
-	public void setDescription(String description) {
+	public void setDescription(final String description) {
 		this.description = description;
 	}
 
 
-	public void createRow(ArrayList<String> cells) {
-		EventCausePK eventCausePK = new EventCausePK();
+	public void createRow(final List<String> cells) {
+		final EventCausePK eventCausePK = new EventCausePK();
 		eventCausePK.setEventCode(cells.get(0));
 		eventCausePK.setEventId(cells.get(1));
 		this.setId(eventCausePK);

@@ -69,10 +69,10 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 			public void setUp() {
 				utilsDAO.deleteTableBaseData();
 				utilsDAO.deleteTable();
-				MccMncPK mccMncPK = new MccMncPK();
+				final MccMncPK mccMncPK = new MccMncPK();
 				mccMncPK.setMcc("238");
 				mccMncPK.setMnc("1");
-				MccMnc mccMnc=new MccMnc();
+				final MccMnc mccMnc=new MccMnc();
 				mccMnc.setId(mccMncPK);
 				mccMnc.setCountry("Denmark");
 				mccMnc.setOperator("TDC-DK");
@@ -81,11 +81,11 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
 			
 			@Test
 			public void testGetAllMccMncs() {
-				Response response = mcc_mncWS.findAllMccMncs();
+				final Response response = mcc_mncWS.findAllMccMncs();
 				List<MccMnc> mccMncList = (List<MccMnc>) response.getEntity();
 				assertEquals(HttpStatus.SC_OK, response.getStatus());				
 				assertEquals("Data fetch = data persisted", mccMncList.size(), 1);
-				MccMnc mccMnc = mccMncList.get(0);
+				final MccMnc mccMnc = mccMncList.get(0);
 				assertEquals("238",mccMnc.getId().getMcc());
 				assertEquals("1",mccMnc.getId().getMnc());
 				assertEquals("Denmark",mccMnc.getCountry());

@@ -13,15 +13,15 @@ import com.mase2.mase2_project.model.EventCause;
 public class EventCauseDAO {
 	
 	@PersistenceContext
-    private EntityManager em;
+    private EntityManager entityManager;
     
 	public List<EventCause> getAllEventCauses() {
-    	Query query=em.createQuery("SELECT w FROM EventCause w");
+		final Query query=entityManager.createQuery("SELECT w FROM EventCause w");
         return query.getResultList();
     }
 	
-	public void save(EventCause eventCause){
-		em.persist(eventCause);
+	public void save(final EventCause eventCause){
+		entityManager.persist(eventCause);
 	}
 	
 	/*

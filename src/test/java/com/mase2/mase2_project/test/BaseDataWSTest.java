@@ -1,9 +1,7 @@
 package com.mase2.mase2_project.test;
 
 import static org.junit.Assert.*;
-import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -95,7 +93,7 @@ public class BaseDataWSTest {
 	@Before
 	public void setUp() {
 		utilsDAO.deleteTableBaseData();
-		BaseData baseData = new BaseData();
+		final BaseData baseData = new BaseData();
 		calendar=Calendar.getInstance();
 		calendar.setTime(new Date());
 		baseData.setDateTime(calendar.getTime());
@@ -107,7 +105,7 @@ public class BaseDataWSTest {
 		baseData.setImsi("344930011");
 		baseData.setNeVersion("11B");
 		utilsDAO.deleteTable();
-		MccMncPK mccMncPK = new MccMncPK();
+		final MccMncPK mccMncPK = new MccMncPK();
 		mccMncPK.setMcc("238");
 		mccMncPK.setMnc("1");
 		mccMnc=new MccMnc();
@@ -117,7 +115,7 @@ public class BaseDataWSTest {
 		mcc_mncDAO.save(mccMnc);
 		baseData.setMccMnc(mccMnc);
 		utilsDAO.deleteTableEventCause();
-		EventCausePK eventCausePK = new EventCausePK();
+		final EventCausePK eventCausePK = new EventCausePK();
 		eventCausePK.setEventId("4097");
 		eventCausePK.setEventCode("3");
 		eventCause=new EventCause();
@@ -144,11 +142,11 @@ public class BaseDataWSTest {
 	
 	@Test
 	public void testGetAllBaseData() {
-	  	Response responseBaseData = baseDataEndpoint.listAll();
+		final Response responseBaseData = baseDataEndpoint.listAll();
 		List<BaseData> baseDataList = (List<BaseData>) responseBaseData.getEntity();
 		assertEquals(HttpStatus.SC_OK, responseBaseData.getStatus());				
 		assertEquals("Data fetch = data persisted", baseDataList.size(), 1);
-		BaseData baseData = baseDataList.get(0);
+		final BaseData baseData = baseDataList.get(0);
 		assertEquals("11B", baseData.getNeVersion());
 		assertEquals(new SimpleDateFormat("dd/MM/yy HH:mm").format(calendar.getTime()), new SimpleDateFormat("dd/MM/yy HH:mm").format(baseData.getDateTime()));	
 		assertEquals("4", baseData.getCellId());	
@@ -164,11 +162,11 @@ public class BaseDataWSTest {
 	
 	@Test
 	public void testGetAllEventCauses() {
-		Response response = eventCauseEndpoint.listAll();
+		final Response response = eventCauseEndpoint.listAll();
 		List<EventCause> eventCauseList = (List<EventCause>) response.getEntity();
 		assertEquals(HttpStatus.SC_OK, response.getStatus());				
 		assertEquals("Data fetch = data persisted", eventCauseList.size(), 1);
-		EventCause eventCause = eventCauseList.get(0);
+		final EventCause eventCause = eventCauseList.get(0);
 		assertEquals("4097", eventCause.getId().getEventId());
 		assertEquals("3", eventCause.getId().getEventCode());
 		assertEquals("S1 SIG CONN SETUP-S1 INTERFACE DOWN", eventCause.getDescription());	
@@ -176,11 +174,11 @@ public class BaseDataWSTest {
 	
 	@Test
 	public void testGetAllMccMncs() {
-		Response response = mcc_mncWS.findAllMccMncs();
+		final Response response = mcc_mncWS.findAllMccMncs();
 		List<MccMnc> mccMncList = (List<MccMnc>) response.getEntity();
 		assertEquals(HttpStatus.SC_OK, response.getStatus());				
 		assertEquals("Data fetch = data persisted", mccMncList.size(), 1);
-		MccMnc mccMnc = mccMncList.get(0);
+		final MccMnc mccMnc = mccMncList.get(0);
 		assertEquals("238",mccMnc.getId().getMcc());
 		assertEquals("1",mccMnc.getId().getMnc());
 		assertEquals("Denmark",mccMnc.getCountry());
@@ -189,11 +187,11 @@ public class BaseDataWSTest {
 	
     @Test
     public void testGetAllUes() {
-        Response response = ueWS.findAllUes();
+    	final Response response = ueWS.findAllUes();
 		List<Ue> uEList = (List<Ue>) response.getEntity();
 		assertEquals(HttpStatus.SC_OK, response.getStatus());				
 		assertEquals("Data fetch = data persisted", uEList.size(), 1);
-		Ue uE = uEList.get(0);
+		final Ue uE = uEList.get(0);
 		assertEquals("100100", uE.getTac());
 		assertEquals("G410", uE.getMarketingName());
 		assertEquals("Mitsubishi", uE.getManufacturer());
@@ -202,11 +200,11 @@ public class BaseDataWSTest {
 	
 	@Test
 	public void testGetAllFailureClassWS() {
-		Response response = failureClassWS.findAllFailureClasses();
+		final Response response = failureClassWS.findAllFailureClasses();
 		List<FailureClass> failureClassList = (List<FailureClass>) response.getEntity();
 		assertEquals(HttpStatus.SC_OK, response.getStatus());				
 		assertEquals("Data fetch = data persisted", failureClassList.size(), 1);
-		FailureClass failureClass = failureClassList.get(0);
+		final FailureClass failureClass = failureClassList.get(0);
 		assertEquals("2",failureClass.getFailureClass());
 		assertEquals("MT ACCESS",failureClass.getDescription());
 	}

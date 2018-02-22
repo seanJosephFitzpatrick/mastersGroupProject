@@ -2,12 +2,9 @@ package com.mase2.mase2_project.test;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.ws.rs.core.Response;
-import org.apache.commons.httpclient.HttpStatus;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
@@ -54,8 +51,6 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
             }
 
              
-            @EJB
-            private com.mase2.mase2_project.rest.UeWS ueWS;
             
             @EJB
             private com.mase2.mase2_project.data.UeDAO ueDAO;
@@ -70,7 +65,7 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
                 //it should be possible to test with an in memory db for efficiency
             	utilsDao.deleteTableBaseData();
             	utilsDao.deleteTableUe();
-                com.mase2.mase2_project.model.Ue ue=new com.mase2.mase2_project.model.Ue();
+            	final Ue ue=new Ue();
                 ue.setTac("100100");
                 ue.setMarketingName("G410");
                 ue.setManufacturer("Mitsubishi");
@@ -80,7 +75,7 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
             
             @Test
             public void testGetAllUes() {
-                List<com.mase2.mase2_project.model.Ue> ueList = ueDAO.getAllUes();
+            	final List<com.mase2.mase2_project.model.Ue> ueList = ueDAO.getAllUes();
                 assertEquals("Data fetch = data persisted", ueList.size(), 1);
 				
             }
