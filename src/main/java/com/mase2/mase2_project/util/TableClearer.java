@@ -9,19 +9,19 @@ import javax.persistence.PersistenceContext;
 public class TableClearer {
 	
     @PersistenceContext
-    private EntityManager em;
+    private EntityManager entityManager;
     
 	public void deleteAllTables(){
 		deleteBaseDataTable();
-		em.createQuery("DELETE FROM MccMnc").executeUpdate();
-		em.createQuery("DELETE FROM EventCause").executeUpdate();
-		em.createQuery("DELETE FROM FailureClass").executeUpdate();
-		em.createQuery("DELETE FROM Ue").executeUpdate();
+		entityManager.createQuery("DELETE FROM MccMnc").executeUpdate();
+		entityManager.createQuery("DELETE FROM EventCause").executeUpdate();
+		entityManager.createQuery("DELETE FROM FailureClass").executeUpdate();
+		entityManager.createQuery("DELETE FROM Ue").executeUpdate();
 
 	}
 	public void deleteBaseDataTable(){
-		em.createQuery("DELETE FROM BaseData").executeUpdate();
-		em.createNativeQuery("ALTER TABLE base_data AUTO_INCREMENT=1").executeUpdate();
+		entityManager.createQuery("DELETE FROM BaseData").executeUpdate();
+		entityManager.createNativeQuery("ALTER TABLE base_data AUTO_INCREMENT=1").executeUpdate();
 	}
 
 }

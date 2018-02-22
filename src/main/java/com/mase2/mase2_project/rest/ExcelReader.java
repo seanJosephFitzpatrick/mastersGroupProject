@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -36,6 +38,7 @@ import jxl.read.biff.BiffException;
 
 @Path("/importdata")
 @Stateless
+@DeclareRoles({"admin"})
 @LocalBean
 public class ExcelReader {
 	@EJB
@@ -56,6 +59,7 @@ public class ExcelReader {
 
 	@GET
 	@Path("/all")
+	@RolesAllowed({"admin"})
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response importAllData() {
 		tableClearer.deleteAllTables();
