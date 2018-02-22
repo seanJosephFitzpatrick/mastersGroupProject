@@ -18,7 +18,7 @@ import com.mase2.mase2_project.model.EventCause;
 @Path("/eventcauses")
 @Stateless
 @LocalBean
-public class EventCauseEndpoint {
+public class EventCauseWS {
 	
 	@EJB
 	private EventCauseDAO eventCauseDAO;
