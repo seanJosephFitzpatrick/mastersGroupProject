@@ -9,10 +9,19 @@ var rootUrlEventCause = "http://localhost:8080/mase2-project/rest/eventcauses";
 var rootUrlImportData = "http://localhost:8080/mase2-project/rest/importdata/all";
 var rootUrlImportBaseData = "http://localhost:8080/mase2-project/rest/importdata/basedata";
 
+$('document').ready(function(){
+	$('.card-header').html("Network Data Analytics");
+	$('.content-wrapper').css("background", "rgb(180,180,180)");
+//	{
+//		  overflow-x: hidden;
+//		  background: rgb(180,180,180);
+//		}
+});
 // ///////////////////// Dashboard /////////////////////
 function showDashboard() {
 	cleenAllElements();
 	$('.card-header').html("Network Data Analytics");
+	$('.content-wrapper').css("background", "rgb(180,180,180)");
 
 }
 // ///////////////////// Import Tables /////////////////////
@@ -128,6 +137,7 @@ function cleenAllElements(){
 	
 }
 function clearElement(id) {
+	$('.content-wrapper').css("background", "rgb(255,255,255)");
 	console.log(id);
 	if (id !== null) {
 		document.getElementById(id).innerHTML = "";
