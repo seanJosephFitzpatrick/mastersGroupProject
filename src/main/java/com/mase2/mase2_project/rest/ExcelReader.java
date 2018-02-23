@@ -17,6 +17,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 
+
+import org.jboss.ejb3.annotation.SecurityDomain;
+
 import com.mase2.mase2_project.data.BaseDataDAO;
 import com.mase2.mase2_project.data.EventCauseDAO;
 import com.mase2.mase2_project.data.FailureClassDAO;
@@ -38,7 +41,8 @@ import jxl.read.biff.BiffException;
 
 @Path("/importdata")
 @Stateless
-@DeclareRoles({"admin"})
+@SecurityDomain("other")
+@RolesAllowed({"guest"})
 @LocalBean
 public class ExcelReader {
 	@EJB
@@ -59,7 +63,7 @@ public class ExcelReader {
 
 	@GET
 	@Path("/all")
-	@RolesAllowed({"admin"})
+	@RolesAllowed({"guest"})
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response importAllData() {
 		tableClearer.deleteAllTables();
