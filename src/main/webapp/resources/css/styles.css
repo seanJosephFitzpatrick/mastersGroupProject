@@ -9,6 +9,9 @@ ul {
 }
 
 
+.content-wrapper {
+	background-color: rgb(180,180,180);
+}
 
 .leftArea {
 	position: absolute;
