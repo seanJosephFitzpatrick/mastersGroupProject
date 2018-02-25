@@ -6,6 +6,7 @@ import static org.junit.Assert.assertEquals;
 
 
 
+
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -41,6 +42,7 @@ import com.mase2.mase2_project.rest.JaxRsActivator;
 import com.mase2.mase2_project.rest.MccMncWS;
 import com.mase2.mase2_project.rest.UeWS;
 import com.mase2.mase2_project.test.utils.UtilsDAO;
+import com.mase2.mase2_project.util.DateParam;
 import com.mase2.mase2_project.util.FileLogger;
 import com.mase2.mase2_project.util.InvalidEntity;
 import com.mase2.mase2_project.util.TableClearer;
@@ -61,7 +63,7 @@ import com.mase2.mase2_project.util.Validator;
                                 UtilsDAO.class, FailureClassDAO.class,MccMncDAO.class, BaseData.class, ExcelDAO.class, 
                                 EventCause.class, BaseDataWS.class, BaseDataDAO.class, FailureClassWS.class,
                                 MccMncWS.class, EventCauseWS.class,
-                                EventCauseDAO.class, EventCausePK.class,ImportWS.class, FailureClass.class,TableClearer.class,FileLogger.class,InvalidEntity.class,Validator.class, Ue.class, UeWS.class, UeDAO.class)
+                                EventCauseDAO.class,DateParam.class, EventCausePK.class,ImportWS.class, FailureClass.class,TableClearer.class,FileLogger.class,InvalidEntity.class,Validator.class, Ue.class, UeWS.class, UeDAO.class)
                         .addPackages(true, jxl.Sheet.class.getPackage())
                         .addPackages(true, jxl.Workbook.class.getPackage())
                         .addPackages(true, jxl.Cell.class.getPackage())

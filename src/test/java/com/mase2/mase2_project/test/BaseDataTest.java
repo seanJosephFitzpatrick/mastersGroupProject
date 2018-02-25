@@ -1,6 +1,7 @@
 package com.mase2.mase2_project.test;
 
 import static org.junit.Assert.*;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -35,6 +36,7 @@ import com.mase2.mase2_project.rest.EventCauseWS;
 import com.mase2.mase2_project.rest.JaxRsActivator;
 import com.mase2.mase2_project.rest.MccMncWS;
 import com.mase2.mase2_project.test.utils.UtilsDAO;
+import com.mase2.mase2_project.util.DateParam;
 
 
 @RunWith(Arquillian.class)
@@ -50,7 +52,7 @@ public class BaseDataTest {
 						UtilsDAO.class, FailureClassDAO.class, BaseData.class, 
 						BaseDataDAO.class,BaseDataWS.class, 
 						EventCause.class, EventCausePK.class,EventCauseDAO.class,
-						EventCauseWS.class, FailureClass.class, Ue.class,UeDAO.class)
+						DateParam.class,EventCauseWS.class, FailureClass.class, Ue.class,UeDAO.class)
 			//	.addPackage(EventCause.class.getPackage())
 			//	.addPackage(EventCauseDAO.class.getPackage())
 						//this line will pick up the production db
