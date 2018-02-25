@@ -5,7 +5,7 @@ import java.util.List;
 
 public class InvalidEntity {
 	private List<String> cells;
-	String errorDescription;
+	private String errorDescription="Error - ";
 	
 
 //	public ArrayList<String> getCells() {
@@ -20,8 +20,8 @@ public class InvalidEntity {
 //		return errorDescription;
 //	}
 
-	public void setErrorDescription(final String errorDescription) {
-		this.errorDescription = errorDescription;
+	public void appendErrorDescription(final String errorDescription) {
+		this.errorDescription += errorDescription;
 	}
 
 
