@@ -183,7 +183,6 @@ public class BaseData implements Serializable {
 	public void createRow(final List<String> cells, final EventCause eventCauseRow,
 			final FailureClass failureClassRow, final Ue ueRow, final MccMnc mccMncRow) {
 		try {
-			System.out.println(cells.get(0));
 			this.setDateTime(new SimpleDateFormat("MM/dd/yy HH:mm").parse(cells.get(0)));
 
 		} catch (ParseException e) {
