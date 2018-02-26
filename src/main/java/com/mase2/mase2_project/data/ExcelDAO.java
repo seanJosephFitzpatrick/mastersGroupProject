@@ -1,46 +1,34 @@
-package com.mase2.mase2_project.rest;
+package com.mase2.mase2_project.data;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.security.DeclareRoles;
-import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 
-import com.mase2.mase2_project.data.BaseDataDAO;
-import com.mase2.mase2_project.data.EventCauseDAO;
-import com.mase2.mase2_project.data.FailureClassDAO;
-import com.mase2.mase2_project.data.MccMncDAO;
-import com.mase2.mase2_project.data.UeDAO;
+
+
+
+
 import com.mase2.mase2_project.model.BaseData;
 import com.mase2.mase2_project.model.EventCause;
 import com.mase2.mase2_project.model.FailureClass;
 import com.mase2.mase2_project.model.MccMnc;
 import com.mase2.mase2_project.model.Ue;
-import com.mase2.mase2_project.util.FileLogger;
-import com.mase2.mase2_project.util.InvalidEntity;
-import com.mase2.mase2_project.util.TableClearer;
+import com.mase2.mase2_project.util.Validator;
 
 import jxl.Cell;
 import jxl.Sheet;
 import jxl.Workbook;
 import jxl.read.biff.BiffException;
 
-@Path("/importdata")
 @Stateless
-@DeclareRoles({"admin"})
 @LocalBean
-public class ExcelReader {
+public class ExcelDAO {
 	@EJB
 	private MccMncDAO mcc_mncDao;
 	@EJB
@@ -51,39 +39,16 @@ public class ExcelReader {
 	private EventCauseDAO eventCauseDAO;
 	@EJB
 	private BaseDataDAO baseDataDAO;
-	@EJB 
-	private TableClearer tableClearer;
 
-	private final FileLogger fileLogger = new FileLogger();
-	private final Validator validator = new Validator();
+	private Validator validator=new Validator();
 
-	@GET
-	@Path("/all")
-	@RolesAllowed({"admin"})
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response importAllData() {
-		tableClearer.deleteAllTables();
-		final int[] validAndInvalidRows = this.importAllExcelData();
 
-		return Response.status(200).entity(validAndInvalidRows).build();
-	}
-
-	@GET
-	@Path("/basedata")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response importBaseData() {
-		tableClearer.deleteBaseDataTable();
-		final int[] validAndInvalidRows = importBaseDataExcelData();
-		return Response.status(200).entity(validAndInvalidRows).build();
-	}
-
-	private int[] importBaseDataExcelData() {
+	public int[] importBaseDataExcelData() {
 		final File baseDataFile = initiateExcelFile();
 		final Workbook workbook;
 		try {
 			workbook = Workbook.getWorkbook(baseDataFile);
 			final Sheet sheet = workbook.getSheet(0);
-			this.retrieveParentTableData();
 			return this.importDataBaseData(sheet);
 		} catch (BiffException e) {
 			e.printStackTrace();
@@ -95,7 +60,7 @@ public class ExcelReader {
 		return new int[2];
 	}
 
-	private int[] importAllExcelData() {
+	public int[] importAllExcelData() {
 		final File allDataFile = initiateExcelFile();
 
 		try {
@@ -109,7 +74,6 @@ public class ExcelReader {
 			sheet = workbook.getSheet(1);
 			this.importDataEventCause(sheet);
 			sheet = workbook.getSheet(0);
-			this.retrieveParentTableData();
 			return this.importDataBaseData(sheet);
 		} catch (BiffException e) {
 			e.printStackTrace();
@@ -132,9 +96,8 @@ public class ExcelReader {
 		final File excelFile = new File(filePath);
 		return excelFile;
 	}
-
 	private void retrieveParentTableData() {
-		if (validator.getFailureClassData() != null) {
+		if(validator.getFailureClassData()!=null){
 			return;
 		}
 		validator.setFailureClassData(failureClassDAO.getAllFailureClasses());
@@ -143,10 +106,13 @@ public class ExcelReader {
 		validator.setMccMncData(mcc_mncDao.getAllMcc_Mncs());
 	}
 
+	
+
 	private int[] importDataBaseData(final Sheet sheet) {
 		final int row = sheet.getRows();
 		final int col = sheet.getColumns();
 		int[] validAndInvalidRows = new int[2];
+		retrieveParentTableData();
 
 		final ArrayList<String> cells = new ArrayList<String>();
 
@@ -157,9 +123,9 @@ public class ExcelReader {
 				final Cell cell = sheet.getCell(j, i1);
 				cells.add(cell.getContents());
 			}
-			if (checkForeignKeysExist(cells)) {
+			if (validator.checkForeignKeysExist(cells)) {
 				baseData.createRow(cells, validator.getEventCauseRow(), validator.getFailureClassRow(), validator.getUeRow(), validator.getMccMncRow());
-				if(validator.validateBase_data(baseData)){
+				if(Validator.validateBase_data(baseData)){
 					baseDataDAO.save(baseData);
 					validAndInvalidRows[0]++;
 				} else {
@@ -170,31 +136,6 @@ public class ExcelReader {
 			}
 		}
 		return validAndInvalidRows;
-
-	}
-
-	private boolean checkForeignKeysExist(final List<String> cells) {
-		final InvalidEntity invalidEntity = new InvalidEntity();
-		if (validator.checkFailureClassForeignKeys(cells)) {
-			if (validator.checkEventCauseForeignKeys(cells)) {
-				if (validator.checkUeTypeForeignKeys(cells)) {
-					if (validator.checkMccMncForeignKeys(cells)) {
-						return true;
-					} else {
-						invalidEntity.setErrorDescription("Error - Foreign key doesn't exist in MccMnc Table (market or operator)");
-					}
-				} else {
-					invalidEntity.setErrorDescription("Error - Foreign key doesn't exist in Ue Table (ue_type)");
-				}
-			} else {
-				invalidEntity.setErrorDescription("Error - Foreign key doesn't exist in EventCause Table (event_id or cause_code)");
-			}
-		} else {
-			invalidEntity.setErrorDescription("Error - Foreign key doesn't exist in FailureClass Table (failure_class)");
-		}
-		invalidEntity.setCells(cells);
-		fileLogger.logToFile(invalidEntity.toString());
-		return false;
 
 	}
 
@@ -212,7 +153,7 @@ public class ExcelReader {
 
 			}
 			eventCause.createRow(cells);
-			if(validator.validateEventCause(eventCause)){
+			if(Validator.validateEventCause(eventCause)){
 				eventCauseDAO.save(eventCause);
 			}
 		}
@@ -233,7 +174,7 @@ public class ExcelReader {
 
 			}
 			failureClass.createRow(cells);
-			if(validator.validateFailureClass(failureClass)){
+			if(Validator.validateFailureClass(failureClass)){
 				failureClassDAO.save(failureClass);
 			}
 		}
@@ -255,7 +196,7 @@ public class ExcelReader {
 
 			}
 			ue.createRow(cells);
-			if(validator.validateUe(ue)){
+			if(Validator.validateUe(ue)){
 				ueDAO.save(ue);
 			}
 		}
@@ -277,7 +218,7 @@ public class ExcelReader {
 
 			}
 			mccMnc.createRow(cells);
-			if(validator.validateMcc_Mnc(mccMnc)){
+			if(Validator.validateMcc_Mnc(mccMnc)){
 				mcc_mncDao.save(mccMnc);
 			}
 		}

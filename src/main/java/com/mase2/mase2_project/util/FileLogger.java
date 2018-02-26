@@ -10,7 +10,7 @@ public class FileLogger {
 	private static Logger logger;
 
 
-	public void logToFile(final String logMessage) {
+	public static void logToFile(final String logMessage) {
 		logger.info(logMessage);
 	}
 
