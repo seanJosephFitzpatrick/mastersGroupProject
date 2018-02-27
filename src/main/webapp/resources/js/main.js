@@ -41,6 +41,36 @@ var importBaseData = function() {
 		success : renderPopUp
 	});
 };
+var displayIMSIForm = function() {
+	$('.container-fluid')
+	.html(
+		      '<div class="form-group">'
+		+		'<label for="inputsm">IMSI</label>'
+		+		'<input class="form-control input-sm" id="inputsm" type="text">'
+		+	  '</div>'
+		+	  '<button type="submit" id="queryButton" class="btn btn-primary">Excecute Query</button>');
+			/*'<div class="col-md-5">'
+		  + 	'<div class="form-group">'
+		  +			'<div class="input-group date" id="datetimepicker6">'
+		  +				'<input type="text" class="form-control" />'
+		  +				'<span class="input-group-addon">'
+		  +					'<span class="glyphicon glyphicon-calendar"></span>'
+		  +				'</span>'
+		  +			'</div>'
+		  +		'</div>'
+		  +	'</div>'
+		  +	'<div class="col-md-5">'
+		  + 	'<div class="form-group">'
+		  +			'<div class="input-group date" id="datetimepicker7">'
+		  +				'<input type="text" class="form-control" />'
+		  +				'<span class="input-group-addon">'
+		  +					'<span class="glyphicon glyphicon-calendar"></span>'
+		  +				'</span>'
+		  +			'</div>'
+		  +		'</div>'
+		  +	'</div>');*/
+cleenAllElements();
+};
 var renderPopUp = function(data) {
 		
 		console.log(data[0]);
@@ -64,6 +94,9 @@ function importTables() {
 
 function importBaseDataTable() {
 	importBaseData();
+}
+function displayIMSIQueryForm(){
+	displayIMSIForm();
 }
 
 // /////////////////////Tables /////////////////////
@@ -134,7 +167,12 @@ function cleenAllElements(){
 	clearElement('tableHeader');
 	clearElement('tableFooter');
 	clearElement('tableBody');
+	clearElement('container-fluid');
 	
+}
+function getValue(){
+	value = $("#inputsm").val();
+	alert(value);
 }
 function clearElement(id) {
 	$('.content-wrapper').css("background", "rgb(255,255,255)");
@@ -236,7 +274,7 @@ var renderListFailureClass = function(data) {
 	});
 	document.getElementById('example_info').setAttribute("style",
 			"display:none");
-}
+};
 
 var renderListEventCause = function(data) {
 	$('.card-header')
@@ -266,7 +304,7 @@ var renderListEventCause = function(data) {
 	});
 	document.getElementById('example_info').setAttribute("style",
 			"display:none");
-}
+};
 
 // //////////////////////////
 var renderListBaseData = function(data) {
@@ -326,4 +364,9 @@ var renderListBaseData = function(data) {
 	});
 	document.getElementById('example_info').setAttribute("style",
 			"display:none");
-}
+};
+$('#container-fluid').on('click','.queryButton', function() {
+	alert("Hi");
+    getValue();
+
+});
