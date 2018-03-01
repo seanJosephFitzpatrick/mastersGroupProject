@@ -8,6 +8,7 @@ var rootUrlBaseData = "http://localhost:8080/mase2-project/rest/basedatas";
 var rootUrlEventCause = "http://localhost:8080/mase2-project/rest/eventcauses";
 var rootUrlImportData = "http://localhost:8080/mase2-project/rest/importdata/all";
 var rootUrlImportBaseData = "http://localhost:8080/mase2-project/rest/importdata/basedata";
+var rootUrlImportCallFailures = "http://localhost:8080/mase2-project/rest/importdata/callfailures";
 
 $('document').ready(function(){
 	$('.card-header').html("Network Data Analytics");
@@ -41,6 +42,14 @@ var importBaseData = function() {
 		success : renderPopUp
 	});
 };
+var importCallFailures = function() {
+	$.ajax({
+		type : 'GET',
+		url : rootUrlImportCallFailures,
+		dataType : "json",
+		success : renderPopUp
+	});
+};
 var renderPopUp = function(data) {
 		
 		console.log(data[0]);
@@ -64,6 +73,10 @@ function importTables() {
 
 function importBaseDataTable() {
 	importBaseData();
+}
+
+function importCallFailuresTable() {
+	importCallFailures();
 }
 
 // /////////////////////Tables /////////////////////
