@@ -41,5 +41,14 @@ public class ImportWS {
 		final int[] validAndInvalidRows = excelDAO.importBaseDataExcelData();
 		return Response.status(200).entity(validAndInvalidRows).build();
 	}
+	
+	@GET
+	@Path("/callfailures")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response importCallFailures() {
+		tableClearer.deleteCallFailuresTables();
+		excelDAO.importCallFailuresExcelData();
+		return Response.status(200).build();
+	}
 
 }

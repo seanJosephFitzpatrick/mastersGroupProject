@@ -23,5 +23,8 @@ public class TableClearer {
 		entityManager.createQuery("DELETE FROM BaseData").executeUpdate();
 		entityManager.createNativeQuery("ALTER TABLE base_data AUTO_INCREMENT=1").executeUpdate();
 	}
+	public void deleteCallFailuresTables(){
+		entityManager.createQuery("DELETE FROM FailureClass").executeUpdate();
+	}
 
 }

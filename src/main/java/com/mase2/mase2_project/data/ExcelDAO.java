@@ -59,6 +59,23 @@ public class ExcelDAO {
 		}
 		return new int[2];
 	}
+	
+	public void importCallFailuresExcelData() {
+		final File callFailuresFile = initiateExcelFile();
+		final Workbook workbook;
+		try {
+			workbook = Workbook.getWorkbook(callFailuresFile);
+			final Sheet sheet = workbook.getSheet(2);
+			importDataFailureClass(sheet);
+		} catch (BiffException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
 
 	public int[] importAllExcelData() {
 		final File allDataFile = initiateExcelFile();
