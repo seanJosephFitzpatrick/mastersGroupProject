@@ -11,7 +11,7 @@ import com.mase2.mase2_project.model.FailureClass;
 import com.mase2.mase2_project.model.MccMnc;
 import com.mase2.mase2_project.model.MccMncPK;
 import com.mase2.mase2_project.model.Ue;
-import com.mase2.mase2_project.rest.Validator;
+import com.mase2.mase2_project.util.Validator;
 
 public class ValidatorTest {
 

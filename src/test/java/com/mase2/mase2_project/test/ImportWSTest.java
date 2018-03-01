@@ -3,6 +3,10 @@ package com.mase2.mase2_project.test;
 import static org.junit.Assert.assertEquals;
 
 
+
+
+
+
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -19,6 +23,7 @@ import org.junit.runner.RunWith;
 
 import com.mase2.mase2_project.data.BaseDataDAO;
 import com.mase2.mase2_project.data.EventCauseDAO;
+import com.mase2.mase2_project.data.ExcelDAO;
 import com.mase2.mase2_project.data.FailureClassDAO;
 import com.mase2.mase2_project.data.MccMncDAO;
 import com.mase2.mase2_project.data.UeDAO;
@@ -31,21 +36,22 @@ import com.mase2.mase2_project.model.MccMncPK;
 import com.mase2.mase2_project.model.Ue;
 import com.mase2.mase2_project.rest.BaseDataWS;
 import com.mase2.mase2_project.rest.EventCauseWS;
-import com.mase2.mase2_project.rest.ExcelReader;
 import com.mase2.mase2_project.rest.FailureClassWS;
+import com.mase2.mase2_project.rest.ImportWS;
 import com.mase2.mase2_project.rest.JaxRsActivator;
 import com.mase2.mase2_project.rest.MccMncWS;
 import com.mase2.mase2_project.rest.UeWS;
-import com.mase2.mase2_project.rest.Validator;
 import com.mase2.mase2_project.test.utils.UtilsDAO;
+import com.mase2.mase2_project.util.DateParam;
 import com.mase2.mase2_project.util.FileLogger;
 import com.mase2.mase2_project.util.InvalidEntity;
 import com.mase2.mase2_project.util.TableClearer;
+import com.mase2.mase2_project.util.Validator;
 
 
     //    @FixMethodOrder(MethodSorters.NAME_ASCENDING)
         @RunWith(Arquillian.class)
-        public class ExcelReaderTest {
+        public class ImportWSTest {
             
             @Deployment
             public static Archive<?> createTestArchive() {
@@ -54,10 +60,10 @@ import com.mase2.mase2_project.util.TableClearer;
                         .addClasses(MccMnc.class,
                                 MccMncPK.class,
                                 JaxRsActivator.class,
-                                UtilsDAO.class, FailureClassDAO.class,MccMncDAO.class, BaseData.class, ExcelReader.class, 
+                                UtilsDAO.class, FailureClassDAO.class,MccMncDAO.class, BaseData.class, ExcelDAO.class, 
                                 EventCause.class, BaseDataWS.class, BaseDataDAO.class, FailureClassWS.class,
                                 MccMncWS.class, EventCauseWS.class,
-                                EventCauseDAO.class, EventCausePK.class, FailureClass.class,TableClearer.class,FileLogger.class,InvalidEntity.class,Validator.class, Ue.class, UeWS.class, UeDAO.class)
+                                EventCauseDAO.class,DateParam.class, EventCausePK.class,ImportWS.class, FailureClass.class,TableClearer.class,FileLogger.class,InvalidEntity.class,Validator.class, Ue.class, UeWS.class, UeDAO.class)
                         .addPackages(true, jxl.Sheet.class.getPackage())
                         .addPackages(true, jxl.Workbook.class.getPackage())
                         .addPackages(true, jxl.Cell.class.getPackage())
@@ -87,7 +93,9 @@ import com.mase2.mase2_project.util.TableClearer;
             @EJB
             private UeDAO ueDAO;
             @EJB
-            private ExcelReader excelReader;
+            private ImportWS importWS;
+            @EJB
+            private ExcelDAO excelDAO;
         	@EJB
         	private BaseDataDAO baseDataDao;
         	@EJB
@@ -99,7 +107,7 @@ import com.mase2.mase2_project.util.TableClearer;
         	
         	@Before
         	public void setup(){
-        		excelReader.importAllData();
+        		importWS.importAllData();
         	}
              
             
@@ -119,7 +127,7 @@ import com.mase2.mase2_project.util.TableClearer;
             
         	@Test
         	public void testImportBaseData() {
-        		excelReader.importBaseData();
+        		importWS.importBaseData();
         		final List<BaseData> baseDataList = baseDataDao.getAllBaseData();
         		assertEquals("Data fetch = data persisted", baseDataList.size(), 800);
 
