@@ -4,6 +4,7 @@ var rootUrlIMSIQuery = "http://localhost:8080/mase2-project/rest/basedatas/csr/"
 var rootUrlFailuresWithinTimePeriodQuery = "http://localhost:8080/mase2-project/rest/basedatas/se/QueryDates?";
 var rootUrlNumFailuresForModel = "http://localhost:8080/mase2-project/rest/basedatas/se/";
 var rootUrlSumDurationAndCountFailures= "http://localhost:8080/mase2-project/rest/basedatas/nme/query?StartDate=";
+var rootUrlUniqueIdAndCauseCodeForModel= "http://localhost:8080/mase2-project/rest/basedatas/nme/";
 $('document').ready(function(){
 	$('.card-header').html("Network Data Analytics");
 	$('.content-wrapper').css("background", "rgb(180,180,180)");
@@ -65,6 +66,15 @@ var findCountCallFailures = function(model,date1,date2){
 	});
 };
 
+var findUniqueIdCauseCodeCombinations = function(model){
+	$.ajax({
+		type : 'GET',
+		url : rootUrlUniqueIdAndCauseCodeForModel+model,
+		dataType : "json",
+		success : renderCountFailures
+	});
+};
+
 function retrieveIMSI() {
 	findAllIMSIData(document.getElementById('imsi').value);
 }
@@ -76,6 +86,9 @@ function retrieveDatesNME() {
 }
 function retrieveModelAndDates() {
 	findCountCallFailures(document.getElementById('model').value,document.getElementById('date_timepicker_start').value,document.getElementById('date_timepicker_end').value);
+}
+function retrieveModel() {
+	findUniqueIdCauseCodeCombinations(document.getElementById('model').value);
 }
 function showModelModal(){
 	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="dropdown">'
@@ -95,7 +108,17 @@ function showModelModal(){
 	initializeDatePicker();
 	$('#csrIMSIQueryModal').modal('show'); 
 }
-
+function showUniqueModelModal(){
+	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="dropdown">'
+			+'Enter Model: <input type="text" name="model" id="model">'
+			+'</div>');
+	$('#csrIMSIQueryModal').find('.modal-footer').html('<button type="button" class="btn btn-secondary"'
+		+'data-dismiss="modal">Close</button>'
+		+'<button type="button" class="btn btn-primary"'
+			+'onclick="retrieveModel()" data-dismiss="modal">Submit'
+			+' Query</button>');
+	$('#csrIMSIQueryModal').modal('show'); 
+}
 function showIMSIModal(){
 	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="dropdown">'
 			+'Enter IMSI: <input type="text" name="imsi" id="imsi">'

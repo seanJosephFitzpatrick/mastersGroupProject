@@ -61,10 +61,19 @@ public class BaseDataDAO {
 				.setParameter(2, endDateParam.getDate());
         return query.getResultList();
 	}
-
+	
+	/*
 	public List<BaseData> getUniqueEventIdAndCauseCodeForModel(String cellId) {
 		final Query query=entityManager.createQuery("SELECT m.eventCause,count(m) FROM BaseData m where m.cellId like ?1 group by m.eventCause")
 				.setParameter(1, cellId);
+				
+        return query.getResultList();
+	}
+	*/
+	
+	public List<BaseData> getUniqueEventIdAndCauseCodeForModel(String model) {
+		final Query query=entityManager.createQuery("SELECT m.eventCause,count(m) FROM BaseData m where m.ue.model like ?1 group by m.eventCause")
+				.setParameter(1, model);
 				
         return query.getResultList();
 	}
