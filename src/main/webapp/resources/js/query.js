@@ -71,7 +71,7 @@ var findUniqueIdCauseCodeCombinations = function(model){
 		type : 'GET',
 		url : rootUrlUniqueIdAndCauseCodeForModel+model,
 		dataType : "json",
-		success : renderCountFailures
+		success : renderListUniqueEventIdCauseCode
 	});
 };
 
@@ -307,6 +307,34 @@ var renderListSumDurationAndCountFailures = function(data) {
 						+ base_data[0] + '</td><td>'
 						+ base_data[1]+'</td><td>'
 						+ base_data[2]+'</td></tr>');
+	});
+	$('#example').DataTable({
+		destroy : true,
+		paging : false,
+		searching : false
+	});
+	document.getElementById('example_info').setAttribute("style",
+			"display:none");
+};
+var renderListUniqueEventIdCauseCode = function(data) {
+	$('.card-header')
+			.html(
+					'<i class="fa fa-table"></i> <span id="tableTitle">Base Data Table</span>');
+
+	cleenAllElements();
+
+	$('#tableHeader').append(
+			"<th>Event Id</th>" + "<th>Cause Code</th>" + "<th>Number of Occurrences</th>");
+
+	$('#tableFooter').append(
+			"<th>Event Id</th>" + "<th>Cause Code</th>" + "<th>Number of Occurrences</th>");
+
+	$.each(data, function(index, base_data) {
+		$('#tableBody').append(
+				'<tr><td>'
+				+ base_data[0].id.eventId + '</td><td>'
+				+ base_data[0].id.eventCode + '</td><td>'
+				+ base_data[1] + '</td></tr>');
 	});
 	$('#example').DataTable({
 		destroy : true,
