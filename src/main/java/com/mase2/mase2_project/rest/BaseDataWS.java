@@ -69,6 +69,14 @@ public class BaseDataWS {
 
 	}
 	@GET
+	@Path("/fc/{imsi}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response findByIMSIAndDateTime(@PathParam("imsi") final String imsi,@QueryParam("StartDate") final DateParam startDateParam,@QueryParam("EndDate") final DateParam endDateParam) {
+		final List<BaseData> baseData=baseDataDAO.getCountForIMSIAndDate(imsi,startDateParam,endDateParam);
+		return Response.status(200).entity(baseData).build();
+
+	}
+	@GET
 	@Path("/nme/query")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response findByDateTime(@QueryParam("StartDate") final DateParam startDateParam,@QueryParam("EndDate") final DateParam endDateParam) {
