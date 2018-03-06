@@ -5,6 +5,7 @@ var rootUrlFailuresWithinTimePeriodQuery = "http://localhost:8080/mase2-project/
 var rootUrlNumFailuresForModel = "http://localhost:8080/mase2-project/rest/basedatas/se/";
 var rootUrlIMSIFailuresWithinTimePeriod = "http://localhost:8080/mase2-project/rest/basedatas/fc/";
 var rootUrlSumDurationAndCountFailures= "http://localhost:8080/mase2-project/rest/basedatas/nme/query?StartDate=";
+var rootUrlUniqueIdAndCauseCodeForModel= "http://localhost:8080/mase2-project/rest/basedatas/nme/";
 $('document').ready(function(){
 	$('.card-header').html("Network Data Analytics");
 	$('.content-wrapper').css("background", "rgb(180,180,180)");
@@ -74,6 +75,15 @@ var findIMSICallFailuresGivenTimePeriod = function(imsi,date1,date2){
 	});
 };
 
+var findUniqueIdCauseCodeCombinations = function(model){
+	$.ajax({
+		type : 'GET',
+		url : rootUrlUniqueIdAndCauseCodeForModel+model,
+		dataType : "json",
+		success : renderListUniqueEventIdCauseCode
+	});
+};
+
 function retrieveIMSI() {
 	findAllIMSIData(document.getElementById('imsi').value);
 }
@@ -86,8 +96,12 @@ function retrieveDatesNME() {
 function retrieveModelAndDates() {
 	findCountCallFailures(document.getElementById('model').value,document.getElementById('date_timepicker_start').value,document.getElementById('date_timepicker_end').value);
 }
+
 function retrieveIMSIAndDates() {
 	findIMSICallFailuresGivenTimePeriod(document.getElementById('imsi').value,document.getElementById('date_timepicker_start').value,document.getElementById('date_timepicker_end').value);
+}
+function retrieveModel() {
+	findUniqueIdCauseCodeCombinations(document.getElementById('model').value);
 }
 function showModelModal(){
 	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="dropdown">'
@@ -107,7 +121,17 @@ function showModelModal(){
 	initializeDatePicker();
 	$('#csrIMSIQueryModal').modal('show'); 
 }
-
+function showUniqueModelModal(){
+	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="dropdown">'
+			+'Enter Model: <input type="text" name="model" id="model">'
+			+'</div>');
+	$('#csrIMSIQueryModal').find('.modal-footer').html('<button type="button" class="btn btn-secondary"'
+		+'data-dismiss="modal">Close</button>'
+		+'<button type="button" class="btn btn-primary"'
+			+'onclick="retrieveModel()" data-dismiss="modal">Submit'
+			+' Query</button>');
+	$('#csrIMSIQueryModal').modal('show'); 
+}
 function showIMSIModal(){
 	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="dropdown">'
 			+'Enter IMSI: <input type="text" name="imsi" id="imsi">'
@@ -330,6 +354,7 @@ var renderListSumDurationAndCountFailures = function(data) {
 	document.getElementById('example_info').setAttribute("style",
 			"display:none");
 };
+
 var renderCountIMSIFailuresGivenTimePeriod = function(data) {
 	$('.card-header')
 			.html('<i class="fa fa-table"></i> <span id="tableTitle">Base Data Table</span>');
@@ -344,6 +369,35 @@ var renderCountIMSIFailuresGivenTimePeriod = function(data) {
 
 	$.each(data, function(index, base_data) {
 		$('#tableBody').append('<tr><td>'+ base_data + '</td></tr>');
+	});
+	$('#example').DataTable({
+		destroy : true,
+		paging : false,
+		searching : false
+	});
+	document.getElementById('example_info').setAttribute("style",
+			"display:none");
+	};
+	
+var renderListUniqueEventIdCauseCode = function(data) {
+	$('.card-header')
+			.html(
+					'<i class="fa fa-table"></i> <span id="tableTitle">Base Data Table</span>');
+
+	cleenAllElements();
+
+	$('#tableHeader').append(
+			"<th>Event Id</th>" + "<th>Cause Code</th>" + "<th>Number of Occurrences</th>");
+
+	$('#tableFooter').append(
+			"<th>Event Id</th>" + "<th>Cause Code</th>" + "<th>Number of Occurrences</th>");
+
+	$.each(data, function(index, base_data) {
+		$('#tableBody').append(
+				'<tr><td>'
+				+ base_data[0].id.eventId + '</td><td>'
+				+ base_data[0].id.eventCode + '</td><td>'
+				+ base_data[1] + '</td></tr>');
 	});
 	$('#example').DataTable({
 		destroy : true,
