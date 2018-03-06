@@ -69,6 +69,14 @@ public class BaseDataWS {
 
 	}
 	@GET
+	@Path("/fc/{imsi}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response findByIMSIAndDateTime(@PathParam("imsi") final String imsi,@QueryParam("StartDate") final DateParam startDateParam,@QueryParam("EndDate") final DateParam endDateParam) {
+		final List<BaseData> baseData=baseDataDAO.getCountForIMSIAndDate(imsi,startDateParam,endDateParam);
+		return Response.status(200).entity(baseData).build();
+
+	}
+	@GET
 	@Path("/nme/query")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response findByDateTime(@QueryParam("StartDate") final DateParam startDateParam,@QueryParam("EndDate") final DateParam endDateParam) {
@@ -77,10 +85,10 @@ public class BaseDataWS {
 
 	}
 	@GET
-	@Path("/nme/{model}")
+	@Path("/nme/{cellId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response findByModelPhone(@PathParam("model") final String model) {
-		final List<BaseData> baseData=baseDataDAO.getUniqueEventIdAndCauseCodeForModel(model);
+	public Response findByDateTime(@PathParam("cellId") final String cellId) {
+		final List<BaseData> baseData=baseDataDAO.getUniqueEventIdAndCauseCodeForModel(cellId);
 		return Response.status(200).entity(baseData).build();
 
 	}

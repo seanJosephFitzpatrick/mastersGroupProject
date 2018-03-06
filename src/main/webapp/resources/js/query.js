@@ -3,6 +3,7 @@
 var rootUrlIMSIQuery = "http://localhost:8080/mase2-project/rest/basedatas/csr/";
 var rootUrlFailuresWithinTimePeriodQuery = "http://localhost:8080/mase2-project/rest/basedatas/se/QueryDates?";
 var rootUrlNumFailuresForModel = "http://localhost:8080/mase2-project/rest/basedatas/se/";
+var rootUrlIMSIFailuresWithinTimePeriod = "http://localhost:8080/mase2-project/rest/basedatas/fc/";
 var rootUrlSumDurationAndCountFailures= "http://localhost:8080/mase2-project/rest/basedatas/nme/query?StartDate=";
 var rootUrlUniqueIdAndCauseCodeForModel= "http://localhost:8080/mase2-project/rest/basedatas/nme/";
 $('document').ready(function(){
@@ -65,6 +66,14 @@ var findCountCallFailures = function(model,date1,date2){
 		success : renderCountFailures
 	});
 };
+var findIMSICallFailuresGivenTimePeriod = function(imsi,date1,date2){
+	$.ajax({
+		type : 'GET',
+		url : rootUrlIMSIFailuresWithinTimePeriod+imsi+"?StartDate="+date1+"&EndDate="+date2,
+		dataType : "json",
+		success : renderCountIMSIFailuresGivenTimePeriod
+	});
+};
 
 var findUniqueIdCauseCodeCombinations = function(model){
 	$.ajax({
@@ -86,6 +95,10 @@ function retrieveDatesNME() {
 }
 function retrieveModelAndDates() {
 	findCountCallFailures(document.getElementById('model').value,document.getElementById('date_timepicker_start').value,document.getElementById('date_timepicker_end').value);
+}
+
+function retrieveIMSIAndDates() {
+	findIMSICallFailuresGivenTimePeriod(document.getElementById('imsi').value,document.getElementById('date_timepicker_start').value,document.getElementById('date_timepicker_end').value);
 }
 function retrieveModel() {
 	findUniqueIdCauseCodeCombinations(document.getElementById('model').value);
@@ -165,6 +178,31 @@ function showDateModal(){
 			+' Query</button>');
 	initializeDatePicker();
 	
+	$('#csrIMSIQueryModal').modal('show'); 
+}
+function showIMSIFailureModalGivenTimePeriod(){
+	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="dropdown">'		
+			+ '<table>'
+			+ '<tr>'
+			+ '<td>IMSI: </td>'
+			+ '<td><input type="text" name="imsi" id="imsi"></td>'
+			+ '</tr>'
+			+ '<tr>'
+			+ '<td>Start Date: </td>'
+			+ '<td><input id="date_timepicker_start" type="text" /></td>'
+			+ '</tr>'
+			+ '<tr>'
+			+ '<td>End Date: </td>'
+			+ '<td><input id="date_timepicker_end" type="text" /></td>'
+			+ '</tr>'
+			+ '</table>'
+			+ '</div>');
+	$('#csrIMSIQueryModal').find('.modal-footer').html('<button type="button" class="btn btn-secondary"'
+		+'data-dismiss="modal">Close</button>'
+		+'<button type="button" class="btn btn-primary"'
+			+'onclick="retrieveIMSIAndDates()" data-dismiss="modal">Submit'
+			+' Query</button>');
+	initializeDatePicker();
 	$('#csrIMSIQueryModal').modal('show'); 
 }
 function initializeDatePicker(){
@@ -296,10 +334,10 @@ var renderListSumDurationAndCountFailures = function(data) {
 	cleenAllElements();
 
 	$('#tableHeader').append(
-			"<th>IMSI</th>" + "<th>Number of Failures</th>"+"<th>Sum Duration</th>");
+			"<th>IMSI</th>" + "<th>Number of Failures</th>"+"<th>Start period</th>"+"<th>end period</th>" );
 
 	$('#tableFooter').append(
-			"<th>IMSI</th>" + "<th>Number of Failures</th>"+"<th>Sum Duration</th>");
+			"<th>IMSI</th>" + "<th>Number of Failures</th>"+"<th>Start period</th>"+"<th>end period</th>");
 
 	$.each(data, function(index, base_data) {
 		$('#tableBody').append(
@@ -316,6 +354,31 @@ var renderListSumDurationAndCountFailures = function(data) {
 	document.getElementById('example_info').setAttribute("style",
 			"display:none");
 };
+
+var renderCountIMSIFailuresGivenTimePeriod = function(data) {
+	$('.card-header')
+			.html('<i class="fa fa-table"></i> <span id="tableTitle">Base Data Table</span>');
+
+	cleenAllElements();
+
+	$('#tableHeader').append(
+			"<th>Number of Failures</th>");
+
+	$('#tableFooter').append(
+			"<th>Number of Failures</th>");
+
+	$.each(data, function(index, base_data) {
+		$('#tableBody').append('<tr><td>'+ base_data + '</td></tr>');
+	});
+	$('#example').DataTable({
+		destroy : true,
+		paging : false,
+		searching : false
+	});
+	document.getElementById('example_info').setAttribute("style",
+			"display:none");
+	};
+	
 var renderListUniqueEventIdCauseCode = function(data) {
 	$('.card-header')
 			.html(
