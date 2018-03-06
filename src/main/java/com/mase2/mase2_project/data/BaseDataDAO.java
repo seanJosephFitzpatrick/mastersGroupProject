@@ -45,6 +45,16 @@ public class BaseDataDAO {
 				.setParameter(3, endDateParam.getDate());
         return query.getResultList();
 	}
+	
+	public List<BaseData> getCountForIMSIAndDate(String imsi,DateParam startDateParam, DateParam endDateParam) {
+		
+
+		final Query query=entityManager.createQuery("SELECT count(m) as Failures FROM BaseData m where m.imsi like ?1 and m.dateTime between ?2 and ?3")
+				.setParameter(1, imsi)
+				.setParameter(2, startDateParam.getDate())
+				.setParameter(3, endDateParam.getDate());
+        return query.getResultList();
+	}
 
 	public List<BaseData> getSumDurationAndCountForEachIMSI(DateParam startDateParam, DateParam endDateParam) {
 
@@ -69,19 +79,10 @@ public class BaseDataDAO {
 				.setParameter(2, endDateParam.getDate());
         return query.getResultList();
 	}
-	
-	/*
+
 	public List<BaseData> getUniqueEventIdAndCauseCodeForModel(String cellId) {
 		final Query query=entityManager.createQuery("SELECT m.eventCause,count(m) FROM BaseData m where m.cellId like ?1 group by m.eventCause")
 				.setParameter(1, cellId);
-				
-        return query.getResultList();
-	}
-	*/
-	
-	public List<BaseData> getUniqueEventIdAndCauseCodeForModel(String model) {
-		final Query query=entityManager.createQuery("SELECT m.eventCause,count(m) FROM BaseData m where m.ue.model like ?1 group by m.eventCause")
-				.setParameter(1, model);
 				
         return query.getResultList();
 	}
