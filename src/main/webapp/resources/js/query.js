@@ -4,6 +4,7 @@ var rootUrlIMSIQuery = "http://localhost:8080/mase2-project/rest/basedatas/csr/"
 var rootUrlFailuresWithinTimePeriodQuery = "http://localhost:8080/mase2-project/rest/basedatas/se/QueryDates?";
 var rootUrlNumFailuresForModel = "http://localhost:8080/mase2-project/rest/basedatas/se/";
 var rootUrlSumDurationAndCountFailures= "http://localhost:8080/mase2-project/rest/basedatas/nme/query?StartDate=";
+var rootUrlTop10Failures= "http://localhost:8080/mase2-project/rest/basedatas/nme/querytopten?StartDate=";
 var rootUrlUniqueIdAndCauseCodeForModel= "http://localhost:8080/mase2-project/rest/basedatas/nme/";
 $('document').ready(function(){
 	$('.card-header').html("Network Data Analytics");
@@ -75,6 +76,15 @@ var findUniqueIdCauseCodeCombinations = function(model){
 	});
 };
 
+var findAllTopTenDateDataFailures = function(data1,data2) {
+	$.ajax({
+		type : 'GET',
+		url : rootUrlTop10Failures+data1+"&EndDate="+data2,
+		dataType : "json",
+		success : renderListTopTenFailuresTimePeriod
+	});
+};
+
 function retrieveIMSI() {
 	findAllIMSIData(document.getElementById('imsi').value);
 }
@@ -83,6 +93,9 @@ function retrieveDates() {
 }
 function retrieveDatesNME() {
 	findAllDateDataNME(document.getElementById('date_timepicker_start').value,document.getElementById('date_timepicker_end').value);
+}
+function retrieveDatesTopTen() {
+	findAllTopTenDateDataFailures(document.getElementById('date_timepicker_start').value,document.getElementById('date_timepicker_end').value);
 }
 function retrieveModelAndDates() {
 	findCountCallFailures(document.getElementById('model').value,document.getElementById('date_timepicker_start').value,document.getElementById('date_timepicker_end').value);
@@ -143,6 +156,25 @@ function showNMEModal(){
 				+'data-dismiss="modal">Close</button>'
 				+'<button type="button" class="btn btn-primary"'
 					+'onclick="retrieveDatesNME()" data-dismiss="modal">Submit'
+					+' Query</button>');
+			initializeDatePicker();
+			
+			$('#csrIMSIQueryModal').modal('show'); 
+	
+}
+function showTopTenModal(){
+	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="dropdown">'
+			+'<div>'
+			+'Start'
+			+'<input id="date_timepicker_start" type="text" />'
+			+'End'
+			+'<input id="date_timepicker_end" type="text" />'
+		+'</div>'
+		+'</div>');
+			$('#csrIMSIQueryModal').find('.modal-footer').html('<button type="button" class="btn btn-secondary"'
+				+'data-dismiss="modal">Close</button>'
+				+'<button type="button" class="btn btn-primary"'
+					+'onclick="retrieveDatesTopTen()" data-dismiss="modal">Submit'
 					+' Query</button>');
 			initializeDatePicker();
 			
@@ -337,6 +369,40 @@ var renderListUniqueEventIdCauseCode = function(data) {
 				+ base_data[1] + '</td></tr>');
 	});
 	$('#example').DataTable({
+		destroy : true,
+		paging : false,
+		searching : false
+	});
+	document.getElementById('example_info').setAttribute("style",
+			"display:none");
+};
+
+var renderListTopTenFailuresTimePeriod = function(data) {
+	var count=0;
+	$('.card-header')
+			.html(
+					'<i class="fa fa-table"></i> <span id="tableTitle">Base Data Table</span>');
+
+	cleenAllElements();
+
+	$('#tableHeader').append(
+			"<th></th>" + "<th>Market</th>" + "<th>Operator</th>"+"<th>Cell ID</th>"+"<th>Number of failures</th>");
+
+	$('#tableFooter').append(
+			"<th></th>" +"<th>Market</th>" + "<th>Operator</th>"+"<th>Cell ID</th>"+"<th>Number of failures</th>");
+
+	$.each(data, function(index, base_data) {
+		count++;
+		$('#tableBody').append(
+				'<tr><td>'
+						+ count + '</td><td>'
+						+ base_data[0] + '</td><td>'
+						+ base_data[1]+'</td><td>'
+						+ base_data[2]+'</td><td>'
+						+ base_data[3]+'</td></tr>');
+	});
+	$('#example').DataTable({
+		"order": [[4,"desc"]],
 		destroy : true,
 		paging : false,
 		searching : false
