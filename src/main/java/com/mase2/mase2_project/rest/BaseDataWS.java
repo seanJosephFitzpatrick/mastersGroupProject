@@ -92,6 +92,15 @@ public class BaseDataWS {
 		return Response.status(200).entity(baseData).build();
 
 	}
+	@GET
+	@Path("/nme/querytopten")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response findTopTenFailuresByDateTime(@QueryParam("StartDate") final DateParam startDateParam,@QueryParam("EndDate") final DateParam endDateParam) {
+		final List<BaseData> baseData=baseDataDAO.getTopTenFailures(startDateParam,endDateParam);
+		return Response.status(200).entity(baseData).build();
+
+	}
+	
 
 
 }
