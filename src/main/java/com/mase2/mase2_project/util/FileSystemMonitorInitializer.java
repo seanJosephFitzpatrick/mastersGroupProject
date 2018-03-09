@@ -18,8 +18,7 @@ public class FileSystemMonitorInitializer {
    public void init(){  
        fileSystemMonitor.newFolderWatcher();  
        fileSystemMonitor.setMonitoredDir(initiateDirectoryPath());  
-       fileSystemMonitor.startWatching();  
-        
+       fileSystemMonitor.startWatching();       
    } 
    
 	private String initiateDirectoryPath() {
