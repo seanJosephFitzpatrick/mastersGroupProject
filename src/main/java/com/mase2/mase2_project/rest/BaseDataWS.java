@@ -53,37 +53,54 @@ public class BaseDataWS {
 
 	}
 	@GET
-	@Path("/se/{date}")
+	@Path("/se/QueryDates")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response findByAllImsiWithFailures(@PathParam("date") final DateParam dateParam) {
-		final List<BaseData> baseData=baseDataDAO.getAllImsiWithFailures(dateParam);
+	public Response findByAllImsiWithFailures(@QueryParam("StartDate") final DateParam startDateParam,@QueryParam("EndDate") final DateParam endDateParam) {
+		final List<BaseData> baseData=baseDataDAO.getAllImsiWithFailures(startDateParam,endDateParam);
 		return Response.status(200).entity(baseData).build();
 
 	}
 	@GET
-	@Path("/se/query")
+	@Path("/se/{model}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response findByCellIdAndDateTime(@QueryParam("cellId") final String cellId,@QueryParam("date") final DateParam dateParam) {
-		final List<BaseData> baseData=baseDataDAO.getCountForCellIdAndDate(cellId,dateParam);
+	public Response findByCellIdAndDateTime(@PathParam("model") final String model,@QueryParam("StartDate") final DateParam startDateParam,@QueryParam("EndDate") final DateParam endDateParam) {
+		final List<BaseData> baseData=baseDataDAO.getCountForCellIdAndDate(model,startDateParam,endDateParam);
+		return Response.status(200).entity(baseData).build();
+
+	}
+	@GET
+	@Path("/fc/{imsi}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response findByIMSIAndDateTime(@PathParam("imsi") final String imsi,@QueryParam("StartDate") final DateParam startDateParam,@QueryParam("EndDate") final DateParam endDateParam) {
+		final List<BaseData> baseData=baseDataDAO.getCountForIMSIAndDate(imsi,startDateParam,endDateParam);
 		return Response.status(200).entity(baseData).build();
 
 	}
 	@GET
 	@Path("/nme/query")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response findByDateTime(@QueryParam("date") final DateParam dateParam) {
-		final List<BaseData> baseData=baseDataDAO.getSumDurationAndCountForEachIMSI(dateParam);
+	public Response findByDateTime(@QueryParam("StartDate") final DateParam startDateParam,@QueryParam("EndDate") final DateParam endDateParam) {
+		final List<BaseData> baseData=baseDataDAO.getSumDurationAndCountForEachIMSI(startDateParam,endDateParam);
 		return Response.status(200).entity(baseData).build();
 
 	}
 	@GET
-	@Path("/nme/{cellId}")
+	@Path("/nme/{model}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response findByDateTime(@PathParam("cellId") final String cellId) {
-		final List<BaseData> baseData=baseDataDAO.getUniqueEventIdAndCauseCodeForModel(cellId);
+	public Response findByUniqueModelCombinations(@PathParam("model") final String model) {
+		final List<BaseData> baseData=baseDataDAO.getUniqueEventIdAndCauseCodeForModel(model);
 		return Response.status(200).entity(baseData).build();
 
 	}
+	@GET
+	@Path("/nme/querytopten")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response findTopTenFailuresByDateTime(@QueryParam("StartDate") final DateParam startDateParam,@QueryParam("EndDate") final DateParam endDateParam) {
+		final List<BaseData> baseData=baseDataDAO.getTopTenFailures(startDateParam,endDateParam);
+		return Response.status(200).entity(baseData).build();
+
+	}
+	
 
 
 }

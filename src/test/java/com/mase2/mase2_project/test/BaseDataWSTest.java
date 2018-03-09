@@ -134,6 +134,7 @@ public class BaseDataWSTest {
         ue.setMarketingName("G410");
         ue.setManufacturer("Mitsubishi");
         ue.setAccessCapability("GSM 1800, GSM 900");
+        ue.setModel("Apple");
         ueDAO.save(ue);
 		baseData.setUe(ue);
 		utilsDAO.deleteTableFailureClass();
@@ -164,6 +165,55 @@ public class BaseDataWSTest {
 
 
 	}
+	@Test
+	public void testFindByIMSI() {
+		final Response response = baseDataEndpoint.findByImsi("344930011");
+		List<EventCause> baseDataList = (List<EventCause>) response.getEntity();
+		assertEquals(HttpStatus.SC_OK, response.getStatus());				
+		assertEquals("Data fetch = data persisted", baseDataList.size(), 1);
+		final EventCause eventCause = baseDataList.get(0);
+		assertEquals("4097", eventCause.getId().getEventId());	
+		assertEquals("3", eventCause.getId().getEventCode());	
+		
+	}
+	@Test
+	public void testFindAllIMSIWithFailures() {
+		final Response response = baseDataEndpoint.findByAllImsiWithFailures(new DateParam("2018-02-12"), new DateParam("2019-02-12"));
+		List<String> baseDataList = (List<String>) response.getEntity();
+		assertEquals(HttpStatus.SC_OK, response.getStatus());				
+		assertEquals("Data fetch = data persisted", baseDataList.size(), 1);
+		final String imsi = baseDataList.get(0);
+		assertEquals("344930011", imsi);	
+				
+	}
+	@Test
+	public void testFindByCellIdAndDateTime() {
+		final Response response = baseDataEndpoint.findByCellIdAndDateTime("Apple",new DateParam("2018-02-12"), new DateParam("2019-02-12"));
+		List<Long> baseDataList = (List<Long>) response.getEntity();
+		assertEquals(HttpStatus.SC_OK, response.getStatus());				
+		assertEquals("Data fetch = data persisted", baseDataList.size(), 1);
+		final long count = baseDataList.get(0);
+		assertEquals(1, count);	
+				
+	}
+	@Test
+	public void testFindByDateTime() {
+		final Response response = baseDataEndpoint.findByDateTime(new DateParam("2018-02-12"), new DateParam("2019-02-12"));
+		List baseDataList = (List) response.getEntity();
+		assertEquals(HttpStatus.SC_OK, response.getStatus());				
+		assertEquals("Data fetch = data persisted", baseDataList.size(), 1);				
+	}
+	@Test
+	public void testFindUniqueEventIdCauseCodeByModel() {
+		final Response response = baseDataEndpoint.findByUniqueModelCombinations("Apple");
+		List<EventCause> baseDataList = (List<EventCause>) response.getEntity();
+		assertEquals(HttpStatus.SC_OK, response.getStatus());				
+		assertEquals("Data fetch = data persisted", baseDataList.size(), 1);
+		assertEquals("4097", eventCause.getId().getEventId());	
+		assertEquals("3", eventCause.getId().getEventCode());
+		
+		
+	}
 	
 	@Test
 	public void testGetAllEventCauses() {
@@ -176,6 +226,7 @@ public class BaseDataWSTest {
 		assertEquals("3", eventCause.getId().getEventCode());
 		assertEquals("S1 SIG CONN SETUP-S1 INTERFACE DOWN", eventCause.getDescription());	
 	}
+
 	
 	@Test
 	public void testGetAllMccMncs() {

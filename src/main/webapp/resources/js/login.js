@@ -27,10 +27,10 @@ function loginRequest(emailValue, passworsValue){
 	$.ajax({
 		type : 'GET',
 		url : loginURL,
-		dataType : "json",
 		success : postLoginAction,
+		dataType : "json",
 		headers : {
-			'Authorization' : 'Basic '+emailValue+":"+passworsValue
+			'Authorization' : 'Basic '+ emailValue+":"+passworsValue
 		},
 	});
 };
@@ -46,6 +46,7 @@ function loginFunction() {
 var postLoginAction = function(data) {
 	console.log("Back from server - -- " + data.role);
 	sessionStorage.setItem("role", data.role);
+
 	showPage();
 };
 

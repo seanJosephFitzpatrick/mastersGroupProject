@@ -1,6 +1,6 @@
 package com.mase2.mase2_project.data;
 
-import java.util.Date;
+
 import java.util.List;
 
 import javax.ejb.LocalBean;
@@ -9,7 +9,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import org.joda.time.DateTime;
 
 import com.mase2.mase2_project.model.BaseData;
 import com.mase2.mase2_project.util.DateParam;
@@ -37,37 +36,53 @@ public class BaseDataDAO {
         return query.getResultList();
 	}
 
-	public List<BaseData> getCountForCellIdAndDate(String cellId,DateParam dateParam) {
+	public List<BaseData> getCountForCellIdAndDate(String model,DateParam startDateParam, DateParam endDateParam) {
 		
 
-		final Query query=entityManager.createQuery("SELECT count(m) FROM BaseData m where m.cellId like ?1 and m.dateTime between ?2 and ?3")
-				.setParameter(1, cellId)
-				.setParameter(2, dateParam.getDate())
-				.setParameter(3, new Date());
+		final Query query=entityManager.createQuery("SELECT count(m) FROM BaseData m where m.ue.model like ?1 and m.dateTime between ?2 and ?3")
+				.setParameter(1, model)
+				.setParameter(2, startDateParam.getDate())
+				.setParameter(3, endDateParam.getDate());
+        return query.getResultList();
+	}
+	
+	public List<BaseData> getCountForIMSIAndDate(String imsi,DateParam startDateParam, DateParam endDateParam) {
+		
+
+		final Query query=entityManager.createQuery("SELECT count(m) as Failures FROM BaseData m where m.imsi like ?1 and m.dateTime between ?2 and ?3")
+				.setParameter(1, imsi)
+				.setParameter(2, startDateParam.getDate())
+				.setParameter(3, endDateParam.getDate());
         return query.getResultList();
 	}
 
-	public List<BaseData> getSumDurationAndCountForEachIMSI(DateParam dateParam) {
-		DateTime dt = new DateTime();
+	public List<BaseData> getSumDurationAndCountForEachIMSI(DateParam startDateParam, DateParam endDateParam) {
 
-		final Query query=entityManager.createQuery("SELECT m.imsi,count(m),sum(duration) FROM BaseData m where m.dateTime between ?1 and ?2 group by m.imsi")
-				.setParameter(1, dateParam.getDate())
-				.setParameter(2, new Date());
+		final Query query=entityManager.createQuery("SELECT m.imsi,count(m) as numFailures,sum(duration) as sumDuration FROM BaseData m where m.dateTime between ?1 and ?2 group by m.imsi")
+				.setParameter(1, startDateParam.getDate())
+				.setParameter(2, endDateParam.getDate());
         return query.getResultList();
 	}
+	
+	public List<BaseData> getTopTenFailures(DateParam startDateParam, DateParam endDateParam) {
 
-	public List<BaseData> getAllImsiWithFailures(DateParam dateParam) {
-		DateTime dt = new DateTime();
+		final Query query=entityManager.createQuery("SELECT m.mccMnc.id.mcc, m.mccMnc.id.mnc, m.cellId,count(m) as countfailures FROM BaseData m where m.dateTime between ?1 and ?2 group by m.mccMnc.id.mcc, m.mccMnc.id.mnc, m.cellId order by countfailures desc limit 10")
+				.setParameter(1, startDateParam.getDate())
+				.setParameter(2, endDateParam.getDate());
+        return query.setMaxResults(10).getResultList();
+	}
 
+	public List<BaseData> getAllImsiWithFailures(DateParam startDateParam, DateParam endDateParam) {
+		
 		final Query query=entityManager.createQuery("SELECT distinct m.imsi FROM BaseData m where m.dateTime between ?1 and ?2")
-				.setParameter(1, dateParam.getDate())
-				.setParameter(2, new Date());
+				.setParameter(1, startDateParam.getDate())
+				.setParameter(2, endDateParam.getDate());
         return query.getResultList();
 	}
 
-	public List<BaseData> getUniqueEventIdAndCauseCodeForModel(String cellId) {
-		final Query query=entityManager.createQuery("SELECT m.eventCause,count(m) FROM BaseData m where m.cellId like ?1 group by m.eventCause")
-				.setParameter(1, cellId);
+	public List<BaseData> getUniqueEventIdAndCauseCodeForModel(String model) {
+		final Query query=entityManager.createQuery("SELECT m.eventCause,count(m) FROM BaseData m where m.ue.model like ?1 group by m.eventCause")
+				.setParameter(1, model);
 				
         return query.getResultList();
 	}
