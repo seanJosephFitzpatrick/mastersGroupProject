@@ -19,6 +19,7 @@ import com.mase2.mase2_project.model.EventCause;
 import com.mase2.mase2_project.model.FailureClass;
 import com.mase2.mase2_project.model.MccMnc;
 import com.mase2.mase2_project.model.Ue;
+import com.mase2.mase2_project.util.TableClearer;
 import com.mase2.mase2_project.util.Validator;
 
 import jxl.Cell;
@@ -29,6 +30,8 @@ import jxl.read.biff.BiffException;
 @Stateless
 @LocalBean
 public class ExcelDAO {
+	@EJB 
+	TableClearer tableClearer;
 	@EJB
 	private MccMncDAO mcc_mncDao;
 	@EJB
@@ -58,6 +61,45 @@ public class ExcelDAO {
 			e.printStackTrace();
 		}
 		return new int[2];
+	}
+	
+	public int[] autoImportBaseDataExcelData(final File baseDataFile) {
+		tableClearer.deleteAllTables();
+		try {
+			final Workbook workbook = Workbook.getWorkbook(baseDataFile);
+			final Sheet sheet = workbook.getSheet(0);
+			return this.importDataBaseData(sheet);
+		} catch (BiffException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new int[2];
+	}
+	
+	public int[] autoImportAllExcelData(final File allDataFile) {
+		tableClearer.deleteAllTables();
+		try {
+			final Workbook workbook = Workbook.getWorkbook(allDataFile);
+			Sheet sheet = workbook.getSheet(4);
+			this.importDataMccMnc(sheet);
+			sheet = workbook.getSheet(3);
+			this.importDataUE(sheet);
+			sheet = workbook.getSheet(2);
+			this.importDataFailureClass(sheet);
+			sheet = workbook.getSheet(1);
+			this.importDataEventCause(sheet);
+			sheet = workbook.getSheet(0);
+			return this.importDataBaseData(sheet);
+		} catch (BiffException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return new int[2];
+
 	}
 
 	public int[] importAllExcelData() {
