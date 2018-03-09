@@ -57,6 +57,7 @@
             <li>
               <a href="#" onclick="showTableBasedatas()">Base Data</a>
             </li>
+            
           </ul>
         </li>
           
@@ -72,8 +73,19 @@
             <i class="fa fa-file-excel-o"></i>
             <span class="nav-link-text">Import Base Data</span>
           </a>
-
         </li>
+        
+        <script type="text/javascript"> if (sessionStorage.getItem("role") == "admin"){ </script>
+
+		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+			<a class="nav-link" data-toggle="tooltip" href="#navbarResponsive" data-parent="#exampleAccordion" onclick="showUsers()"> 
+				<i class="fa fa-file-excel-o"></i> <span class="nav-link-text">User Management</span>
+			</a>
+		</li>
+
+				<script type="text/javascript"> } </script>
+        
+        
       </ul>
       
       <ul class="navbar-nav sidenav-toggler">
@@ -85,8 +97,8 @@
       </ul>
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <!-- <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
-            <i class="fa fa-fw fa-sign-out"></i>Logout</a> -->
+           <a class="nav-link" onclick="logoutAction()">
+            <i class="fa fa-fw fa-sign-out"></i>Logout</a> 
         </li>
       </ul>
     </div>

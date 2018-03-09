@@ -48,7 +48,7 @@ var renderPopUp = function(data) {
 		console.log(data[1]);
 	
 
-	$('.card-header')
+	$('.card-header') 
 			.html(
 					'<div class="alert alert-success alert-dismissable">'
 							+ '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'

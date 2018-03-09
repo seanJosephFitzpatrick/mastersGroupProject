@@ -22,6 +22,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -54,11 +55,13 @@ public class UserWS {
 	
 	@GET
 	@Path("/login")
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response login(@Context HttpHeaders httpHeaders) {
 		User logedUser = securityCheck.login(httpHeaders);
 		
 		if (logedUser.getRole() != null && !logedUser.getRole().equalsIgnoreCase("")) {
-			return Response.ok("{\"role\": " + logedUser.getRole() + "}").build();
+			System.out.println("UserWS.login()" + logedUser.getRole() + "{\"role\": \"" + logedUser.getRole() + "\"}");
+			return Response.status(200).entity("{\"role\": \"" + logedUser.getRole() + "\"}").build();
 		} else {
 			return ACCESS_DENY;
 		}

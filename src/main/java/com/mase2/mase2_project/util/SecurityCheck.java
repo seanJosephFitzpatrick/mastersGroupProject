@@ -31,11 +31,12 @@ public class SecurityCheck {
 
 		try {
 			credentials = getAuthorizationHeader(httpHeaders);
+			System.out.println(credentials);
 		} catch (Exception e) {
 			System.out.println("Credential not found");
 			return userToCheck;
 		}
-
+		
 		tkenizeCredentials(credentials, userToCheck);
 		isValidUser(userToCheck);
 		return userToCheck;
