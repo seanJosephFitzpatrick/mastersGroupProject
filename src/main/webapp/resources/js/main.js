@@ -10,8 +10,9 @@ var rootUrlImportData = "http://localhost:8080/mase2-project/rest/importdata/all
 var rootUrlImportBaseData = "http://localhost:8080/mase2-project/rest/importdata/basedata";
 
 $('document').ready(function(){
-	$('.card-header').html("Network Data Analytics");
-	$('.content-wrapper').css("background", "rgb(180,180,180)");
+	
+	$('.card-header').html("Network Data AnalyticsSS");
+	$('.content-wrapper').css("background", "rgb(0,0,0)");
 //	{
 //		  overflow-x: hidden;
 //		  background: rgb(180,180,180);

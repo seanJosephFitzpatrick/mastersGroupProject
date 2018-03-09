@@ -83,7 +83,7 @@
 
 		<!-- First declare the APIs we depend on and need for compilation. All 
 			of them are provided by JBoss AS 7 -->
-		<dependency>
+<dependency>
 			<groupId>org.jboss.resteasy</groupId>
 			<artifactId>resteasy-jaxrs</artifactId>
 			<version>2.2.1.GA</version>
@@ -99,8 +99,35 @@
 			<artifactId>resteasy-multipart-provider</artifactId>
 			<version>2.2.0.GA</version>
 			<scope>provided</scope>
+		</dependency> 
+
+		<!-- MICHAL
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20080701</version>
+		</dependency>
+		
+		<dependency>
+		  <groupId>org.jboss.resteasy</groupId>
+		    <artifactId>resteasy-jaxb-provider</artifactId>
+		  <version>3.0.2.Final</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.jboss.resteasy</groupId>
+		    <artifactId>jaxrs-api</artifactId>
+		    <version>3.0.2.Final</version>
 		</dependency>
 
+		<dependency>
+		    <groupId>net.sf.scannotation</groupId>
+		    <artifactId>scannotation</artifactId>
+		    <version>1.0.3</version>
+		</dependency>
+		 MICHAL END -->
+		
+		
 <!-- 		<dependency> -->
 <!-- 			<groupId>org.jboss.resteasy</groupId> -->
 <!-- 			<artifactId>resteasy-multipart-provider</artifactId> -->
