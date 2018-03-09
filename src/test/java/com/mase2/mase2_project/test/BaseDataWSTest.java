@@ -203,6 +203,17 @@ public class BaseDataWSTest {
 		assertEquals(HttpStatus.SC_OK, response.getStatus());				
 		assertEquals("Data fetch = data persisted", baseDataList.size(), 1);				
 	}
+	@Test
+	public void testFindUniqueEventIdCauseCodeByModel() {
+		final Response response = baseDataEndpoint.findByUniqueModelCombinations("Apple");
+		List<EventCause> baseDataList = (List<EventCause>) response.getEntity();
+		assertEquals(HttpStatus.SC_OK, response.getStatus());				
+		assertEquals("Data fetch = data persisted", baseDataList.size(), 1);
+		assertEquals("4097", eventCause.getId().getEventId());	
+		assertEquals("3", eventCause.getId().getEventCode());
+		
+		
+	}
 	
 	@Test
 	public void testGetAllEventCauses() {
