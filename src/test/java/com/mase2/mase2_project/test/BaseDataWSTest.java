@@ -23,6 +23,7 @@ import org.junit.runner.RunWith;
 
 import com.mase2.mase2_project.data.BaseDataDAO;
 import com.mase2.mase2_project.data.EventCauseDAO;
+import com.mase2.mase2_project.data.ExcelDAO;
 import com.mase2.mase2_project.data.FailureClassDAO;
 import com.mase2.mase2_project.data.MccMncDAO;
 import com.mase2.mase2_project.data.UeDAO;
@@ -36,11 +37,18 @@ import com.mase2.mase2_project.model.Ue;
 import com.mase2.mase2_project.rest.BaseDataWS;
 import com.mase2.mase2_project.rest.EventCauseWS;
 import com.mase2.mase2_project.rest.FailureClassWS;
+import com.mase2.mase2_project.rest.ImportWS;
 import com.mase2.mase2_project.rest.JaxRsActivator;
 import com.mase2.mase2_project.rest.MccMncWS;
 import com.mase2.mase2_project.rest.UeWS;
 import com.mase2.mase2_project.test.utils.UtilsDAO;
 import com.mase2.mase2_project.util.DateParam;
+import com.mase2.mase2_project.util.FileLogger;
+import com.mase2.mase2_project.util.InvalidEntity;
+import com.mase2.mase2_project.util.TableClearer;
+import com.mase2.mase2_project.util.Validator;
+
+import jxl.read.biff.BiffException;
 
 
 @RunWith(Arquillian.class)
@@ -56,7 +64,22 @@ public class BaseDataWSTest {
 						UtilsDAO.class, FailureClassDAO.class, BaseData.class, 
 					    BaseDataDAO.class,BaseDataWS.class, UeWS.class, 
 						EventCause.class, EventCausePK.class,EventCauseDAO.class, FailureClassWS.class,
-						EventCauseWS.class,DateParam.class, FailureClass.class, Ue.class,UeDAO.class,java.util.Date.class)
+						EventCauseWS.class,DateParam.class, FailureClass.class,ExcelDAO.class,InvalidEntity.class,FileLogger.class,Validator.class, Ue.class,UeDAO.class,ImportWS.class,TableClearer.class,java.util.Date.class)
+				 .addPackages(true, jxl.Sheet.class.getPackage())
+                 .addPackages(true, jxl.Workbook.class.getPackage())
+                 .addPackages(true, jxl.Cell.class.getPackage())
+                 .addPackages(true, jxl.biff.BaseCellFeatures.class.getPackage())
+                 .addPackages(true, jxl.HeaderFooter.Contents.class.getPackage())
+                 .addPackages(true, jxl.HeaderFooter.class.getPackage())
+                 .addPackages(true, jxl.biff.FontRecord.class.getPackage())
+                 .addPackages(true, jxl.format.Font.class.getPackage())
+                 .addPackages(true, jxl.write.WritableCell.class.getPackage())
+                 .addPackages(true, jxl.write.WritableHyperlink.class.getPackage())
+                 .addPackages(true, jxl.write.biff.HyperlinkRecord.class.getPackage())
+                 .addPackages(true, jxl.read.biff.CellValue.class.getPackage())
+                 .addPackages(true, jxl.read.biff.BaseSharedFormulaRecord.class.getPackage())
+                 .addPackages(true, common.Logger.class.getPackage())
+                 .addPackages(true, common.log.SimpleLogger.class.getPackage())
 			//	.addPackage(EventCause.class.getPackage())
 			//	.addPackage(EventCauseDAO.class.getPackage())
 						//this line will pick up the production db
@@ -81,6 +104,8 @@ public class BaseDataWSTest {
 	@EJB
 	private FailureClassWS failureClassWS;
 	@EJB
+	private ExcelDAO excelDAO;
+	@EJB
 	private UeWS ueWS;
 	@EJB
 	private MccMncWS mcc_mncWS;
@@ -88,17 +113,20 @@ public class BaseDataWSTest {
 	private EventCauseWS eventCauseEndpoint;
 	@EJB
 	private UtilsDAO utilsDAO;
+	@EJB
+	private ImportWS importWS;
 	
 	private static Calendar calendar;
 	private static EventCause eventCause;
 	private static Ue ue;
 	private static MccMnc mccMnc;
 	private static FailureClass failureClass;
+	private static BaseData baseData;
 	
 	@Before
 	public void setUp() {
 		utilsDAO.deleteTableBaseData();
-		final BaseData baseData = new BaseData();
+		baseData = new BaseData();
 		calendar=Calendar.getInstance();
 		calendar.setTime(new Date());
 		baseData.setDateTime(calendar.getTime());
@@ -212,6 +240,14 @@ public class BaseDataWSTest {
 		final FailureClass failureClass = failureClassList.get(0);
 		assertEquals("2",failureClass.getFailureClass());
 		assertEquals("MT ACCESS",failureClass.getDescription());
+	}
+	
+	@Test
+	public void testFindTopTenFailuresByDateTime() {
+		final Response response = baseDataEndpoint.findTopTenFailuresByDateTime(new DateParam("2010-03-07"), new DateParam("2019-03-09"));
+		List baseDataList = (List) response.getEntity();
+		assertEquals(HttpStatus.SC_OK, response.getStatus());				
+		assertEquals("Data fetch = data persisted",1,  baseDataList.size());	
 	}
 	
 }
