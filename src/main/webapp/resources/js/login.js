@@ -1,28 +1,10 @@
 /**
  * Login and logout functionality
  */
-var email;
-var password;
-var role = "none";
+
 var loginURL = "http://localhost:8080/mase2-project/rest/users/login";
 
-$('document').ready(function() {
-	sessionStorage.setItem("role", "none");
-	showPage();
-});
- 
-function logoutAction() {
-	sessionStorage.setItem("role", "none");
-	showPage();
-}
-function showPage() {
-	console.log("Current rolle " + sessionStorage.getItem("role"));
-	if (sessionStorage.getItem("role") === "none") {
-		showLoginForm();
-	} else {
-		$('.content-wrapper').html("<p>Welcome "+ role +"</p>");
-	}
-}
+
 function loginRequest(emailValue, passworsValue){
 	$.ajax({
 		type : 'GET',
@@ -40,21 +22,27 @@ function loginFunction() {
 	var emailValue = document.getElementById("inputEmail").value;
 	console.log(passworsValue + " " + emailValue);
 	loginRequest(emailValue, passworsValue);
-
+	sessionStorage.setItem("email", emailValue);
+	sessionStorage.setItem("password", passworsValue);
 }
 
 var postLoginAction = function(data) {
 	console.log("Back from server - -- " + data.role);
 	sessionStorage.setItem("role", data.role);
-
-	showPage();
+	$('#wrapper').html("");
+	showManiPage();
 };
 
+function logoutAction() {
+	sessionStorage.setItem("role", "none");
+	showManiPage();
+}
+
 function showLoginForm() {
-	$('.content-wrapper')
+	$('#wrapper')
 			.html(
 					""
-							+ '<div class="card card-login mx-auto mt-5">'
+							+ '<div id="loginForm" class="card card-login mx-auto mt-5">'
 							+ '<div class="card-header">Login</div>'
 							+ '<div class="card-body">'
 //							+ '  <form id="loginForm">'

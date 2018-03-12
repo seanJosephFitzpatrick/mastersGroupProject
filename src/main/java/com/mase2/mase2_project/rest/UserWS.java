@@ -61,6 +61,7 @@ public class UserWS {
 
 		if (logedUser.getRole() != null && !logedUser.getRole().equalsIgnoreCase("")) {
 			// if (logedUser.getRole() .equals("admin")) {
+			System.out.println("UserWS.login()");
 			System.out.println("UserWS.login()" + logedUser.getRole() + "{\"role\": \"" + logedUser.getRole() + "\"}");
 			return Response.status(200).entity("{\"role\": \"" + logedUser.getRole() + "\"}").build();
 		} else {
