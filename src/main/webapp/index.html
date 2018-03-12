@@ -17,7 +17,9 @@
 <!-- Custom styles for this template-->
 <link href="./resources/css/sb-admin.css" rel="stylesheet">
 <link href="./resources/css/jquery.datetimepicker.min.css" rel="stylesheet">
-
+<link href="./resources/css/jquery.dataTables.min.css" rel="stylesheet">
+<!-- <link href="./resources/css/jquery.dataTablesStyle.css" rel="stylesheet">
+ -->
 </head>
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
@@ -62,12 +64,6 @@
 					</ul>
 				</li>
 
-				<li id="nav_ImportAllData" class="nav-item" data-toggle="tooltip" data-placement="right" title="Import All Data">
-					<a class="nav-link" data-toggle="tooltip" href="#navbarResponsive" data-parent="#exampleAccordion" onclick="importTables()">
-						<i class="fa fa-file-excel-o"></i> <span class="nav-link-text">Import All Data</span>
-					</a>
-				</li>
-
 				<li id="nav_Queries" class="nav-item" data-toggle="tooltip" data-placement="right" title="Queries">
 					<a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseQueries" data-parent="#exampleAccordion">
 						<i class="fa fa-file-excel-o"></i> <span class="nav-link-text">Queries</span>
@@ -103,11 +99,26 @@
 					</a>
 				</li>
 
-				<li id="nav_userMgmt" class="nav-item" data-toggle="tooltip" data-placement="right" title="User Management">
-					<a class="nav-link" data-toggle="tooltip" href="#navbarResponsive" data-parent="#exampleAccordion" onclick="showUsers()">
-						<i class="fa fa-file-excel-o"></i> <span class="nav-link-text">User Management</span>
+				<li id="nav_ImportAllData" class="nav-item" data-toggle="tooltip" data-placement="right" title="Import All Data">
+					<a class="nav-link" data-toggle="tooltip" href="#navbarResponsive" data-parent="#exampleAccordion" onclick="importTables()">
+						<i class="fa fa-file-excel-o"></i> <span class="nav-link-text">Import All Data</span>
 					</a>
 				</li>
+				
+				<li id="nav_userMgmt" class="nav-item" data-toggle="tooltip" data-placement="right" title="User MAnagemenr">
+					<a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#users_managemnt" data-parent="#exampleAccordion">
+						<i class="fa fa-fw fa-table"></i> <span class="nav-link-text">User Management</span>
+					</a>
+					<ul class="sidenav-second-level collapse" id="users_managemnt">
+						<li>
+							<a href="#" onclick="showUsers()">Users list</a>
+						</li>
+						<li>
+							<a href="#" onclick="showNewUserForm()">Register new user</a>
+						</li>
+					</ul>
+				</li>
+				
 			</ul>
 
 			<ul class="navbar-nav ml-auto">
@@ -188,9 +199,9 @@
 		<script type="text/javascript" src="./resources/vendor/datatables/jquery.dataTables.js"></script>
 		<script type="text/javascript" src="./resources/vendor/datatables/dataTables.bootstrap4.js"></script>
 		<!-- Custom scripts for all pages-->
-		<script type="text/javascript" src="./resources/js/sb-admin.min.js"></script>
-		<script type="text/javascript" src="./resources/js/sb-admin-datatables.min.js"></script>
-		<script type="text/javascript" src="./resources/js/sb-admin-charts.min.js"></script>
+		<script type="text/javascript" src="./resources/js/sb-admin.js"></script>
+		<script type="text/javascript" src="./resources/js/sb-admin-datatables.js"></script>
+		<script type="text/javascript" src="./resources/js/sb-admin-charts.js"></script>
 		<script type="text/javascript" src="./resources/js/jquery.datetimepicker.full.min.js"></script>
 		<!-- Custom scripts for this page-->
 		<script type="text/javascript" src="./resources/js/navigation.js"></script>

@@ -18,8 +18,6 @@ function showNavigation() {
 		
 		$('#nav_Queries').show();
 		$('#nav_Tables').show();
-		
-		
 	}
 	
 	if(role == "admin" || role == "manager" || role == "support") {

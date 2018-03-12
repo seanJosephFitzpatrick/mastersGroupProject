@@ -121,8 +121,8 @@ public class UserWS {
 	@PUT
 	@Path("/{id:[0-9][0-9]*}")
 	public Response update(@PathParam("id") Long id, final User user) {
-		// TODO: process the given user
-		return Response.noContent().build();
+		userDAO.update(user);
+		return Response.ok().build();
 	}
 
 	@DELETE

@@ -37,4 +37,8 @@ public class UserDAO {
 	public User findById(int id) {
 		return entityManager.find(User.class, id);
 	}
+
+	public void update(User user) {
+		entityManager.merge(user);
+	}
 }
