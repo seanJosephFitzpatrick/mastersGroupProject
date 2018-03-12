@@ -11,23 +11,32 @@ function showNavigation() {
 	$('#nav_ImportAll').hide();
 	$('#nav_ImportAllData').hide();
 	$('#nav_userMgmt').hide();
+	$('#dateQuery').hide();
+	$('#countFailuresQuery').hide();
+	$('#sumDurationQuery').hide();
+	$('#topTenQuery').hide();
+	$('#uniqueIdAndCodeQuery').hide();
 	
 	if(role == "admin" || role == "manager" || role == "support" || role == "customer") {
 		$('#nav_NDA').show();
 		$('#nav_logout').show();
-		
-		$('#nav_Queries').show();
-		$('#nav_Tables').show();
+		$('#nav_Queries').show();	
 	}
 	
 	if(role == "admin" || role == "manager" || role == "support") {
-		
+		$('#dateQuery').show();
+		$('#countFailuresQuery').show();	
 	}	
 	
 	if(role == "admin" || role == "manager") {
+		$('#uniqueIdAndCodeQuery').show();
+		$('#sumDurationQuery').show();
+		$('#topTenQuery').show();
+		
 	}	
 	if(sessionStorage.getItem("role") == "admin") {
 		$('#nav_userMgmt').show();
+		$('#nav_Tables').show();
 		$('#nav_ImportAll').show();
 		$('#nav_ImportAllData').show();
 		

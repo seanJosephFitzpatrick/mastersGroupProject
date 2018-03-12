@@ -48,10 +48,8 @@ var importBaseData = function() {
 };
 var renderPopUp = function(data) {
 
-	$('.card-header').html(
-			'<div class="alert alert-success alert-dismissable">' + '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + '<strong>Success!</strong> ' + data[0]
+	$('#wrapper').html('<div class="alert alert-success alert-dismissable">' + '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + '<strong>Success!</strong> ' + data[0]
 					+ ' rows were imported. ' + data[1] + ' rows were excluded.' + ' See log file for details</div> ');
-	cleenAllElements();
 
 };
 
