@@ -23,6 +23,11 @@ function showManiPage() {
 	showNavigation();
 
 }
+function showLoading(){
+	$('#wrapper')
+	.html('<img src="./resources/images/ajax-loader.gif" id="loading-indicator" style="display:none" />');
+	$('#loading-indicator').show();
+}
 
 // ///////////////////// Dashboard /////////////////////
 function showDashboard() {
@@ -54,10 +59,12 @@ var renderPopUp = function(data) {
 };
 
 function importTables() {
+	showLoading();
 	importData();
 }
 
 function importBaseDataTable() {
+	showLoading();
 	importBaseData();
 }
 

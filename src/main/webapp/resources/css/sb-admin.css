@@ -7,6 +7,12 @@ body {
   overflow-x: hidden;
 }
 
+#loading-indicator {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+}
+
 body.sticky-footer {
   margin-bottom: 56px;
 }

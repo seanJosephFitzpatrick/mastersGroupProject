@@ -117,10 +117,10 @@ function registerNewUser() {
 	var message = "";
 
 	if(emailValue == "") {
-		message += "Email cannot be empty";
+		message += "Email cannot be empty. ";
 	}
 	if(passworsValue == "" || passworsValue != confirmPassworsValue) {
-		message += "Password dos't match Confirm Password";
+		message += "Passwords don't match.";
 	}
 	
 	var userFromDBEmail = "";
@@ -197,7 +197,7 @@ function showNewUserForm() {
 			+'      <div class="card-header">Register an Account</div>'
 			+'<div class="card-body">'
 			+'<div id="errorMsg"></div>'
-			+'  <form>'
+			+'  <form id="myForm2">'
 			+'    <div class="form-group">'
 			+'      <div class="form-row">'
 			+'        <div class="col-md-6">'
@@ -230,17 +230,53 @@ function showNewUserForm() {
 			+'      </div>'
 			+'    </div>'
 			+'		<div id="userFormButton">'
-			+'    		<a class="btn btn-primary btn-block" href="#" onClick="registerNewUser()"><span id="span_reg">Register</span></a>'
++			'<a class="btn btn-primary btn-block" href="#" onClick="registerNewUser()"><span id="span_reg">Register</span></a>'
 			+'		<div>'	
 			+'  </form>'
 			+'</div>'
 			+'</div>'
 			);
+
+	$('#myForm2').validate({ // initialize the plugin
+        rules: {
+        	inputEmail: {
+                required: true,
+                email: true
+            },
+            inputPassword: {
+                required: true,
+                minlength: 3
+            },
+            confirmPassword: {
+                required: true,
+                minlength: 3,
+                equalTo: "#inputPassword"
+            }
+        },
+	messages: {
+		inputEmail: {
+			required: " (required)",
+			email: "must be correct email syntax"
+		},
+		inputPassword: {
+			required: " (required)",
+			minlength: " (must be at least three characters)"
+			
+		},
+		confirmPassword: {
+			required: " (required)",
+			minlength: " (must be at least three characters)",
+			equalTo: "Passwords must be equal"
+		}
+	}
+
+    });
+
 }
 function showUsersTable() {
 	$('#wrapper').html(
 		'<div class="card-body"><div class="table-responsive">'
-		+'	<table id="userTable" class="table table-bordered" cellspacing="0" width="100%">'
+		+'	<table id="userTable" class="table table-bordered display" cellspacing="0" width="100%">'
 		+'		<thead>'
 		+'			<tr>'
 		+' 				<th>Id</th>'

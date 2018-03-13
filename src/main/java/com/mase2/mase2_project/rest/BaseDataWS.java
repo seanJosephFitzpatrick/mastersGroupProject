@@ -20,6 +20,11 @@ import javax.ws.rs.core.Response;
 import com.mase2.mase2_project.data.BaseDataDAO;
 import com.mase2.mase2_project.model.BaseData;
 import com.mase2.mase2_project.util.DateParam;
+import com.mase2.mase2_project.util.DurationAndCountObject;
+import com.mase2.mase2_project.util.FailureCountObject;
+import com.mase2.mase2_project.util.IMSIObject;
+import com.mase2.mase2_project.util.TopTenFailuresObject;
+import com.mase2.mase2_project.util.UniqueEventAndCauseObject;
 
 
 
@@ -56,7 +61,7 @@ public class BaseDataWS {
 	@Path("/se/QueryDates")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response findByAllImsiWithFailures(@QueryParam("StartDate") final DateParam startDateParam,@QueryParam("EndDate") final DateParam endDateParam) {
-		final List<BaseData> baseData=baseDataDAO.getAllImsiWithFailures(startDateParam,endDateParam);
+		final List<IMSIObject> baseData=baseDataDAO.getAllImsiWithFailures(startDateParam,endDateParam);
 		return Response.status(200).entity(baseData).build();
 
 	}
@@ -64,7 +69,7 @@ public class BaseDataWS {
 	@Path("/se/{model}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response findByCellIdAndDateTime(@PathParam("model") final String model,@QueryParam("StartDate") final DateParam startDateParam,@QueryParam("EndDate") final DateParam endDateParam) {
-		final List<BaseData> baseData=baseDataDAO.getCountForCellIdAndDate(model,startDateParam,endDateParam);
+		final List<FailureCountObject> baseData=baseDataDAO.getCountForCellIdAndDate(model,startDateParam,endDateParam);
 		return Response.status(200).entity(baseData).build();
 
 	}
@@ -72,7 +77,7 @@ public class BaseDataWS {
 	@Path("/fc/{imsi}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response findByIMSIAndDateTime(@PathParam("imsi") final String imsi,@QueryParam("StartDate") final DateParam startDateParam,@QueryParam("EndDate") final DateParam endDateParam) {
-		final List<BaseData> baseData=baseDataDAO.getCountForIMSIAndDate(imsi,startDateParam,endDateParam);
+		final List<FailureCountObject> baseData=baseDataDAO.getCountForIMSIAndDate(imsi,startDateParam,endDateParam);
 		return Response.status(200).entity(baseData).build();
 
 	}
@@ -80,7 +85,7 @@ public class BaseDataWS {
 	@Path("/nme/query")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response findByDateTime(@QueryParam("StartDate") final DateParam startDateParam,@QueryParam("EndDate") final DateParam endDateParam) {
-		final List<BaseData> baseData=baseDataDAO.getSumDurationAndCountForEachIMSI(startDateParam,endDateParam);
+		final List<DurationAndCountObject> baseData=baseDataDAO.getSumDurationAndCountForEachIMSI(startDateParam,endDateParam);
 		return Response.status(200).entity(baseData).build();
 
 	}
@@ -88,7 +93,7 @@ public class BaseDataWS {
 	@Path("/nme/{model}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response findByUniqueModelCombinations(@PathParam("model") final String model) {
-		final List<BaseData> baseData=baseDataDAO.getUniqueEventIdAndCauseCodeForModel(model);
+		final List<UniqueEventAndCauseObject> baseData=baseDataDAO.getUniqueEventIdAndCauseCodeForModel(model);
 		return Response.status(200).entity(baseData).build();
 
 	}
@@ -96,7 +101,7 @@ public class BaseDataWS {
 	@Path("/nme/querytopten")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response findTopTenFailuresByDateTime(@QueryParam("StartDate") final DateParam startDateParam,@QueryParam("EndDate") final DateParam endDateParam) {
-		final List<BaseData> baseData=baseDataDAO.getTopTenFailures(startDateParam,endDateParam);
+		final List<TopTenFailuresObject> baseData=baseDataDAO.getTopTenFailures(startDateParam,endDateParam);
 		return Response.status(200).entity(baseData).build();
 
 	}
