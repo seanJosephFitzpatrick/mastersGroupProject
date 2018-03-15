@@ -117,123 +117,142 @@ function retrieveModel() {
 	findUniqueIdCauseCodeCombinations(document.getElementById('model').value);
 }
 function showModelModal(){
+	$("#modalTitle").text("Model Failures Query");
 	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="dropdown">'
-			+'Enter Phone Model: <input type="text" name="model" id="model">'
-			+'<div>'
-			+'Start'
-			+'<input id="date_timepicker_start" type="text" />'
-			+'End'
-			+'<input id="date_timepicker_end" type="text" />'
-		+'</div>'
-		+'</div>');
+		+ '<table>'
+		+ '<tr>'
+		+ '<td>Enter Phone Model:</td>' 
+		+ '<td><input type="text" name="model" id="model"></td>'
+		+ '</tr>'
+		+ '<tr>'
+		+ '<td>Start Date: </td>'
+		+ '<td><input id="date_timepicker_start" type="text" /></td>'
+		+ '<tr>'
+		+ '<td>End Date: </td>'
+		+ '<td><input id="date_timepicker_end" type="text" /></td>'
+		+ '</tr>'
+		+ '</table>'
+		+ '</div>');
 	$('#csrIMSIQueryModal').find('.modal-footer').html('<button type="button" class="btn btn-secondary"'
-		+'data-dismiss="modal">Close</button>'
-		+'<button type="button" class="btn btn-primary"'
-			+'onclick="retrieveModelAndDates()" data-dismiss="modal">Submit'
-			+' Query</button>');
+		+ 'data-dismiss="modal">Close</button>'
+		+ '<button type="button" class="btn btn-primary"'
+		+ 'onclick="retrieveModelAndDates()" data-dismiss="modal">Submit</button>');
 	initializeDatePicker();
 	$('#csrIMSIQueryModal').modal('show'); 
 }
 function showUniqueModelModal(){
 	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="dropdown">'
-			+'Enter Model: <input type="text" name="model" id="model">'
-			+'</div>');
+		+ '<table>'
+		+ '<tr>'
+		+ '<td>Enter Model:</td>' 
+		+ '<td><input type="text" name="model" id="model"></td>'
+		+ '</tr>'
+		+ '</table>'
+		+ '</div>');
 	$('#csrIMSIQueryModal').find('.modal-footer').html('<button type="button" class="btn btn-secondary"'
-		+'data-dismiss="modal">Close</button>'
-		+'<button type="button" class="btn btn-primary"'
-			+'onclick="retrieveModel()" data-dismiss="modal">Submit'
-			+' Query</button>');
+		+ 'data-dismiss="modal">Close</button>'
+		+ '<button type="button" class="btn btn-primary"'
+		+ 'onclick="retrieveModel()" data-dismiss="modal">Submit</button>');
 	$('#csrIMSIQueryModal').modal('show'); 
 }
 function showIMSIModal(){
 	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="dropdown">'
-			+'Enter IMSI: <input type="text" name="imsi" id="imsi">'
-			+'</div>');
+		+ '<table>'
+		+ '<tr>'
+		+ '<td>Enter IMSI:</td>' 
+		+ '<td><input type="text" name="imsi" id="imsi"></td>'
+		+ '</tr>'
+		+ '</table>'
+		+ '</div>');
 	$('#csrIMSIQueryModal').find('.modal-footer').html('<button type="button" class="btn btn-secondary"'
-		+'data-dismiss="modal">Close</button>'
-		+'<button type="button" class="btn btn-primary"'
-			+'onclick="retrieveIMSI()" data-dismiss="modal">Submit'
-			+' Query</button>');
+		+ 'data-dismiss="modal">Close</button>'
+		+ '<button type="button" class="btn btn-primary"'
+		+ 'onclick="retrieveIMSI()" data-dismiss="modal">Submit</button>');
 	$('#csrIMSIQueryModal').modal('show'); 
 }
 function showNMEModal(){
 	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="dropdown">'
-			+'<div>'
-			+'Start'
-			+'<input id="date_timepicker_start" type="text" />'
-			+'End'
-			+'<input id="date_timepicker_end" type="text" />'
-		+'</div>'
-		+'</div>');
-			$('#csrIMSIQueryModal').find('.modal-footer').html('<button type="button" class="btn btn-secondary"'
-				+'data-dismiss="modal">Close</button>'
-				+'<button type="button" class="btn btn-primary"'
-					+'onclick="retrieveDatesNME()" data-dismiss="modal">Submit'
-					+' Query</button>');
-			initializeDatePicker();
-			
-			$('#csrIMSIQueryModal').modal('show'); 
+		+ '<table>'
+		+ '<tr>'
+		+ '<td>Start Date: </td>'
+		+ '<td><input id="date_timepicker_start" type="text" /></td>'
+		+ '</tr>'
+		+ '<tr>'
+		+ '<td>End Date: </td>'
+		+ '<td><input id="date_timepicker_end" type="text" /></td>'
+		+ '</tr>'
+		+ '</table>'
+		+ '</div>');
+	$('#csrIMSIQueryModal').find('.modal-footer').html('<button type="button" class="btn btn-secondary"'
+		+ 'data-dismiss="modal">Close</button>'
+		+ '<button type="button" class="btn btn-primary"'
+		+ 'onclick="retrieveDatesNME()" data-dismiss="modal">Submit</button>');
+	initializeDatePicker();		
+	$('#csrIMSIQueryModal').modal('show'); 
 	
 }
 function showTopTenModal(){
 	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="dropdown">'
-			+'<div>'
-			+'Start'
-			+'<input id="date_timepicker_start" type="text" />'
-			+'End'
-			+'<input id="date_timepicker_end" type="text" />'
-		+'</div>'
-		+'</div>');
-			$('#csrIMSIQueryModal').find('.modal-footer').html('<button type="button" class="btn btn-secondary"'
-				+'data-dismiss="modal">Close</button>'
-				+'<button type="button" class="btn btn-primary"'
-					+'onclick="retrieveDatesTopTen()" data-dismiss="modal">Submit'
-					+' Query</button>');
-			initializeDatePicker();
-			
-			$('#csrIMSIQueryModal').modal('show'); 
-	
+		+ '<table>'
+		+ '<tr>'
+		+ '<td>Start Date: </td>'
+		+ '<td><input id="date_timepicker_start" type="text" /></td>'
+		+ '</tr>'
+		+ '<tr>'
+		+ '<td>End Date: </td>'
+		+ '<td><input id="date_timepicker_end" type="text" /></td>'
+		+ '</tr>'
+		+ '</table>'
+		+ '</div>');
+	$('#csrIMSIQueryModal').find('.modal-footer').html('<button type="button" class="btn btn-secondary"'
+		+ 'data-dismiss="modal">Close</button>'
+		+ '<button type="button" class="btn btn-primary"'
+		+ 'onclick="retrieveDatesTopTen()" data-dismiss="modal">Submit</button>');
+	initializeDatePicker();
+	$('#csrIMSIQueryModal').modal('show'); 
 }
+
 function showDateModal(){
 	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="dropdown">'
-	+'<div>'
-	+'Start'
-	+'<input id="date_timepicker_start" type="text" />'
-	+'End'
-	+'<input id="date_timepicker_end" type="text" />'
-+'</div>'
-+'</div>');
+		+ '<table>'
+		+ '<tr>'
+		+ '<td>Start Date: </td>'
+		+ '<td><input id="date_timepicker_start" type="text" /></td>'
+		+ '</tr>'
+		+ '<tr>'
+		+ '<td>End Date: </td>'
+		+ '<td><input id="date_timepicker_end" type="text" /></td>'
+		+ '</tr>'
+		+ '</table>'
+		+'</div>');
 	$('#csrIMSIQueryModal').find('.modal-footer').html('<button type="button" class="btn btn-secondary"'
-		+'data-dismiss="modal">Close</button>'
-		+'<button type="button" class="btn btn-primary"'
-			+'onclick="retrieveDates()" data-dismiss="modal">Submit'
-			+' Query</button>');
+		+ 'data-dismiss="modal">Close</button>'
+		+ '<button type="button" class="btn btn-primary"'
+		+ 'onclick="retrieveDates()" data-dismiss="modal">Submit</button>');
 	initializeDatePicker();
-	
 	$('#csrIMSIQueryModal').modal('show'); 
 }
 function showIMSIFailureModalGivenTimePeriod(){
 	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="dropdown">'		
-			+ '<table>'
-			+ '<tr>'
-			+ '<td>IMSI: </td>'
-			+ '<td><input type="text" name="imsi" id="imsi"></td>'
-			+ '</tr>'
-			+ '<tr>'
-			+ '<td>Start Date: </td>'
-			+ '<td><input id="date_timepicker_start" type="text" /></td>'
-			+ '</tr>'
-			+ '<tr>'
-			+ '<td>End Date: </td>'
-			+ '<td><input id="date_timepicker_end" type="text" /></td>'
-			+ '</tr>'
-			+ '</table>'
-			+ '</div>');
+		+ '<table>'
+		+ '<tr>'
+		+ '<td>IMSI: </td>'
+		+ '<td><input type="text" name="imsi" id="imsi"></td>'
+		+ '</tr>'
+		+ '<tr>'
+		+ '<td>Start Date: </td>'
+		+ '<td><input id="date_timepicker_start" type="text" /></td>'
+		+ '</tr>'
+		+ '<tr>'
+		+ '<td>End Date: </td>'
+		+ '<td><input id="date_timepicker_end" type="text" /></td>'
+		+ '</tr>'
+		+ '</table>'
+		+ '</div>');
 	$('#csrIMSIQueryModal').find('.modal-footer').html('<button type="button" class="btn btn-secondary"'
-		+'data-dismiss="modal">Close</button>'
-		+'<button type="button" class="btn btn-primary"'
-			+'onclick="retrieveIMSIAndDates()" data-dismiss="modal">Submit'
-			+' Query</button>');
+		+ 'data-dismiss="modal">Close</button>'
+		+ '<button type="button" class="btn btn-primary"'
+		+ 'onclick="retrieveIMSIAndDates()" data-dismiss="modal">Submit</button>');
 	initializeDatePicker();
 	$('#csrIMSIQueryModal').modal('show'); 
 }
