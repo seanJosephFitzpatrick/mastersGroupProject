@@ -34,6 +34,7 @@ public class SecurityCheck {
 
 		try {
 			credentials = getAuthorizationHeader(httpHeaders);
+			System.out.println("SecurityCheck.login()");
 			System.out.println(credentials);
 		} catch (Exception e) {
 			System.out.println("Credential not found");
