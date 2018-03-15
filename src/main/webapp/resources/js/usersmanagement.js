@@ -9,16 +9,8 @@ var userTable;
 $(document).ready(function() {
 } );
 
-function showUsers() {
-	userListRequest();
-	showUsersTable();
-}
 
 function editUser(userId, email, password , role) {
-//	console.log(userId);
-//	console.log(email);
-//	console.log(password);
-//	console.log(role);
 	showNewUserForm();
 	$('#inputEmail').val(email);
 	$('#span_reg').val("Update User");
@@ -26,6 +18,12 @@ function editUser(userId, email, password , role) {
 	$('#userFormButton').html('    		<a class="btn btn-primary btn-block" href="#" onClick="updateUser('+userId+')"><span id="span_reg">Update User</span></a>');
 	
 }
+
+function showUsers() {
+	userListRequest();
+	showUsersTable();
+}
+
 function updateUser(userId) {
 	var emailValue = $('#inputEmail').val();
 	var passworsValue = $('#inputPassword').val();
@@ -33,7 +31,7 @@ function updateUser(userId) {
 	var roleValue = $('#selectRole option:selected').val();
 
 	var message = "";
-	do {
+	
 		if(emailValue == "") {
 			message += "Email cannot be empty";
 		}
@@ -49,8 +47,12 @@ function updateUser(userId) {
 					+	'<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
 					+	'<strong>Error</strong> '+ message +'</div> ');
 		}
-	} while(message != "");
-	updateUserInDB(userId, emailValue, passworsValue, roleValue);
+	if(message == "") {
+		updateUserInDB(userId, emailValue, passworsValue, roleValue);
+	} else {
+		$('#inputEmail').val(emailValue);
+		$('#selectRole').val(roleValue);
+	}
 
 }
 function updateUserInDB(id, email, password, role){
@@ -70,14 +72,15 @@ function updateUserInDB(id, email, password, role){
 		headers : {
 			'Authorization' : 'Basic '+ sessionStorage.getItem("email")+":"+sessionStorage.getItem("password")
 		},
-		success : function(data){
-			console.log(data);
-		},
-		failure : function(data){
-			alert(data);
-		},
 	});
 	
+	showUsers();
+	$('#message').html(
+		'<div class="alert alert-success alert-dismissable" role="alert">'
+			+	'<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
+			+'<strong>Success</strong> User updated'
+		 +'</div>'
+	);
 }
 var userListRequest = function (){
 	$.ajax({
@@ -93,7 +96,12 @@ var userListRequest = function (){
 				columns: [
 		            { data: "id" },
 		            { data: "email" },
-		            { data: "password" },
+//		            { data: "password" },
+		            {
+		            	render : function(data, type, row) {
+		                	return "********"
+		            	}
+		            },
 		            { data: "role" },
 		            {
 		                className: "center",
@@ -153,17 +161,11 @@ function registerNewUser() {
 			},
 			error : function() {
 				addUserToDB(emailValue, passworsValue, roleValue);
-				$('#errorMsg').html(
-						'<div class="alert alert-success alert-dismissable">' 
-						+	'<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
-						+	'<strong>Success</strong> User registered</div> ');
+				
 			}
 		});
-	
 	}
-	
 }
-
 
 function addUserToDB(email, password, role){
 	var newUser = {
@@ -171,6 +173,7 @@ function addUserToDB(email, password, role){
 			"password":password,
 			"role": role
 	}
+	console.log("Sending post to add user");
 	
 	$.ajax({
 		type: "POST",
@@ -181,13 +184,21 @@ function addUserToDB(email, password, role){
 		headers : {
 			'Authorization' : 'Basic '+ sessionStorage.getItem("email")+":"+sessionStorage.getItem("password")
 		},
-		success : function(data){
-			alet(data);
+		success : function(data) {
+			
 		},
 		failure : function(data){
-			alet(data);
+			console.log("WIELKI HUJ WIELKI HUJ");
 		},
 	});
+	console.log("WIELKI HUJ");
+	showUsers();
+	$('#message').html(
+		'<div class="alert alert-success alert-dismissable" role="alert">'
+			+	'<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
+			+'<strong>Success</strong> User added'
+		 +'</div>'
+	);
 }
 
 
@@ -230,52 +241,19 @@ function showNewUserForm() {
 			+'      </div>'
 			+'    </div>'
 			+'		<div id="userFormButton">'
-+			'<a class="btn btn-primary btn-block" href="#" onClick="registerNewUser()"><span id="span_reg">Register</span></a>'
+			+			'<a class="btn btn-primary btn-block" href="#" onClick="registerNewUser()"><span id="span_reg">Register</span></a>'
 			+'		<div>'	
 			+'  </form>'
 			+'</div>'
 			+'</div>'
 			);
 
-	$('#myForm2').validate({ // initialize the plugin
-        rules: {
-        	inputEmail: {
-                required: true,
-                email: true
-            },
-            inputPassword: {
-                required: true,
-                minlength: 3
-            },
-            confirmPassword: {
-                required: true,
-                minlength: 3,
-                equalTo: "#inputPassword"
-            }
-        },
-	messages: {
-		inputEmail: {
-			required: " (required)",
-			email: "must be correct email syntax"
-		},
-		inputPassword: {
-			required: " (required)",
-			minlength: " (must be at least three characters)"
-			
-		},
-		confirmPassword: {
-			required: " (required)",
-			minlength: " (must be at least three characters)",
-			equalTo: "Passwords must be equal"
-		}
-	}
-
-    });
 
 }
 function showUsersTable() {
 	$('#wrapper').html(
-		'<div class="card-body"><div class="table-responsive">'
+		'<div id="message"></div>'
+		+'<div class="table-responsive">'
 		+'	<table id="userTable" class="table table-bordered display" cellspacing="0" width="100%">'
 		+'		<thead>'
 		+'			<tr>'
@@ -297,5 +275,5 @@ function showUsersTable() {
 		+'			</tr>'
 		+'		</tfoot>'
 		+'	</table>'
-		+'</div></div>');
+		+'</div>');
 }

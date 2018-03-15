@@ -9,6 +9,8 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.ws.rs.core.HttpHeaders;
 
+import org.jboss.resteasy.core.Headers;
+import org.jboss.resteasy.core.ServerResponse;
 import org.jboss.resteasy.util.Base64;
 
 import com.mase2.mase2_project.data.UserDAO;
@@ -17,6 +19,9 @@ import com.mase2.mase2_project.model.User;
 @Stateless
 @LocalBean
 public class SecurityCheck {
+	
+	public static final ServerResponse ACCESS_DENY = new ServerResponse("Access deny for this resource", 401,
+			new Headers<>());
 	@EJB
 	UserDAO userDAO;
 
