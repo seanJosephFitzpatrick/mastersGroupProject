@@ -235,6 +235,16 @@ public class BaseDataWSTest {
 	}
 
 	@Test
+	public void testCountForIMSIFailureDate() {
+		final Response response = baseDataEndpoint.findByIMSIAndDateTime(httpHeaders, "344930011",new DateParam("2011-03-08"), new DateParam("2019-03-05"));
+		List<Long> baseDataList = (List<Long>) response.getEntity();
+		assertEquals(HttpStatus.SC_OK, response.getStatus());				
+		assertEquals("Data fetch = data persisted", baseDataList.size(), 1);
+		final long count = baseDataList.get(0);
+		assertEquals(1, count);	
+				
+	}
+	@Test
 	public void testFindByDateTime() {
 		final Response response = baseDataEndpoint.findByDateTime(httpHeaders, new DateParam("2018-02-12"),
 				new DateParam("2019-02-12"));

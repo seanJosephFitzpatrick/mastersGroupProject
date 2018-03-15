@@ -10,7 +10,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
 import com.mase2.mase2_project.data.ExcelDAO;
 import com.mase2.mase2_project.util.SecurityCheck;
 import com.mase2.mase2_project.util.TableClearer;
@@ -30,6 +29,7 @@ public class ImportWS {
 	@GET
 	@Path("/all")
 	@Produces(MediaType.APPLICATION_JSON)
+
 	public Response importAllData(@Context HttpHeaders httpHeaders) {
 
 		if (securityCheck.hasRole(httpHeaders, "admin")) {

@@ -303,25 +303,64 @@ function showIMSIModal() {
 					+ ' Query</button>');
 	$('#csrIMSIQueryModal').modal('show');
 }
-function showNMEModal() {
-	$('#csrIMSIQueryModal').find('.modal-body').html(
-			'<div class="dropdown">' + '<div>' + 'Start'
-					+ '<input id="date_timepicker_start" type="text" />'
-					+ 'End' + '<input id="date_timepicker_end" type="text" />'
-					+ '</div>' + '</div>');
-	$('#csrIMSIQueryModal')
-			.find('.modal-footer')
-			.html(
-					'<button type="button" class="btn btn-secondary"'
-							+ 'data-dismiss="modal">Close</button>'
-							+ '<button type="button" class="btn btn-primary"'
-							+ 'onclick="retrieveDatesNME()" data-dismiss="modal">Submit'
-							+ ' Query</button>');
-	initializeDatePicker();
 
-	$('#csrIMSIQueryModal').modal('show');
-
+function showNMEModal(){
+	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="dropdown">'
+			+'<div>'
+			+'Start'
+			+'<input id="date_timepicker_start" type="text" />'
+			+'End'
+			+'<input id="date_timepicker_end" type="text" />'
+		+'</div>'
+		+'</div>');
+			$('#csrIMSIQueryModal').find('.modal-footer').html('<button type="button" class="btn btn-secondary"'
+				+'data-dismiss="modal">Close</button>'
+				+'<button type="button" class="btn btn-primary"'
+					+'onclick="retrieveDatesNME()" data-dismiss="modal">Submit'
+					+' Query</button>');
+			initializeDatePicker();
+			
+			$('#csrIMSIQueryModal').modal('show'); 
+	
 }
+//function showTopTenModal(){
+//	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="dropdown">'
+//			+'<div>'
+//			+'Start'
+//			+'<input id="date_timepicker_start" type="text" />'
+//			+'End'
+//			+'<input id="date_timepicker_end" type="text" />'
+//		+'</div>'
+//		+'</div>');
+//			$('#csrIMSIQueryModal').find('.modal-footer').html('<button type="button" class="btn btn-secondary"'
+//				+'data-dismiss="modal">Close</button>'
+//				+'<button type="button" class="btn btn-primary"'
+//					+'onclick="retrieveDatesTopTen()" data-dismiss="modal">Submit'
+//					+' Query</button>');
+//			initializeDatePicker();
+//			
+//			$('#csrIMSIQueryModal').modal('show'); 
+//	
+//}
+//function showDateModal(){
+//	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="dropdown">'
+//	+'<div>'
+//	+'Start'
+//	+'<input id="date_timepicker_start" type="text" />'
+//	+'End'
+//	+'<input id="date_timepicker_end" type="text" />'
+//+'</div>'
+//+'</div>');
+//	$('#csrIMSIQueryModal').find('.modal-footer').html('<button type="button" class="btn btn-secondary"'
+//		+'data-dismiss="modal">Close</button>'
+//		+'<button type="button" class="btn btn-primary"'
+//			+'onclick="retrieveDates()" id="submitdatequery" data-dismiss="modal">Submit'
+//			+' Query</button>');
+//	initializeDatePicker();
+//
+//	$('#csrIMSIQueryModal').modal('show');
+//
+//}
 function showTopTenModal() {
 	$('#csrIMSIQueryModal').find('.modal-body').html(
 			'<div class="dropdown">' + '<div>' + 'Start'

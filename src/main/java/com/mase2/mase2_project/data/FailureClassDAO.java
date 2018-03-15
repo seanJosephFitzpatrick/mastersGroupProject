@@ -19,12 +19,14 @@ public class FailureClassDAO {
 
 	@SuppressWarnings("unchecked")
 	public List<FailureClass> getAllFailureClasses() {
+
 		final Query query = entityManager.createQuery("SELECT w FROM FailureClass w");
 		return query.getResultList();
 	}
 
 	public void save(final FailureClass failureClass) {
 		entityManager.persist(failureClass);
+
 	}
 
 }
