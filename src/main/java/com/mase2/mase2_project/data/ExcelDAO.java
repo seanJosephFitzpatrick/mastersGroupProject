@@ -23,7 +23,6 @@ import jxl.read.biff.BiffException;
 
 @Stateless
 @LocalBean
-@TransactionManagement(TransactionManagementType.CONTAINER)
 public class ExcelDAO {
 	@EJB 
 	TableClearer tableClearer;
