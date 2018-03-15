@@ -70,27 +70,43 @@
 					href="#collapseQueries" data-parent="#exampleAccordion"> <i
 						class="fa fa-file-excel-o"></i> <span class="nav-link-text">Queries</span>
 				</a>
+				
 					<ul class="sidenav-second-level collapse" id="collapseQueries">
-						<li id="imsiQuery"><a href="baseDataModal.html"
-							data-toggle="modal" onclick="showIMSIModal()">IMSI Query</a></li>
-						<li id="dateQuery"><a href="baseDataModal.html"
-							data-toggle="modal" onclick="showDateModal()">Date Query</a></li>
-						<li id="countFailuresQuery"><a href="baseDataModal.html"
-							data-toggle="modal" onclick="showModelModal()">Count Failures
-								For Model</a></li>
-						<li id="sumDurationQuery"><a href="baseDataModal.html"
-							data-toggle="modal" onclick="showNMEModal()">Sum Duration and
-								Num Failures</a></li>
-						<li id="topTenQuery"><a href="baseDataModal.html"
-							data-toggle="modal" onclick="showTopTenModal()">Top 10
-								Failures</a></li>
-						<li id="showIMSIFailuresQuery"><a href="baseDataModal.html"
+						<li id="imsiQuery"><a href="baseDataModal.html" data-placement="top" 
+							title="Display all Event IDs and Cause Codes for a given IMSI"
+							data-toggle="modal" onclick="showIMSIModal()">IMSI Codes</a>
+						</li>
+							
+						<li id="dateQuery"><a href="baseDataModal.html"  data-placement="top" 
+							title="Display all failures during a given time period" 
+							data-toggle="modal" onclick="showDateModal()">Date Failures</a>
+						</li>
+							
+						<li id="countFailuresQuery"><a href="baseDataModal.html" data-placement="top" 
+							title="Display number of failures for a Model during a given time period"
+							data-toggle="modal" onclick="showModelModal()">Model Failures</a>
+						</li>
+								
+						<li id="sumDurationQuery"><a href="baseDataModal.html" data-placement="top" 
+							title="Display number of failures and duration for a given time period"
+							data-toggle="modal" onclick="showNMEModal()">IMSI Failures and Duration</a>
+						</li>
+								
+						<li id="topTenQuery"><a href="baseDataModal.html" data-placement="top" 
+							title="Display top 10 Market/Operator/Cell ID combinations with failures for a given time period"
+							data-toggle="modal" onclick="showTopTenModal()">Top 10 Failures</a>
+						</li>
+							
+						<li id="showIMSIFailuresQuery"><a href="baseDataModal.html" data-placement="top" 
+							title="Display number of failures for a given IMSI and a given time period"
 							data-toggle="modal"
-							onclick="showIMSIFailureModalGivenTimePeriod()">Show IMSI
-								Failures for given time period</a></li>
-						<li id="uniqueIdAndCodeQuery"><a href="baseDataModal.html"
-							data-toggle="modal" onclick="showUniqueModelModal()">Unique
-								Event ID and Cause Code by Model</a></li>
+							onclick="showIMSIFailureModalGivenTimePeriod()">IMSI Dates and Failures</a>
+						</li>
+								
+						<li id="uniqueIdAndCodeQuery"><a href="baseDataModal.html" data-placement="top" 
+							title="Display unique Event IDs and Cause Codes for a given model"
+							data-toggle="modal" onclick="showUniqueModelModal()">Model Codes</a>
+						</li>
 
 					</ul></li>
 
