@@ -4,16 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-
-
-
-
-
-
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
 import com.mase2.mase2_project.model.BaseData;
 import com.mase2.mase2_project.model.EventCause;
 import com.mase2.mase2_project.model.FailureClass;
@@ -21,7 +16,6 @@ import com.mase2.mase2_project.model.MccMnc;
 import com.mase2.mase2_project.model.Ue;
 import com.mase2.mase2_project.util.TableClearer;
 import com.mase2.mase2_project.util.Validator;
-
 import jxl.Cell;
 import jxl.Sheet;
 import jxl.Workbook;
@@ -29,7 +23,10 @@ import jxl.read.biff.BiffException;
 
 @Stateless
 @LocalBean
+@TransactionManagement(TransactionManagementType.CONTAINER)
 public class ExcelDAO {
+	@EJB 
+	TableClearer tableClearer;
 	@EJB
 	private MccMncDAO mcc_mncDao;
 	@EJB
@@ -61,6 +58,46 @@ public class ExcelDAO {
 		}
 		return new int[2];
 	}
+	
+	public int[] autoImportBaseDataExcelData(final File baseDataFile) {
+		tableClearer.deleteAllTables();
+		try {
+			final Workbook workbook = Workbook.getWorkbook(baseDataFile);
+			final Sheet sheet = workbook.getSheet(0);
+			return this.importDataBaseData(sheet);
+		} catch (BiffException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new int[2];
+	}
+	
+	public int[] autoImportAllExcelData(final File allDataFile) {
+		tableClearer.deleteAllTables();
+		//final File allDataFile = initiateFile("test.xls");
+		try {
+			final Workbook workbook = Workbook.getWorkbook(allDataFile);
+			Sheet sheet = workbook.getSheet(4);
+			this.importDataMccMnc(sheet);
+			sheet = workbook.getSheet(3);
+			this.importDataUE(sheet);
+			sheet = workbook.getSheet(2);
+			this.importDataFailureClass(sheet);
+			sheet = workbook.getSheet(1);
+			this.importDataEventCause(sheet);
+			sheet = workbook.getSheet(0);
+			return this.importDataBaseData(sheet);
+		} catch (BiffException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return new int[2];
+
+	}
 
 	public int[] importAllExcelData() {
 		final File allDataFile = initiateExcelFile();
@@ -90,6 +127,21 @@ public class ExcelDAO {
 		}
 
 	}
+	
+	//////////////////////////////////////////////
+	private File initiateFile(String file) {
+		String filePath = "";
+		String absolutePath = new File(".").getAbsolutePath();
+		final int last = absolutePath.length() - 1;
+		absolutePath = absolutePath.substring(0, last);
+		//final String file = "test.xls";
+		filePath = (absolutePath + file);
+		filePath = filePath.replace("\\", "/");
+		System.out.println(filePath);
+		final File excelFile = new File(filePath);
+		return excelFile;
+	}
+	//////////////////////////////////////////////
 
 	private File initiateExcelFile() {
 		String filePath = "";
