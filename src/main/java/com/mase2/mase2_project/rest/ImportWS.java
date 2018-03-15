@@ -27,7 +27,7 @@ public class ImportWS {
 	@Path("/all")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response importAllData() {
-		tableClearer.deleteAllTables();
+		tableClearer.deleteBaseDataTable();
 		final int[] validAndInvalidRows = excelDAO.importAllExcelData();
 
 		return Response.status(200).entity(validAndInvalidRows).build();

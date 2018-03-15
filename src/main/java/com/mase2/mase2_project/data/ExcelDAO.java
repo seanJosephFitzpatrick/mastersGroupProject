@@ -19,6 +19,7 @@ import com.mase2.mase2_project.model.EventCause;
 import com.mase2.mase2_project.model.FailureClass;
 import com.mase2.mase2_project.model.MccMnc;
 import com.mase2.mase2_project.model.Ue;
+import com.mase2.mase2_project.util.TableClearer;
 import com.mase2.mase2_project.util.Validator;
 
 import jxl.Cell;
@@ -39,8 +40,9 @@ public class ExcelDAO {
 	private EventCauseDAO eventCauseDAO;
 	@EJB
 	private BaseDataDAO baseDataDAO;
-
-	private Validator validator=new Validator();
+	@EJB
+	private TableClearer tableClearer;
+	private final Validator validator=new Validator();
 
 
 	public int[] importBaseDataExcelData() {
@@ -62,7 +64,9 @@ public class ExcelDAO {
 
 	public int[] importAllExcelData() {
 		final File allDataFile = initiateExcelFile();
-
+		final List<FailureClass> failureClasses=failureClassDAO.getAllFailureClasses();
+		if(failureClasses.isEmpty()){
+			tableClearer.deleteParentTables();
 		try {
 			final Workbook workbook = Workbook.getWorkbook(allDataFile);
 			Sheet sheet = workbook.getSheet(4);
@@ -81,6 +85,9 @@ public class ExcelDAO {
 			e.printStackTrace();
 		}
 		return new int[2];
+		}else{
+			return importBaseDataExcelData();
+		}
 
 	}
 
