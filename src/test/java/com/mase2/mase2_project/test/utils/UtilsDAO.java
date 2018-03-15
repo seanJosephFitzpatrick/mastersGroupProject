@@ -1,5 +1,6 @@
 package com.mase2.mase2_project.test.utils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -53,14 +54,16 @@ public class UtilsDAO {
 			
 			@Override
 			public MultivaluedMap<String, String> getRequestHeaders() {
-				// TODO Auto-generated method stub
+				//MultivaluedMap<String, String>new ArrayList<>();
+				//request.add("michal:pass");
 				return null;
 			}
 			
 			@Override
 			public List<String> getRequestHeader(String arg0) {
-				// TODO Auto-generated method stub
-				return null;
+				List<String> request = new ArrayList<>();
+				request.add("Basic michal:pass");
+				return request;
 			}
 			
 			@Override

@@ -28,6 +28,7 @@ import com.mase2.mase2_project.data.ExcelDAO;
 import com.mase2.mase2_project.data.FailureClassDAO;
 import com.mase2.mase2_project.data.MccMncDAO;
 import com.mase2.mase2_project.data.UeDAO;
+import com.mase2.mase2_project.data.UserDAO;
 import com.mase2.mase2_project.model.BaseData;
 import com.mase2.mase2_project.model.EventCause;
 import com.mase2.mase2_project.model.EventCausePK;
@@ -35,6 +36,7 @@ import com.mase2.mase2_project.model.FailureClass;
 import com.mase2.mase2_project.model.MccMnc;
 import com.mase2.mase2_project.model.MccMncPK;
 import com.mase2.mase2_project.model.Ue;
+import com.mase2.mase2_project.model.User;
 import com.mase2.mase2_project.rest.BaseDataWS;
 import com.mase2.mase2_project.rest.EventCauseWS;
 import com.mase2.mase2_project.rest.FailureClassWS;
@@ -42,14 +44,19 @@ import com.mase2.mase2_project.rest.ImportWS;
 import com.mase2.mase2_project.rest.JaxRsActivator;
 import com.mase2.mase2_project.rest.MccMncWS;
 import com.mase2.mase2_project.rest.UeWS;
+import com.mase2.mase2_project.rest.UserWS;
 import com.mase2.mase2_project.test.utils.UtilsDAO;
 import com.mase2.mase2_project.util.DateParam;
+import com.mase2.mase2_project.util.DurationAndCountObject;
+import com.mase2.mase2_project.util.FailureCountObject;
 import com.mase2.mase2_project.util.FileLogger;
+import com.mase2.mase2_project.util.IMSIObject;
 import com.mase2.mase2_project.util.InvalidEntity;
+import com.mase2.mase2_project.util.SecurityCheck;
 import com.mase2.mase2_project.util.TableClearer;
+import com.mase2.mase2_project.util.TopTenFailuresObject;
+import com.mase2.mase2_project.util.UniqueEventAndCauseObject;
 import com.mase2.mase2_project.util.Validator;
-
-import jxl.read.biff.BiffException;
 
 @RunWith(Arquillian.class)
 public class BaseDataWSTest {
@@ -60,9 +67,9 @@ public class BaseDataWSTest {
 		return ShrinkWrap.create(JavaArchive.class, "BaseDataTest.jar")
 				.addClasses(MccMncDAO.class, MccMnc.class, MccMncPK.class, JaxRsActivator.class, MccMncWS.class,
 						UtilsDAO.class, FailureClassDAO.class, BaseData.class, BaseDataDAO.class, BaseDataWS.class,
-						UeWS.class, EventCause.class, EventCausePK.class, EventCauseDAO.class, FailureClassWS.class,
-						EventCauseWS.class, DateParam.class, FailureClass.class, ExcelDAO.class, InvalidEntity.class,
-						FileLogger.class, Validator.class, Ue.class, UeDAO.class, ImportWS.class, TableClearer.class,
+						UeWS.class, EventCause.class,TopTenFailuresObject.class,FailureCountObject.class, EventCausePK.class, EventCauseDAO.class, FailureClassWS.class,
+						EventCauseWS.class, User.class,UserWS.class, DateParam.class, FailureClass.class, ExcelDAO.class, InvalidEntity.class,
+						FileLogger.class,UniqueEventAndCauseObject.class, Validator.class,DurationAndCountObject.class,IMSIObject.class, UserDAO.class, SecurityCheck.class, Ue.class, UeDAO.class, ImportWS.class, TableClearer.class,
 						java.util.Date.class)
 				.addPackages(true, jxl.Sheet.class.getPackage()).addPackages(true, jxl.Workbook.class.getPackage())
 				.addPackages(true, jxl.Cell.class.getPackage())
@@ -213,11 +220,11 @@ public class BaseDataWSTest {
 		final Response response = baseDataEndpoint.findByAllImsiWithFailures(httpHeaders, new DateParam("2018-02-12"),
 				new DateParam("2019-02-12"));
 		@SuppressWarnings("unchecked")
-		List<String> baseDataList = (List<String>) response.getEntity();
+		List<IMSIObject> baseDataList = (List<IMSIObject>) response.getEntity();
 		assertEquals(HttpStatus.SC_OK, response.getStatus());
 		assertEquals("Data fetch = data persisted", baseDataList.size(), 1);
-		final String imsi = baseDataList.get(0);
-		assertEquals("344930011", imsi);
+		final IMSIObject imsi = baseDataList.get(0);
+		assertEquals("344930011", imsi.getImsi());
 
 	}
 
@@ -226,22 +233,22 @@ public class BaseDataWSTest {
 		final Response response = baseDataEndpoint.findByCellIdAndDateTime(httpHeaders, "Apple",
 				new DateParam("2018-02-12"), new DateParam("2019-02-12"));
 		@SuppressWarnings("unchecked")
-		List<Long> baseDataList = (List<Long>) response.getEntity();
+		List<FailureCountObject> baseDataList = (List<FailureCountObject>) response.getEntity();
 		assertEquals(HttpStatus.SC_OK, response.getStatus());
 		assertEquals("Data fetch = data persisted", baseDataList.size(), 1);
-		final long count = baseDataList.get(0);
-		assertEquals(1, count);
+		final FailureCountObject count = baseDataList.get(0);
+		assertEquals(new Long(1), count.getFailureCount());
 
 	}
 
 	@Test
 	public void testCountForIMSIFailureDate() {
 		final Response response = baseDataEndpoint.findByIMSIAndDateTime(httpHeaders, "344930011",new DateParam("2011-03-08"), new DateParam("2019-03-05"));
-		List<Long> baseDataList = (List<Long>) response.getEntity();
+		List<FailureCountObject> baseDataList = (List<FailureCountObject>) response.getEntity();
 		assertEquals(HttpStatus.SC_OK, response.getStatus());				
 		assertEquals("Data fetch = data persisted", baseDataList.size(), 1);
-		final long count = baseDataList.get(0);
-		assertEquals(1, count);	
+		final FailureCountObject count = baseDataList.get(0);
+		assertEquals(new Long(1), count.getFailureCount());	
 				
 	}
 	@Test
