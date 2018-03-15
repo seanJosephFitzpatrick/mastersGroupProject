@@ -31,6 +31,7 @@ public class BaseDataDAO {
 	@PersistenceContext
     private EntityManager entityManager;
     
+	@SuppressWarnings("unchecked")
 	public List<BaseData> getAllBaseData() {
 		final Query query=entityManager.createQuery("SELECT m FROM BaseData m");
         return query.getResultList();
@@ -40,12 +41,14 @@ public class BaseDataDAO {
 		entityManager.persist(baseData);
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<BaseData> getBaseDataForIMSI(String imsi) {
 		final Query query=entityManager.createQuery("SELECT m.eventCause FROM BaseData m where m.imsi like ?1")
 				.setParameter(1, imsi);
         return query.getResultList();
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<FailureCountObject> getCountForCellIdAndDate(String model,DateParam startDateParam, DateParam endDateParam) {
 		
 
@@ -56,6 +59,7 @@ public class BaseDataDAO {
         return query.getResultList();
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<FailureCountObject> getCountForIMSIAndDate(String imsi,DateParam startDateParam, DateParam endDateParam) {
 		
 
@@ -66,6 +70,7 @@ public class BaseDataDAO {
         return query.getResultList();
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<DurationAndCountObject> getSumDurationAndCountForEachIMSI(DateParam startDateParam, DateParam endDateParam) {
 
 		final Query query=entityManager.createQuery("SELECT new com.mase2.mase2_project.util.DurationAndCountObject(m.imsi,count(m),sum(duration)) FROM BaseData m where m.dateTime between ?1 and ?2 group by m.imsi")
@@ -74,6 +79,7 @@ public class BaseDataDAO {
         return query.getResultList();
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<TopTenFailuresObject> getTopTenFailures(DateParam startDateParam, DateParam endDateParam) {
 
 		final Query query=entityManager.createQuery("SELECT new com.mase2.mase2_project.util.TopTenFailuresObject(m.mccMnc.id.mcc, m.mccMnc.id.mnc, m.cellId,count(m) as countfailures) FROM BaseData m where m.dateTime between ?1 and ?2 group by m.mccMnc.id.mcc, m.mccMnc.id.mnc, m.cellId order by countfailures desc limit 10")
@@ -82,6 +88,7 @@ public class BaseDataDAO {
         return query.setMaxResults(10).getResultList();
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<IMSIObject> getAllImsiWithFailures(DateParam startDateParam, DateParam endDateParam) {
 		
 		final Query query=entityManager.createQuery("SELECT distinct new com.mase2.mase2_project.util.IMSIObject(m.imsi) FROM BaseData m where m.dateTime between ?1 and ?2")
@@ -90,6 +97,7 @@ public class BaseDataDAO {
         return query.getResultList();
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<UniqueEventAndCauseObject> getUniqueEventIdAndCauseCodeForModel(String model) {
 		final Query query=entityManager.createQuery("SELECT new com.mase2.mase2_project.util.UniqueEventAndCauseObject(m.eventCause,count(m)) FROM BaseData m where m.ue.model like ?1 group by m.eventCause")
 				.setParameter(1, model);

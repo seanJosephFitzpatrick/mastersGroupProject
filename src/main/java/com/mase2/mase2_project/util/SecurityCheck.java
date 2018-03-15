@@ -1,6 +1,5 @@
 package com.mase2.mase2_project.util;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -11,7 +10,6 @@ import javax.ws.rs.core.HttpHeaders;
 
 import org.jboss.resteasy.core.Headers;
 import org.jboss.resteasy.core.ServerResponse;
-import org.jboss.resteasy.util.Base64;
 
 import com.mase2.mase2_project.data.UserDAO;
 import com.mase2.mase2_project.model.User;

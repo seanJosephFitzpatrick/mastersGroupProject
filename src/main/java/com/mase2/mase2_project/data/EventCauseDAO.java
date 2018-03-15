@@ -15,6 +15,7 @@ public class EventCauseDAO {
 	@PersistenceContext
     private EntityManager entityManager;
     
+	@SuppressWarnings("unchecked")
 	public List<EventCause> getAllEventCauses() {
 		final Query query=entityManager.createQuery("SELECT w FROM EventCause w");
         return query.getResultList();

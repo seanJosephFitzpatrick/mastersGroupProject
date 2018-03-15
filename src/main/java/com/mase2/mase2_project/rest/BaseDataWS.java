@@ -3,7 +3,6 @@
  */
 package com.mase2.mase2_project.rest;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -21,7 +20,6 @@ import javax.ws.rs.core.Response;
 
 import com.mase2.mase2_project.data.BaseDataDAO;
 import com.mase2.mase2_project.model.BaseData;
-import com.mase2.mase2_project.model.User;
 import com.mase2.mase2_project.util.DateParam;
 import com.mase2.mase2_project.util.DurationAndCountObject;
 import com.mase2.mase2_project.util.FailureCountObject;
@@ -29,11 +27,6 @@ import com.mase2.mase2_project.util.IMSIObject;
 import com.mase2.mase2_project.util.SecurityCheck;
 import com.mase2.mase2_project.util.TopTenFailuresObject;
 import com.mase2.mase2_project.util.UniqueEventAndCauseObject;
-
-/**
- * @author A00248115
- *
- */
 
 @Path("/basedatas")
 @Stateless
