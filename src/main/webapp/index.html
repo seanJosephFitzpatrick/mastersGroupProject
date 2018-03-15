@@ -6,8 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="">
-<meta name="author" content="">
+<meta name="description" content="Network Data Analitycs">
+<meta name="author" content="mase2">
 <title>Network Data Analytics</title>
 <!-- Bootstrap core CSS-->
 <link href="./resources/vendor/bootstrap/css/bootstrap.min.css"
@@ -20,161 +20,119 @@
 	rel="stylesheet">
 <!-- Custom styles for this template-->
 <link href="./resources/css/sb-admin.css" rel="stylesheet">
-<link href="./resources/css/jquery.datetimepicker.min.css" rel="stylesheet">
-<!-- <link href="./resources/css/style.css" rel="stylesheet"> -->
+<link href="./resources/css/jquery.datetimepicker.min.css"
+	rel="stylesheet">
+<link href="./resources/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="./resources/css/custom.css" rel="stylesheet">
+
 </head>
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
+
 	<!-- Navigation-->
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
 		id="mainNav">
-		<a class="navbar-brand" href="index.html">MASE 2 - Perfect Harmony
-		</a>
+		<a class="navbar-brand" href="#">MASE 2 - Perfect Harmony </a>
 		<button class="navbar-toggler navbar-toggler-right" type="button"
 			data-toggle="collapse" data-target="#navbarResponsive"
 			aria-controls="navbarResponsive" aria-expanded="false"
 			aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
+
 		<div class="collapse navbar-collapse" id="navbarResponsive">
 			<ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-				<li class="nav-item" data-toggle="tooltip" data-placement="right"
-					title="Dashboard"><a class="nav-link" href="#"
-					onclick="showDashboard()"> <i class="fa fa-fw fa-dashboard"></i>
-						<span class="nav-link-text">Network Data Analytics</span>
+				<li id="nav_NDA" class="nav-item" data-toggle="tooltip"
+					data-placement="right" title="Dashboard"><a class="nav-link"
+					href="#" onclick="showDashboard()"> <i
+						class="fa fa-fw fa-dashboard"></i> <span class="nav-link-text">Network
+							Data Analytics</span>
 				</a></li>
 
-				<li class="nav-item" data-toggle="tooltip" data-placement="right"
-					title="Tables"><a class="nav-link nav-link-collapse collapsed"
-					data-toggle="collapse" href="#collapseTables"
-					data-parent="#exampleAccordion"> <i class="fa fa-fw fa-table"></i>
-						<span class="nav-link-text">Tables</span>
+				<li id="nav_Tables" class="nav-item" data-toggle="tooltip"
+					data-placement="right" title="Tables"><a
+					class="nav-link nav-link-collapse collapsed" data-toggle="collapse"
+					href="#collapseTables" data-parent="#exampleAccordion"> <i
+						class="fa fa-fw fa-table"></i> <span class="nav-link-text">Tables</span>
 				</a>
 					<ul class="sidenav-second-level collapse" id="collapseTables">
-						<li>
-							<!--  <a href="#" id="showTabelMcc_Mnc">Mcc Mnc</a> --> <a
-							href="#" onclick="showTabelMcc_Mnc()">Mcc Mnc</a>
-						</li>
+						<li><a href="#" onclick="showTabelMcc_Mnc()">Mcc Mnc</a></li>
 						<li><a href="#" onclick="showTabelFailureClass()">Failure
 								Class</a></li>
 						<li><a href="#" onclick="showTabelUe()">Ue</a></li>
 						<li><a href="#" onclick="showTableEventcauses()">Event
 								Cause</a></li>
 					</ul></li>
-				<!-- Sean -->
-				<li class="nav-item" data-toggle="tooltip" data-placement="right"
-					title="Queries"><a
+
+				<li id="nav_Queries" class="nav-item" data-toggle="tooltip"
+					data-placement="right" title="Queries"><a
 					class="nav-link nav-link-collapse collapsed" data-toggle="collapse"
-					href="#collapseQueries" data-parent="#exampleAccordion" id="queriestoggle"> <i
-						class="fa fa-fw fa-query"></i> <span class="nav-link-text">Queries</span>
+					href="#collapseQueries" data-parent="#exampleAccordion"> <i
+						class="fa fa-file-excel-o"></i> <span class="nav-link-text">Queries</span>
 				</a>
 					<ul class="sidenav-second-level collapse" id="collapseQueries">
-						<li><a href="baseDataModal.html" data-toggle="modal"
-							onclick="showIMSIModal()">Display all Event IDs and Cause Codes for a given IMSI</a></li>
-						<li><a href="baseDataModal.html" data-toggle="modal"
-							onclick="showDateModal()" id="datequery">Display all IMSIs with failures during a time period</a></li>
-						<li><a href="baseDataModal.html" data-toggle="modal"
-						onclick="showModelModal()">Count failures For a Model during a time period</a></li>
-						<li><a href="baseDataModal.html" data-toggle="modal"
-						onclick="showNMEModal()">Count failures and sum their duration for a given IMSI and time period</a></li>
-						<li><a href="baseDataModal.html" data-toggle="modal"
-						onclick="showTopTenModal()">Display top 10 Market/Operator/Cell ID combinations with failures for given time period</a></li>
-						<li><a href="baseDataModal.html" data-toggle="modal"
-						onclick="showIMSIFailureModalGivenTimePeriod()">Display count of failures for a given IMSI and time period</a></li>
-						<li><a href="baseDataModal.html" data-toggle="modal"
-						onclick="showUniqueModelModal()">Display unique Event IDs and Cause Codes for a given model</a></li>
+						<li id="imsiQuery"><a href="baseDataModal.html"
+							data-toggle="modal" onclick="showIMSIModal()">IMSI Query</a></li>
+						<li id="dateQuery"><a href="baseDataModal.html"
+							data-toggle="modal" onclick="showDateModal()">Date Query</a></li>
+						<li id="countFailuresQuery"><a href="baseDataModal.html"
+							data-toggle="modal" onclick="showModelModal()">Count Failures
+								For Model</a></li>
+						<li id="sumDurationQuery"><a href="baseDataModal.html"
+							data-toggle="modal" onclick="showNMEModal()">Sum Duration and
+								Num Failures</a></li>
+						<li id="topTenQuery"><a href="baseDataModal.html"
+							data-toggle="modal" onclick="showTopTenModal()">Top 10
+								Failures</a></li>
+						<li id="showIMSIFailuresQuery"><a href="baseDataModal.html"
+							data-toggle="modal"
+							onclick="showIMSIFailureModalGivenTimePeriod()">Show IMSI
+								Failures for given time period</a></li>
+						<li id="uniqueIdAndCodeQuery"><a href="baseDataModal.html"
+							data-toggle="modal" onclick="showUniqueModelModal()">Unique
+								Event ID and Cause Code by Model</a></li>
 
 					</ul></li>
-				<li class="nav-item" data-toggle="tooltip" data-placement="right"
+
+				<li id="nav_ImportAll" class="nav-item" data-toggle="tooltip" data-placement="right"
 					title="Tables"><a class="nav-link" data-toggle="tooltip"
 					href="#navbarResponsive" data-parent="#exampleAccordion"
-					onclick="importTables()"> <i class="fa fa-file-excel-o"></i>
-						<span class="nav-link-text">Import Call Failures</span>
+					onclick="importTables()"> <i class="fa fa-file-excel-o"></i> <span
+						class="nav-link-text">Import Call Failures</span>
 				</a></li>
+
+				<li id="nav_userMgmt" class="nav-item" data-toggle="tooltip"
+					data-placement="right" title="User MAnagemenr"><a
+					class="nav-link nav-link-collapse collapsed" data-toggle="collapse"
+					href="#users_managemnt" data-parent="#exampleAccordion"> <i
+						class="fa fa-fw fa-table"></i> <span class="nav-link-text">User
+							Management</span>
+				</a>
+					<ul class="sidenav-second-level collapse" id="users_managemnt">
+						<li><a href="#" onclick="showUsers()">Users list</a></li>
+						<li><a href="#" onclick="showNewUserForm()">Register new
+								user</a></li>
+					</ul></li>
 			</ul>
 
-			<ul class="navbar-nav sidenav-toggler">
-				<li class="nav-item"><a class="nav-link text-center"
-					id="sidenavToggler"> <i class="fa fa-fw fa-angle-left"></i>
-				</a></li>
-			</ul>
 			<ul class="navbar-nav ml-auto">
-				<li class="nav-item">
-					<!-- <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
-            <i class="fa fa-fw fa-sign-out"></i>Logout</a> -->
-				</li>
+				<li id="nav_logout" class="nav-item"><a class="nav-link"
+					data-toggle="modal" data-target="#exampleModal"
+					onclick="logoutAction()"> <i class="fa fa-fw fa-sign-out"></i>Logout
+				</a></li>
 			</ul>
 		</div>
 	</nav>
-	<div class="content-wrapper" id="wrapper">
-		<!-- END OF NAVIGATION -->
+	<!-- END OF NAVIGATION -->
 
-		<div class="container-fluid">
-			<div class="card-header">
-				<!-- <i class="fa fa-table"></i> <span id="tableTitle" >Data Table Example</span> -->
-			</div>
+	<div class="content-wrapper">
+		<div class="container-fluid" id="wrapper"></div>
 
-			<!-- <img src="./resources/images/ericsson-5g-sweden-832x333.jpg"alt="Ericsson"/> -->
-			<div class="card-body">
-				<div class="table-responsive">
-					<table id="example" class="table table-bordered" cellspacing="0"
-						width="100%">
-						<thead>
-							<tr id="tableHeader">
-							</tr>
-						</thead>
-						<tbody id="tableBody">
-						</tbody>
-						<tfoot>
-							<tr id="tableFooter">
-							</tr>
-						</tfoot>
-					</table>
-				</div>
-
-
-				<!-- END OF <div class="card-body" -->
-
-				<!-- <div class="card-footer small text-muted">
-					 Updated yesterday at 11:59 PM
-				</div> -->
-			</div>
-		</div>
-		<!-- /.container-fluid-->
-		<!-- /.content-wrapper-->
-		<footer class="sticky-footer">
-			<div class="container">
-				<div class="text-center">
-					<small>Copyright © MASE2</small>
-				</div>
-			</div>
-		</footer>
 		<!-- Scroll to Top Button-->
 		<a class="scroll-to-top rounded" href="#page-top"> <i
 			class="fa fa-angle-up"></i>
 		</a>
-		<!-- Logout Modal-->
-		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-			aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLabel">Ready to
-							Leave?</h5>
-						<button class="close" type="button" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">×</span>
-						</button>
-					</div>
-					<div class="modal-body">Select "Logout" below if you are
-						ready to end your current session.</div>
-					<div class="modal-footer">
-						<!-- <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="login.html">Logout</a> -->
-					</div>
-				</div>
-			</div>
-		</div>
+
 		<!--Query Modal -->
 		<div class="modal fade" id="csrIMSIQueryModal" tabindex="-1"
 			role="dialog" aria-labelledby="exampleModalCenterTitle"
@@ -188,9 +146,7 @@
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
-					<div class="modal-body">
-						
-					</div>
+					<div class="modal-body"></div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary"
 							data-dismiss="modal">Close</button>
@@ -201,27 +157,49 @@
 				</div>
 			</div>
 		</div>
-		
-			<!-- Bootstrap core JavaScript-->
-			<script src="./resources/vendor/jquery/jquery.min.js"></script>
-			<script src="./resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-			<!-- Core plugin JavaScript-->
-			<script src="./resources/vendor/jquery-easing/jquery.easing.min.js"></script>
-			<!-- Page level plugin JavaScript-->
-			<script src="./resources/vendor/chart.js/Chart.min.js"></script>
-			<script src="./resources/vendor/datatables/jquery.dataTables.js"></script>
-			<script src="./resources/vendor/datatables/dataTables.bootstrap4.js"></script>
-			<!-- Custom scripts for all pages-->
-			<script src="./resources/js/sb-admin.min.js"></script>
-			<!-- Custom scripts for this page-->
-			<script src="./resources/js/sb-admin-datatables.min.js"></script>
-			<script src="./resources/js/sb-admin-charts.min.js"></script>
-			<script src="./resources/js/jquery.datetimepicker.full.min.js"></script>
-			<script type="text/javascript" src="./resources/js/main.js"></script>
-			<!--Sean -->
-			<script type="text/javascript" src="./resources/js/query.js"></script>
-			
+	</div>
+	<footer class="sticky-footer">
+		<div class="container">
+			<div class="text-center">
+				<small>Copyright © MASE2</small>
+			</div>
 		</div>
-</body>
+	</footer>
+	<!-- Bootstrap core JavaScript-->
+	<script type="text/javascript"
+		src="./resources/vendor/jquery/jquery.min.js"></script>
+	<script type="text/javascript"
+		src="./resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<!-- Core plugin JavaScript-->
+	<script type="text/javascript"
+		src="./resources/vendor/jquery-easing/jquery.easing.min.js"></script>
+	<!-- Page level plugin JavaScript-->
+	<script type="text/javascript"
+		src="./resources/vendor/chart.js/Chart.min.js"></script>
+	<script type="text/javascript"
+		src="./resources/vendor/datatables/jquery.dataTables.js"></script>
+	<script type="text/javascript"
+		src="./resources/vendor/datatables/dataTables.bootstrap4.js"></script>
+	<!-- Custom scripts for all pages-->
+	<script type="text/javascript" src="./resources/js/sb-admin.js"></script>
+	<script type="text/javascript"
+		src="./resources/js/sb-admin-datatables.js"></script>
+	<script type="text/javascript" src="./resources/js/sb-admin-charts.js"></script>
+	<script type="text/javascript"
+		src="./resources/js/jquery.datetimepicker.full.min.js"></script>
+	<!-- Custom scripts for this page-->
+	<script type="text/javascript" src="./resources/js/navigation.js"></script>
+	<script type="text/javascript" src="./resources/js/login.js"></script>
+	<script type="text/javascript" src="./resources/js/usersmanagement.js"></script>
+	<script type="text/javascript" src="./resources/js/query.js"></script>
+	<script type="text/javascript" src="./resources/js/main.js"></script>
 
+	<script type="text/javascript" src="./resources/js/jquery.validate.js"></script>
+	<script type="text/javascript" src="./resources/js/tables.js"></script>
+	<script type="text/javascript" src="./resources/js/importdata.js"></script>
+	<script type="text/javascript"
+		src="./resources/js/additional-methods.js"></script>
+
+
+</body>
 </html>

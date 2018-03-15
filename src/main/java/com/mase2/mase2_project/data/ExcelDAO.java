@@ -37,8 +37,7 @@ public class ExcelDAO {
 	private EventCauseDAO eventCauseDAO;
 	@EJB
 	private BaseDataDAO baseDataDAO;
-	@EJB
-	private TableClearer tableClearer;
+
 	private final Validator validator=new Validator();
 
 
