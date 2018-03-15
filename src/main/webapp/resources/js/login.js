@@ -62,5 +62,5 @@ function showLoginForm() {
 							+ '    <a class="btn btn-primary btn-block" onclick="loginFunction()">Login</a>'
 //							+ '  </form>' 
 							+ '<div class="text-center">'
-							+ '</div>' + ' </div>' + '</div>);');
+							+ '</div>' + ' </div>' + '</div>');
 }
