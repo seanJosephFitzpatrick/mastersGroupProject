@@ -2,9 +2,7 @@ package com.mase2.mase2_project.util;
 
 
 import java.util.List;
-
 import javax.ejb.EJB;
-
 import com.mase2.mase2_project.data.EventCauseDAO;
 import com.mase2.mase2_project.data.FailureClassDAO;
 import com.mase2.mase2_project.data.MccMncDAO;

@@ -1,7 +1,6 @@
 package com.mase2.mase2_project.util;
 
 import java.io.File;
-
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
@@ -16,6 +15,7 @@ public class FileSystemMonitorInitializer {
     
    @PostConstruct  
    public void init(){  
+	   createDirectory(".\\DataFiles");
        fileSystemMonitor.newFolderWatcher();  
        fileSystemMonitor.setMonitoredDir(initiateDirectoryPath());  
        fileSystemMonitor.startWatching();       
@@ -30,5 +30,11 @@ public class FileSystemMonitorInitializer {
 		filePath = filePath.replace("\\", "/");
 		return filePath;
 	}
+	
+    private static File createDirectory(String directory) {
+        File dir = new File(directory);
+        if (!dir.exists()) dir.mkdirs();
+		return dir;     
+    }
 
 }

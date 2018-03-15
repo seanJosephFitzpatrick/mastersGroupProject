@@ -198,12 +198,12 @@ public class BaseDataWSTest {
 	}
 	@Test
 	public void testCountForIMSIFailureDate() {
-		final Response response = baseDataEndpoint.findByIMSIAndDateTime("344930000000011",new DateParam("2011-03-08"), new DateParam("2018-03-05"));
+		final Response response = baseDataEndpoint.findByIMSIAndDateTime("344930011",new DateParam("2011-03-08"), new DateParam("2019-03-05"));
 		List<Long> baseDataList = (List<Long>) response.getEntity();
 		assertEquals(HttpStatus.SC_OK, response.getStatus());				
 		assertEquals("Data fetch = data persisted", baseDataList.size(), 1);
 		final long count = baseDataList.get(0);
-		assertEquals(256, count);	
+		assertEquals(1, count);	
 				
 	}
 	@Test

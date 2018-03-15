@@ -23,7 +23,7 @@ public class FailureClassDAO {
     }
 	
 	public void save(final FailureClass failureClass){
-		entityManager.persist(failureClass);
+		entityManager.persist(failureClass);	
 	}
 	
 	/*
