@@ -7,7 +7,7 @@
     <container qualifier="jboss7" default="true">
     <configuration>
       <property name="managementAddress">127.0.0.1</property>
-      <property name="managementPort">9999</property>
+      <property name="managementPort">9997</property>
     </configuration>
   </container>
 </arquillian>

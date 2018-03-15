@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.List;
 import javax.ejb.EJB;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import org.apache.commons.httpclient.HttpStatus;
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -60,6 +61,8 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
             @EJB
             private UtilsDAO utilsDao;
              
+            private static HttpHeaders httpHeaders;
+            
             @Before
             public void setUp() {
                 //this function means that we start with an empty table
@@ -73,11 +76,12 @@ import com.mase2.mase2_project.test.utils.UtilsDAO;
                 ue.setManufacturer("Mitsubishi");
                 ue.setAccessCapability("GSM 1800, GSM 900");
                 ueDAO.save(ue);
+                httpHeaders = utilsDao.getHttpHeaders();
             }
             
             @Test
             public void testGetAllUes() {
-            	final Response response = ueWS.findAllUes();
+            	final Response response = ueWS.findAllUes(httpHeaders);
 				List<Ue> uEList = (List<Ue>) response.getEntity();
 				assertEquals(HttpStatus.SC_OK, response.getStatus());				
 				assertEquals("Data fetch = data persisted", uEList.size(), 1);

@@ -13,11 +13,15 @@ public class TableClearer {
     
 	public void deleteAllTables(){
 		deleteBaseDataTable();
+		deleteParentTables();
+
+	}
+	public void deleteParentTables(){
 		entityManager.createQuery("DELETE FROM MccMnc").executeUpdate();
 		entityManager.createQuery("DELETE FROM EventCause").executeUpdate();
 		entityManager.createQuery("DELETE FROM FailureClass").executeUpdate();
 		entityManager.createQuery("DELETE FROM Ue").executeUpdate();
-
+		
 	}
 	public void deleteBaseDataTable(){
 		entityManager.createQuery("DELETE FROM BaseData").executeUpdate();

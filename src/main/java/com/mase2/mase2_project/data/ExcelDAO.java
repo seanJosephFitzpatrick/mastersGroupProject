@@ -38,7 +38,7 @@ public class ExcelDAO {
 	@EJB
 	private BaseDataDAO baseDataDAO;
 
-	private Validator validator=new Validator();
+	private final Validator validator=new Validator();
 
 
 	public int[] importBaseDataExcelData() {
@@ -100,7 +100,9 @@ public class ExcelDAO {
 
 	public int[] importAllExcelData() {
 		final File allDataFile = initiateExcelFile();
-
+		final List<FailureClass> failureClasses=failureClassDAO.getAllFailureClasses();
+		if(failureClasses.isEmpty()){
+			tableClearer.deleteParentTables();
 		try {
 			final Workbook workbook = Workbook.getWorkbook(allDataFile);
 			Sheet sheet = workbook.getSheet(4);
@@ -119,6 +121,9 @@ public class ExcelDAO {
 			e.printStackTrace();
 		}
 		return new int[2];
+		}else{
+			return importBaseDataExcelData();
+		}
 
 	}
 	
@@ -206,9 +211,9 @@ public class ExcelDAO {
 
 			}
 			eventCause.createRow(cells);
-			if(Validator.validateEventCause(eventCause)){
+			//if(Validator.validateEventCause(eventCause)){
 				eventCauseDAO.save(eventCause);
-			}
+			//}
 		}
 
 	}
@@ -227,9 +232,9 @@ public class ExcelDAO {
 
 			}
 			failureClass.createRow(cells);
-			if(Validator.validateFailureClass(failureClass)){
+			//if(Validator.validateFailureClass(failureClass)){
 				failureClassDAO.save(failureClass);
-			}
+			//}
 		}
 
 	}
@@ -249,9 +254,9 @@ public class ExcelDAO {
 
 			}
 			ue.createRow(cells);
-			if(Validator.validateUe(ue)){
+			//if(Validator.validateUe(ue)){
 				ueDAO.save(ue);
-			}
+			//}
 		}
 
 	}
@@ -271,9 +276,9 @@ public class ExcelDAO {
 
 			}
 			mccMnc.createRow(cells);
-			if(Validator.validateMcc_Mnc(mccMnc)){
+			//if(Validator.validateMcc_Mnc(mccMnc)){
 				mcc_mncDao.save(mccMnc);
-			}
+			//}
 		}
 	}
 

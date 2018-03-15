@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 
 import org.apache.commons.httpclient.HttpStatus;
@@ -31,68 +32,61 @@ import com.mase2.mase2_project.rest.JaxRsActivator;
 import com.mase2.mase2_project.rest.MccMncWS;
 import com.mase2.mase2_project.test.utils.UtilsDAO;
 
+@RunWith(Arquillian.class)
+public class MccMncWSTest {
 
+	@Deployment
+	public static Archive<?> createTestArchive() {
+		return ShrinkWrap.create(JavaArchive.class, "TestMccMncWS.jar")
+				.addClasses(MccMncDAO.class, MccMnc.class, MccMncPK.class, JaxRsActivator.class, MccMncWS.class,
+						UtilsDAO.class, FailureClassDAO.class, BaseData.class, EventCause.class, EventCausePK.class,
+						FailureClass.class, Ue.class)
+				// .addPackage(EventCause.class.getPackage())
+				// .addPackage(EventCauseDAO.class.getPackage())
+				// this line will pick up the production db
+				.addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
+				.addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
 
+	}
 
-	//	@FixMethodOrder(MethodSorters.NAME_ASCENDING)
-		@RunWith(Arquillian.class)
-		public class MccMncWSTest {
-			
-			@Deployment
-			public static Archive<?> createTestArchive() {
-				return ShrinkWrap
-						.create(JavaArchive.class, "TestMccMncWS.jar")
-						.addClasses(MccMncDAO.class, MccMnc.class,
-								MccMncPK.class,
-								JaxRsActivator.class,MccMncWS.class,
-								UtilsDAO.class, FailureClassDAO.class, BaseData.class, EventCause.class, EventCausePK.class, FailureClass.class, Ue.class)
-					//	.addPackage(EventCause.class.getPackage())
-					//	.addPackage(EventCauseDAO.class.getPackage())
-								//this line will pick up the production db
-						.addAsManifestResource("META-INF/persistence.xml",
-								"persistence.xml")
-						.addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
+	@EJB
+	private MccMncWS mcc_mncWS;
 
-			}
+	@EJB
+	private MccMncDAO mcc_mncDAO;
 
-			 
-			@EJB
-			private MccMncWS mcc_mncWS;
-			
-			@EJB
-			private MccMncDAO mcc_mncDAO;
-			
-			@EJB
-			private UtilsDAO utilsDAO;
-			 
-			@Before
-			public void setUp() {
-				utilsDAO.deleteTableBaseData();
-				utilsDAO.deleteTable();
-				final MccMncPK mccMncPK = new MccMncPK();
-				mccMncPK.setMcc("238");
-				mccMncPK.setMnc("1");
-				final MccMnc mccMnc=new MccMnc();
-				mccMnc.setId(mccMncPK);
-				mccMnc.setCountry("Denmark");
-				mccMnc.setOperator("TDC-DK");
-				mcc_mncDAO.save(mccMnc);
-			}
-			
-			@Test
-			public void testGetAllMccMncs() {
-				final Response response = mcc_mncWS.findAllMccMncs();
-				List<MccMnc> mccMncList = (List<MccMnc>) response.getEntity();
-				assertEquals(HttpStatus.SC_OK, response.getStatus());				
-				assertEquals("Data fetch = data persisted", mccMncList.size(), 1);
-				final MccMnc mccMnc = mccMncList.get(0);
-				assertEquals("238",mccMnc.getId().getMcc());
-				assertEquals("1",mccMnc.getId().getMnc());
-				assertEquals("Denmark",mccMnc.getCountry());
-				assertEquals("TDC-DK",mccMnc.getOperator());
+	@EJB
+	private UtilsDAO utilsDAO;
 
-			}
-			
-			
-			
+	private static HttpHeaders httpHeaders;
+
+	@Before
+	public void setUp() {
+		utilsDAO.deleteTableBaseData();
+		utilsDAO.deleteTable();
+		final MccMncPK mccMncPK = new MccMncPK();
+		mccMncPK.setMcc("238");
+		mccMncPK.setMnc("1");
+		final MccMnc mccMnc = new MccMnc();
+		mccMnc.setId(mccMncPK);
+		mccMnc.setCountry("Denmark");
+		mccMnc.setOperator("TDC-DK");
+		mcc_mncDAO.save(mccMnc);
+		httpHeaders = utilsDAO.getHttpHeaders();
+	}
+
+	@Test
+	public void testGetAllMccMncs() {
+		final Response response = mcc_mncWS.findAllMccMncs(httpHeaders);
+		List<MccMnc> mccMncList = (List<MccMnc>) response.getEntity();
+		assertEquals(HttpStatus.SC_OK, response.getStatus());
+		assertEquals("Data fetch = data persisted", mccMncList.size(), 1);
+		final MccMnc mccMnc = mccMncList.get(0);
+		assertEquals("238", mccMnc.getId().getMcc());
+		assertEquals("1", mccMnc.getId().getMnc());
+		assertEquals("Denmark", mccMnc.getCountry());
+		assertEquals("TDC-DK", mccMnc.getOperator());
+
+	}
+
 }
