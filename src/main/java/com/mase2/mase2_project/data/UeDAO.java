@@ -4,6 +4,10 @@ import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -13,6 +17,7 @@ import com.mase2.mase2_project.model.Ue;
 
 @Stateless
 @LocalBean
+//@TransactionManagement(TransactionManagementType.BEAN)
 public class UeDAO {
 	@PersistenceContext
     private EntityManager entityManager;
@@ -52,7 +57,6 @@ public class UeDAO {
 //	public Ue getUe(int tac ) {
 //        return em.find(Ue.class, tac);
 //    }
-	
 	public void save(final Ue ue){
 		entityManager.persist(ue);
 	}

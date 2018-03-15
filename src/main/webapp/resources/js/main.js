@@ -30,7 +30,7 @@ var importData = function() {
 		type : 'GET',
 		url : rootUrlImportData,
 		dataType : "json",
-		success : renderPopUp
+		success : renderPopUp 
 	});
 };
 var importBaseData = function() {
@@ -42,7 +42,7 @@ var importBaseData = function() {
 	});
 };
 var renderPopUp = function(data) {
-		
+
 		console.log(data[0]);
 		console.log(data[1]);
 	
@@ -134,6 +134,7 @@ function cleenAllElements(){
 	clearElement('tableHeader');
 	clearElement('tableFooter');
 	clearElement('tableBody');
+	clearElement('contentdiv');
 	
 }
 function clearElement(id) {

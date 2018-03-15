@@ -85,10 +85,10 @@ public class BaseDataWS {
 
 	}
 	@GET
-	@Path("/nme/{cellId}")
+	@Path("/nme/{model}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response findByDateTime(@PathParam("cellId") final String cellId) {
-		final List<BaseData> baseData=baseDataDAO.getUniqueEventIdAndCauseCodeForModel(cellId);
+	public Response findByUniqueModelCombinations(@PathParam("model") final String model) {
+		final List<BaseData> baseData=baseDataDAO.getUniqueEventIdAndCauseCodeForModel(model);
 		return Response.status(200).entity(baseData).build();
 
 	}
