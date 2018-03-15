@@ -60,45 +60,36 @@
 						<li><a href="#" onclick="showTabelUe()">Ue</a></li>
 						<li><a href="#" onclick="showTableEventcauses()">Event
 								Cause</a></li>
-						<li><a href="#" onclick="showTableBasedatas()">Base Data</a>
-						</li>
 					</ul></li>
 				<!-- Sean -->
 				<li class="nav-item" data-toggle="tooltip" data-placement="right"
 					title="Queries"><a
 					class="nav-link nav-link-collapse collapsed" data-toggle="collapse"
-					href="#collapseQueries" data-parent="#exampleAccordion"> <i
+					href="#collapseQueries" data-parent="#exampleAccordion" id="queriestoggle"> <i
 						class="fa fa-fw fa-query"></i> <span class="nav-link-text">Queries</span>
 				</a>
 					<ul class="sidenav-second-level collapse" id="collapseQueries">
 						<li><a href="baseDataModal.html" data-toggle="modal"
-							onclick="showIMSIModal()">IMSI Query</a></li>
+							onclick="showIMSIModal()">Display all Event IDs and Cause Codes for a given IMSI</a></li>
 						<li><a href="baseDataModal.html" data-toggle="modal"
-							onclick="showDateModal()">Date Query</a></li>
+							onclick="showDateModal()" id="datequery">Display all IMSIs with failures during a time period</a></li>
 						<li><a href="baseDataModal.html" data-toggle="modal"
-						onclick="showModelModal()">Count Failures For Model</a></li>
+						onclick="showModelModal()">Count failures For a Model during a time period</a></li>
 						<li><a href="baseDataModal.html" data-toggle="modal"
-						onclick="showNMEModal()">Sum Duration and Num Failures</a></li>
+						onclick="showNMEModal()">Count failures and sum their duration for a given IMSI and time period</a></li>
 						<li><a href="baseDataModal.html" data-toggle="modal"
-						onclick="showTopTenModal()">Top 10 Failures</a></li>
+						onclick="showTopTenModal()">Display top 10 Market/Operator/Cell ID combinations with failures for given time period</a></li>
 						<li><a href="baseDataModal.html" data-toggle="modal"
-						onclick="showIMSIFailureModalGivenTimePeriod()">Show IMSI Failures for given time period</a></li>
+						onclick="showIMSIFailureModalGivenTimePeriod()">Display count of failures for a given IMSI and time period</a></li>
 						<li><a href="baseDataModal.html" data-toggle="modal"
-						onclick="showUniqueModelModal()">Unique Event ID and Cause Code by Model</a></li>
+						onclick="showUniqueModelModal()">Display unique Event IDs and Cause Codes for a given model</a></li>
 
 					</ul></li>
-
-				<li class="nav-item" data-toggle="tooltip" data-placement="right"
-					title="Tables"><a class="nav-link" data-toggle="tooltip"
-					href="#navbarResponsive" data-parent="#exampleAccordion"
-					onclick="importTables()"> <i class="fa fa-file-excel-o"></i> <span
-						class="nav-link-text">Import All Data</span>
-				</a></li>
 				<li class="nav-item" data-toggle="tooltip" data-placement="right"
 					title="Tables"><a class="nav-link" data-toggle="tooltip"
 					href="#navbarResponsive" data-parent="#exampleAccordion"
 					onclick="importBaseDataTable()"> <i class="fa fa-file-excel-o"></i>
-						<span class="nav-link-text">Import Base Data</span>
+						<span class="nav-link-text">Import Call Failures</span>
 				</a></li>
 			</ul>
 
