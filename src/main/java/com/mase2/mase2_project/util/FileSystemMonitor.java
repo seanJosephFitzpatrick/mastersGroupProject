@@ -103,9 +103,10 @@ public class FileSystemMonitor {
 				      }
 				  }
 				  if(!found) {
-					  excelDAO.autoImportAllExcelData(excelFile);
+					  excelDAO.autoImportBaseDataExcelData(excelFile);
 			    	  bufferedWriter.write(pathCreated.toString()+"\r\n");
 			          bufferedWriter.close();
+			          log.info("Dataset Imported");
 				  }
 				  
 				} catch (IOException e) {

@@ -16,7 +16,7 @@ public class FileNameDAO {
 		File[] listOfFiles = folder.listFiles();
 		List<String> fileNames = new ArrayList<>();
 		    for (int i = 0; i < listOfFiles.length; i++) {
-		      if (listOfFiles[i].isFile()) {
+		      if (listOfFiles[i].isFile()&&listOfFiles[i].getName().endsWith(".xls")) {
 		    	  fileNames.add(listOfFiles[i].getName());
 		      } else if (listOfFiles[i].isDirectory()) {
 		    	  

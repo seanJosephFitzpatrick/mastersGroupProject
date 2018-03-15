@@ -143,8 +143,9 @@ public class ExcelDAO {
 	}
 
 	public int[] manualImport(String fileName) {
+		fileName=fileName.replaceAll("\"", "");
 		int[] validAndInvalidRows = new int[2];
-		final File excelFile = initiateFile(fileName);
+		final File excelFile = initiateFile("DataFiles\\"+fileName);
 		BufferedReader bufferedReader = null;
 		try {
 			bufferedReader = new BufferedReader(new FileReader(".\\DataFiles\\dataImportNames.txt"));
