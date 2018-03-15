@@ -8,7 +8,9 @@ var rootUrlBaseData = "http://localhost:8080/mase2-project/rest/basedatas";
 var rootUrlEventCause = "http://localhost:8080/mase2-project/rest/eventcauses";
 var rootUrlImportData = "http://localhost:8080/mase2-project/rest/importdata/all";
 var rootUrlImportBaseData = "http://localhost:8080/mase2-project/rest/importdata/basedata";
-
+var rootUrlFileNames="http://localhost:8080/mase2-project/rest/importdata/filenames"
+var rootUrlManualImport="http://localhost:8080/mase2-project/rest/importdata/"
+		
 $('document').ready(function(){
 	$('.card-header').html("Network Data Analytics");
 	$('.content-wrapper').css("background", "rgb(180,180,180)");
@@ -33,6 +35,22 @@ var importData = function() {
 		success : renderPopUp 
 	});
 };
+var manualImport = function(filename) {
+	$.ajax({
+		type : 'POST',
+		url : rootUrlManualImport+filename,
+		dataType : "json",
+		success : renderPopUp 
+	});
+};
+var getFileNames = function() {
+	$.ajax({
+		type : 'GET',
+		url : rootUrlFileNames,
+		dataType : "json",
+		success: addFileNames
+	});
+};
 var importBaseData = function() {
 	$.ajax({
 		type : 'GET',
@@ -41,6 +59,15 @@ var importBaseData = function() {
 		success : renderPopUp
 	});
 };
+function addFileNames(fileNames){
+	for (index = 0; index < fileNames.length; ++index) {
+		$('#collapseFiles')
+		.append('<li><a href="baseDataModal.html" id="'+fileNames[index]+'" data-toggle="modal"'
+			+'onclick="manualImport(this.id)">'+fileNames[index]+'</a></li>');
+	    
+	}
+	
+}
 var renderPopUp = function(data) {
 
 		console.log(data[0]);
