@@ -206,7 +206,7 @@ function showDateModal(){
 	$('#csrIMSIQueryModal').find('.modal-footer').html('<button type="button" class="btn btn-secondary"'
 		+'data-dismiss="modal">Close</button>'
 		+'<button type="button" class="btn btn-primary"'
-			+'onclick="retrieveDates()" data-dismiss="modal">Submit'
+			+'onclick="retrieveDates()" id="submitdatequery" data-dismiss="modal">Submit'
 			+' Query</button>');
 	initializeDatePicker();
 	

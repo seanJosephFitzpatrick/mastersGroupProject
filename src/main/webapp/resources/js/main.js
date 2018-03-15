@@ -134,6 +134,7 @@ function cleenAllElements(){
 	clearElement('tableHeader');
 	clearElement('tableFooter');
 	clearElement('tableBody');
+	clearElement('contentdiv');
 	
 }
 function clearElement(id) {

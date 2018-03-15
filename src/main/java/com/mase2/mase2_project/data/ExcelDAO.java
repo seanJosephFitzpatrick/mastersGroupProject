@@ -153,9 +153,9 @@ public class ExcelDAO {
 
 			}
 			eventCause.createRow(cells);
-			if(Validator.validateEventCause(eventCause)){
+			//if(Validator.validateEventCause(eventCause)){
 				eventCauseDAO.save(eventCause);
-			}
+			//}
 		}
 
 	}
@@ -174,9 +174,9 @@ public class ExcelDAO {
 
 			}
 			failureClass.createRow(cells);
-			if(Validator.validateFailureClass(failureClass)){
+			//if(Validator.validateFailureClass(failureClass)){
 				failureClassDAO.save(failureClass);
-			}
+			//}
 		}
 
 	}
@@ -196,9 +196,9 @@ public class ExcelDAO {
 
 			}
 			ue.createRow(cells);
-			if(Validator.validateUe(ue)){
+			//if(Validator.validateUe(ue)){
 				ueDAO.save(ue);
-			}
+			//}
 		}
 
 	}
@@ -218,9 +218,9 @@ public class ExcelDAO {
 
 			}
 			mccMnc.createRow(cells);
-			if(Validator.validateMcc_Mnc(mccMnc)){
+			//if(Validator.validateMcc_Mnc(mccMnc)){
 				mcc_mncDao.save(mccMnc);
-			}
+			//}
 		}
 	}
 
