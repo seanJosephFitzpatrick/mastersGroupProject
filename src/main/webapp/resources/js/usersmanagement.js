@@ -217,7 +217,7 @@ function showNewUserForm() {
 			+'        <div class="col-md-6">'
 			+'          <select class="form-control" id="selectRole">'
 			+' 				<option value="customer">Customer Service Representative</option>'
-			+' 				<option value="engineer">Network Management Engineer</option>'
+			+' 				<option value="manager">Network Management Engineer</option>'
 			+' 				<option value="support">Support Engineer</option>'
 			+' 				<option value="admin">System Admin</option>'
 			+' 			</select>'
