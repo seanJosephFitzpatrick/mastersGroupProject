@@ -4,6 +4,7 @@ $('document').ready(function() {
 	$('#wrapper').css({backgroundColor:"white"});
 	sessionStorage.setItem("role", "none");
 	showManiPage();
+	$('[data-toggle="modal"]').tooltip()
 });
 
 function showLoading(){
