@@ -17,6 +17,7 @@ function showNavigation() {
 	$('#topTenQuery').hide();
 	$('#uniqueIdAndCodeQuery').hide();
 	$('#Filestoggle').hide();
+	$('.filelist').hide();
 
 	
 	if(role == "admin" || role == "manager" || role == "support" || role == "customer") {

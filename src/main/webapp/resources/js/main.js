@@ -47,9 +47,11 @@ var getFileNames = function() {
 };
 
 function addFileNames(fileNames){
+	$('#collapseFiles')
+	.html('');
 	for (index = 0; index < fileNames.length; ++index) {
 		$('#collapseFiles')
-		.append('<li><a href="baseDataModal.html" id="'+fileNames[index]+'" data-toggle="modal"'
+		.append('<li><a href="baseDataModal.html" class="filelist" id="'+fileNames[index]+'" data-toggle="modal"'
 				+'onclick="manualImportTables(this.id)">'+fileNames[index]+'</a></li>');
 
 	}
