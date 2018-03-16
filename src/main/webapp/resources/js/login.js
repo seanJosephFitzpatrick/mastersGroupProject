@@ -59,7 +59,7 @@ function showLoginForm() {
 							+ '        <label class="form-check-label">'
 							+ '      </div>'
 							+ '    </div>'
-							+ '    <a class="btn btn-primary btn-block" onclick="loginFunction()">Login</a>'
+							+ '    <a class="btn btn-primary btn-block" id="loginbutton" onclick="loginFunction()">Login</a>'
 //							+ '  </form>' 
 							+ '<div class="text-center">'
 							+ '</div>' + ' </div>' + '</div>');

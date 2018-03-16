@@ -46,6 +46,10 @@ var imsiDataRequest = function(imsi) {
 		},
 		success : function(data) {
 			userTable = $('#ImsiDataTable').DataTable({
+				"columnDefs": [
+				               { "width": "50%","targets": [0,1] }
+
+				             ],
 				data : data,
 				columns : [ {
 					data : "id.eventId"
@@ -114,6 +118,10 @@ var countAndSumDataRequest = function(data1, data2) {
 		success : function(data) {
 
 			userTable = $('#SumAndCountDataTable').DataTable({
+				"columnDefs": [
+				               { "width": "33%","targets": [0,1,2] }
+
+				             ],
 				data : data,
 				columns : [ {
 					data : "imsi"
@@ -139,6 +147,10 @@ var TopTenDataRequest = function(data1, data2) {
 		success : function(data) {
 
 			userTable = $('#TopTenDataTable').DataTable({
+				"columnDefs": [
+				               { "width": "25%","targets": [0,1,2,3] }
+
+				             ],
 				data : data,
 				columns : [ {
 					data : "mcc"
@@ -191,7 +203,10 @@ var uniqueEventAndCauseDataRequest = function(model) {
 		success : function(data) {
 
 			userTable = $('#UniqueEventAndCauseTable').DataTable({
+				"columnDefs": [
+				               { "width": "33%","targets": [0,1,2] }
 
+				             ],
 				data : data,
 				columns : [ {
 					data : "eventCause.id.eventId"
@@ -268,7 +283,7 @@ function showModelModal(){
 	$('#csrIMSIQueryModal').find('.modal-footer').html('<button type="button" class="btn btn-secondary"'
 		+'data-dismiss="modal">Close</button>'
 		+'<button type="button" class="btn btn-primary"'
-		+'onclick="retrieveModelAndDates()" data-dismiss="modal">Submit</button>');
+		+'onclick="retrieveModelAndDates()" id="submitquery" data-dismiss="modal">Submit</button>');
 	initializeDatePicker();
 	$('#csrIMSIQueryModal').modal('show'); 
 }
@@ -283,7 +298,7 @@ function showUniqueModelModal(){
 	$('#csrIMSIQueryModal').find('.modal-footer').html('<button type="button" class="btn btn-secondary"'
 		+'data-dismiss="modal">Close</button>'
 		+'<button type="button" class="btn btn-primary"'
-		+'onclick="retrieveModel()" data-dismiss="modal">Submit</button>');
+		+'onclick="retrieveModel()" id="submitquery" data-dismiss="modal">Submit</button>');
 	$('#csrIMSIQueryModal').modal('show'); 
 }
 function showIMSIModal(){
@@ -297,7 +312,7 @@ function showIMSIModal(){
 	$('#csrIMSIQueryModal').find('.modal-footer').html('<button type="button" class="btn btn-secondary"'
 		+'data-dismiss="modal">Close</button>'
 		+'<button type="button" class="btn btn-primary"'
-		+'onclick="retrieveIMSI()" data-dismiss="modal">Submit</button>');
+		+'onclick="retrieveIMSI()" id="submitquery" data-dismiss="modal">Submit</button>');
 	$('#csrIMSIQueryModal').modal('show'); 
 }
 function showNMEModal(){
@@ -313,7 +328,7 @@ function showNMEModal(){
 	$('#csrIMSIQueryModal').find('.modal-footer').html('<button type="button" class="btn btn-secondary"'
 		+'data-dismiss="modal">Close</button>'
 		+'<button type="button" class="btn btn-primary"'
-		+'onclick="retrieveDatesNME()" data-dismiss="modal">Submit</button>');
+		+'onclick="retrieveDatesNME()" id="submitquery" data-dismiss="modal">Submit</button>');
 	initializeDatePicker();
 	$('#csrIMSIQueryModal').modal('show'); 
 	
@@ -332,7 +347,7 @@ function showTopTenModal(){
 	$('#csrIMSIQueryModal').find('.modal-footer').html('<button type="button" class="btn btn-secondary"'
 		+'data-dismiss="modal">Close</button>'
 		+'<button type="button" class="btn btn-primary"'
-		+'onclick="retrieveDatesTopTen()" data-dismiss="modal">Submit</button>');
+		+'onclick="retrieveDatesTopTen()" id="submitquery" data-dismiss="modal">Submit</button>');
 	initializeDatePicker();
 	$('#csrIMSIQueryModal').modal('show'); 	
 }
@@ -350,7 +365,7 @@ function showDateModal(){
 	$('#csrIMSIQueryModal').find('.modal-footer').html('<button type="button" class="btn btn-secondary"'
 		+ 'data-dismiss="modal">Close</button>'
 		+ '<button type="button" class="btn btn-primary"'
-		+ 'onclick="retrieveDates()" data-dismiss="modal">Submit</button>');
+		+ 'onclick="retrieveDates()" id="submitquery" data-dismiss="modal">Submit</button>');
 	initializeDatePicker();
 	$('#csrIMSIQueryModal').modal('show');
 
@@ -371,7 +386,7 @@ function showIMSIFailureModalGivenTimePeriod(){
 	$('#csrIMSIQueryModal').find('.modal-footer').html('<button type="button" class="btn btn-secondary"'
 		+ 'data-dismiss="modal">Close</button>'
 		+ '<button type="button" class="btn btn-primary"'
-		+ 'onclick="retrieveIMSIAndDates()" data-dismiss="modal">Submit</button>');
+		+ 'onclick="retrieveIMSIAndDates()" id="submitquery" data-dismiss="modal">Submit</button>');
 	initializeDatePicker();
 	$('#csrIMSIQueryModal').modal('show'); 
 }

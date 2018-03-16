@@ -16,6 +16,10 @@ function showTableEventcauses() {
 		},
 		success : function(data) {
 			$('#eventcauses_table').DataTable({
+				"columnDefs": [
+				               { "width": "33%","targets": [0,1,2] }
+
+				             ],
 				data : data,
 				columns : [ {
 					data : "id.eventCode"
@@ -31,7 +35,7 @@ function showTableEventcauses() {
 
 function showEventcausesTable() {
 	$('#wrapper').html(	''
-			+ '	<i class="fa fa-table"></i> <span id="tableTitle">All Ue Table</span>'
+			+ '	<i class="fa fa-table"></i> <span id="tableTitle">All Event Causes Table</span>'
 			+ '	<div class="table-responsive ">'
 			+ '		<table id="eventcauses_table" class="table table-bordered display" cellspacing="0" width="100%">'
 			+ '			<thead>'
@@ -108,6 +112,10 @@ function showTabelFailureClass() {
 		},
 		success : function(data) {
 			$('#failure_table').DataTable({
+				"columnDefs": [
+				               { "width": "50%","targets": [0,1] }
+
+				             ],
 				data : data,
 				columns : [ {
 					data : "failureClass"
@@ -142,6 +150,10 @@ function showTabelMcc_Mnc() {
 		},
 		success : function(data) {
 			$('#mccmnc_table').DataTable({
+				"columnDefs": [
+				               { "width": "25%","targets": [0,1,2,3] }
+
+				             ],
 				data : data,
 				columns : [ {
 					data : "id.mcc"
