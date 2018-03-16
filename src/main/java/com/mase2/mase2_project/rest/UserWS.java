@@ -68,7 +68,7 @@ public class UserWS {
 		} else {
 			return SecurityCheck.ACCESS_DENY;
 		}
-	}
+	} 
 
 	@GET
 	@Path("/{email}")

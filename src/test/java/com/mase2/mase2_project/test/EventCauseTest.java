@@ -17,6 +17,7 @@ import com.mase2.mase2_project.data.BaseDataDAO;
 import com.mase2.mase2_project.data.EventCauseDAO;
 import com.mase2.mase2_project.data.ExcelDAO;
 import com.mase2.mase2_project.data.FailureClassDAO;
+import com.mase2.mase2_project.data.FileNameDAO;
 import com.mase2.mase2_project.data.MccMncDAO;
 import com.mase2.mase2_project.data.UeDAO;
 import com.mase2.mase2_project.data.UserDAO;
@@ -41,6 +42,7 @@ import com.mase2.mase2_project.util.DateParam;
 import com.mase2.mase2_project.util.DurationAndCountObject;
 import com.mase2.mase2_project.util.FailureCountObject;
 import com.mase2.mase2_project.util.FileLogger;
+import com.mase2.mase2_project.util.FileSystemMonitor;
 import com.mase2.mase2_project.util.IMSIObject;
 import com.mase2.mase2_project.util.InvalidEntity;
 import com.mase2.mase2_project.util.SecurityCheck;
@@ -62,7 +64,7 @@ import com.mase2.mase2_project.util.Validator;
 			public static Archive<?> createTestArchive() {
 				return ShrinkWrap
 						.create(JavaArchive.class, "TestEventCause.jar")
-						.addClasses(MccMncDAO.class, MccMnc.class, MccMncPK.class, JaxRsActivator.class, MccMncWS.class,
+						.addClasses(FileNameDAO.class,FileSystemMonitor.class,MccMncDAO.class, MccMnc.class, MccMncPK.class, JaxRsActivator.class, MccMncWS.class,
 								UtilsDAO.class, FailureClassDAO.class, BaseData.class, BaseDataDAO.class, BaseDataWS.class,
 								UeWS.class, EventCause.class,TopTenFailuresObject.class,FailureCountObject.class, EventCausePK.class, EventCauseDAO.class, FailureClassWS.class,
 								EventCauseWS.class, User.class,UserWS.class, DateParam.class, FailureClass.class, ExcelDAO.class, InvalidEntity.class,
