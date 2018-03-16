@@ -46,9 +46,15 @@ public class UtilsDAO {
 		entityManager.createNativeQuery("ALTER TABLE failure_class AUTO_INCREMENT=1").executeUpdate();	
 	}
 	
+	
 	public void deleteTableUe(){
 		entityManager.createQuery("DELETE FROM Ue").executeUpdate();		
 	}
+	
+	public void deleteUserTable() {
+		entityManager.createQuery("DELETE FROM User").executeUpdate();
+	}
+	
 	public HttpHeaders getHttpHeaders() {
 		return new HttpHeaders() {
 			

@@ -28,7 +28,7 @@ import com.mase2.mase2_project.util.SecurityCheck;
 @Path("/users")
 @Produces("application/json")
 @Consumes("application/json")
-public class UserWS {
+public class UserWS { 
 
 	@EJB
 	UserDAO userDAO;
@@ -42,14 +42,14 @@ public class UserWS {
 		User logedUser = securityCheck.login(httpHeaders);
 		if (logedUser.getRole() != null && !logedUser.getRole().equalsIgnoreCase("")) {
 			// if (logedUser.getRole() .equals("admin")) {
-			System.out.println("UserWS.login()");
-			System.out.println("UserWS.login()" + logedUser.getRole() + "{\"role\": \"" + logedUser.getRole() + "\"}");
+//			System.out.println("UserWS.login()");
+//			System.out.println("UserWS.login()" + logedUser.getRole() + "{\"role\": \"" + logedUser.getRole() + "\"}");
 			return Response.status(200).entity("{\"role\": \"" + logedUser.getRole() + "\"}").build();
 		} else {
 			return SecurityCheck.ACCESS_DENY;
 		}
 	}
-
+ 
 	@GET
 	public Response listAll(@Context HttpHeaders httpHeaders) {
 		if (securityCheck.hasRole(httpHeaders, "admin")) {

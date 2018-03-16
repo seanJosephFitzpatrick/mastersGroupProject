@@ -38,7 +38,7 @@ public class BaseDataWS {
 	@EJB
 	private BaseDataDAO baseDataDAO;
 
-	@GET
+	@GET 
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response listAll(@Context HttpHeaders httpHeaders) {
 		if (securityCheck.hasRole(httpHeaders, "admin")) {
