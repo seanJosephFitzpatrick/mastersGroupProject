@@ -65,25 +65,34 @@ public class FileSystemMonitor {
         if (kind.equals(StandardWatchEventKinds.ENTRY_CREATE)) {
             Path pathCreated = (Path) event.context();
             log.info("Entry created: " + pathCreated + " Directory path: " + dir.toString());
-            final File excelFile = new File(".\\DataFiles\\"+pathCreated);
+            final File excelFile = new File(".\\DataFiles\\imports\\"+pathCreated);
             
             BufferedReader bufferedReader = null;
+            final File file = new File(".\\DataFiles\\dataImportNames.txt");
+            if(!file.exists()) {
+	        	  try {
+					file.createNewFile();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	          }
             
 			try {
-				bufferedReader = new BufferedReader(new FileReader("dataImportNames.txt"));
+				bufferedReader = new BufferedReader(new FileReader(".\\DataFiles\\dataImportNames.txt"));
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			}
 			
             String line;
-		    File file = new File("dataImportNames.txt");
-		    try {
-		          if(!file.exists()) {
-		        	  file.createNewFile();
-		          }
+		    
+
 		
-		          FileWriter fileWriter = new FileWriter(file,true);
-		          BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+		          FileWriter fileWriter;
+				try {
+					fileWriter = new FileWriter(file,true);
+				
+		          final BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 		          boolean found=false;
 				  while ((line = bufferedReader.readLine()) != null)
 				  {
@@ -94,16 +103,16 @@ public class FileSystemMonitor {
 				      }
 				  }
 				  if(!found) {
-					  excelDAO.autoImportAllExcelData(excelFile);
+					  excelDAO.autoImportBaseDataExcelData(excelFile);
 			    	  bufferedWriter.write(pathCreated.toString()+"\r\n");
 			          bufferedWriter.close();
+			          log.info("Dataset Imported");
 				  }
 				  
-			  }catch (FileNotFoundException e) {
-				  e.printStackTrace();
-			  } catch (IOException e) {
-				  e.printStackTrace();
-			  } 
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
         }
     }
         
@@ -124,7 +133,7 @@ public class FileSystemMonitor {
   
             if (key != null) {  
   
-                for (WatchEvent<?> event : key.pollEvents()) {  
+                for (final WatchEvent<?> event : key.pollEvents()) {  
                 	printEvent(event);
                 } 
                 

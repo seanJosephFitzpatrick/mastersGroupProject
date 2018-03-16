@@ -15,7 +15,7 @@ public class FileSystemMonitorInitializer {
     
    @PostConstruct  
    public void init(){  
-	   createDirectory(".\\DataFiles");
+	   createDirectory(".\\DataFiles\\imports");
        fileSystemMonitor.newFolderWatcher();  
        fileSystemMonitor.setMonitoredDir(initiateDirectoryPath());  
        fileSystemMonitor.startWatching();       
@@ -26,7 +26,7 @@ public class FileSystemMonitorInitializer {
 		String absolutePath = new File(".").getAbsolutePath();
 		final int last = absolutePath.length() - 1;
 		absolutePath = absolutePath.substring(0, last);
-		filePath = (absolutePath + "/DataFiles");
+		filePath = (absolutePath + "/DataFiles/imports");
 		filePath = filePath.replace("\\", "/");
 		return filePath;
 	}

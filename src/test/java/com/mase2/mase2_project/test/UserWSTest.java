@@ -1,8 +1,6 @@
 package com.mase2.mase2_project.test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
@@ -59,21 +57,20 @@ import com.mase2.mase2_project.util.TopTenFailuresObject;
 import com.mase2.mase2_project.util.UniqueEventAndCauseObject;
 import com.mase2.mase2_project.util.Validator;
 
-//	@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @RunWith(Arquillian.class)
-public class EventCauseWSTest {
+public class UserWSTest {
 
 	@Deployment
 	public static Archive<?> createTestArchive() {
-		return ShrinkWrap.create(JavaArchive.class, "TestEventCauseWS.jar")
-				.addClasses(FileNameDAO.class,FileSystemMonitor.class,MccMncDAO.class, MccMnc.class, MccMncPK.class, JaxRsActivator.class, MccMncWS.class,
+		return ShrinkWrap.create(JavaArchive.class, "TestFailureClassWS.jar")
+				.addClasses(FileNameDAO.class,FileSystemMonitor.class, MccMncDAO.class, MccMnc.class, MccMncPK.class, JaxRsActivator.class, MccMncWS.class,
 						UtilsDAO.class, FailureClassDAO.class, BaseData.class, BaseDataDAO.class, BaseDataWS.class,
 						UeWS.class, EventCause.class,TopTenFailuresObject.class,FailureCountObject.class, EventCausePK.class, EventCauseDAO.class, FailureClassWS.class,
 						EventCauseWS.class, User.class,UserWS.class, DateParam.class, FailureClass.class, ExcelDAO.class, InvalidEntity.class,
 						FileLogger.class,UniqueEventAndCauseObject.class, Validator.class,DurationAndCountObject.class,IMSIObject.class, UserDAO.class, SecurityCheck.class, Ue.class, UeDAO.class, ImportWS.class, TableClearer.class,
 						java.util.Date.class)
-				// .addPackage(EventCause.class.getPackage())
-				// .addPackage(EventCauseDAO.class.getPackage())
+				// .addPackage(FailureClass.class.getPackage())
+				// .addPackage(FailureClassDAO.class.getPackage())
 				// this line will pick up the production db
 				.addPackages(true, jxl.Sheet.class.getPackage()).addPackages(true, jxl.Workbook.class.getPackage())
 				.addPackages(true, jxl.Cell.class.getPackage())
@@ -95,64 +92,81 @@ public class EventCauseWSTest {
 	}
 
 	@EJB
-	private EventCauseWS eventCauseEndpoint;
+	private UserDAO userDAO;
 	@EJB
-	private EventCauseDAO eventCauseDAO;
+	private UserWS userWS;
 	@EJB
 	private UtilsDAO utilsDAO;
 
-	private EventCause eventCause;
 	private static HttpHeaders httpHeaders;
 
+	private User user;
+	
 	@Before
 	public void setUp() {
 		// this function means that we start with an empty table
-		// And add one wine
+		// And add one Failure Class and description
 		// it should be possible to test with an in memory db for efficiency
-		utilsDAO.deleteTableBaseData();
-		utilsDAO.deleteTableEventCause();
-		final EventCausePK eventCausePK = new EventCausePK();
-		eventCausePK.setEventId("4097");
-		eventCausePK.setEventCode("3");
-		eventCause = new EventCause();
-		eventCause.setId(eventCausePK);
-		eventCause.setDescription("S1 SIG CONN SETUP-S1 INTERFACE DOWN");
-		eventCauseDAO.save(eventCause);
+		utilsDAO.deleteUserTable();
+		user = new User();
+		user.setEmail("michal");
+		user.setPassword("pass");
+		user.setRole("admin");
+		userDAO.save(user);
 		httpHeaders = utilsDAO.getHttpHeaders();
 	}
-
 	@Test
-	public void testGetAllEventCauses() {
-		final Response response = eventCauseEndpoint.listAll(httpHeaders);
-		List<EventCause> eventCauseList = (List<EventCause>) response.getEntity();
+	public void testFindByEmailUsersWS() {
+		
+		final Response response = userWS.findByEmail(httpHeaders, "michal");
+		List<User> userList = (List<User>) response.getEntity();
+		assertEquals(userList.size(), 1);
 		assertEquals(HttpStatus.SC_OK, response.getStatus());
-		assertEquals("Data fetch = data persisted", eventCauseList.size(), 1);
-		final EventCause eventCause = eventCauseList.get(0);
-		assertEquals("4097", eventCause.getId().getEventId());
-		assertEquals("3", eventCause.getId().getEventCode());
-		assertEquals("S1 SIG CONN SETUP-S1 INTERFACE DOWN", eventCause.getDescription());
-
+		
+	}
+	
+	@Test
+	public void testUpdateUsersWS() {
+		user.setEmail("michal2");
+		final Response response = userWS.update(httpHeaders,1l, user);
+//		List<User> userList = (List<User>) response.getEntity();
+//		assertEquals(userList.size(), 2);
+		assertEquals(HttpStatus.SC_OK, response.getStatus());
+		
 	}
 
 	@Test
-	public void testMccMncPKEqual() {
-		final EventCausePK eventCausePK = new EventCausePK();
-		eventCausePK.setEventId("4097");
-		eventCausePK.setEventCode("3");
-		assertTrue(eventCausePK.equals(eventCause.getId()));
-		assertTrue(eventCausePK.equals(eventCausePK));
-
+	public void testCreateUsersWS() {
+		User userTest = new User();
+		userTest.setEmail("michal2");
+		userTest.setPassword("pass2");
+		userTest.setRole("admin2");
+		final Response response = userWS.create(httpHeaders, userTest);
+//		List<User> userList = (List<User>) response.getEntity();
+//		assertEquals(userList.size(), 2);
+		assertEquals(HttpStatus.SC_OK, response.getStatus());
+		
 	}
-
+	
 	@Test
-	public void testMccMncPKUnequal() {
-		final EventCausePK eventCausePK = new EventCausePK();
-		eventCausePK.setEventId("4037");
-		eventCausePK.setEventCode("3");
-		assertFalse(eventCausePK.equals(eventCause.getId()));
-		final String test = "";
-		assertFalse(eventCausePK.equals(test));
+	public void testLoginUsersWS() {
+		final Response response = userWS.login(httpHeaders);
+		assertEquals(HttpStatus.SC_OK, response.getStatus());
+	}
+	
+	@Test
+	public void testGetAllUsersWS() {
+		final Response response = userWS.listAll(httpHeaders);
+		@SuppressWarnings("unchecked")
+		List<User> userList = (List<User>) response.getEntity();
+		assertEquals(HttpStatus.SC_OK, response.getStatus());
+		
+		assertEquals("Data fetch = data persisted", userList.size(), 1);
+		final User userTest = userList.get(0);
+		assertEquals("michal", userTest.getEmail());
+		
+		assertEquals("pass", userTest.getPassword());
+		assertEquals("admin", userTest.getRole());
 
 	}
-
 }

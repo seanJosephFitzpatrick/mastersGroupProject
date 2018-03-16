@@ -7,6 +7,12 @@ body {
   overflow-x: hidden;
 }
 
+#loading-indicator {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+}
+
 body.sticky-footer {
   margin-bottom: 56px;
 }
@@ -281,6 +287,7 @@ body.sidenav-toggled #mainNav.static-top #sidenavToggler i {
 
 .content-wrapper {
   overflow-x: hidden;
+  background: white;
 }
 
 @media (min-width: 992px) {

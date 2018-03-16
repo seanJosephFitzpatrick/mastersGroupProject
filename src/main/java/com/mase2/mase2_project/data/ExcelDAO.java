@@ -1,9 +1,17 @@
 package com.mase2.mase2_project.data;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
+
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -14,6 +22,7 @@ import com.mase2.mase2_project.model.EventCause;
 import com.mase2.mase2_project.model.FailureClass;
 import com.mase2.mase2_project.model.MccMnc;
 import com.mase2.mase2_project.model.Ue;
+import com.mase2.mase2_project.util.FileSystemMonitor;
 import com.mase2.mase2_project.util.TableClearer;
 import com.mase2.mase2_project.util.Validator;
 import jxl.Cell;
@@ -24,7 +33,8 @@ import jxl.read.biff.BiffException;
 @Stateless
 @LocalBean
 public class ExcelDAO {
-	@EJB 
+	public static Logger log = Logger.getLogger(FileSystemMonitor.class.getName());
+	@EJB
 	TableClearer tableClearer;
 	@EJB
 	private MccMncDAO mcc_mncDao;
@@ -37,8 +47,7 @@ public class ExcelDAO {
 	@EJB
 	private BaseDataDAO baseDataDAO;
 
-	private final Validator validator=new Validator();
-
+	private final Validator validator = new Validator();
 
 	public int[] importBaseDataExcelData() {
 		final File baseDataFile = initiateExcelFile();
@@ -56,9 +65,14 @@ public class ExcelDAO {
 		}
 		return new int[2];
 	}
-	
+
 	public int[] autoImportBaseDataExcelData(final File baseDataFile) {
-		tableClearer.deleteAllTables();
+		final List<FailureClass> failureClasses = failureClassDAO.getAllFailureClasses();
+		if (failureClasses.isEmpty()) {
+			tableClearer.deleteParentTables();
+			autoImportAllExcelData(baseDataFile);
+		}
+		else{
 		try {
 			final Workbook workbook = Workbook.getWorkbook(baseDataFile);
 			final Sheet sheet = workbook.getSheet(0);
@@ -70,12 +84,13 @@ public class ExcelDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		}
 		return new int[2];
 	}
-	
+
 	public int[] autoImportAllExcelData(final File allDataFile) {
-		tableClearer.deleteAllTables();
-		//final File allDataFile = initiateFile("test.xls");
+		
+		// final File allDataFile = initiateFile("test.xls");
 		try {
 			final Workbook workbook = Workbook.getWorkbook(allDataFile);
 			Sheet sheet = workbook.getSheet(4);
@@ -99,40 +114,93 @@ public class ExcelDAO {
 
 	public int[] importAllExcelData() {
 		final File allDataFile = initiateExcelFile();
-		final List<FailureClass> failureClasses=failureClassDAO.getAllFailureClasses();
-		if(failureClasses.isEmpty()){
+		final List<FailureClass> failureClasses = failureClassDAO.getAllFailureClasses();
+		if (failureClasses.isEmpty()) {
 			tableClearer.deleteParentTables();
-		try {
-			final Workbook workbook = Workbook.getWorkbook(allDataFile);
-			Sheet sheet = workbook.getSheet(4);
-			this.importDataMccMnc(sheet);
-			sheet = workbook.getSheet(3);
-			this.importDataUE(sheet);
-			sheet = workbook.getSheet(2);
-			this.importDataFailureClass(sheet);
-			sheet = workbook.getSheet(1);
-			this.importDataEventCause(sheet);
-			sheet = workbook.getSheet(0);
-			return this.importDataBaseData(sheet);
-		} catch (BiffException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return new int[2];
-		}else{
+			try {
+				final Workbook workbook = Workbook.getWorkbook(allDataFile);
+				Sheet sheet = workbook.getSheet(4);
+				this.importDataMccMnc(sheet);
+				sheet = workbook.getSheet(3);
+				this.importDataUE(sheet);
+				sheet = workbook.getSheet(2);
+				this.importDataFailureClass(sheet);
+				sheet = workbook.getSheet(1);
+				this.importDataEventCause(sheet);
+				sheet = workbook.getSheet(0);
+				return this.importDataBaseData(sheet);
+			} catch (BiffException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return new int[2];
+		} else {
 			return importBaseDataExcelData();
 		}
 
 	}
-	
+
+	public int[] manualImport(String fileName) {
+		fileName=fileName.replaceAll("\"", "");
+		int[] validAndInvalidRows = new int[2];
+		final File excelFile = initiateFile("DataFiles\\"+fileName);
+		BufferedReader bufferedReader = null;
+		try {
+			bufferedReader = new BufferedReader(new FileReader(".\\DataFiles\\dataImportNames.txt"));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		final File file = new File(".\\DataFiles\\dataImportNames.txt");
+		if (!file.exists()) {
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		FileWriter fileWriter;
+		try {
+			fileWriter = new FileWriter(file, true);
+			final BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+
+			String line = "";
+			boolean found = false;
+			while ((line = bufferedReader.readLine()) != null) {
+				if ((line.equals(fileName))) {
+					log.info("File already exists");
+					found = true;
+					break;
+				}
+			}
+			if (!found) {
+				validAndInvalidRows=autoImportBaseDataExcelData(excelFile);
+				
+			} else {
+				tableClearer.deleteAllTables();
+				validAndInvalidRows=autoImportAllExcelData(excelFile);
+				PrintWriter writer = new PrintWriter(file);
+				writer.print("");
+				writer.close();
+			}
+			bufferedWriter.write(fileName + "\r\n");
+			bufferedWriter.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return validAndInvalidRows;
+	}
+
 	//////////////////////////////////////////////
 	private File initiateFile(String file) {
 		String filePath = "";
 		String absolutePath = new File(".").getAbsolutePath();
 		final int last = absolutePath.length() - 1;
 		absolutePath = absolutePath.substring(0, last);
-		//final String file = "test.xls";
+		// final String file = "test.xls";
 		filePath = (absolutePath + file);
 		filePath = filePath.replace("\\", "/");
 		System.out.println(filePath);
@@ -153,8 +221,9 @@ public class ExcelDAO {
 		final File excelFile = new File(filePath);
 		return excelFile;
 	}
+
 	private void retrieveParentTableData() {
-		if(validator.getFailureClassData()!=null){
+		if (validator.getFailureClassData() != null) {
 			return;
 		}
 		validator.setFailureClassData(failureClassDAO.getAllFailureClasses());
@@ -162,8 +231,6 @@ public class ExcelDAO {
 		validator.setUeData(ueDAO.getAllUes());
 		validator.setMccMncData(mcc_mncDao.getAllMcc_Mncs());
 	}
-
-	
 
 	private int[] importDataBaseData(final Sheet sheet) {
 		final int row = sheet.getRows();
@@ -181,8 +248,9 @@ public class ExcelDAO {
 				cells.add(cell.getContents());
 			}
 			if (validator.checkForeignKeysExist(cells)) {
-				baseData.createRow(cells, validator.getEventCauseRow(), validator.getFailureClassRow(), validator.getUeRow(), validator.getMccMncRow());
-				if(Validator.validateBase_data(baseData)){
+				baseData.createRow(cells, validator.getEventCauseRow(), validator.getFailureClassRow(),
+						validator.getUeRow(), validator.getMccMncRow());
+				if (Validator.validateBase_data(baseData)) {
 					baseDataDAO.save(baseData);
 					validAndInvalidRows[0]++;
 				} else {
@@ -210,9 +278,9 @@ public class ExcelDAO {
 
 			}
 			eventCause.createRow(cells);
-			//if(Validator.validateEventCause(eventCause)){
-				eventCauseDAO.save(eventCause);
-			//}
+			// if(Validator.validateEventCause(eventCause)){
+			eventCauseDAO.save(eventCause);
+			// }
 		}
 
 	}
@@ -231,9 +299,9 @@ public class ExcelDAO {
 
 			}
 			failureClass.createRow(cells);
-			//if(Validator.validateFailureClass(failureClass)){
-				failureClassDAO.save(failureClass);
-			//}
+			// if(Validator.validateFailureClass(failureClass)){
+			failureClassDAO.save(failureClass);
+			// }
 		}
 
 	}
@@ -253,9 +321,9 @@ public class ExcelDAO {
 
 			}
 			ue.createRow(cells);
-			//if(Validator.validateUe(ue)){
-				ueDAO.save(ue);
-			//}
+			// if(Validator.validateUe(ue)){
+			ueDAO.save(ue);
+			// }
 		}
 
 	}
@@ -275,9 +343,9 @@ public class ExcelDAO {
 
 			}
 			mccMnc.createRow(cells);
-			//if(Validator.validateMcc_Mnc(mccMnc)){
-				mcc_mncDao.save(mccMnc);
-			//}
+			// if(Validator.validateMcc_Mnc(mccMnc)){
+			mcc_mncDao.save(mccMnc);
+			// }
 		}
 	}
 

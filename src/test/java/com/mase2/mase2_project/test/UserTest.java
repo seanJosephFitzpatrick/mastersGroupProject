@@ -1,8 +1,11 @@
 package com.mase2.mase2_project.test;
 
 import static org.junit.Assert.assertEquals;
+
 import java.util.List;
+
 import javax.ejb.EJB;
+
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
@@ -51,27 +54,21 @@ import com.mase2.mase2_project.util.TopTenFailuresObject;
 import com.mase2.mase2_project.util.UniqueEventAndCauseObject;
 import com.mase2.mase2_project.util.Validator;
 
-/**
- * @author A00248114
- *
- */
-
-	//	@FixMethodOrder(MethodSorters.NAME_ASCENDING)
-		@RunWith(Arquillian.class)
-		public class EventCauseTest {
+@RunWith(Arquillian.class)
+		public class UserTest {
 			
 			@Deployment
 			public static Archive<?> createTestArchive() {
 				return ShrinkWrap
-						.create(JavaArchive.class, "TestEventCause.jar")
-						.addClasses(FileNameDAO.class,FileSystemMonitor.class,MccMncDAO.class, MccMnc.class, MccMncPK.class, JaxRsActivator.class, MccMncWS.class,
+						.create(JavaArchive.class, "TestFailureClass.jar")
+						.addClasses(FileNameDAO.class,FileSystemMonitor.class, MccMncDAO.class, MccMnc.class, MccMncPK.class, JaxRsActivator.class, MccMncWS.class,
 								UtilsDAO.class, FailureClassDAO.class, BaseData.class, BaseDataDAO.class, BaseDataWS.class,
 								UeWS.class, EventCause.class,TopTenFailuresObject.class,FailureCountObject.class, EventCausePK.class, EventCauseDAO.class, FailureClassWS.class,
 								EventCauseWS.class, User.class,UserWS.class, DateParam.class, FailureClass.class, ExcelDAO.class, InvalidEntity.class,
 								FileLogger.class,UniqueEventAndCauseObject.class, Validator.class,DurationAndCountObject.class,IMSIObject.class, UserDAO.class, SecurityCheck.class, Ue.class, UeDAO.class, ImportWS.class, TableClearer.class,
 								java.util.Date.class)
-					//	.addPackage(EventCause.class.getPackage())
-					//	.addPackage(EventCauseDAO.class.getPackage())
+					//	.addPackage(FailureClass.class.getPackage())
+					//	.addPackage(FailureClassDAO.class.getPackage())
 								//this line will pick up the production db
 						.addPackages(true, jxl.Sheet.class.getPackage()).addPackages(true, jxl.Workbook.class.getPackage())
 						.addPackages(true, jxl.Cell.class.getPackage())
@@ -93,9 +90,9 @@ import com.mase2.mase2_project.util.Validator;
 
 			}
 
-			
+			private User user;
 			@EJB
-			private EventCauseDAO eventCauseDAO;
+			private UserDAO userDAO;
 			
 			@EJB
 			private UtilsDAO utilsDAO;
@@ -103,25 +100,40 @@ import com.mase2.mase2_project.util.Validator;
 			@Before
 			public void setUp() {
 				//this function means that we start with an empty table
-				//And add one wine
+				//And add one Failure Class and description
 				//it should be possible to test with an in memory db for efficiency
-				utilsDAO.deleteTableBaseData();
-				utilsDAO.deleteTableEventCause();
-				final EventCausePK eventCausePK = new EventCausePK();
-				eventCausePK.setEventId("4097");
-				eventCausePK.setEventCode("3");
-				final EventCause eventCause=new EventCause();
-				eventCause.setId(eventCausePK);
-				eventCause.setDescription("S1 SIG CONN SETUP-S1 INTERFACE DOWN");
-				eventCauseDAO.save(eventCause);
+				utilsDAO.deleteUserTable();
+				user = new User();
+				user.setEmail("michal");
+				user.setPassword("pass");
+				user.setRole("admin");
+				userDAO.save(user);
+	
+			}
+			@Test
+			public void testSetId() {
+				user.setId(2);
+				assertEquals(2, user.getId());
 			}
 			
 			@Test
-			public void testGetAllEventCauses() {
-				final List<EventCause> eventCauseList = eventCauseDAO.getAllEventCauses();
-				assertEquals("Data fetch = data persisted", eventCauseList.size(), 1);
+			public void testGetAllUsers() {
+				final List<User> userList = userDAO.getAllUsers();
+				assertEquals("Data fetch = data persisted", userList.size(), 1);
 			}
 			
+			@Test
+			public void testGeUsersByEmail() {
+				final List<User> userList = userDAO.findByEmail("michal");
+				assertEquals("Data fetch = data persisted", userList.size(), 1);
+			}
 			
-			
+			@Test
+			public void testGeUsersByID() {
+				user.setEmail("michal2");
+				userDAO.update(user);
+				final List<User> userList = userDAO.findByEmail("michal2");
+				assertEquals("Data fetch = data persisted", userList.size(), 1);
+				assertEquals("Data fetch = data persisted", userList.get(0).getEmail(), "michal2");
+			}
 }
