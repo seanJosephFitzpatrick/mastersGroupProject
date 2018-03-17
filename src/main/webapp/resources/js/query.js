@@ -46,6 +46,13 @@ var imsiDataRequest = function(imsi) {
 		},
 		success : function(data) {
 			userTable = $('#ImsiDataTable').DataTable({
+				responsive: true,
+				fixedHeader: true,
+				dom: 'Bfrtlip',
+				buttons: [
+				            'copy','excel','pdf','print'
+				            
+				            ],
 				"columnDefs": [
 				               { "width": "50%","targets": [0,1] }
 
@@ -73,6 +80,13 @@ var DateDataRequest = function(date1, date2) {
 		success : function(data) {
 
 			userTable = $('#DateDataTable').DataTable({
+				responsive: true,
+				fixedHeader: true,
+				dom: 'Bfrtlip',
+				buttons: [
+				            'copy','excel','pdf','print'
+				            
+				            ],
 				data : data,
 				columns : [ {
 					data : "imsi"
@@ -95,7 +109,13 @@ var countFailuresDataRequest = function(model, date1, date2) {
 		success : function(data) {
 
 			userTable = $('#CountFailuresDataTable').DataTable({
-
+				responsive: true,
+				fixedHeader: true,
+				dom: 'Bfrtlip',
+				buttons: [
+				            'copy','excel','pdf','print'
+				            
+				            ],
 				data : data,
 				columns : [ {
 					data : "failureCount"
@@ -117,7 +137,14 @@ var countAndSumDataRequest = function(data1, data2) {
 		},
 		success : function(data) {
 
-			userTable = $('#SumAndCountDataTable').DataTable({
+				$('#SumAndCountDataTable').DataTable({
+				responsive: true,
+				fixedHeader: true,
+				dom: 'Bfrtlip',
+				buttons: [
+				            'copy','excel','pdf','print'
+				            
+				            ],
 				"columnDefs": [
 				               { "width": "33%","targets": [0,1,2] }
 
@@ -147,6 +174,13 @@ var TopTenDataRequest = function(data1, data2) {
 		success : function(data) {
 
 			userTable = $('#TopTenDataTable').DataTable({
+				responsive: true,
+				fixedHeader: true,
+				dom: 'Bfrtlip',
+				buttons: [
+				            'copy','excel','pdf','print'
+				            
+				            ],
 				"columnDefs": [
 				               { "width": "25%","targets": [0,1,2,3] }
 
@@ -180,7 +214,13 @@ var countFailuresForIMSIDataRequest = function(imsi, date1, date2) {
 		success : function(data) {
 
 			userTable = $('#CountFailuresDataTable').DataTable({
-
+				responsive: true,
+				fixedHeader: true,
+				dom: 'Bfrtlip',
+				buttons: [
+				            'copy','excel','pdf','print'
+				            
+				            ],
 				data : data,
 				columns : [ {
 					data : "failureCount"
@@ -203,6 +243,13 @@ var uniqueEventAndCauseDataRequest = function(model) {
 		success : function(data) {
 
 			userTable = $('#UniqueEventAndCauseTable').DataTable({
+				responsive: true,
+				fixedHeader: true,
+				dom: 'Bfrtlip',
+				buttons: [
+				            'copy','excel','pdf','print'
+				            
+				            ],
 				"columnDefs": [
 				               { "width": "33%","targets": [0,1,2] }
 
