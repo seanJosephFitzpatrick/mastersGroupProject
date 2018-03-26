@@ -55,11 +55,10 @@ public class BaseDataWS {
 	@Path("/aci/") 
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response autoCopleteImsi(@Context HttpHeaders httpHeaders, @QueryParam("term") final String imsi) {
+	
 //		if (securityCheck.hasRole(httpHeaders, "admin")) {
-//
-//			final List<IMSIObject> baseData = baseDataDAO.getAllImsi();
+//			final List<String> baseData = baseDataDAO.getAllImsi(imsi);
 //			return Response.status(200).entity(baseData).build();
-//
 //		} else {
 //			return SecurityCheck.ACCESS_DENY;
 //		}

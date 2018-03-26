@@ -367,29 +367,11 @@ function showIMSIModal(){
 	
 }
 
-function imsiautocomplete(){
-	$("#imsi").autocomplete({
-		source: rootUrlIMSIAutoQuery + document.getElementById('imsi').value
-		
-//	      source : function(request, response) {
-//	           $.ajax({
-//	                url : rootUrlIMSIAutoQuery + document.getElementById('imsi').value,
-//	                type : "GET",
-//	                dataType: "json",
-//	                success: function (data) {
-//	                    response($.map(data, function (value,key) {
-//	                        return {
-//	                        	label: value,
-//	                            value: key
-//	                        };
-//	                    }));
-//	                },
-//	               
-//	         });
-//	      }
-
-	})
-}
+//function imsiautocomplete(){
+//	$("#imsi").autocomplete({
+//		source: rootUrlIMSIAutoQuery + document.getElementById('imsi').value
+//	})
+//}
 
 function showNMEModal(){
 	$("#exampleModalLongTitle").text("Sum Failure duration for IMSI");
