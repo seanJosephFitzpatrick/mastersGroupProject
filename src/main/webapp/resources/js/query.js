@@ -90,10 +90,6 @@ var DateDataRequest = function(date1, date2) {
 				data : data,
 				columns : [ {
 					data : "imsi"
-				}, {
-					date1 : "StartDate"
-				}, {
-					date2 : "EndDate"
 				} ]
 			
 			});
