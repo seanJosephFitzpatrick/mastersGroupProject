@@ -90,7 +90,12 @@ var DateDataRequest = function(date1, date2) {
 				data : data,
 				columns : [ {
 					data : "imsi"
+				}, {
+					date1 : "StartDate"
+				}, {
+					date2 : "EndDate"
 				} ]
+			
 			});
 
 		}
@@ -360,8 +365,30 @@ function showIMSIModal(){
 		+'data-dismiss="modal">Close</button>'
 		+'<button type="button" class="btn btn-primary"'
 		+'onclick="retrieveIMSI()" id="submitquery" data-dismiss="modal">Submit</button>');
-	$('#csrIMSIQueryModal').modal('show'); 
+	$('#csrIMSIQueryModal').modal('show');
+	imsiautocomplete();
+	
 }
+
+function imsiautocomplete(){
+	alert("in function");
+	$("#imsi").autocomplete({     
+	      source : function(request, response) {
+	           $.ajax({
+	                url : rootUrlIMSIQuery,
+	                type : "GET",
+	                success : function(data) {
+	                      response(data);
+	                }
+	         });
+	      },
+	      select: function( event, ui ) {
+	          $( "#imsi" ).val( ui.item.label );	   
+	          return false;
+	        }
+	})
+}
+
 function showNMEModal(){
 	$("#exampleModalLongTitle").text("Sum Failure duration for IMSI");
 	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="dropdown">'
@@ -557,7 +584,7 @@ function showDateDataTable() {
 	$('#wrapper')
 			.html(
 					'<div class="card-body"><div class="table-responsive">'
-							+ '	<table id="DateDataTable" class="table table-bordered display" cellspacing="0" width="100%">'
+							+ '	<table id="DateDataTable" class="table table-bordered display" cellspacing="0" width="auto">'
 							+ '		<thead>' + '			<tr>' + ' 				<th>IMSI</th>'
 							+ ' 			</tr>' + ' 		</thead>'
 							// +' <tbody> </tbody>'
