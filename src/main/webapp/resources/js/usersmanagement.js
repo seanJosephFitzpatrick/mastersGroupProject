@@ -36,7 +36,7 @@ function updateUser(userId) {
 			message += "Email cannot be empty";
 		}
 		if(passworsValue == "" || passworsValue != confirmPassworsValue) {
-			message += "Password dos't match Confirm Password";
+			message += "Passwords don't match";
 		}
 		
 		if(message != "") {
@@ -72,15 +72,18 @@ function updateUserInDB(id, email, password, role){
 		headers : {
 			'Authorization' : 'Basic '+ sessionStorage.getItem("email")+":"+sessionStorage.getItem("password")
 		},
+		complete : function () {
+			showUsers();
+			$('#message').html(
+				'<div class="alert alert-success alert-dismissable" role="alert">'
+					+	'<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
+					+'<strong>Success</strong> User updated'
+				 +'</div>'
+			);
+		}
 	});
 	
-	showUsers();
-	$('#message').html(
-		'<div class="alert alert-success alert-dismissable" role="alert">'
-			+	'<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
-			+'<strong>Success</strong> User updated'
-		 +'</div>'
-	);
+	
 }
 var userListRequest = function (){
 	$.ajax({
@@ -190,15 +193,18 @@ function addUserToDB(email, password, role){
 		failure : function(data){
 			console.log("WIELKI HUJ WIELKI HUJ");
 		},
+		complete : function () {
+			showUsers();
+			$('#message').html(
+				'<div class="alert alert-success alert-dismissable" role="alert">'
+					+	'<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
+					+'<strong>Success</strong> User added'
+				 +'</div>'
+			);
+		}
 	});
 	console.log("WIELKI HUJ");
-	showUsers();
-	$('#message').html(
-		'<div class="alert alert-success alert-dismissable" role="alert">'
-			+	'<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
-			+'<strong>Success</strong> User added'
-		 +'</div>'
-	);
+	
 }
 
 

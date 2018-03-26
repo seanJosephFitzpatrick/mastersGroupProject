@@ -37,7 +37,7 @@ function showEventcausesTable() {
 	$('#wrapper').html(	''
 			+ '	<i class="fa fa-table"></i> <span id="tableTitle">All Event Causes Table</span>'
 			+ '	<div class="table-responsive ">'
-			+ '		<table id="eventcauses_table" class="table table-bordered display" cellspacing="0" width="100%">'
+			+ '		<table id="eventcauses_table" class="table table-bordered table-fixed-header" cellspacing="0" width="100%">'
 			+ '			<thead>'
 			+ '				<th>Event Code</th><th>Event ID</th><th>Description</th>'     
 			+ '			</thead>'
