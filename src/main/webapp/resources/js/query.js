@@ -1,5 +1,6 @@
 //JavaScript Document
 
+var rootUrlIMSIAutoQuery = "http://localhost:8080/mase2-project/rest/basedatas/csi/";
 var rootUrlIMSIQuery = "http://localhost:8080/mase2-project/rest/basedatas/csr/";
 var rootUrlFailuresWithinTimePeriodQuery = "http://localhost:8080/mase2-project/rest/basedatas/se/QueryDates?";
 var rootUrlNumFailuresForModel = "http://localhost:8080/mase2-project/rest/basedatas/se/";
@@ -352,7 +353,7 @@ function showUniqueModelModal(){
 function showIMSIModal(){
 	$("#exampleModalLongTitle").text("Event IDs - Cause Codes for IMSI");
 	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="dropdown">'
-		+'<div class="form-group centermargin">'
+		+'<div class="form-group centermargin ui-widget">'
 		+ '<label for="imsi">IMSI:</label>'
 		+ '<input type="text" class="form-control" id="imsi" placeholder="IMSI">'
 		+ '</div>'
@@ -367,21 +368,26 @@ function showIMSIModal(){
 }
 
 function imsiautocomplete(){
-	alert("in function");
-	$("#imsi").autocomplete({     
-	      source : function(request, response) {
-	           $.ajax({
-	                url : rootUrlIMSIQuery,
-	                type : "GET",
-	                success : function(data) {
-	                      response(data);
-	                }
-	         });
-	      },
-	      select: function( event, ui ) {
-	          $( "#imsi" ).val( ui.item.label );	   
-	          return false;
-	        }
+	$("#imsi").autocomplete({
+		source: rootUrlIMSIAutoQuery + document.getElementById('imsi').value
+		
+//	      source : function(request, response) {
+//	           $.ajax({
+//	                url : rootUrlIMSIAutoQuery + document.getElementById('imsi').value,
+//	                type : "GET",
+//	                dataType: "json",
+//	                success: function (data) {
+//	                    response($.map(data, function (value,key) {
+//	                        return {
+//	                        	label: value,
+//	                            value: key
+//	                        };
+//	                    }));
+//	                },
+//	               
+//	         });
+//	      }
+
 	})
 }
 

@@ -12,4 +12,7 @@
       max-height: calc(100vh - 9rem);
       overflow-y: auto;
  }
+ .ui-autocomplete {
+     z-index: 100000000000 !important;
+}
 
