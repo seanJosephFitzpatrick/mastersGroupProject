@@ -1,6 +1,6 @@
 //JavaScript Document
 
-var rootUrlIMSIAutoQuery = "http://localhost:8080/mase2-project/rest/basedatas/csi/";
+var rootUrlIMSIAutoQuery = "http://localhost:8080/mase2-project/rest/basedatas/aci/";
 var rootUrlIMSIQuery = "http://localhost:8080/mase2-project/rest/basedatas/csr/";
 var rootUrlFailuresWithinTimePeriodQuery = "http://localhost:8080/mase2-project/rest/basedatas/se/QueryDates?";
 var rootUrlNumFailuresForModel = "http://localhost:8080/mase2-project/rest/basedatas/se/";

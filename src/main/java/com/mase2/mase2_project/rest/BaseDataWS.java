@@ -52,7 +52,7 @@ public class BaseDataWS {
 	}
 	
 	@GET
-	@Path("/csi/") 
+	@Path("/aci/") 
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response autoCopleteImsi(@Context HttpHeaders httpHeaders, @QueryParam("term") final String imsi) {
 //		if (securityCheck.hasRole(httpHeaders, "admin")) {

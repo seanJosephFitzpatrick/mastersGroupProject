@@ -102,7 +102,7 @@ public class BaseDataDAO {
 		
 		final Query query=entityManager.createQuery("SELECT distinct m.imsi FROM BaseData m WHERE m.imsi LIKE :imsi")
 		.setParameter("imsi", '%' +imsi+'%' );
-		return query.setMaxResults(10).getResultList();
+		return query.setMaxResults(5).getResultList();
 	}
 
 	@SuppressWarnings("unchecked")
