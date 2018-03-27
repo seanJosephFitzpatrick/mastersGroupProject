@@ -1,6 +1,6 @@
 //JavaScript Document
 
-var rootUrlIMSIQuery = "http://localhost:8080/mase2-project/rest/basedatas/csr/";
+
 var rootUrlFailuresWithinTimePeriodQuery = "http://localhost:8080/mase2-project/rest/basedatas/se/QueryDates?";
 var rootUrlNumFailuresForModel = "http://localhost:8080/mase2-project/rest/basedatas/se/";
 var rootUrlIMSIFailuresWithinTimePeriod = "http://localhost:8080/mase2-project/rest/basedatas/fc/";
@@ -366,6 +366,7 @@ function showModelModal(){
 		+'onclick="retrieveModelAndDates()" id="submitquery" data-dismiss="modal">Submit</button>');
 	initializeDatePicker();
 	$('#csrIMSIQueryModal').modal('show'); 
+	modelautocomplete();
 }
 function showUniqueModelModal(){
 	$("#exampleModalLongTitle").text("Unique Event IDs - Cause Codes for model");
@@ -380,6 +381,7 @@ function showUniqueModelModal(){
 		+'<button type="button" class="btn btn-primary"'
 		+'onclick="retrieveModel()" id="submitquery" data-dismiss="modal">Submit</button>');
 	$('#csrIMSIQueryModal').modal('show'); 
+	modelautocomplete();
 }
 function showIMSIModal(){
 	$("#exampleModalLongTitle").text("Event IDs - Cause Codes for IMSI");
@@ -394,6 +396,7 @@ function showIMSIModal(){
 		+'<button type="button" class="btn btn-primary"'
 		+'onclick="retrieveIMSI()" id="submitquery" data-dismiss="modal">Submit</button>');
 	$('#csrIMSIQueryModal').modal('show'); 
+	imsiautocomplete();
 }
 function showUniqueIMSIModal(){
 	$("#exampleModalLongTitle").text("Unique Cause Codes for IMSI");
@@ -408,6 +411,7 @@ function showUniqueIMSIModal(){
 		+'<button type="button" class="btn btn-primary"'
 		+'onclick="retrieveUniqueIMSI()" id="submitquery" data-dismiss="modal">Submit</button>');
 	$('#csrIMSIQueryModal').modal('show'); 
+	imsiautocomplete();
 }
 function showNMEModal(){
 	$("#exampleModalLongTitle").text("Sum Failure duration for IMSI");
@@ -482,7 +486,8 @@ function showIMSIFailureModalGivenTimePeriod(){
 		+ '<button type="button" class="btn btn-primary"'
 		+ 'onclick="retrieveIMSIAndDates()" id="submitquery" data-dismiss="modal">Submit</button>');
 	initializeDatePicker();
-	$('#csrIMSIQueryModal').modal('show'); 
+	$('#csrIMSIQueryModal').modal('show');
+	imsiautocomplete();
 }
 
 
