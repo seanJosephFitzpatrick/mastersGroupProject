@@ -66,6 +66,14 @@ public class BaseDataWS {
 		final List<String> baseData = baseDataDAO.getAllImsi(imsi);
 		return Response.status(200).entity(baseData).build();
 	}
+	
+	@GET
+	@Path("/acm/") 
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response autoCopleteModel(@Context HttpHeaders httpHeaders, @QueryParam("term") final String model) {		
+		final List<String> baseData = baseDataDAO.getAllModels(model);
+		return Response.status(200).entity(baseData).build();
+	}
 
 	@GET
 	@Path("/csr/{imsi}")
