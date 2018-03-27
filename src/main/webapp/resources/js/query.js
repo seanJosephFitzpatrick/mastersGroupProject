@@ -367,12 +367,6 @@ function showIMSIModal(){
 	
 }
 
-//function imsiautocomplete(){
-//	$("#imsi").autocomplete({
-//		source: rootUrlIMSIAutoQuery + document.getElementById('imsi').value
-//	})
-//}
-
 function showNMEModal(){
 	$("#exampleModalLongTitle").text("Sum Failure duration for IMSI");
 	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="dropdown">'
