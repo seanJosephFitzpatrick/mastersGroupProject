@@ -180,7 +180,7 @@ public class BaseDataWS {
 	}
 	
 	@GET
-	@Path("/nme/querytopten")
+	@Path("/nme/querytoptenimsi")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response findTopTenIMSIsThatHadCallFailuresByDateTime(@Context HttpHeaders httpHeaders,
 			@QueryParam("StartDate") final DateParam startDateParam,
