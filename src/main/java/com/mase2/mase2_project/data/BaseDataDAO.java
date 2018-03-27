@@ -100,7 +100,7 @@ public class BaseDataDAO {
 	@SuppressWarnings("unchecked")
 	public List<String> getAllImsi(String imsi) {
 		
-		final Query query=entityManager.createQuery("SELECT distinct m.imsi FROM BaseData m WHERE m.imsi LIKE :imsi")
+		final Query query=entityManager.createQuery("SELECT distinct m.imsi FROM BaseData m WHERE m.imsi LIKE :imsi ORDER BY m.imsi DESC")
 		.setParameter("imsi", '%' +imsi+'%' );
 		return query.setMaxResults(5).getResultList();
 	}
