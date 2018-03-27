@@ -364,7 +364,6 @@ function showIMSIModal(){
 		+'onclick="retrieveIMSI()" id="submitquery" data-dismiss="modal">Submit</button>');
 	$('#csrIMSIQueryModal').modal('show');
 	imsiautocomplete();
-	
 }
 
 function showNMEModal(){
@@ -441,6 +440,7 @@ function showIMSIFailureModalGivenTimePeriod(){
 		+ 'onclick="retrieveIMSIAndDates()" id="submitquery" data-dismiss="modal">Submit</button>');
 	initializeDatePicker();
 	$('#csrIMSIQueryModal').modal('show'); 
+	imsiautocomplete();
 }
 
 
