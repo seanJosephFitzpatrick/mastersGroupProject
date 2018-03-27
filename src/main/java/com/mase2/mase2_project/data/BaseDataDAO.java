@@ -104,6 +104,14 @@ public class BaseDataDAO {
 		.setParameter("imsi", '%' +imsi+'%' );
 		return query.setMaxResults(5).getResultList();
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<String> getAllModel(String model) {
+		
+		final Query query=entityManager.createQuery("SELECT distinct m.model FROM Ue m WHERE m.model LIKE :model ORDER BY m.model DESC")
+		.setParameter("model", '%' +model+'%' );
+		return query.setMaxResults(5).getResultList();
+	}
 
 	@SuppressWarnings("unchecked")
 	public List<UniqueEventAndCauseObject> getUniqueEventIdAndCauseCodeForModel(String model) {
