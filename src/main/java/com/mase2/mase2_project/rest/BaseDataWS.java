@@ -63,6 +63,18 @@ public class BaseDataWS {
 		}
 
 	}
+	@GET
+	@Path("/csr/unique/{imsi}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response findUniqueCodesByImsi(@Context HttpHeaders httpHeaders, @PathParam("imsi") final String imsi) {
+		if (securityCheck.hasRole(httpHeaders, "admin")) {
+			final List<IMSIObject> baseData = baseDataDAO.getUniqueCauseCodesForIMSI(imsi);
+			return Response.status(200).entity(baseData).build();
+		} else {
+			return SecurityCheck.ACCESS_DENY;
+		}
+
+	}
 
 	@GET
 	@Path("/se/QueryDates")

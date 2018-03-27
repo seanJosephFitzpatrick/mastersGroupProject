@@ -47,6 +47,12 @@ public class BaseDataDAO {
 				.setParameter(1, imsi);
         return query.getResultList();
 	}
+	@SuppressWarnings("unchecked")
+	public List<IMSIObject> getUniqueCauseCodesForIMSI(String imsi) {
+		final Query query=entityManager.createQuery("SELECT distinct new com.mase2.mase2_project.util.IMSIObject(m.eventCause.id.eventCode) FROM BaseData m where m.imsi like ?1")
+				.setParameter(1, imsi);
+        return query.getResultList();
+	}
 
 	@SuppressWarnings("unchecked")
 	public List<FailureCountObject> getCountForCellIdAndDate(String model,DateParam startDateParam, DateParam endDateParam) {
