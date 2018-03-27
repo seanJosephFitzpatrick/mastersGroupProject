@@ -7,6 +7,7 @@ var rootUrlIMSIFailuresWithinTimePeriod = "http://localhost:8080/mase2-project/r
 var rootUrlSumDurationAndCountFailures = "http://localhost:8080/mase2-project/rest/basedatas/nme/query?StartDate=";
 var rootUrlTop10Failures = "http://localhost:8080/mase2-project/rest/basedatas/nme/querytopten?StartDate=";
 var rootUrlUniqueIdAndCauseCodeForModel = "http://localhost:8080/mase2-project/rest/basedatas/nme/";
+var rootUrlUniqueCauseCodeForIMSI = "http://localhost:8080/mase2-project/rest/basedatas/csr/unique/";
 $('document').ready(function() {
 	$('.card-header').html("Network Data Analytics");
 
@@ -46,6 +47,13 @@ var imsiDataRequest = function(imsi) {
 		},
 		success : function(data) {
 			userTable = $('#ImsiDataTable').DataTable({
+				responsive: true,
+				fixedHeader: true,
+				dom: 'Bfrtlip',
+				buttons: [
+				            'copy','excel','pdf','print'
+				            
+				            ],
 				"columnDefs": [
 				               { "width": "50%","targets": [0,1] }
 
@@ -56,6 +64,32 @@ var imsiDataRequest = function(imsi) {
 				}, {
 					data : "id.eventCode"
 				}, ]
+			});
+		}
+	});
+};
+var uniqueImsiDataRequest = function(imsi) {
+	$.ajax({
+		type : 'GET',
+		url : rootUrlUniqueCauseCodeForIMSI + imsi,
+		dataType : "json",
+		headers : {
+			'Authorization' : 'Basic ' + sessionStorage.getItem("email") + ":"
+					+ sessionStorage.getItem("password")
+		},
+		success : function(data) {
+			userTable = $('#uniqueImsiDataTable').DataTable({
+				responsive: true,
+				fixedHeader: true,
+				dom: 'Bfrtlip',
+				buttons: [
+				            'copy','excel','pdf','print'
+				            
+				            ],
+				data : data,
+				columns : [ {
+					data : "imsi"
+				} ]
 			});
 		}
 	});
@@ -73,6 +107,13 @@ var DateDataRequest = function(date1, date2) {
 		success : function(data) {
 
 			userTable = $('#DateDataTable').DataTable({
+				responsive: true,
+				fixedHeader: true,
+				dom: 'Bfrtlip',
+				buttons: [
+				            'copy','excel','pdf','print'
+				            
+				            ],
 				data : data,
 				columns : [ {
 					data : "imsi"
@@ -95,7 +136,13 @@ var countFailuresDataRequest = function(model, date1, date2) {
 		success : function(data) {
 
 			userTable = $('#CountFailuresDataTable').DataTable({
-
+				responsive: true,
+				fixedHeader: true,
+				dom: 'Bfrtlip',
+				buttons: [
+				            'copy','excel','pdf','print'
+				            
+				            ],
 				data : data,
 				columns : [ {
 					data : "failureCount"
@@ -117,7 +164,14 @@ var countAndSumDataRequest = function(data1, data2) {
 		},
 		success : function(data) {
 
-			userTable = $('#SumAndCountDataTable').DataTable({
+				$('#SumAndCountDataTable').DataTable({
+				responsive: true,
+				fixedHeader: true,
+				dom: 'Bfrtlip',
+				buttons: [
+				            'copy','excel','pdf','print'
+				            
+				            ],
 				"columnDefs": [
 				               { "width": "33%","targets": [0,1,2] }
 
@@ -147,6 +201,13 @@ var TopTenDataRequest = function(data1, data2) {
 		success : function(data) {
 
 			userTable = $('#TopTenDataTable').DataTable({
+				responsive: true,
+				fixedHeader: true,
+				dom: 'Bfrtlip',
+				buttons: [
+				            'copy','excel','pdf','print'
+				            
+				            ],
 				"columnDefs": [
 				               { "width": "25%","targets": [0,1,2,3] }
 
@@ -180,7 +241,13 @@ var countFailuresForIMSIDataRequest = function(imsi, date1, date2) {
 		success : function(data) {
 
 			userTable = $('#CountFailuresDataTable').DataTable({
-
+				responsive: true,
+				fixedHeader: true,
+				dom: 'Bfrtlip',
+				buttons: [
+				            'copy','excel','pdf','print'
+				            
+				            ],
 				data : data,
 				columns : [ {
 					data : "failureCount"
@@ -203,6 +270,13 @@ var uniqueEventAndCauseDataRequest = function(model) {
 		success : function(data) {
 
 			userTable = $('#UniqueEventAndCauseTable').DataTable({
+				responsive: true,
+				fixedHeader: true,
+				dom: 'Bfrtlip',
+				buttons: [
+				            'copy','excel','pdf','print'
+				            
+				            ],
 				"columnDefs": [
 				               { "width": "33%","targets": [0,1,2] }
 
@@ -227,6 +301,12 @@ function retrieveIMSI() {
 	showLoading();
 	imsiDataRequest(document.getElementById('imsi').value);
 	showImsiDataTable();
+}
+function retrieveUniqueIMSI() {
+	
+	showLoading();
+	uniqueImsiDataRequest(document.getElementById('imsi').value);
+	showUniqueImsiDataTable();
 }
 function retrieveDates() {
 	showLoading();
@@ -313,6 +393,20 @@ function showIMSIModal(){
 		+'data-dismiss="modal">Close</button>'
 		+'<button type="button" class="btn btn-primary"'
 		+'onclick="retrieveIMSI()" id="submitquery" data-dismiss="modal">Submit</button>');
+	$('#csrIMSIQueryModal').modal('show'); 
+}
+function showUniqueIMSIModal(){
+	$("#exampleModalLongTitle").text("Unique Cause Codes for IMSI");
+	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="dropdown">'
+		+'<div class="form-group centermargin">'
+		+ '<label for="imsi">IMSI:</label>'
+		+ '<input type="text" class="form-control" id="imsi" placeholder="IMSI">'
+		+ '</div>'
+		+'</div>');
+	$('#csrIMSIQueryModal').find('.modal-footer').html('<button type="button" class="btn btn-secondary"'
+		+'data-dismiss="modal">Close</button>'
+		+'<button type="button" class="btn btn-primary"'
+		+'onclick="retrieveUniqueIMSI()" id="submitquery" data-dismiss="modal">Submit</button>');
 	$('#csrIMSIQueryModal').modal('show'); 
 }
 function showNMEModal(){
@@ -442,6 +536,19 @@ function clearElement(id) {
 }
 
 // //////////////////////////
+function showUniqueImsiDataTable() {
+	$('#wrapper')
+			.html(
+					'<div class="card-body"><div class="table-responsive">'
+							+ '	<table id="uniqueImsiDataTable" class="table table-bordered display" cellspacing="0" width="100%">'
+							+ '		<thead>' + '			<tr>'
+							+ ' 				<th>Cause Code</th>' + ' 			</tr>'
+							+ ' 		</thead>'
+							// +' <tbody> </tbody>'
+							+ '		<tfoot>' + '			<tr>'
+							+ ' 				<th>Cause Code</th>' + '			</tr>'
+							+ '		</tfoot>' + '	</table>' + '</div></div>');
+}
 function showImsiDataTable() {
 	$('#wrapper')
 			.html(

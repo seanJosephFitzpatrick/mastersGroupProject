@@ -16,6 +16,13 @@ function showTableEventcauses() {
 		},
 		success : function(data) {
 			$('#eventcauses_table').DataTable({
+				responsive: true,
+				fixedHeader: true,
+				dom: 'Bfrtlip',
+				buttons: [
+				            'copy','excel','pdf','print'
+				            
+				            ],
 				"columnDefs": [
 				               { "width": "33%","targets": [0,1,2] }
 
@@ -59,23 +66,35 @@ function showTabelUe() {
 		},
 		success : function(data) {
 			$('#ue_table').DataTable({
+				responsive: true,
+				fixedHeader: true,
+				dom: 'Bfrtlip',
+				buttons: [
+				            'copy','excel','pdf','print'
+				            
+				            ],
 				data : data,
+				bAutoWidth: false ,
 				columns : [ {
 					data : "tac"
 				}, {
 					data : "marketingName"
 				} , {
-					data : "manufacturer"
+					data : "manufacturer",
+					"width": "12%"
 				}, {
-					data : "accessCapability"
+					data : "accessCapability",
+					"width": "15%"
 				}, {
 					data : "model"
 				}, {
-					data : "vendorName"
+					data : "vendorName",
+					"width": "12%"
 				}, {
 					data : "ueType"
 				}, {
-					data : "os"
+					data : "os",
+					"width": "2%"
 				},{
 					data : "inputType"
 				} ]
@@ -112,6 +131,13 @@ function showTabelFailureClass() {
 		},
 		success : function(data) {
 			$('#failure_table').DataTable({
+				responsive: true,
+				fixedHeader: true,
+				dom: 'Bfrtlip',
+				buttons: [
+				            'copy','excel','pdf','print'
+				            
+				            ],
 				"columnDefs": [
 				               { "width": "50%","targets": [0,1] }
 
@@ -150,6 +176,13 @@ function showTabelMcc_Mnc() {
 		},
 		success : function(data) {
 			$('#mccmnc_table').DataTable({
+				responsive: true,
+				fixedHeader: true,
+				dom: 'Bfrtlip',
+				buttons: [
+				            'copy','excel','pdf','print'
+				            
+				            ],
 				"columnDefs": [
 				               { "width": "25%","targets": [0,1,2,3] }
 
