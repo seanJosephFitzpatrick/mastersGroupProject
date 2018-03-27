@@ -97,6 +97,22 @@ public class BaseDataDAO {
 				.setParameter(2, endDateParam.getDate());
         return query.getResultList();
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<String> getAllImsi(String imsi) {
+		
+		final Query query=entityManager.createQuery("SELECT distinct m.imsi FROM BaseData m WHERE m.imsi LIKE :imsi ORDER BY m.imsi DESC")
+		.setParameter("imsi", '%' +imsi+'%' );
+		return query.setMaxResults(5).getResultList();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<String> getAllModels(String model) {
+		
+		final Query query=entityManager.createQuery("SELECT distinct m.model FROM Ue m WHERE m.model LIKE :model")
+		.setParameter("model", '%' +model+'%' );
+		return query.setMaxResults(5).getResultList();
+	}
 
 	@SuppressWarnings("unchecked")
 	public List<UniqueEventAndCauseObject> getUniqueEventIdAndCauseCodeForModel(String model) {

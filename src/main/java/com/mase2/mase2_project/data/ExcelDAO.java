@@ -32,7 +32,6 @@ import jxl.read.biff.BiffException;
 
 @Stateless
 @LocalBean
-@TransactionManagement(TransactionManagementType.CONTAINER)
 public class ExcelDAO {
 	public static Logger log = Logger.getLogger(FileSystemMonitor.class.getName());
 	@EJB
