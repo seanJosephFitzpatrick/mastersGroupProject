@@ -1,6 +1,6 @@
 //JavaScript Document
 
-var rootUrlIMSIAutoQuery = "http://localhost:8080/mase2-project/rest/basedatas/aci/";
+
 var rootUrlIMSIQuery = "http://localhost:8080/mase2-project/rest/basedatas/csr/";
 var rootUrlFailuresWithinTimePeriodQuery = "http://localhost:8080/mase2-project/rest/basedatas/se/QueryDates?";
 var rootUrlNumFailuresForModel = "http://localhost:8080/mase2-project/rest/basedatas/se/";
@@ -335,6 +335,7 @@ function showModelModal(){
 		+'onclick="retrieveModelAndDates()" id="submitquery" data-dismiss="modal">Submit</button>');
 	initializeDatePicker();
 	$('#csrIMSIQueryModal').modal('show'); 
+	modelautocomplete();
 }
 function showUniqueModelModal(){
 	$("#exampleModalLongTitle").text("Unique Event IDs - Cause Codes for model");
@@ -349,6 +350,7 @@ function showUniqueModelModal(){
 		+'<button type="button" class="btn btn-primary"'
 		+'onclick="retrieveModel()" id="submitquery" data-dismiss="modal">Submit</button>');
 	$('#csrIMSIQueryModal').modal('show'); 
+	modelautocomplete();
 }
 function showIMSIModal(){
 	$("#exampleModalLongTitle").text("Event IDs - Cause Codes for IMSI");
