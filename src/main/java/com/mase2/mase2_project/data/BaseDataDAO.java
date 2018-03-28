@@ -124,8 +124,6 @@ public class BaseDataDAO {
 	
 	@SuppressWarnings("unchecked")
 	public List<TopTenIMSIsObject> getTopTenIMSIs(DateParam startDateParam, DateParam endDateParam) {
-		//SELECT base_data.imsi, count(*) as num_failures, failure_class.description FROM base_data INNER JOIN failure_class ON  base_data.failure_class = failure_class.failure_class where date_time between '2013-02-21 21:01:00' and '2013-02-22 21:04:00' group by imsi order by num_failures desc limit 10; 
-		//SELECT new com.mase2.mase2_project.util.TopTenIMSIsObject(m.imsi, m.failureClassBean.description,count(m) as countfailures) FROM BaseData m INNER JOIN FailureClass f ON m.failureClassBean.description = f.description where m.dateTime between ?1 and ?2 group by m.imsi, order by countfailures desc limit 10
 		final Query query=entityManager.createQuery("SELECT new com.mase2.mase2_project.util.TopTenIMSIsObject(m.imsi,count(m) as countfailures) FROM BaseData m where m.dateTime between ?1 and ?2 group by m.imsi order by countfailures desc")
 				.setParameter(1, startDateParam.getDate())
 				.setParameter(2, endDateParam.getDate());
