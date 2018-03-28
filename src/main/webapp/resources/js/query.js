@@ -1,6 +1,6 @@
 //JavaScript Document
 
-
+var rootUrlIMSIQuery = "http://localhost:8080/mase2-project/rest/basedatas/csr/";
 var rootUrlFailuresWithinTimePeriodQuery = "http://localhost:8080/mase2-project/rest/basedatas/se/QueryDates?";
 var rootUrlNumFailuresForModel = "http://localhost:8080/mase2-project/rest/basedatas/se/";
 var rootUrlIMSIFailuresWithinTimePeriod = "http://localhost:8080/mase2-project/rest/basedatas/fc/";
@@ -8,6 +8,7 @@ var rootUrlSumDurationAndCountFailures = "http://localhost:8080/mase2-project/re
 var rootUrlTop10Failures = "http://localhost:8080/mase2-project/rest/basedatas/nme/querytopten?StartDate=";
 var rootUrlUniqueIdAndCauseCodeForModel = "http://localhost:8080/mase2-project/rest/basedatas/nme/";
 var rootUrlUniqueCauseCodeForIMSI = "http://localhost:8080/mase2-project/rest/basedatas/csr/unique/";
+var imsi;
 $('document').ready(function() {
 	$('.card-header').html("Network Data Analytics");
 
@@ -65,6 +66,7 @@ var imsiDataRequest = function(imsi) {
 					data : "id.eventCode"
 				}, ]
 			});
+			
 		}
 	});
 };
@@ -299,8 +301,12 @@ var uniqueEventAndCauseDataRequest = function(model) {
 function retrieveIMSI() {
 	// findAllIMSIData(document.getElementById('imsi').value);
 	showLoading();
+	imsi = document.getElementById('imsi').value;
 	imsiDataRequest(document.getElementById('imsi').value);
 	showImsiDataTable();
+//	showImsiGraph();
+	imsiDataRequestGraph();
+	
 }
 function retrieveUniqueIMSI() {
 	

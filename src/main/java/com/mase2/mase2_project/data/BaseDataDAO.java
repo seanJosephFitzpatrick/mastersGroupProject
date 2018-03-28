@@ -1,21 +1,21 @@
 package com.mase2.mase2_project.data;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-
-
-
-
-
-
+import com.mase2.mase2_project.graph_model.LastNode;
+import com.mase2.mase2_project.graph_model.NodeDataTime;
+import com.mase2.mase2_project.graph_model.NodeEventIdCouseCode;
 import com.mase2.mase2_project.model.BaseData;
+import com.mase2.mase2_project.model.EventCause;
 import com.mase2.mase2_project.util.DateParam;
 import com.mase2.mase2_project.util.DurationAndCountObject;
 import com.mase2.mase2_project.util.FailureCountObject;
@@ -31,6 +31,9 @@ public class BaseDataDAO {
 	@PersistenceContext
     private EntityManager entityManager;
     
+	@EJB
+	EventCauseDAO eventCauseDAO;
+	
 	@SuppressWarnings("unchecked")
 	public List<BaseData> getAllBaseData() {
 		final Query query=entityManager.createQuery("SELECT m FROM BaseData m");
@@ -125,6 +128,204 @@ public class BaseDataDAO {
 				.setParameter(1, model);
 				
         return query.getResultList();
+	}
+
+	public List<NodeEventIdCouseCode> getBaseDataForIMSIGraph(String imsi) {
+		List<NodeEventIdCouseCode> result = new ArrayList<>();
+		Query query = entityManager.createQuery("SELECT m FROM BaseData m where m.imsi like ?1 ").setParameter(1, imsi);
+		List<BaseData> baseDatas = query.getResultList();
+		List<EventCause> eventCauses = eventCauseDAO.getAllEventCauses();
+		NodeEventIdCouseCode nodeEventIdCouseCode = new NodeEventIdCouseCode();
+		List<BaseData> basedataForTheSameEvents = new ArrayList<>();
+		NodeDataTime nodeDataTime = new NodeDataTime();
+		List<NodeDataTime> nodeEventIdCouseCodeChildren = new ArrayList<>();;
+		
+		
+		
+		
+		List<NodeDataTime>nodeDataTimeChildren = new ArrayList<>();
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	
+//		nodeDataTime = new NodeDataTime(baseData.getDateTime().toString());
+//		nodeDataTime.addChild(new LastNode("" + baseData.getBaseDataId()));
+//		nodeDataTime.addChild(new LastNode("" + baseData.getCellId()));
+//		nodeDataTime.addChild(new LastNode("" + baseData.getDuration()));
+//		nodeDataTime.addChild(new LastNode("" + baseData.getHier321Id()));
+//		nodeEventIdCouseCode.addChildren();
+		
+		List<BaseData> eventIdCouseCodeChildList = new ArrayList<>();
+		
+		for (EventCause eventCause : eventCauses) {
+			query = entityManager.createQuery("Select m FROM BaseData m where m.imsi like ?1 and m.eventCause.id.eventCode like ?2  and m.eventCause.id.eventId like ?3 ");
+			query.setParameter(1, imsi);
+			query.setParameter(2, eventCause.getId().getEventCode());
+			query.setParameter(3, eventCause.getId().getEventId());
+			
+			List<BaseData> baseDataForImsiAndEvenCause = query.getResultList();
+			System.out.println("baseDataForImsiAndEvenCaouse " +baseDataForImsiAndEvenCause.size());
+			nodeEventIdCouseCode = new NodeEventIdCouseCode();
+			for (BaseData baseData : baseDataForImsiAndEvenCause) {
+				nodeDataTime = new NodeDataTime(baseData.getDateTime().toString());
+				nodeDataTime.addChild(new LastNode(baseData.getImsi()));
+				nodeDataTime.addChild(new LastNode(baseData.getDateTime().toString()));
+				nodeDataTime.addChild(new LastNode(baseData.getDuration()+""));
+				nodeDataTime.addChild(new LastNode(baseData.getFailureClassBean().getDescription()));
+				nodeEventIdCouseCode.addChildren(nodeDataTime);
+				nodeEventIdCouseCode.setName(eventCause.getDescription());
+				
+			}
+			if(nodeEventIdCouseCode.getChildren().size() != 0) {
+				result.add(nodeEventIdCouseCode);
+			}
+			
+			
+			
+			
+//			for (BaseData baseData : baseDatas) {
+//				if (eventCause == baseData.getEventCause()) {
+//					if (eventIdCouseCodeChildList.contains(o))
+//					nodeDataTime = new NodeDataTime(baseData.getDateTime().toString() = new NodeEventIdCouseCode(eventCause.getDescription());
+//					
+//					nodeDataTime = new NodeDataTime(baseData.getDateTime().toString());
+//					nodeEventIdCouseCode.addChildren(nodeDataTime);
+//					
+//				}
+//			}
+//			if (!result.contains(nodeEventIdCouseCode)) {
+//				result.add(nodeEventIdCouseCode);
+//			}
+		}
+		System.out.println("BaseDataDAO.getBaseDataForIMSIGraph()result.size "  + result.size());
+					
+					
+					
+					
+//					basedataForTheSameEvents.add(baseData);
+//					nodeDataTime.setName(baseData.getDateTime().toString());
+//					
+//					nodeDataTime = new NodeDataTime(baseData.getDateTime().toString());
+//					nodeDataTime.addChild(new LastNode("" + baseData.getBaseDataId()));
+//					nodeDataTime.addChild(new LastNode("" + baseData.getCellId()));
+//					nodeDataTime.addChild(new LastNode("" + baseData.getDuration()));
+//					nodeDataTime.addChild(new LastNode("" + baseData.getHier321Id()));
+//					nodeEventIdCouseCode.addChildren();
+//				}
+//				for (BaseData basedataForTheSameEvent : basedataForTheSameEvents) {
+//					nodeDataTime = new NodeDataTime(basedataForTheSameEvent.getDateTime().toString());
+//					nodeDataTime.addChild(new LastNode("" + basedataForTheSameEvent.getBaseDataId()));
+//					nodeDataTime.addChild(new LastNode("" + basedataForTheSameEvent.getCellId()));
+//					nodeDataTime.addChild(new LastNode("" + basedataForTheSameEvent.getDuration()));
+//					nodeDataTime.addChild(new LastNode("" + basedataForTheSameEvent.getHier321Id()));
+//					nodeEventIdCouseCodeChildren.add(nodeDataTime);
+//				}
+//				nodeEventIdCouseCode.setChildren(nodeEventIdCouseCodeChildren);
+//				result.add(nodeEventIdCouseCode);
+//			}
+//		}
+//				
+//			}
+//			for (BaseData basedataTheSameEvent : basedataTheSameEvents) {
+//				
+//			}
+//		}
+//					for (BaseData eventCause2 : eventCauses) {
+//						
+//					}
+//					
+//					
+//					NodeEventIdCouseCode nodeEventIdCouseCode = new NodeEventIdCouseCode(baseData.getEventCause().getDescription());
+//					List<NodeDataTime> nodeEventIdCouseCodeChildren = new ArrayList<>();
+//					
+//					
+//					nodeEventIdCouseCode.setChildren(nodeEventIdCouseCodeChildren);
+//					result.add(nodeEventIdCouseCode);
+//				}
+//			}
+//		}
+		
+		
+		
+		
+		
+		
+//		for (BaseData baseData : baseDatas) {
+//
+//			NodeEventIdCouseCode nodeEventIdCouseCode = new NodeEventIdCouseCode(baseData.getEventCause().getDescription());
+//			
+//			List<NodeDataTime> nodeEventIdCouseCodeChildren = new ArrayList<>();
+//			List<LastNode> nodeDataTimeChilden = new ArrayList<>();
+//
+//			NodeDataTime nodeDataTime = new NodeDataTime();
+//			List<NodeDataTime> nodeDataTimeLists = new ArrayList<>();
+//
+//			for (BaseData base : baseDatas) {
+//				nodeDataTimeChilden.add(new LastNode("" + base.getBaseDataId()));
+//				nodeDataTimeChilden.add(new LastNode("" + base.getCellId()));
+//				nodeDataTimeChilden.add(new LastNode("" + base.getDuration()));
+//				nodeDataTimeChilden.add(new LastNode("" + base.getHier321Id()));
+//
+//				nodeDataTime.setName(base.getDateTime().toString());
+//				nodeDataTime.setChilderen(nodeDataTimeChilden);
+//				nodeEventIdCouseCodeChildren.add(nodeDataTime);
+//
+//			}
+//
+//			nodeEventIdCouseCode.setChildren(nodeEventIdCouseCodeChildren);
+//			result.add(nodeEventIdCouseCode);
+//		}
+		
+		return result;
+
+
+//		for (BaseData base : baseDatas) {
+//
+//			List<BaseData> onlyWithDescription = new ArrayList<>();
+//
+//			for (BaseData base2 : baseDatas) {
+//				if (base.getEventCause().getDescription().equals(base2.getEventCause().getDescription())) {
+//					onlyWithDescription.add(base2);
+//				}
+//				
+//				List<BaseData> onlyWithDataTimes = new ArrayList<>();
+//				
+//				for (BaseData onlyWithDataTime : onlyWithDataTimes) {
+//					if()
+//				}
+//				
+//				
+//				
+//				
+//				
+//				
+//				List<NodeDataTime> nodeEventIdCouseCodeChildren = new ArrayList<>();
+//				if (base.getEventCause().getDescription().equals(base2.getEventCause().getDescription())) {
+//					NodeDataTime nodeDataTime = new NodeDataTime(base2.getDateTime().toString());
+//					
+//					
+////					NodeEventIdCouseCode nodeEventIdCouseCode = new NodeEventIdCouseCode(base.getEventCause().getDescription());
+//			//		nodeEventIdCouseCodeChildren = 
+//				}
+//			}
+//        	NodeDataTime nodeDataTime = new NodeDataTime(base.getDateTime().toString());
+//        	nodeDataTime.setChilderen(childeren);
+//        	
+//        	nodeEventIdCouseCode.addChildren(nodeDataTime);
+//		}
+		
 	}
 
 }

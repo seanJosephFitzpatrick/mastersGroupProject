@@ -19,6 +19,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.mase2.mase2_project.data.BaseDataDAO;
+import com.mase2.mase2_project.graph_model.ImsiNode;
+import com.mase2.mase2_project.graph_model.NodeEventIdCouseCode;
 import com.mase2.mase2_project.model.BaseData;
 import com.mase2.mase2_project.util.DateParam;
 import com.mase2.mase2_project.util.DurationAndCountObject;
@@ -176,6 +178,23 @@ public class BaseDataWS {
 		} else {
 			return SecurityCheck.ACCESS_DENY;
 		}
+	}
+	
+	@GET
+	@Path("/graph/{imsi}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response findByImsiGraph(@Context HttpHeaders httpHeaders, @PathParam("imsi") final String imsi) {
+		//if (securityCheck.hasRole(httpHeaders, "admin")) {
+			final List<NodeEventIdCouseCode> baseData = baseDataDAO.getBaseDataForIMSIGraph(imsi);
+			ImsiNode imsiNode = new ImsiNode();
+			imsiNode.setName(imsi);
+			imsiNode.setChildren(baseData);
+			
+			return Response.status(200).entity(imsiNode).build();
+//		} else {
+//			return SecurityCheck.ACCESS_DENY;
+//		}
+
 	}
 
 }
