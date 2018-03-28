@@ -248,23 +248,14 @@ var TopTenIMSIsDataRequest = function(data1, data2) {
 				            'copy','excel','pdf','print'
 				            
 				            ],
-				"columnDefs": [
-				               { "width": "25%","targets": [0,1,2,3] }
-
-				             ],
+				
 				data : data,
 				columns : [ {
 					data : "imsi"
 				}, {
-					data : "numFailures"
-				}, {
-					data : "failure"
-				}, {
-					data : "startDate"
-				}, {
-					data : "endDate"
+					data : "count"
 				} ],
-				"order" : [ [ 3, "desc" ] ]
+				"order" : [ [ 1, "count" ] ]
 			});
 
 		}
@@ -668,23 +659,19 @@ function showTopTenDataTable() {
 							+ ' 				<th>Number of Failures</th>' + '			</tr>'
 							+ '		</tfoot>' + '	</table>' + '</div></div>');
 }
-function showTopTenIMSIDataTable() {
+function showTopTenIMSIsDataTable() {
 	$('#wrapper')
 			.html(
 					'<div class="card-body"><div class="table-responsive">'
 							+ '	<table id="TopTenIMSIDataTable" class="table table-bordered display" cellspacing="0" width="100%">'
 							+ '		<thead>' + '			<tr>' + ' 				<th>IMSI</th>'
 							+ ' 				<th>Number of Failures</th>'
-							+ ' 				<th>Failure</th>'
-							+ ' 				<th>Start Date</th>'
-							+ ' 				<th>End Date</th>' + ' 			</tr>'
+                            + ' 			</tr>'
 							+ ' 		</thead>'
 							// +' <tbody> </tbody>'
 							+ '		<tfoot>' + '			<tr>' + ' 				<th>IMSI</th>'
 							+ ' 				<th>Number of Failures</th>'
-							+ ' 				<th>Failure</th>'
-							+ ' 				<th>Start Date</th>'
-							+ ' 				<th>End Date</th>' + '			</tr>'
+ + '			</tr>'
 							+ '		</tfoot>' + '	</table>' + '</div></div>');
 }
 function showSumAndCountDataTable() {
