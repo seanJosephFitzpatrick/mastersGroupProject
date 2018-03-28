@@ -26,6 +26,7 @@ import com.mase2.mase2_project.util.FailureCountObject;
 import com.mase2.mase2_project.util.IMSIObject;
 import com.mase2.mase2_project.util.SecurityCheck;
 import com.mase2.mase2_project.util.TopTenFailuresObject;
+import com.mase2.mase2_project.util.TopTenIMSIsObject;
 import com.mase2.mase2_project.util.UniqueEventAndCauseObject;
 
 @Path("/basedatas")
@@ -172,6 +173,20 @@ public class BaseDataWS {
 			@QueryParam("EndDate") final DateParam endDateParam) {
 		if (securityCheck.hasRole(httpHeaders, "admin")) {
 			final List<TopTenFailuresObject> baseData = baseDataDAO.getTopTenFailures(startDateParam, endDateParam);
+			return Response.status(200).entity(baseData).build();
+		} else {
+			return SecurityCheck.ACCESS_DENY;
+		}
+	}
+	
+	@GET
+	@Path("/nme/querytoptenimsi")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response findTopTenIMSIsThatHadCallFailuresByDateTime(@Context HttpHeaders httpHeaders,
+			@QueryParam("StartDate") final DateParam startDateParam,
+			@QueryParam("EndDate") final DateParam endDateParam) {
+		if (securityCheck.hasRole(httpHeaders, "admin")) {
+			final List<TopTenIMSIsObject> baseData = baseDataDAO.getTopTenIMSIs(startDateParam, endDateParam);
 			return Response.status(200).entity(baseData).build();
 		} else {
 			return SecurityCheck.ACCESS_DENY;

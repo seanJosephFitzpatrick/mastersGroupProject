@@ -6,6 +6,7 @@ var rootUrlNumFailuresForModel = "http://localhost:8080/mase2-project/rest/based
 var rootUrlIMSIFailuresWithinTimePeriod = "http://localhost:8080/mase2-project/rest/basedatas/fc/";
 var rootUrlSumDurationAndCountFailures = "http://localhost:8080/mase2-project/rest/basedatas/nme/query?StartDate=";
 var rootUrlTop10Failures = "http://localhost:8080/mase2-project/rest/basedatas/nme/querytopten?StartDate=";
+var rootUrlTop10IMSIs = "http://localhost:8080/mase2-project/rest/basedatas/nme/querytoptenimsi?StartDate=";
 var rootUrlUniqueIdAndCauseCodeForModel = "http://localhost:8080/mase2-project/rest/basedatas/nme/";
 var rootUrlUniqueCauseCodeForIMSI = "http://localhost:8080/mase2-project/rest/basedatas/csr/unique/";
 $('document').ready(function() {
@@ -228,6 +229,38 @@ var TopTenDataRequest = function(data1, data2) {
 		}
 	});
 };
+var TopTenIMSIsDataRequest = function(data1, data2) {
+	$.ajax({
+		type : 'GET',
+		url : rootUrlTop10IMSIs + data1 + "&EndDate=" + data2,
+		dataType : "json",
+		headers : {
+			'Authorization' : 'Basic ' + sessionStorage.getItem("email") + ":"
+					+ sessionStorage.getItem("password")
+		},
+		success : function(data) {
+
+			userTable = $('#TopTenIMSIDataTable').DataTable({
+				responsive: true,
+				fixedHeader: true,
+				dom: 'Bfrtlip',
+				buttons: [
+				            'copy','excel','pdf','print'
+				            
+				            ],
+				
+				data : data,
+				columns : [ {
+					data : "imsi"
+				}, {
+					data : "count"
+				} ],
+				"order" : [ [ 1, "count" ] ]
+			});
+
+		}
+	});
+};
 var countFailuresForIMSIDataRequest = function(imsi, date1, date2) {
 	$.ajax({
 		type : 'GET',
@@ -347,6 +380,12 @@ function retrieveModel() {
 	uniqueEventAndCauseDataRequest(document.getElementById('model').value);
 	showUniqueEventAndCauseTable();
 }
+function retrieveDatesTopTenIMSIs() {
+	showLoading();
+	TopTenIMSIsDataRequest(document.getElementById('date_timepicker_start').value,
+			document.getElementById('date_timepicker_end').value);
+	showTopTenIMSIsDataTable();
+}
 
 function showModelModal(){
 	$("#exampleModalLongTitle").text("Failures for Model");
@@ -382,6 +421,23 @@ function showUniqueModelModal(){
 		+'onclick="retrieveModel()" id="submitquery" data-dismiss="modal">Submit</button>');
 	$('#csrIMSIQueryModal').modal('show'); 
 	modelautocomplete();
+}
+function showTopTenIMSIsModal(){
+	$("#exampleModalLongTitle").text("Top 10 IMSIs - Failures for time period");
+	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="dropdown">'
+			+'<div class="form-group centermargin">'
+			+ '<label for="date_timepicker_start">Start Date:</label>'
+			+ '<input type="text" class="form-control" id="date_timepicker_start" placeholder="Start Date">'
+			+ '<label for="date_timepicker_end">End Date:</label>'
+			+ '<input type="text" class="form-control" id="date_timepicker_end" placeholder="End Date">'
+			+ '</div>'
+		+ '</div>');
+	$('#csrIMSIQueryModal').find('.modal-footer').html('<button type="button" class="btn btn-secondary"'
+		+'data-dismiss="modal">Close</button>'
+		+'<button type="button" class="btn btn-primary"'
+		+'onclick="retrieveDatesTopTenIMSIs()" id="submitquery" data-dismiss="modal">Submit</button>');
+	initializeDatePicker();
+	$('#csrIMSIQueryModal').modal('show'); 	
 }
 function showIMSIModal(){
 	$("#exampleModalLongTitle").text("Event IDs - Cause Codes for IMSI");
@@ -601,6 +657,21 @@ function showTopTenDataTable() {
 							+ ' 				<th>Operator</th>'
 							+ ' 				<th>Cell ID</th>'
 							+ ' 				<th>Number of Failures</th>' + '			</tr>'
+							+ '		</tfoot>' + '	</table>' + '</div></div>');
+}
+function showTopTenIMSIsDataTable() {
+	$('#wrapper')
+			.html(
+					'<div class="card-body"><div class="table-responsive">'
+							+ '	<table id="TopTenIMSIDataTable" class="table table-bordered display" cellspacing="0" width="100%">'
+							+ '		<thead>' + '			<tr>' + ' 				<th>IMSI</th>'
+							+ ' 				<th>Number of Failures</th>'
+                            + ' 			</tr>'
+							+ ' 		</thead>'
+							// +' <tbody> </tbody>'
+							+ '		<tfoot>' + '			<tr>' + ' 				<th>IMSI</th>'
+							+ ' 				<th>Number of Failures</th>'
+ + '			</tr>'
 							+ '		</tfoot>' + '	</table>' + '</div></div>');
 }
 function showSumAndCountDataTable() {

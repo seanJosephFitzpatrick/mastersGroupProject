@@ -9,18 +9,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-
-
-
-
-
-
 import com.mase2.mase2_project.model.BaseData;
 import com.mase2.mase2_project.util.DateParam;
 import com.mase2.mase2_project.util.DurationAndCountObject;
 import com.mase2.mase2_project.util.FailureCountObject;
 import com.mase2.mase2_project.util.IMSIObject;
 import com.mase2.mase2_project.util.TopTenFailuresObject;
+import com.mase2.mase2_project.util.TopTenIMSIsObject;
 import com.mase2.mase2_project.util.UniqueEventAndCauseObject;
 
 
@@ -125,6 +120,14 @@ public class BaseDataDAO {
 				.setParameter(1, model);
 				
         return query.getResultList();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<TopTenIMSIsObject> getTopTenIMSIs(DateParam startDateParam, DateParam endDateParam) {
+		final Query query=entityManager.createQuery("SELECT new com.mase2.mase2_project.util.TopTenIMSIsObject(m.imsi,count(m) as countfailures) FROM BaseData m where m.dateTime between ?1 and ?2 group by m.imsi order by countfailures desc")
+				.setParameter(1, startDateParam.getDate())
+				.setParameter(2, endDateParam.getDate());
+        return query.setMaxResults(10).getResultList();
 	}
 
 }
