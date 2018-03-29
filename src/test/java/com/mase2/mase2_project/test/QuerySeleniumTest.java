@@ -140,8 +140,24 @@ public class QuerySeleniumTest {
 		assertNotNull(driver.findElement(By.id("UniqueEventAndCauseTable")));
 		
 	}
-
-
+	
+	@Test
+	public void topTenIMSIsQueryTest() throws InterruptedException{
+		
+		driver.findElement(By.id("topTenIMSIQuery")).click();
+		Thread.sleep(1000);
+		driver.findElement(By.id("date_timepicker_start")).sendKeys("2011-02-01");
+		Thread.sleep(1000);
+		driver.findElement(By.id("date_timepicker_start")).click();
+		Thread.sleep(1000);
+		driver.findElement(By.id("date_timepicker_end")).sendKeys("2018-02-01");
+		Thread.sleep(1000);
+		driver.findElement(By.id("date_timepicker_end")).click();
+		driver.findElement(By.id("submitquery")).click();
+		Thread.sleep(500);
+		assertNotNull(driver.findElement(By.id("TopTenIMSIDataTable")));
+		
+	}
 
 
 }

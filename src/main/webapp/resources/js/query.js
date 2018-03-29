@@ -1,6 +1,6 @@
 //JavaScript Document
 
-
+var rootUrlIMSIQuery = "http://localhost:8080/mase2-project/rest/basedatas/csr/";
 var rootUrlFailuresWithinTimePeriodQuery = "http://localhost:8080/mase2-project/rest/basedatas/se/QueryDates?";
 var rootUrlNumFailuresForModel = "http://localhost:8080/mase2-project/rest/basedatas/se/";
 var rootUrlIMSIFailuresWithinTimePeriod = "http://localhost:8080/mase2-project/rest/basedatas/fc/";
@@ -9,7 +9,10 @@ var rootUrlTop10Failures = "http://localhost:8080/mase2-project/rest/basedatas/n
 var rootUrlTop10IMSIs = "http://localhost:8080/mase2-project/rest/basedatas/nme/querytoptenimsi?StartDate=";
 var rootUrlUniqueIdAndCauseCodeForModel = "http://localhost:8080/mase2-project/rest/basedatas/nme/";
 var rootUrlUniqueCauseCodeForIMSI = "http://localhost:8080/mase2-project/rest/basedatas/csr/unique/";
-var rootUrlIMSIQuery = "http://localhost:8080/mase2-project/rest/basedatas/csr/";
+
+var imsi;
+var rootUrlIMSIForGivenFailureCauseClass = "http://localhost:8080/mase2-project/rest/basedatas/nme/querygivenfailurecauseclass/";
+
 $('document').ready(function() {
 	$('.card-header').html("Network Data Analytics");
 
@@ -57,6 +60,7 @@ var imsiDataRequest = function(imsi) {
 					data : "id.eventCode"
 				}, ]
 			});
+			
 		}
 	});
 };
@@ -206,9 +210,9 @@ var TopTenDataRequest = function(data1, data2) {
 				             ],
 				data : data,
 				columns : [ {
-					data : "mcc"
+					data : "country"
 				}, {
-					data : "mnc"
+					data : "operator"
 				}, {
 					data : "cellId"
 				}, {
@@ -320,11 +324,42 @@ var uniqueEventAndCauseDataRequest = function(model) {
 		}
 	});
 };
+var imsiForFailureClassRequest = function(failure) {
+	$.ajax({
+		type : 'GET',
+		url : rootUrlIMSIForGivenFailureCauseClass + failure,
+		dataType : "json",
+		headers : {
+			'Authorization' : 'Basic ' + sessionStorage.getItem("email") + ":"
+					+ sessionStorage.getItem("password")
+		},
+		success : function(data) {
+			console.log(data);
+			userTable = $('#ImsibyFailureClassDataTable').DataTable({
+				responsive: true,
+				fixedHeader: true,
+				dom: 'Bfrtlip',
+				buttons: [
+				            'copy','excel','pdf','print'
+				            
+				            ],
+				data : data,
+				columns : [ {
+					data : "imsi"
+				}, ]
+			});
+		}
+	});
+};
 function retrieveIMSI() {
 	// findAllIMSIData(document.getElementById('imsi').value);
 	showLoading();
+	imsi = document.getElementById('imsi').value;
 	imsiDataRequest(document.getElementById('imsi').value);
 	showImsiDataTable();
+//	showImsiGraph();
+	imsiDataRequestGraph();
+	
 }
 function retrieveUniqueIMSI() {
 	
@@ -376,6 +411,11 @@ function retrieveDatesTopTenIMSIs() {
 	TopTenIMSIsDataRequest(document.getElementById('date_timepicker_start').value,
 			document.getElementById('date_timepicker_end').value);
 	showTopTenIMSIsDataTable();
+}
+function retrieveIMSIbyFailureClass() {
+	showLoading();
+	imsiForFailureClassRequest(document.getElementById('failure').value);
+	showImsibyFailureClassTable();
 }
 
 function showModelModal(){
@@ -539,7 +579,21 @@ function showIMSIFailureModalGivenTimePeriod(){
 	imsiautocomplete();
 }
 
-
+function showIMSIsForFailureClassModal(){
+	$("#exampleModalLongTitle").text("IMSI Affected by given Failure Class");
+	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="dropdown">'
+		+'<div class="form-group centermargin">'
+		+ '<label for="failure">Failure Cause:</label>'
+		+ '<input type="text" class="form-control" id="failure" placeholder="Failure">'
+		+ '</div>'
+		+'</div>');
+	$('#csrIMSIQueryModal').find('.modal-footer').html('<button type="button" class="btn btn-secondary"'
+		+'data-dismiss="modal">Close</button>'
+		+'<button type="button" class="btn btn-primary"'
+		+'onclick="retrieveIMSIbyFailureClass()" id="submitquery" data-dismiss="modal">Submit</button>');
+	$('#csrIMSIQueryModal').modal('show'); 
+	
+}
 function initializeDatePicker() {
 	$.datetimepicker.setLocale('en');
 	jQuery(function() {
@@ -705,5 +759,18 @@ function showCountFailuresDataTable() {
 							// +' <tbody> </tbody>'
 							+ '		<tfoot id="tableFooter">' + '			<tr>'
 							+ ' 				<th>Number of Failures</th>' + '			</tr>'
+							+ '		</tfoot>' + '	</table>' + '</div></div>');
+}
+function showImsibyFailureClassTable() {
+	$('#wrapper')
+			.html(
+					'<div class="card-body"><div class="table-responsive">'
+							+ '	<table id="ImsibyFailureClassDataTable" class="table table-bordered display" cellspacing="0" width="100%">'
+							+ '		<thead id="tableHeader">' + '			<tr>'
+							+ ' 				<th>IMSI</th>' + ' 			</tr>'
+							+ ' 		</thead>'
+							// +' <tbody> </tbody>'
+							+ '		<tfoot id="tableFooter">' + '			<tr>'
+							+ ' 				<th>IMSI</th>' + '			</tr>'
 							+ '		</tfoot>' + '	</table>' + '</div></div>');
 }

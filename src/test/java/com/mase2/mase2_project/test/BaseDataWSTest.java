@@ -57,6 +57,7 @@ import com.mase2.mase2_project.util.InvalidEntity;
 import com.mase2.mase2_project.util.SecurityCheck;
 import com.mase2.mase2_project.util.TableClearer;
 import com.mase2.mase2_project.util.TopTenFailuresObject;
+import com.mase2.mase2_project.util.TopTenIMSIsObject;
 import com.mase2.mase2_project.util.UniqueEventAndCauseObject;
 import com.mase2.mase2_project.util.Validator;
 
@@ -72,7 +73,7 @@ public class BaseDataWSTest {
 						UeWS.class, EventCause.class,TopTenFailuresObject.class,FailureCountObject.class, EventCausePK.class, EventCauseDAO.class, FailureClassWS.class,
 						EventCauseWS.class, User.class,UserWS.class, DateParam.class, FailureClass.class, ExcelDAO.class, InvalidEntity.class,
 						FileLogger.class,UniqueEventAndCauseObject.class, Validator.class,DurationAndCountObject.class,IMSIObject.class, UserDAO.class, SecurityCheck.class, Ue.class, UeDAO.class, ImportWS.class, TableClearer.class,
-						java.util.Date.class)
+						java.util.Date.class, TopTenIMSIsObject.class)
 				.addPackages(true, jxl.Sheet.class.getPackage()).addPackages(true, jxl.Workbook.class.getPackage())
 				.addPackages(true, jxl.Cell.class.getPackage())
 				.addPackages(true, jxl.biff.BaseCellFeatures.class.getPackage())
@@ -266,7 +267,7 @@ public class BaseDataWSTest {
 	public void testFindUniqueEventIdCauseCodeByModel() {
 		final Response response = baseDataEndpoint.findByUniqueModelCombinations(httpHeaders, "Apple");
 		@SuppressWarnings("unchecked")
-		List<EventCause> baseDataList = (List<EventCause>) response.getEntity();
+		List<UniqueEventAndCauseObject> baseDataList = (List<UniqueEventAndCauseObject>) response.getEntity();
 		assertEquals(HttpStatus.SC_OK, response.getStatus());
 		assertEquals("Data fetch = data persisted", baseDataList.size(), 1);
 		assertEquals("4097", eventCause.getId().getEventId());
@@ -326,6 +327,15 @@ public class BaseDataWSTest {
 	@Test
 	public void testFindTopTenFailuresByDateTime() {
 		final Response response = baseDataEndpoint.findTopTenFailuresByDateTime(httpHeaders, new DateParam("2010-03-07"),
+				new DateParam("2019-03-09"));
+		List baseDataList = (List) response.getEntity();
+		assertEquals(HttpStatus.SC_OK, response.getStatus());
+		assertEquals("Data fetch = data persisted", 1, baseDataList.size());
+	}
+	
+	@Test
+	public void testFindTopTenIMSIsFailuresByDateTime() {
+		final Response response = baseDataEndpoint.findTopTenIMSIsThatHadCallFailuresByDateTime(httpHeaders, new DateParam("2010-03-07"),
 				new DateParam("2019-03-09"));
 		List baseDataList = (List) response.getEntity();
 		assertEquals(HttpStatus.SC_OK, response.getStatus());

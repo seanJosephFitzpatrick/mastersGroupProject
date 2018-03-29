@@ -1,29 +1,29 @@
 package com.mase2.mase2_project.util;
 
 public class TopTenFailuresObject {
-		private String mcc;
-		private String mnc;
+		private String country;
+		private String operator;
 		private String cellId;
 		private Long count;
-		public TopTenFailuresObject(String mcc, String mnc, String cellId,
+		public TopTenFailuresObject(String country, String operator, String cellId,
 				Long count) {
 			super();
-			this.mcc = mcc;
-			this.mnc = mnc;
+			this.country = country;
+			this.operator = operator;
 			this.cellId = cellId;
 			this.count = count;
 		}
-		public String getMcc() {
-			return mcc;
+		public String getCountry() {
+			return country;
 		}
-		public void setMcc(String mcc) {
-			this.mcc = mcc;
+		public void setCountry(String country) {
+			this.country = country;
 		}
-		public String getMnc() {
-			return mnc;
+		public String getOperator() {
+			return operator;
 		}
-		public void setMnc(String mnc) {
-			this.mnc = mnc;
+		public void setOperator(String operator) {
+			this.operator = operator;
 		}
 		public String getCellId() {
 			return cellId;
