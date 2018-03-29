@@ -207,9 +207,9 @@ var TopTenDataRequest = function(data1, data2) {
 				             ],
 				data : data,
 				columns : [ {
-					data : "mcc"
+					data : "country"
 				}, {
-					data : "mnc"
+					data : "operator"
 				}, {
 					data : "cellId"
 				}, {

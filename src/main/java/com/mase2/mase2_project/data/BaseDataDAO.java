@@ -83,7 +83,7 @@ public class BaseDataDAO {
 	@SuppressWarnings("unchecked")
 	public List<TopTenFailuresObject> getTopTenFailures(DateParam startDateParam, DateParam endDateParam) {
 
-		final Query query=entityManager.createQuery("SELECT new com.mase2.mase2_project.util.TopTenFailuresObject(m.mccMnc.id.mcc, m.mccMnc.id.mnc, m.cellId,count(m) as countfailures) FROM BaseData m where m.dateTime between ?1 and ?2 group by m.mccMnc.id.mcc, m.mccMnc.id.mnc, m.cellId order by countfailures desc limit 10")
+		final Query query=entityManager.createQuery("SELECT new com.mase2.mase2_project.util.TopTenFailuresObject(m.mccMnc.country, m.mccMnc.operator, m.cellId,count(m) as countfailures) FROM BaseData m where m.dateTime between ?1 and ?2 group by m.mccMnc.country, m.mccMnc.operator, m.cellId order by countfailures desc limit 10")
 				.setParameter(1, startDateParam.getDate())
 				.setParameter(2, endDateParam.getDate());
         return query.setMaxResults(10).getResultList();
