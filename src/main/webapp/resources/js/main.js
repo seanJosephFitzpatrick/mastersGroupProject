@@ -78,7 +78,7 @@ function showManiPage() {
 }
 
 function showDashboard() {
-	$('#wrapper').html('');
+	$('#wrapper').html('<img src="./resources/css/blahblahblah.jpg"  id="EricssonLogo">');
 
 }
 

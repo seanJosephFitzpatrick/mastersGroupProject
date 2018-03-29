@@ -60,3 +60,9 @@ input[type=password] {
   stroke: #ccc;
   stroke-width: 1.5px;
 }
+#EricssonLogo{
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 75%;
+}
