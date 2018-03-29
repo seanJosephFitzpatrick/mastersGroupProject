@@ -2,6 +2,10 @@
  * Navigation
  */
 function showNavigation() {
+	$('.content-wrapper').css({backgroundImage:"url(./resources/css/blahblahblah.jpg)"});
+	$('.content-wrapper').css({backgroundSize:"cover"});
+	$('.content-wrapper').css({backgroundRepeat:"no-repeat"});
+	$('.content-wrapper').css({backgroundPosition:"center center"});
 	role = sessionStorage.getItem("role");
 	// hide all elements
 	$('#nav_logout').hide();
