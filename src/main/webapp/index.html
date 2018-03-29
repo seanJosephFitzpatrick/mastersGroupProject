@@ -24,13 +24,13 @@
 	rel="stylesheet">
 	<link href="https://cdn.datatables.net/buttons/1.5.1/css/buttons.dataTables.min.css"
 	rel="stylesheet">
+	<link href="./resources/css/jquery-ui.css" rel="stylesheet">
 <!-- Custom styles for this template-->
 <link href="./resources/css/sb-admin.css" rel="stylesheet">
 <link href="./resources/css/jquery.datetimepicker.min.css"
 	rel="stylesheet">
 <link href="./resources/css/jquery.dataTables.min.css" rel="stylesheet">
 <link href="./resources/css/custom.css" rel="stylesheet">
-
 </head>
 
 <body class="sticky-footer bg-dark" id="page-top">
@@ -117,6 +117,10 @@
 							title="Display unique Event IDs and Cause Codes for a given model"
 							data-toggle="modal" onclick="showUniqueModelModal()">Model Codes</a>
 						</li>
+						<li id="topTenIMSIQuery"><a href="baseDataModal.html" data-placement="top" 
+							title="Display top 10 IMSIs with failures for a given time period"
+							data-toggle="modal" onclick="showTopTenIMSIsModal()">Top 10 IMSI Failures</a>
+						</li>
 
 					</ul></li>
 
@@ -180,11 +184,7 @@
 			<div class="modal-dialog modal-dialog-centered" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-<<<<<<< HEAD
-						<h5 class="modal-title" id="modalTitle"></h5>
-=======
 						<h5 class="modal-title" id="exampleModalLongTitle"></h5>
->>>>>>> branch 'development' of https://SeanFitz71@bitbucket.org/mase2/group_project.git
 						<button type="button" class="close" data-dismiss="modal"
 							aria-label="Close">
 							<span aria-hidden="true">&times;</span>
@@ -224,10 +224,10 @@
 		src="./resources/vendor/datatables/jquery.dataTables.js"></script>
 	<script type="text/javascript"
 		src="./resources/vendor/datatables/dataTables.bootstrap4.js"></script>
-<script type="text/javascript"
+	<script type="text/javascript"
 		src="./resources/vendor/datatables/dataTables.fixedHeader.min.js"></script>
 		<script type="text/javascript"
-		src="https://cdn.datatables.net/responsive/2.2.1/js/dataTables.responsive.min.js"></script>
+		src="./resources/js/jquery-ui.js"></script>
 				<script type="text/javascript"
 		src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
 		<script type="text/javascript"
@@ -249,7 +249,6 @@
 	<script type="text/javascript" src="./resources/js/sb-admin-charts.js"></script>
 	<script type="text/javascript"
 		src="./resources/js/jquery.datetimepicker.full.min.js"></script>
-	<!-- Custom scripts for this page-->
 	<script type="text/javascript" src="./resources/js/navigation.js"></script>
 	<script type="text/javascript" src="./resources/js/login.js"></script>
 	<script type="text/javascript" src="./resources/js/usersmanagement.js"></script>
@@ -262,7 +261,7 @@
 	<script type="text/javascript" src="./resources/js/importdata.js"></script>
 	<script type="text/javascript"
 		src="./resources/js/additional-methods.js"></script>
-
-
+	<script type="text/javascript" src="./resources/js/autocomplete.js"></script>
+		
 </body>
 </html>
