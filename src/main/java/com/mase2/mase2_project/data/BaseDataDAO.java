@@ -129,5 +129,12 @@ public class BaseDataDAO {
 				.setParameter(2, endDateParam.getDate());
         return query.setMaxResults(10).getResultList();
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<IMSIObject> getIMSIsForGivenFaiureCauseClass(String failure) {
+		final Query query=entityManager.createQuery("SELECT new com.mase2.mase2_project.util.IMSIObject(m.imsi) FROM BaseData m where m.failureClassBean.failureClass like :failure ORDER BY m.imsi DESC")
+				.setParameter("failure", '%' +failure+'%' );
+		return query.getResultList();
+	}
 
 }

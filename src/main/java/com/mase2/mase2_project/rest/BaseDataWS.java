@@ -192,5 +192,18 @@ public class BaseDataWS {
 			return SecurityCheck.ACCESS_DENY;
 		}
 	}
+	
+	@GET
+	@Path("/nme/querygivenfailurecauseclass/{failure}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response findIMSIForGivenFailureCauseClass(@Context HttpHeaders httpHeaders,
+			@PathParam("failure") final String failure) {
+		if (securityCheck.hasRole(httpHeaders, "admin")) {
+			final List<IMSIObject> baseData = baseDataDAO.getIMSIsForGivenFaiureCauseClass(failure);
+			return Response.status(200).entity(baseData).build();
+		} else {
+			return SecurityCheck.ACCESS_DENY;
+		}
+	}
 
 }
