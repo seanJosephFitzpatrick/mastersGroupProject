@@ -1,6 +1,6 @@
 //JavaScript Document
 
-
+var rootUrlIMSIQuery = "http://localhost:8080/mase2-project/rest/basedatas/csr/";
 var rootUrlFailuresWithinTimePeriodQuery = "http://localhost:8080/mase2-project/rest/basedatas/se/QueryDates?";
 var rootUrlNumFailuresForModel = "http://localhost:8080/mase2-project/rest/basedatas/se/";
 var rootUrlIMSIFailuresWithinTimePeriod = "http://localhost:8080/mase2-project/rest/basedatas/fc/";
@@ -9,8 +9,10 @@ var rootUrlTop10Failures = "http://localhost:8080/mase2-project/rest/basedatas/n
 var rootUrlTop10IMSIs = "http://localhost:8080/mase2-project/rest/basedatas/nme/querytoptenimsi?StartDate=";
 var rootUrlUniqueIdAndCauseCodeForModel = "http://localhost:8080/mase2-project/rest/basedatas/nme/";
 var rootUrlUniqueCauseCodeForIMSI = "http://localhost:8080/mase2-project/rest/basedatas/csr/unique/";
-var rootUrlIMSIQuery = "http://localhost:8080/mase2-project/rest/basedatas/csr/";
+
+var imsi;
 var rootUrlIMSIForGivenFailureCauseClass = "http://localhost:8080/mase2-project/rest/basedatas/nme/querygivenfailurecauseclass/";
+
 $('document').ready(function() {
 	$('.card-header').html("Network Data Analytics");
 
@@ -58,6 +60,7 @@ var imsiDataRequest = function(imsi) {
 					data : "id.eventCode"
 				}, ]
 			});
+			
 		}
 	});
 };
@@ -351,8 +354,12 @@ var imsiForFailureClassRequest = function(failure) {
 function retrieveIMSI() {
 	// findAllIMSIData(document.getElementById('imsi').value);
 	showLoading();
+	imsi = document.getElementById('imsi').value;
 	imsiDataRequest(document.getElementById('imsi').value);
 	showImsiDataTable();
+//	showImsiGraph();
+	imsiDataRequestGraph();
+	
 }
 function retrieveUniqueIMSI() {
 	
