@@ -9,14 +9,13 @@ var rootUrlBaseData = "http://localhost:8080/mase2-project/rest/basedatas";
 var rootUrlEventCause = "http://localhost:8080/mase2-project/rest/eventcauses";
 var rootUrlImportData = "http://localhost:8080/mase2-project/rest/importdata/all";
 var rootUrlImportBaseData = "http://localhost:8080/mase2-project/rest/importdata/basedata";
-var rootUrlFileNames="http://localhost:8080/mase2-project/rest/importdata/filenames"
-var rootUrlManualImport="http://localhost:8080/mase2-project/rest/importdata"
+var rootUrlFileNames="http://localhost:8080/mase2-project/rest/importdata/filenames";
+var rootUrlManualImport="http://localhost:8080/mase2-project/rest/importdata";
 
 $('document').ready(function() {
-	$('#wrapper').css({backgroundColor:"white"});
 	sessionStorage.setItem("role", "none");
 	showManiPage();
-	$('[data-toggle="modal"]').tooltip()
+	$('[data-toggle="modal"]').tooltip();
 });
 
 
@@ -62,7 +61,6 @@ function addFileNames(fileNames){
 
 
 function showLoading(){
-	console.log("gsfgdsgs");
 	$('#wrapper').html(''
 			+ '	<div calss="text-center" id="loding">'
 			+ '		<img src="./resources/css/loading_icon.gif" alt="loading" id="loading_gif">'
@@ -71,7 +69,7 @@ function showLoading(){
 }
 
 function showManiPage() {
-	console.log("Current rolle " + sessionStorage.getItem("role"));
+	console.log("Current role " + sessionStorage.getItem("role"));
 	if (sessionStorage.getItem("role") == "none") {
 		showLoginForm();
 	}
@@ -80,7 +78,7 @@ function showManiPage() {
 }
 
 function showDashboard() {
-	$('#wrapper').html("Network Data Analytics");
+	$('#wrapper').html('');
 
 }
 

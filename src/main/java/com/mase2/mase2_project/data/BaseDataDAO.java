@@ -11,9 +11,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+
 import com.mase2.mase2_project.graph_model.LastNode;
 import com.mase2.mase2_project.graph_model.NodeDataTime;
 import com.mase2.mase2_project.graph_model.NodeEventIdCouseCode;
+
 import com.mase2.mase2_project.model.BaseData;
 import com.mase2.mase2_project.model.EventCause;
 import com.mase2.mase2_project.util.DateParam;
@@ -21,6 +23,7 @@ import com.mase2.mase2_project.util.DurationAndCountObject;
 import com.mase2.mase2_project.util.FailureCountObject;
 import com.mase2.mase2_project.util.IMSIObject;
 import com.mase2.mase2_project.util.TopTenFailuresObject;
+import com.mase2.mase2_project.util.TopTenIMSIsObject;
 import com.mase2.mase2_project.util.UniqueEventAndCauseObject;
 
 
@@ -91,7 +94,7 @@ public class BaseDataDAO {
 	@SuppressWarnings("unchecked")
 	public List<TopTenFailuresObject> getTopTenFailures(DateParam startDateParam, DateParam endDateParam) {
 
-		final Query query=entityManager.createQuery("SELECT new com.mase2.mase2_project.util.TopTenFailuresObject(m.mccMnc.id.mcc, m.mccMnc.id.mnc, m.cellId,count(m) as countfailures) FROM BaseData m where m.dateTime between ?1 and ?2 group by m.mccMnc.id.mcc, m.mccMnc.id.mnc, m.cellId order by countfailures desc limit 10")
+		final Query query=entityManager.createQuery("SELECT new com.mase2.mase2_project.util.TopTenFailuresObject(m.mccMnc.country, m.mccMnc.operator, m.cellId,count(m) as countfailures) FROM BaseData m where m.dateTime between ?1 and ?2 group by m.mccMnc.country, m.mccMnc.operator, m.cellId order by countfailures desc limit 10")
 				.setParameter(1, startDateParam.getDate())
 				.setParameter(2, endDateParam.getDate());
         return query.setMaxResults(10).getResultList();
@@ -129,6 +132,21 @@ public class BaseDataDAO {
 				
         return query.getResultList();
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<TopTenIMSIsObject> getTopTenIMSIs(DateParam startDateParam, DateParam endDateParam) {
+		final Query query=entityManager.createQuery("SELECT new com.mase2.mase2_project.util.TopTenIMSIsObject(m.imsi,count(m) as countfailures) FROM BaseData m where m.dateTime between ?1 and ?2 group by m.imsi order by countfailures desc")
+				.setParameter(1, startDateParam.getDate())
+				.setParameter(2, endDateParam.getDate());
+        return query.setMaxResults(10).getResultList();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<IMSIObject> getIMSIsForGivenFaiureCauseClass(String failure) {
+		final Query query=entityManager.createQuery("SELECT new com.mase2.mase2_project.util.IMSIObject(m.imsi) FROM BaseData m where m.failureClassBean.failureClass like :failure ORDER BY m.imsi DESC")
+				.setParameter("failure", '%' +failure+'%' );
+		return query.getResultList();
+	}
 
 	public List<NodeEventIdCouseCode> getBaseDataForIMSIGraph(String imsi) {
 		List<NodeEventIdCouseCode> result = new ArrayList<>();
@@ -140,32 +158,9 @@ public class BaseDataDAO {
 		NodeDataTime nodeDataTime = new NodeDataTime();
 		List<NodeDataTime> nodeEventIdCouseCodeChildren = new ArrayList<>();;
 		
-		
-		
-		
+
 		List<NodeDataTime>nodeDataTimeChildren = new ArrayList<>();
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-	
-//		nodeDataTime = new NodeDataTime(baseData.getDateTime().toString());
-//		nodeDataTime.addChild(new LastNode("" + baseData.getBaseDataId()));
-//		nodeDataTime.addChild(new LastNode("" + baseData.getCellId()));
-//		nodeDataTime.addChild(new LastNode("" + baseData.getDuration()));
-//		nodeDataTime.addChild(new LastNode("" + baseData.getHier321Id()));
-//		nodeEventIdCouseCode.addChildren();
+
 		
 		List<BaseData> eventIdCouseCodeChildList = new ArrayList<>();
 		
@@ -193,138 +188,11 @@ public class BaseDataDAO {
 			}
 			
 			
-			
-			
-//			for (BaseData baseData : baseDatas) {
-//				if (eventCause == baseData.getEventCause()) {
-//					if (eventIdCouseCodeChildList.contains(o))
-//					nodeDataTime = new NodeDataTime(baseData.getDateTime().toString() = new NodeEventIdCouseCode(eventCause.getDescription());
-//					
-//					nodeDataTime = new NodeDataTime(baseData.getDateTime().toString());
-//					nodeEventIdCouseCode.addChildren(nodeDataTime);
-//					
-//				}
-//			}
-//			if (!result.contains(nodeEventIdCouseCode)) {
-//				result.add(nodeEventIdCouseCode);
-//			}
+
 		}
 		System.out.println("BaseDataDAO.getBaseDataForIMSIGraph()result.size "  + result.size());
-					
-					
-					
-					
-//					basedataForTheSameEvents.add(baseData);
-//					nodeDataTime.setName(baseData.getDateTime().toString());
-//					
-//					nodeDataTime = new NodeDataTime(baseData.getDateTime().toString());
-//					nodeDataTime.addChild(new LastNode("" + baseData.getBaseDataId()));
-//					nodeDataTime.addChild(new LastNode("" + baseData.getCellId()));
-//					nodeDataTime.addChild(new LastNode("" + baseData.getDuration()));
-//					nodeDataTime.addChild(new LastNode("" + baseData.getHier321Id()));
-//					nodeEventIdCouseCode.addChildren();
-//				}
-//				for (BaseData basedataForTheSameEvent : basedataForTheSameEvents) {
-//					nodeDataTime = new NodeDataTime(basedataForTheSameEvent.getDateTime().toString());
-//					nodeDataTime.addChild(new LastNode("" + basedataForTheSameEvent.getBaseDataId()));
-//					nodeDataTime.addChild(new LastNode("" + basedataForTheSameEvent.getCellId()));
-//					nodeDataTime.addChild(new LastNode("" + basedataForTheSameEvent.getDuration()));
-//					nodeDataTime.addChild(new LastNode("" + basedataForTheSameEvent.getHier321Id()));
-//					nodeEventIdCouseCodeChildren.add(nodeDataTime);
-//				}
-//				nodeEventIdCouseCode.setChildren(nodeEventIdCouseCodeChildren);
-//				result.add(nodeEventIdCouseCode);
-//			}
-//		}
-//				
-//			}
-//			for (BaseData basedataTheSameEvent : basedataTheSameEvents) {
-//				
-//			}
-//		}
-//					for (BaseData eventCause2 : eventCauses) {
-//						
-//					}
-//					
-//					
-//					NodeEventIdCouseCode nodeEventIdCouseCode = new NodeEventIdCouseCode(baseData.getEventCause().getDescription());
-//					List<NodeDataTime> nodeEventIdCouseCodeChildren = new ArrayList<>();
-//					
-//					
-//					nodeEventIdCouseCode.setChildren(nodeEventIdCouseCodeChildren);
-//					result.add(nodeEventIdCouseCode);
-//				}
-//			}
-//		}
-		
-		
-		
-		
-		
-		
-//		for (BaseData baseData : baseDatas) {
-//
-//			NodeEventIdCouseCode nodeEventIdCouseCode = new NodeEventIdCouseCode(baseData.getEventCause().getDescription());
-//			
-//			List<NodeDataTime> nodeEventIdCouseCodeChildren = new ArrayList<>();
-//			List<LastNode> nodeDataTimeChilden = new ArrayList<>();
-//
-//			NodeDataTime nodeDataTime = new NodeDataTime();
-//			List<NodeDataTime> nodeDataTimeLists = new ArrayList<>();
-//
-//			for (BaseData base : baseDatas) {
-//				nodeDataTimeChilden.add(new LastNode("" + base.getBaseDataId()));
-//				nodeDataTimeChilden.add(new LastNode("" + base.getCellId()));
-//				nodeDataTimeChilden.add(new LastNode("" + base.getDuration()));
-//				nodeDataTimeChilden.add(new LastNode("" + base.getHier321Id()));
-//
-//				nodeDataTime.setName(base.getDateTime().toString());
-//				nodeDataTime.setChilderen(nodeDataTimeChilden);
-//				nodeEventIdCouseCodeChildren.add(nodeDataTime);
-//
-//			}
-//
-//			nodeEventIdCouseCode.setChildren(nodeEventIdCouseCodeChildren);
-//			result.add(nodeEventIdCouseCode);
-//		}
 		
 		return result;
-
-
-//		for (BaseData base : baseDatas) {
-//
-//			List<BaseData> onlyWithDescription = new ArrayList<>();
-//
-//			for (BaseData base2 : baseDatas) {
-//				if (base.getEventCause().getDescription().equals(base2.getEventCause().getDescription())) {
-//					onlyWithDescription.add(base2);
-//				}
-//				
-//				List<BaseData> onlyWithDataTimes = new ArrayList<>();
-//				
-//				for (BaseData onlyWithDataTime : onlyWithDataTimes) {
-//					if()
-//				}
-//				
-//				
-//				
-//				
-//				
-//				
-//				List<NodeDataTime> nodeEventIdCouseCodeChildren = new ArrayList<>();
-//				if (base.getEventCause().getDescription().equals(base2.getEventCause().getDescription())) {
-//					NodeDataTime nodeDataTime = new NodeDataTime(base2.getDateTime().toString());
-//					
-//					
-////					NodeEventIdCouseCode nodeEventIdCouseCode = new NodeEventIdCouseCode(base.getEventCause().getDescription());
-//			//		nodeEventIdCouseCodeChildren = 
-//				}
-//			}
-//        	NodeDataTime nodeDataTime = new NodeDataTime(base.getDateTime().toString());
-//        	nodeDataTime.setChilderen(childeren);
-//        	
-//        	nodeEventIdCouseCode.addChildren(nodeDataTime);
-//		}
 		
 	}
 

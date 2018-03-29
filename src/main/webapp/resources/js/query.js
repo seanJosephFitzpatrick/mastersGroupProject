@@ -6,24 +6,18 @@ var rootUrlNumFailuresForModel = "http://localhost:8080/mase2-project/rest/based
 var rootUrlIMSIFailuresWithinTimePeriod = "http://localhost:8080/mase2-project/rest/basedatas/fc/";
 var rootUrlSumDurationAndCountFailures = "http://localhost:8080/mase2-project/rest/basedatas/nme/query?StartDate=";
 var rootUrlTop10Failures = "http://localhost:8080/mase2-project/rest/basedatas/nme/querytopten?StartDate=";
+var rootUrlTop10IMSIs = "http://localhost:8080/mase2-project/rest/basedatas/nme/querytoptenimsi?StartDate=";
 var rootUrlUniqueIdAndCauseCodeForModel = "http://localhost:8080/mase2-project/rest/basedatas/nme/";
 var rootUrlUniqueCauseCodeForIMSI = "http://localhost:8080/mase2-project/rest/basedatas/csr/unique/";
+
 var imsi;
+var rootUrlIMSIForGivenFailureCauseClass = "http://localhost:8080/mase2-project/rest/basedatas/nme/querygivenfailurecauseclass/";
+
 $('document').ready(function() {
 	$('.card-header').html("Network Data Analytics");
 
 });
 // ///////////////////// Dashboard /////////////////////
-function showDashboard() {
-	cleenAllElements();
-	$('.card-header').html("Network Data Analytics");
-
-}
-function showLoading(){
-	$('#wrapper')
-	.html('<img src="./resources/images/ajax-loader.gif" id="loading-indicator" style="display:none" />');
-	$('#loading-indicator').show();
-}
 
 // ///////////////////Dropdown modal Button//////////////////
 $(function() {
@@ -216,15 +210,47 @@ var TopTenDataRequest = function(data1, data2) {
 				             ],
 				data : data,
 				columns : [ {
-					data : "mcc"
+					data : "country"
 				}, {
-					data : "mnc"
+					data : "operator"
 				}, {
 					data : "cellId"
 				}, {
 					data : "count"
 				} ],
 				"order" : [ [ 3, "desc" ] ]
+			});
+
+		}
+	});
+};
+var TopTenIMSIsDataRequest = function(data1, data2) {
+	$.ajax({
+		type : 'GET',
+		url : rootUrlTop10IMSIs + data1 + "&EndDate=" + data2,
+		dataType : "json",
+		headers : {
+			'Authorization' : 'Basic ' + sessionStorage.getItem("email") + ":"
+					+ sessionStorage.getItem("password")
+		},
+		success : function(data) {
+
+			userTable = $('#TopTenIMSIDataTable').DataTable({
+				responsive: true,
+				fixedHeader: true,
+				dom: 'Bfrtlip',
+				buttons: [
+				            'copy','excel','pdf','print'
+				            
+				            ],
+				
+				data : data,
+				columns : [ {
+					data : "imsi"
+				}, {
+					data : "count"
+				} ],
+				"order" : [ [ 1, "count" ] ]
 			});
 
 		}
@@ -298,6 +324,33 @@ var uniqueEventAndCauseDataRequest = function(model) {
 		}
 	});
 };
+var imsiForFailureClassRequest = function(failure) {
+	$.ajax({
+		type : 'GET',
+		url : rootUrlIMSIForGivenFailureCauseClass + failure,
+		dataType : "json",
+		headers : {
+			'Authorization' : 'Basic ' + sessionStorage.getItem("email") + ":"
+					+ sessionStorage.getItem("password")
+		},
+		success : function(data) {
+			console.log(data);
+			userTable = $('#ImsibyFailureClassDataTable').DataTable({
+				responsive: true,
+				fixedHeader: true,
+				dom: 'Bfrtlip',
+				buttons: [
+				            'copy','excel','pdf','print'
+				            
+				            ],
+				data : data,
+				columns : [ {
+					data : "imsi"
+				}, ]
+			});
+		}
+	});
+};
 function retrieveIMSI() {
 	// findAllIMSIData(document.getElementById('imsi').value);
 	showLoading();
@@ -353,6 +406,17 @@ function retrieveModel() {
 	uniqueEventAndCauseDataRequest(document.getElementById('model').value);
 	showUniqueEventAndCauseTable();
 }
+function retrieveDatesTopTenIMSIs() {
+	showLoading();
+	TopTenIMSIsDataRequest(document.getElementById('date_timepicker_start').value,
+			document.getElementById('date_timepicker_end').value);
+	showTopTenIMSIsDataTable();
+}
+function retrieveIMSIbyFailureClass() {
+	showLoading();
+	imsiForFailureClassRequest(document.getElementById('failure').value);
+	showImsibyFailureClassTable();
+}
 
 function showModelModal(){
 	$("#exampleModalLongTitle").text("Failures for Model");
@@ -388,6 +452,25 @@ function showUniqueModelModal(){
 		+'onclick="retrieveModel()" id="submitquery" data-dismiss="modal">Submit</button>');
 	$('#csrIMSIQueryModal').modal('show'); 
 	modelautocomplete();
+}
+function showTopTenIMSIsModal(){
+	$("#exampleModalLongTitle").text("Top 10 IMSIs - Failures for time period");
+	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="row">'
+			+'<div class="form-group centermargin col-md-6">'
+			+ '<label class="labelclass" for="date_timepicker_start">Start Date</label>'
+			+ '<input type="text" class="form-control" id="date_timepicker_start" placeholder="Start Date">'
+			+'</div>'
+			+'<div class="form-group centermargin col-md-6">'
+			+ '<label class="labelclass" for="date_timepicker_end">End Date</label>'
+			+ '<input type="text" class="form-control" id="date_timepicker_end" placeholder="End Date">'
+			+ '</div>'
+		+ '</div>');
+	$('#csrIMSIQueryModal').find('.modal-footer').html('<button type="button" class="btn btn-secondary"'
+		+'data-dismiss="modal">Close</button>'
+		+'<button type="button" class="btn btn-primary"'
+		+'onclick="retrieveDatesTopTenIMSIs()" id="submitquery" data-dismiss="modal">Submit</button>');
+	initializeDatePicker();
+	$('#csrIMSIQueryModal').modal('show'); 	
 }
 function showIMSIModal(){
 	$("#exampleModalLongTitle").text("Event IDs - Cause Codes for IMSI");
@@ -496,7 +579,21 @@ function showIMSIFailureModalGivenTimePeriod(){
 	imsiautocomplete();
 }
 
-
+function showIMSIsForFailureClassModal(){
+	$("#exampleModalLongTitle").text("IMSI Affected by given Failure Class");
+	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="dropdown">'
+		+'<div class="form-group centermargin">'
+		+ '<label for="failure">Failure Cause:</label>'
+		+ '<input type="text" class="form-control" id="failure" placeholder="Failure">'
+		+ '</div>'
+		+'</div>');
+	$('#csrIMSIQueryModal').find('.modal-footer').html('<button type="button" class="btn btn-secondary"'
+		+'data-dismiss="modal">Close</button>'
+		+'<button type="button" class="btn btn-primary"'
+		+'onclick="retrieveIMSIbyFailureClass()" id="submitquery" data-dismiss="modal">Submit</button>');
+	$('#csrIMSIQueryModal').modal('show'); 
+	
+}
 function initializeDatePicker() {
 	$.datetimepicker.setLocale('en');
 	jQuery(function() {
@@ -552,11 +649,11 @@ function showUniqueImsiDataTable() {
 			.html(
 					'<div class="card-body"><div class="table-responsive">'
 							+ '	<table id="uniqueImsiDataTable" class="table table-bordered display" cellspacing="0" width="100%">'
-							+ '		<thead>' + '			<tr>'
+							+ '		<thead id="tableHeader">' + '			<tr>'
 							+ ' 				<th>Cause Code</th>' + ' 			</tr>'
 							+ ' 		</thead>'
 							// +' <tbody> </tbody>'
-							+ '		<tfoot>' + '			<tr>'
+							+ '		<tfoot id="tableFooter">' + '			<tr>'
 							+ ' 				<th>Cause Code</th>' + '			</tr>'
 							+ '		</tfoot>' + '	</table>' + '</div></div>');
 }
@@ -565,12 +662,12 @@ function showImsiDataTable() {
 			.html(
 					'<div class="card-body"><div class="table-responsive">'
 							+ '	<table id="ImsiDataTable" class="table table-bordered display" cellspacing="0" width="100%">'
-							+ '		<thead>' + '			<tr>'
+							+ '		<thead id="tableHeader">' + '			<tr>'
 							+ ' 				<th>Event Id</th>'
 							+ ' 				<th>Cause Code</th>' + ' 			</tr>'
 							+ ' 		</thead>'
 							// +' <tbody> </tbody>'
-							+ '		<tfoot>' + '			<tr>'
+							+ '		<tfoot id="tableFooter">' + '			<tr>'
 							+ ' 				<th>Event Id</th>'
 							+ ' 				<th>Cause Code</th>' + '			</tr>'
 							+ '		</tfoot>' + '	</table>' + '</div></div>');
@@ -580,13 +677,13 @@ function showUniqueEventAndCauseTable() {
 			.html(
 					'<div class="card-body"><div class="table-responsive">'
 							+ '	<table id="UniqueEventAndCauseTable" class="table table-bordered display" cellspacing="0" width="100%">'
-							+ '		<thead>' + '			<tr>'
+							+ '		<thead id="tableHeader">' + '			<tr>'
 							+ ' 				<th>Event Id</th>'
 							+ ' 				<th>Cause Code</th>'
 							+ ' 				<th>Number of Occurences</th>'
 							+ ' 			</tr>' + ' 		</thead>'
 							// +' <tbody> </tbody>'
-							+ '		<tfoot>' + '			<tr>'
+							+ '		<tfoot id="tableFooter">' + '			<tr>'
 							+ ' 				<th>Event Id</th>'
 							+ ' 				<th>Cause Code</th>'
 							+ ' 				<th>Number of Occurences</th>' + '			</tr>'
@@ -597,16 +694,31 @@ function showTopTenDataTable() {
 			.html(
 					'<div class="card-body"><div class="table-responsive">'
 							+ '	<table id="TopTenDataTable" class="table table-bordered display" cellspacing="0" width="100%">'
-							+ '		<thead>' + '			<tr>' + ' 				<th>Market</th>'
+							+ '		<thead id="tableHeader">' + '			<tr>' + ' 				<th>Market</th>'
 							+ ' 				<th>Operator</th>'
 							+ ' 				<th>Cell ID</th>'
 							+ ' 				<th>Number of Failures</th>' + ' 			</tr>'
 							+ ' 		</thead>'
 							// +' <tbody> </tbody>'
-							+ '		<tfoot>' + '			<tr>' + ' 				<th>Market</th>'
+							+ '		<tfoot id="tableFooter">' + '			<tr>' + ' 				<th>Market</th>'
 							+ ' 				<th>Operator</th>'
 							+ ' 				<th>Cell ID</th>'
 							+ ' 				<th>Number of Failures</th>' + '			</tr>'
+							+ '		</tfoot>' + '	</table>' + '</div></div>');
+}
+function showTopTenIMSIsDataTable() {
+	$('#wrapper')
+			.html(
+					'<div class="card-body"><div class="table-responsive">'
+							+ '	<table id="TopTenIMSIDataTable" class="table table-bordered display" cellspacing="0" width="100%">'
+							+ '		<thead id="tableHeader">' + '			<tr>' + ' 				<th>IMSI</th>'
+							+ ' 				<th>Number of Failures</th>'
+                            + ' 			</tr>'
+							+ ' 		</thead>'
+							// +' <tbody> </tbody>'
+							+ '		<tfoot id="tableFooter">' + '			<tr>' + ' 				<th>IMSI</th>'
+							+ ' 				<th>Number of Failures</th>'
+ + '			</tr>'
 							+ '		</tfoot>' + '	</table>' + '</div></div>');
 }
 function showSumAndCountDataTable() {
@@ -614,12 +726,12 @@ function showSumAndCountDataTable() {
 			.html(
 					'<div class="card-body"><div class="table-responsive">'
 							+ '	<table id="SumAndCountDataTable" class="table table-bordered display" cellspacing="0" width="100%">'
-							+ '		<thead>' + '			<tr>' + ' 				<th>IMSI</th>'
+							+ '		<thead id="tableHeader">' + '			<tr>' + ' 				<th>IMSI</th>'
 							+ ' 				<th>Number of Failures</th>'
 							+ ' 				<th>Sum Duration</th>' + ' 			</tr>'
 							+ ' 		</thead>'
 							// +' <tbody> </tbody>'
-							+ '		<tfoot>' + '			<tr>' + ' 				<th>IMSI</th>'
+							+ '		<tfoot id="tableFooter">' + '			<tr>' + ' 				<th>IMSI</th>'
 							+ ' 				<th>Number of Failures</th>'
 							+ ' 				<th>Sum Duration</th>' + '			</tr>'
 							+ '		</tfoot>' + '	</table>' + '</div></div>');
@@ -629,10 +741,10 @@ function showDateDataTable() {
 			.html(
 					'<div class="card-body"><div class="table-responsive">'
 							+ '	<table id="DateDataTable" class="table table-bordered display" cellspacing="0" width="100%">'
-							+ '		<thead>' + '			<tr>' + ' 				<th>IMSI</th>'
+							+ '		<thead id="tableHeader">' + '			<tr>' + ' 				<th>IMSI</th>'
 							+ ' 			</tr>' + ' 		</thead>'
 							// +' <tbody> </tbody>'
-							+ '		<tfoot>' + '			<tr>' + ' 				<th>IMSI</th>'
+							+ '		<tfoot id="tableFooter">' + '			<tr>' + ' 				<th>IMSI</th>'
 							+ '			</tr>' + '		</tfoot>' + '	</table>'
 							+ '</div></div>');
 }
@@ -641,11 +753,24 @@ function showCountFailuresDataTable() {
 			.html(
 					'<div class="card-body"><div class="table-responsive">'
 							+ '	<table id="CountFailuresDataTable" class="table table-bordered display" cellspacing="0" width="100%">'
-							+ '		<thead>' + '			<tr>'
+							+ '		<thead id="tableHeader">' + '			<tr>'
 							+ ' 				<th>Number of Failures</th>' + ' 			</tr>'
 							+ ' 		</thead>'
 							// +' <tbody> </tbody>'
-							+ '		<tfoot>' + '			<tr>'
+							+ '		<tfoot id="tableFooter">' + '			<tr>'
 							+ ' 				<th>Number of Failures</th>' + '			</tr>'
+							+ '		</tfoot>' + '	</table>' + '</div></div>');
+}
+function showImsibyFailureClassTable() {
+	$('#wrapper')
+			.html(
+					'<div class="card-body"><div class="table-responsive">'
+							+ '	<table id="ImsibyFailureClassDataTable" class="table table-bordered display" cellspacing="0" width="100%">'
+							+ '		<thead id="tableHeader">' + '			<tr>'
+							+ ' 				<th>IMSI</th>' + ' 			</tr>'
+							+ ' 		</thead>'
+							// +' <tbody> </tbody>'
+							+ '		<tfoot id="tableFooter">' + '			<tr>'
+							+ ' 				<th>IMSI</th>' + '			</tr>'
 							+ '		</tfoot>' + '	</table>' + '</div></div>');
 }
