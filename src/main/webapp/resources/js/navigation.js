@@ -5,6 +5,9 @@ function showNavigation() {
 	
 	role = sessionStorage.getItem("role");
 	// hide all elements
+	$('.bg-dark').css("cssText","background-color: #FFFFFF !important;");
+	$('footer').hide();
+	$('#mainNav').hide();
 	$('#nav_logout').hide();
 	$('#nav_Tables').hide();
 	$('#nav_NDA').hide();
@@ -22,6 +25,9 @@ function showNavigation() {
 
 	
 	if(role == "admin" || role == "manager" || role == "support" || role == "customer") {
+		$('.bg-dark').css("cssText","background-color: #343a40 !important;");
+		$('footer').show();
+		$('#mainNav').show();
 		showDashboard();
 		$('#nav_NDA').show();
 		$('#nav_logout').show();

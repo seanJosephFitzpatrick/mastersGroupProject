@@ -36,9 +36,15 @@ input[type=password] {
 .labelclass{
 	color: #00275E;
 }
+.whitetext{
+	color: #FFFFFF;
+}
 .btn-primary{
 	background-color: #00275E !important;
 	border-color: #00275E !important;
+}
+.card-header{
+	font-weight: bold;
 }
 
 .node {
@@ -65,4 +71,9 @@ input[type=password] {
     margin-left: auto;
     margin-right: auto;
     width: 75%;
+}
+#loginForm{
+	position: relative;
+	left: -120px;
+	bottom: -180px;
 }
