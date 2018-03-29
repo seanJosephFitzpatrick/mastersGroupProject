@@ -417,11 +417,11 @@ function showTopTenIMSIsModal(){
 	$("#exampleModalLongTitle").text("Top 10 IMSIs - Failures for time period");
 	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="row">'
 			+'<div class="form-group centermargin col-md-6">'
-			+ '<label for="date_timepicker_start">Start Date:</label>'
+			+ '<label class="labelclass" for="date_timepicker_start">Start Date</label>'
 			+ '<input type="text" class="form-control" id="date_timepicker_start" placeholder="Start Date">'
 			+'</div>'
 			+'<div class="form-group centermargin col-md-6">'
-			+ '<label for="date_timepicker_end">End Date:</label>'
+			+ '<label class="labelclass" for="date_timepicker_end">End Date</label>'
 			+ '<input type="text" class="form-control" id="date_timepicker_end" placeholder="End Date">'
 			+ '</div>'
 		+ '</div>');
