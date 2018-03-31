@@ -45,10 +45,14 @@ var imsiDataRequest = function(imsi) {
 				responsive: true,
 				fixedHeader: true,
 				dom: 'Bfrtlip',
-				buttons: [
-				            'copy','excel','pdf','print'
-				            
-				            ],
+				buttons:{
+					buttons: [
+					            {extend: 'copy',className: 'btn btn-primary'},
+					            {extend: 'excel',className: 'btn btn-primary'},
+					            {extend: 'pdf',className: 'btn btn-primary'},
+					            {extend: 'print',className: 'btn btn-primary'}
+					            
+					            ]},
 				"columnDefs": [
 				               { "width": "50%","targets": [0,1] }
 
@@ -78,10 +82,14 @@ var uniqueImsiDataRequest = function(imsi) {
 				responsive: true,
 				fixedHeader: true,
 				dom: 'Bfrtlip',
-				buttons: [
-				            'copy','excel','pdf','print'
-				            
-				            ],
+				buttons:{
+					buttons: [
+					            {extend: 'copy',className: 'btn btn-primary'},
+					            {extend: 'excel',className: 'btn btn-primary'},
+					            {extend: 'pdf',className: 'btn btn-primary'},
+					            {extend: 'print',className: 'btn btn-primary'}
+					            
+					            ]},
 				data : data,
 				columns : [ {
 					data : "imsi"
@@ -106,10 +114,14 @@ var DateDataRequest = function(date1, date2) {
 				responsive: true,
 				fixedHeader: true,
 				dom: 'Bfrtlip',
-				buttons: [
-				            'copy','excel','pdf','print'
-				            
-				            ],
+				buttons:{
+					buttons: [
+					            {extend: 'copy',className: 'btn btn-primary'},
+					            {extend: 'excel',className: 'btn btn-primary'},
+					            {extend: 'pdf',className: 'btn btn-primary'},
+					            {extend: 'print',className: 'btn btn-primary'}
+					            
+					            ]},
 				data : data,
 				columns : [ {
 					data : "imsi"
@@ -135,10 +147,14 @@ var countFailuresDataRequest = function(model, date1, date2) {
 				responsive: true,
 				fixedHeader: true,
 				dom: 'Bfrtlip',
-				buttons: [
-				            'copy','excel','pdf','print'
-				            
-				            ],
+				buttons:{
+					buttons: [
+					            {extend: 'copy',className: 'btn btn-primary'},
+					            {extend: 'excel',className: 'btn btn-primary'},
+					            {extend: 'pdf',className: 'btn btn-primary'},
+					            {extend: 'print',className: 'btn btn-primary'}
+					            
+					            ]},
 				data : data,
 				columns : [ {
 					data : "failureCount"
@@ -164,10 +180,14 @@ var countAndSumDataRequest = function(data1, data2) {
 				responsive: true,
 				fixedHeader: true,
 				dom: 'Bfrtlip',
-				buttons: [
-				            'copy','excel','pdf','print'
-				            
-				            ],
+				buttons:{
+					buttons: [
+					            {extend: 'copy',className: 'btn btn-primary'},
+					            {extend: 'excel',className: 'btn btn-primary'},
+					            {extend: 'pdf',className: 'btn btn-primary'},
+					            {extend: 'print',className: 'btn btn-primary'}
+					            
+					            ]},
 				"columnDefs": [
 				               { "width": "33%","targets": [0,1,2] }
 
@@ -200,10 +220,14 @@ var TopTenDataRequest = function(data1, data2) {
 				responsive: true,
 				fixedHeader: true,
 				dom: 'Bfrtlip',
-				buttons: [
-				            'copy','excel','pdf','print'
-				            
-				            ],
+				buttons:{
+					buttons: [
+					            {extend: 'copy',className: 'btn btn-primary'},
+					            {extend: 'excel',className: 'btn btn-primary'},
+					            {extend: 'pdf',className: 'btn btn-primary'},
+					            {extend: 'print',className: 'btn btn-primary'}
+					            
+					            ]},
 				"columnDefs": [
 				               { "width": "25%","targets": [0,1,2,3] }
 
@@ -239,10 +263,14 @@ var TopTenIMSIsDataRequest = function(data1, data2) {
 				responsive: true,
 				fixedHeader: true,
 				dom: 'Bfrtlip',
-				buttons: [
-				            'copy','excel','pdf','print'
-				            
-				            ],
+				buttons:{
+					buttons: [
+					            {extend: 'copy',className: 'btn btn-primary'},
+					            {extend: 'excel',className: 'btn btn-primary'},
+					            {extend: 'pdf',className: 'btn btn-primary'},
+					            {extend: 'print',className: 'btn btn-primary'}
+					            
+					            ]},
 				
 				data : data,
 				columns : [ {
@@ -272,10 +300,14 @@ var countFailuresForIMSIDataRequest = function(imsi, date1, date2) {
 				responsive: true,
 				fixedHeader: true,
 				dom: 'Bfrtlip',
-				buttons: [
-				            'copy','excel','pdf','print'
-				            
-				            ],
+				buttons:{
+					buttons: [
+					            {extend: 'copy',className: 'btn btn-primary'},
+					            {extend: 'excel',className: 'btn btn-primary'},
+					            {extend: 'pdf',className: 'btn btn-primary'},
+					            {extend: 'print',className: 'btn btn-primary'}
+					            
+					            ]},
 				data : data,
 				columns : [ {
 					data : "failureCount"
@@ -301,10 +333,14 @@ var uniqueEventAndCauseDataRequest = function(model) {
 				responsive: true,
 				fixedHeader: true,
 				dom: 'Bfrtlip',
-				buttons: [
-				            'copy','excel','pdf','print'
-				            
-				            ],
+				buttons:{
+					buttons: [
+					            {extend: 'copy',className: 'btn btn-primary'},
+					            {extend: 'excel',className: 'btn btn-primary'},
+					            {extend: 'pdf',className: 'btn btn-primary'},
+					            {extend: 'print',className: 'btn btn-primary'}
+					            
+					            ]},
 				"columnDefs": [
 				               { "width": "33%","targets": [0,1,2] }
 
@@ -339,10 +375,14 @@ var imsiForFailureClassRequest = function(failure) {
 				responsive: true,
 				fixedHeader: true,
 				dom: 'Bfrtlip',
-				buttons: [
-				            'copy','excel','pdf','print'
-				            
-				            ],
+				buttons:{
+					buttons: [
+					            {extend: 'copy',className: 'btn btn-primary'},
+					            {extend: 'excel',className: 'btn btn-primary'},
+					            {extend: 'pdf',className: 'btn btn-primary'},
+					            {extend: 'print',className: 'btn btn-primary'}
+					            
+					            ]},
 				data : data,
 				columns : [ {
 					data : "imsi"

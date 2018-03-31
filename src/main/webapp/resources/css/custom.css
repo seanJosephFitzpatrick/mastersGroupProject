@@ -21,6 +21,7 @@
 #tableFooter{
 	background-color: rgba(255, 255, 255, 1) !important;
 }
+
 input[type=text] {
     background: transparent;
     border: none;
@@ -36,12 +37,33 @@ input[type=password] {
 .labelclass{
 	color: #00275E;
 }
+body{
+	color: #00275E !important;
+}
+table.dataTable thead th, table.dataTable thead td{
+	border-bottom: 1px solid #00275E !important;
+}
+table.dataTable tfoot th, table.dataTable tfoot td{
+	border-top: 1px solid #00275E !important;
+}
+
 .whitetext{
 	color: #FFFFFF;
 }
-.btn-primary{
+.dataTables_wrapper .dataTables_length, .dataTables_wrapper .dataTables_filter, .dataTables_wrapper .dataTables_info, .dataTables_wrapper .dataTables_processing, .dataTables_wrapper .dataTables_paginate{
+	color: #00275E !important;
+}
+.btn-primary, .page-item.active .page-link{
+	color: #fff !important;
 	background-color: #00275E !important;
-	border-color: #00275E !important;
+	border-color: #00274C !important;
+}
+
+button.dt-button, div.dt-button, a.dt-button{
+	border: 1px solid #000000 !important;
+	color: #fff !important;
+	background-color: #00275E !important;
+	background-image: none !important;
 }
 .card-header{
 	font-weight: bold;
