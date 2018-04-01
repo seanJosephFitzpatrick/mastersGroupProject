@@ -22,6 +22,8 @@ function showNavigation() {
 	$('#uniqueIdAndCodeQuery').hide();
 	$('#Filestoggle').hide();
 	$('.filelist').hide();
+	$('#IMSIsforGivenFailureClass').hide();
+	$('#topTenIMSIQuery').hide();
 
 	
 	if(role == "admin" || role == "manager" || role == "support" || role == "customer") {
@@ -36,13 +38,15 @@ function showNavigation() {
 	
 	if(role == "admin" || role == "manager" || role == "support") {
 		$('#dateQuery').show();
-		$('#countFailuresQuery').show();	
+		$('#countFailuresQuery').show();
+		$('#IMSIsforGivenFailureClass').show();
 	}	
 	
 	if(role == "admin" || role == "manager") {
 		$('#uniqueIdAndCodeQuery').show();
 		$('#sumDurationQuery').show();
 		$('#topTenQuery').show();
+		$('#topTenIMSIQuery').show();
 		
 	}	
 	if(sessionStorage.getItem("role") == "admin") {

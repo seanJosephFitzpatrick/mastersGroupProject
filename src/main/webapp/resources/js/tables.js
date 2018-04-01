@@ -224,7 +224,7 @@ function showTableMccMnc() {
 	$('#wrapper').html(	''
 			+ '	<i class="fa fa-table"></i> <span id="tableTitle" >Mcc Mnc Table</span>'
 			+ '	<div class="table-responsive ">'
-			+ '		<table id="mccmnc_table" class="table table-bordered display" cellspacing="0" width="100%">'
+			+ '		<table id="mccmnc_table" class="table table-bordered display" cellspacing="0">'
 			+ '			<thead id="tableHeader"><th>Mcc</th><th>Mnc</th><th>Country</th><th>Operator</th></thead>'
 			+ '			<tfoot id="tableFooter"><th>Mcc</th><th>Mnc</th><th>Country</th><th>Operator</th></tfoot>'
 			+ '		</table>' 

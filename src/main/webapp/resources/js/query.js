@@ -460,13 +460,19 @@ function retrieveIMSIbyFailureClass() {
 
 function showModelModal(){
 	$("#exampleModalLongTitle").text("Failures for Model");
-	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="dropdown">'
-			+'<div class="form-group centermargin">'
-			+ '<label for="model">Model:</label>'
+	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="row">'
+			+'<div class="form-group centermargin col-lg-12">'
+			+ '<label for="model">Model</label>'
 			+ '<input type="text" class="form-control" id="model" placeholder="Model">'
-			+ '<label for="date_timepicker_start">Start Date:</label>'
+			+ '</div>'
+			+ '</div>'
+			+ '<div class="row">'
+			+'<div class="form-group centermargin col-md-6">'
+			+ '<label class="labelclass" for="date_timepicker_start">Start Date</label>'
 			+ '<input type="text" class="form-control" id="date_timepicker_start" placeholder="Start Date">'
-			+ '<label for="date_timepicker_end">End Date:</label>'
+			+'</div>'
+			+'<div class="form-group centermargin col-md-6">'
+			+ '<label class="labelclass" for="date_timepicker_end">End Date</label>'
 			+ '<input type="text" class="form-control" id="date_timepicker_end" placeholder="End Date">'
 			+ '</div>'
 		+'</div>');
@@ -480,9 +486,9 @@ function showModelModal(){
 }
 function showUniqueModelModal(){
 	$("#exampleModalLongTitle").text("Unique Event IDs - Cause Codes for model");
-	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="dropdown">'
-			+'<div class="form-group centermargin">'
-			+ '<label for="model">Model:</label>'
+	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="row">'
+			+'<div class="form-group centermargin col-lg-12">'
+			+ '<label for="model">Model</label>'
 			+ '<input type="text" class="form-control" id="model" placeholder="Model">'
 			+ '</div>'
 			+ '</div>');
@@ -514,8 +520,8 @@ function showTopTenIMSIsModal(){
 }
 function showIMSIModal(){
 	$("#exampleModalLongTitle").text("Event IDs - Cause Codes for IMSI");
-	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="dropdown">'
-		+'<div class="form-group centermargin">'
+	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="row">'
+		+'<div class="form-group centermargin col-lg-12">'
 		+ '<label for="imsi">IMSI:</label>'
 		+ '<input type="text" class="form-control" id="imsi" placeholder="IMSI">'
 		+ '</div>'
@@ -529,8 +535,8 @@ function showIMSIModal(){
 }
 function showUniqueIMSIModal(){
 	$("#exampleModalLongTitle").text("Unique Cause Codes for IMSI");
-	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="dropdown">'
-		+'<div class="form-group centermargin">'
+	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="row">'
+		+'<div class="form-group centermargin col-lg-12">'
 		+ '<label for="imsi">IMSI:</label>'
 		+ '<input type="text" class="form-control" id="imsi" placeholder="IMSI">'
 		+ '</div>'
@@ -544,11 +550,13 @@ function showUniqueIMSIModal(){
 }
 function showNMEModal(){
 	$("#exampleModalLongTitle").text("Sum Failure duration for IMSI");
-	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="dropdown">'
-			+'<div class="form-group centermargin">'
-			+ '<label for="date_timepicker_start">Start Date:</label>'
+	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="row">'
+			+'<div class="form-group centermargin col-md-6">'
+			+ '<label class="labelclass" for="date_timepicker_start">Start Date</label>'
 			+ '<input type="text" class="form-control" id="date_timepicker_start" placeholder="Start Date">'
-			+ '<label for="date_timepicker_end">End Date:</label>'
+			+'</div>'
+			+'<div class="form-group centermargin col-md-6">'
+			+ '<label class="labelclass" for="date_timepicker_end">End Date</label>'
 			+ '<input type="text" class="form-control" id="date_timepicker_end" placeholder="End Date">'
 			+ '</div>'
 		+ '</div>');
@@ -563,11 +571,13 @@ function showNMEModal(){
 
 function showTopTenModal(){
 	$("#exampleModalLongTitle").text("Top 10 Market/Operator/Cell ID combinations with failures");
-	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="dropdown">'
-			+'<div class="form-group centermargin">'
-			+ '<label for="date_timepicker_start">Start Date:</label>'
+	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="row">'
+			+'<div class="form-group centermargin col-md-6">'
+			+ '<label class="labelclass" for="date_timepicker_start">Start Date</label>'
 			+ '<input type="text" class="form-control" id="date_timepicker_start" placeholder="Start Date">'
-			+ '<label for="date_timepicker_end">End Date:</label>'
+			+'</div>'
+			+'<div class="form-group centermargin col-md-6">'
+			+ '<label class="labelclass" for="date_timepicker_end">End Date</label>'
 			+ '<input type="text" class="form-control" id="date_timepicker_end" placeholder="End Date">'
 			+ '</div>'
 		+ '</div>');
@@ -581,13 +591,15 @@ function showTopTenModal(){
 
 function showDateModal(){
 	$("#exampleModalLongTitle").text("IMSI failures during given period");
-	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="dropdown">'
-	    +'<div class="form-group centermargin">'
-        +'<label for="date_timepicker_start">Start Date:</label>'
-        +'<input type="text" class="form-control" id="date_timepicker_start" placeholder="Start Date">'
-        +'<label for="date_timepicker_end">End Date:</label>'
-        +'<input type="text" class="form-control" id="date_timepicker_end" placeholder="End Date">'
-		+ '</div>'
+	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="row">'
+			+'<div class="form-group centermargin col-md-6">'
+			+ '<label class="labelclass" for="date_timepicker_start">Start Date</label>'
+			+ '<input type="text" class="form-control" id="date_timepicker_start" placeholder="Start Date">'
+			+'</div>'
+			+'<div class="form-group centermargin col-md-6">'
+			+ '<label class="labelclass" for="date_timepicker_end">End Date</label>'
+			+ '<input type="text" class="form-control" id="date_timepicker_end" placeholder="End Date">'
+			+ '</div>'
 		+ '</div>');
 	$('#csrIMSIQueryModal').find('.modal-footer').html('<button type="button" class="btn btn-secondary"'
 		+ 'data-dismiss="modal">Close</button>'
@@ -600,15 +612,21 @@ function showDateModal(){
 
 function showIMSIFailureModalGivenTimePeriod(){
 	$("#exampleModalLongTitle").text("Count of failures for IMSI");
-	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="dropdown">'		
-		+'<div class="form-group centermargin">'
-		+ '<label for="imsi">IMSI</label>'
-		+ '<input type="text" class="form-control" id="imsi" placeholder="IMSI">'
-		+ '<label for="date_timepicker_start">Start Date:</label>'
-		+ '<input type="text" class="form-control" id="date_timepicker_start" placeholder="Start Date">'
-		+ '<label for="date_timepicker_end">End Date:</label>'
-		+ '<input type="text" class="form-control" id="date_timepicker_end" placeholder="End Date">'
-		+ '</div>'
+	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="row">'		
+			+'<div class="form-group centermargin col-lg-12">'
+			+ '<label for="model">IMSI</label>'
+			+ '<input type="text" class="form-control" id="imsi" placeholder="IMSI">'
+			+ '</div>'
+			+ '</div>'
+			+ '<div class="row">'
+			+'<div class="form-group centermargin col-md-6">'
+			+ '<label class="labelclass" for="date_timepicker_start">Start Date</label>'
+			+ '<input type="text" class="form-control" id="date_timepicker_start" placeholder="Start Date">'
+			+'</div>'
+			+'<div class="form-group centermargin col-md-6">'
+			+ '<label class="labelclass" for="date_timepicker_end">End Date</label>'
+			+ '<input type="text" class="form-control" id="date_timepicker_end" placeholder="End Date">'
+			+ '</div>'
 		+ '</div>');
 	$('#csrIMSIQueryModal').find('.modal-footer').html('<button type="button" class="btn btn-secondary"'
 		+ 'data-dismiss="modal">Close</button>'
@@ -621,8 +639,8 @@ function showIMSIFailureModalGivenTimePeriod(){
 
 function showIMSIsForFailureClassModal(){
 	$("#exampleModalLongTitle").text("IMSI Affected by given Failure Class");
-	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="dropdown">'
-		+'<div class="form-group centermargin">'
+	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="row">'
+		+'<div class="form-group centermargin col-lg-12">'
 		+ '<label for="failure">Failure Cause:</label>'
 		+ '<input type="text" class="form-control" id="failure" placeholder="Failure">'
 		+ '</div>'
@@ -805,7 +823,7 @@ function showImsibyFailureClassTable() {
 	$('#wrapper')
 			.html(
 					'<div class="card-body"><div class="table-responsive">'
-							+ '	<table id="ImsibyFailureClassDataTable" class="table table-bordered display" cellspacing="0" width="100%">'
+							+ '	<table id="ImsibyFailureClassDataTable" class="table table-bordered display" cellspacing="0">'
 							+ '		<thead id="tableHeader">' + '			<tr>'
 							+ ' 				<th>IMSI</th>' + ' 			</tr>'
 							+ ' 		</thead>'
