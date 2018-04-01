@@ -69,6 +69,13 @@ public class BaseDataWS {
 		final List<String> baseData = baseDataDAO.getAllModels(model);
 		return Response.status(200).entity(baseData).build();
 	}
+	@GET
+	@Path("/afc/") 
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response autoCopleteFailureClass(@Context HttpHeaders httpHeaders, @QueryParam("term") final String failureClass) {		
+		final List<String> baseData = baseDataDAO.getAllFailureClasses(failureClass);
+		return Response.status(200).entity(baseData).build();
+	}
 
 	@GET
 	@Path("/csr/{imsi}")

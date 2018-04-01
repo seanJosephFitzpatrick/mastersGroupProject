@@ -642,7 +642,7 @@ function showIMSIsForFailureClassModal(){
 	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="row">'
 		+'<div class="form-group centermargin col-lg-12">'
 		+ '<label for="failure">Failure Cause:</label>'
-		+ '<input type="text" class="form-control" id="failure" placeholder="Failure">'
+		+ '<input type="text" class="form-control" id="failure" placeholder="Failure Class">'
 		+ '</div>'
 		+'</div>');
 	$('#csrIMSIQueryModal').find('.modal-footer').html('<button type="button" class="btn btn-secondary"'
@@ -650,6 +650,7 @@ function showIMSIsForFailureClassModal(){
 		+'<button type="button" class="btn btn-primary"'
 		+'onclick="retrieveIMSIbyFailureClass()" id="submitquery" data-dismiss="modal">Submit</button>');
 	$('#csrIMSIQueryModal').modal('show'); 
+	failureclassautocomplete();
 	
 }
 function initializeDatePicker() {

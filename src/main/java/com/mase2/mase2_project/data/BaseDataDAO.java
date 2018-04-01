@@ -12,10 +12,10 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 
+
 import com.mase2.mase2_project.graph_model.LastNode;
 import com.mase2.mase2_project.graph_model.NodeDataTime;
 import com.mase2.mase2_project.graph_model.NodeEventIdCouseCode;
-
 import com.mase2.mase2_project.model.BaseData;
 import com.mase2.mase2_project.model.EventCause;
 import com.mase2.mase2_project.util.DateParam;
@@ -124,6 +124,11 @@ public class BaseDataDAO {
 		.setParameter("model", '%' +model+'%' );
 		return query.setMaxResults(5).getResultList();
 	}
+	public List<String> getAllFailureClasses(String failureClass) {
+		final Query query=entityManager.createQuery("SELECT distinct m.failureClass FROM FailureClass m WHERE m.failureClass LIKE :failureClass")
+				.setParameter("failureClass", '%' +failureClass+'%' );
+				return query.setMaxResults(5).getResultList();
+	}
 
 	@SuppressWarnings("unchecked")
 	public List<UniqueEventAndCauseObject> getUniqueEventIdAndCauseCodeForModel(String model) {
@@ -195,5 +200,7 @@ public class BaseDataDAO {
 		return result;
 		
 	}
+
+	
 
 }
