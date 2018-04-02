@@ -13,11 +13,13 @@ import javax.persistence.Query;
 
 
 
+
 import com.mase2.mase2_project.graph_model.LastNode;
 import com.mase2.mase2_project.graph_model.NodeDataTime;
 import com.mase2.mase2_project.graph_model.NodeEventIdCouseCode;
 import com.mase2.mase2_project.model.BaseData;
 import com.mase2.mase2_project.model.EventCause;
+import com.mase2.mase2_project.util.AutoComObject;
 import com.mase2.mase2_project.util.DateParam;
 import com.mase2.mase2_project.util.DurationAndCountObject;
 import com.mase2.mase2_project.util.FailureCountObject;
@@ -120,12 +122,12 @@ public class BaseDataDAO {
 	@SuppressWarnings("unchecked")
 	public List<String> getAllModels(String model) {
 		
-		final Query query=entityManager.createQuery("SELECT distinct m.model FROM Ue m WHERE m.model LIKE :model")
+		final Query query=entityManager.createQuery("SELECT distinct m.ue.model FROM BaseData m WHERE m.ue.model LIKE :model")
 		.setParameter("model", '%' +model+'%' );
 		return query.setMaxResults(5).getResultList();
 	}
-	public List<String> getAllFailureClasses(String failureClass) {
-		final Query query=entityManager.createQuery("SELECT distinct m.failureClass FROM FailureClass m WHERE m.failureClass LIKE :failureClass")
+	public List<AutoComObject> getAllFailureClasses(String failureClass) {
+		final Query query=entityManager.createQuery("SELECT distinct new com.mase2.mase2_project.util.AutoComObject(m.description,m.failureClass) FROM FailureClass m WHERE m.description LIKE :failureClass")
 				.setParameter("failureClass", '%' +failureClass+'%' );
 				return query.setMaxResults(5).getResultList();
 	}

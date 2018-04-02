@@ -99,6 +99,9 @@ button.dt-button, div.dt-button, a.dt-button{
 	left: -120px;
 	bottom: -180px;
 }
+.tabletitle{
+	text-align: center;
+}
 .form-control:focus {
   border-color: #00275E;
   box-shadow: inset 0 2px 2px rgba(0, 39, 94, 0.075), 0 0 8px rgba(0, 39, 94, 1);

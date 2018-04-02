@@ -22,6 +22,7 @@ import com.mase2.mase2_project.data.BaseDataDAO;
 import com.mase2.mase2_project.graph_model.ImsiNode;
 import com.mase2.mase2_project.graph_model.NodeEventIdCouseCode;
 import com.mase2.mase2_project.model.BaseData;
+import com.mase2.mase2_project.util.AutoComObject;
 import com.mase2.mase2_project.util.DateParam;
 import com.mase2.mase2_project.util.DurationAndCountObject;
 import com.mase2.mase2_project.util.FailureCountObject;
@@ -73,7 +74,7 @@ public class BaseDataWS {
 	@Path("/afc/") 
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response autoCopleteFailureClass(@Context HttpHeaders httpHeaders, @QueryParam("term") final String failureClass) {		
-		final List<String> baseData = baseDataDAO.getAllFailureClasses(failureClass);
+		final List<AutoComObject> baseData = baseDataDAO.getAllFailureClasses(failureClass);
 		return Response.status(200).entity(baseData).build();
 	}
 
