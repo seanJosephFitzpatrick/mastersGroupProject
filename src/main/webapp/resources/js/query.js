@@ -215,6 +215,7 @@ var TopTenDataRequest = function(data1, data2) {
 					+ sessionStorage.getItem("password")
 		},
 		success : function(data) {
+			
 
 			userTable = $('#TopTenDataTable').DataTable({
 				responsive: true,
@@ -244,7 +245,7 @@ var TopTenDataRequest = function(data1, data2) {
 				} ],
 				"order" : [ [ 3, "desc" ] ]
 			});
-
+			drawGraph(data);
 		}
 	});
 };

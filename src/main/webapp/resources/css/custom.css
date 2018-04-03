@@ -106,3 +106,22 @@ button.dt-button, div.dt-button, a.dt-button{
   border-color: #00275E;
   box-shadow: inset 0 2px 2px rgba(0, 39, 94, 0.075), 0 0 8px rgba(0, 39, 94, 1);
 }
+.outer-label {
+  font-size: 12px;
+  fill: #ccc;
+  text-align: center;
+}
+.center {
+  font-size: 18px;
+  text-transform: uppercase;
+  fill: #fff;
+}
+
+path {
+  cursor: pointer;
+}
+
+@-webkit-keyframes scale-up {
+    from { @include transform(scale(0.95)); opacity: 0; }
+    to { @include transform(scale(1)); opacity: 1; }
+}
