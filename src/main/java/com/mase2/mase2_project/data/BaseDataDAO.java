@@ -18,7 +18,6 @@ import javax.persistence.Query;
 import com.mase2.mase2_project.graph_model.LastNode;
 import com.mase2.mase2_project.graph_model.NodeDataTime;
 import com.mase2.mase2_project.graph_model.NodeEventIdCouseCode;
-import com.mase2.mase2_project.graph_model.PieChartParent;
 import com.mase2.mase2_project.model.BaseData;
 import com.mase2.mase2_project.model.EventCause;
 import com.mase2.mase2_project.util.AutoComObject;

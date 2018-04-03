@@ -83,7 +83,7 @@ var definitionVisualization = {};
         }
 
         var sel = d3.select(this);
-
+        console.log(sel);
         //Search the current path to see the counter where it was selected. (Also update selected path)
 
         for (var i = 0; i < path[0].length; i++) {
@@ -156,57 +156,7 @@ var definitionVisualization = {};
 
             selectedItem.on("click", null);
 
-            zoomZeArc(selectedItem, true, function () {
-
-                var startAngle = clickedItem.startAngle;
-                var endAngle = clickedItem.startAngle + 2 * Math.PI;
-
-                var arcSelect = d3.svg.arc()
-                    .startAngle(function (s) {
-                        return startAngle;
-                    })
-                    .endAngle(function (s) {
-                        return endAngle;
-                    })
-                    .innerRadius(function (i) {
-                        return radius - 20
-                    })
-                    .outerRadius(function (o) {
-                        return radius * 1.1
-                    });
-
-                var arcFinal = d3.svg.arc()
-                    .startAngle(function (s) {
-                        return startAngle;
-                    })
-                    .endAngle(function (s) {
-                        return endAngle;
-                    })
-                    .outerRadius(radius)
-                    .innerRadius(radius - 20);
-
-                selectedItem.transition()
-                    .duration(750)
-                    .attrTween("d", function () {
-                        var newAngle = clickedItem.startAngle + 2 * Math.PI;
-                        var interpolate = d3.interpolate(newAngle, clickedItem.endAngle);
-                        return function (tick) {
-                            endAngle = interpolate(tick);
-                            return arcSelect(clickedItem);
-                        };
-                    })
-                    .each("end", function () {
-                        selectedItem.transition()
-                            .ease("bounce")
-                            .duration(500)
-                            .attr("d", arcFinal)
-                            .each("end", function () {
-                                //Finished animating and bouncing
-                                d3.select(".secondary").html("");
-                            });
-                    });
-
-            });
+            
 
             path
                 .transition()
@@ -216,22 +166,73 @@ var definitionVisualization = {};
                 .style("opacity", 0)
                 .call(endall, function () {
 
-                    path
+                	path=chart.selectAll("path")
                         .attr("transform", "scale(1), rotate(0)")
                         .style("opacity", 1)
-                        .data(pie(currentItem))
-                        .style("fill", function (d) {
+                        .data(pie(currentItem));
+                        path.enter().append("path") .style("fill", function (d) {
                             return colors(d.data.colorIndex);
                         })
                         .attr("d", arc)
                         .on("click", zoomIn)
                         .each(function (d, counter) {
-                            //this._current = d;)
+                            this._current = d;
                         }); // store the initial angles
-
+                        path.exit().remove();
                     updatePieLabels();
 
                 })
+                zoomZeArc(selectedItem, true, function () {
+
+                    var startAngle = clickedItem.startAngle;
+                    var endAngle = clickedItem.startAngle + 2 * Math.PI;
+
+                    var arcSelect = d3.svg.arc()
+                        .startAngle(function (s) {
+                            return startAngle;
+                        })
+                        .endAngle(function (s) {
+                            return endAngle;
+                        })
+                        .innerRadius(function (i) {
+                            return radius - 20
+                        })
+                        .outerRadius(function (o) {
+                            return radius * 1.1
+                        });
+
+                    var arcFinal = d3.svg.arc()
+                        .startAngle(function (s) {
+                            return startAngle;
+                        })
+                        .endAngle(function (s) {
+                            return endAngle;
+                        })
+                        .outerRadius(radius)
+                        .innerRadius(radius - 20);
+
+                    selectedItem.transition()
+                        .duration(750)
+                        .attrTween("d", function () {
+                            var newAngle = clickedItem.startAngle + 2 * Math.PI;
+                            var interpolate = d3.interpolate(newAngle, clickedItem.endAngle);
+                            return function (tick) {
+                                endAngle = interpolate(tick);
+                                return arcSelect(clickedItem);
+                            };
+                        })
+                        .each("end", function () {
+                            selectedItem.transition()
+                                .ease("bounce")
+                                .duration(500)
+                                .attr("d", arcFinal)
+                                .each("end", function () {
+                                    //Finished animating and bouncing
+                                    d3.select(".secondary").html("");
+                                });
+                        });
+
+                });
 
         }
     }
@@ -239,25 +240,31 @@ var definitionVisualization = {};
     function zoomInSweepEnded(childData) {
     	console.log("before");
         return function () {
-
+        	path=chart.selectAll("path").data(pie(childData));
+        	path.exit().remove();
             chartSelectTertiary.attr("style", "display: none");
 
             var selectedItem = d3.select(this);
+            console.log(selectedItem);
 
-            path
-                .attr("transform", "scale(0.5), rotate(-90)")
-                .style("opacity", 0);
-            
-            path.removeData();
-            path
-                .data(pie(childData))
-                .style("fill", function (d) {
+           
+
+        
+          
+         
+          console.log(childData);
+
+            path.enter().append("path").transition(d3.transition()
+            		  .duration(500)).attr("d", arc).attr("fill", function (d) {
                     return colors(d.data.colorIndex);
                 })
-                .attr("d", arc);
 
+
+            console.log(path.data());
             updatePieLabels();
-
+            path
+            .attr("transform", "scale(0.5), rotate(-90)")
+            .style("opacity", 0);
             path
                 .transition()
                 .ease("back-in-out")
@@ -267,7 +274,7 @@ var definitionVisualization = {};
                 .call(function () {
                     //Finished scaling
                 });
-            ;
+            
 
             d3.selectAll(".zoom-out")
                 .transition()
@@ -284,6 +291,8 @@ var definitionVisualization = {};
                 var secondaryHtml = d3.select(".secondary").html();
                 d3.select(".tertiary").html(secondaryHtml);
             }, 850);
+            
+            
 
             zoomZeArc(selectedItem, false);
 
@@ -358,12 +367,7 @@ var definitionVisualization = {};
                 return "translate(" + arcSmall.centroid(d) + ")";
             })
             .text(function(d ,i) { 
-            	if (typeof currentData[i] !== "undefined"){
-                return currentData[i].label;
-            	}else{
-            		return "empty";
-            	}
-            	
+                return currentData[i].label; 	
             });
 
     }
@@ -487,8 +491,8 @@ var definitionVisualization = {};
             .sort(null);
 
         path = chart.selectAll("path")
-            .data(pie(data))
-            .enter().append("path")
+            .data(pie(data));
+            path.enter().append("path")
             .style("fill", function (d) {
                 return colors(d.data.colorIndex);
             })
