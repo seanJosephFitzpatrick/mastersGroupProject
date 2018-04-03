@@ -159,5 +159,16 @@ public class QuerySeleniumTest {
 		
 	}
 
+	@Test
+	public void failuresForGivenIMSI() throws InterruptedException{
+		
+		driver.findElement(By.id("IMSIsforGivenFailureClass")).click();
+		Thread.sleep(1000);
+		driver.findElement(By.id("failure")).sendKeys("1");
+		driver.findElement(By.id("submitquery")).click();
+		Thread.sleep(500);
+		assertNotNull(driver.findElement(By.id("TopTenIMSIDataTable")));
+		
+	}
 
 }
