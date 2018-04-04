@@ -167,7 +167,7 @@ public class QuerySeleniumTest {
 		driver.findElement(By.id("failure")).sendKeys("1");
 		driver.findElement(By.id("submitquery")).click();
 		Thread.sleep(500);
-		assertNotNull(driver.findElement(By.id("TopTenIMSIDataTable")));
+		assertNotNull(driver.findElement(By.id("ImsibyFailureClassDataTable")));
 		
 	}
 
