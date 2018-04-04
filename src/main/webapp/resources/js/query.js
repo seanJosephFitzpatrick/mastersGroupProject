@@ -584,7 +584,7 @@ function showIMSIsForFailureClassModal(){
 	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="dropdown">'
 		+'<div class="form-group centermargin">'
 		+ '<label for="failure">Failure Cause:</label>'
-		+ '<input type="text" class="form-control" id="failure" placeholder="Failure">'
+		+ '<input type="number" class="form-control" id="failure" min="0" max="4" placeholder="0-4">'
 		+ '</div>'
 		+'</div>');
 	$('#csrIMSIQueryModal').find('.modal-footer').html('<button type="button" class="btn btn-secondary"'
