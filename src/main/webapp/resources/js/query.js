@@ -252,7 +252,7 @@ var TopTenIMSIsDataRequest = function(data1, data2) {
 				} ],
 				"order" : [ [ 1, "count" ] ]
 			});
-
+			
 		}
 	});
 };
@@ -414,7 +414,8 @@ function retrieveDatesTopTenIMSIs() {
 	var date2 = document.getElementById('date_timepicker_end').value;
 	TopTenIMSIsDataRequest(date1,date2);
 	showTopTenIMSIsDataTable();
-	showTop10IMSIsGraph(date1, date2);
+	drawGraph(data);
+	//showTop10IMSIsGraph(date1, date2);
 }
 function retrieveIMSIbyFailureClass() {
 	showLoading();
