@@ -38,6 +38,13 @@ input[type=password] {
 .labelclass{
 	color: #00275E;
 }
+.chartLabel{
+	color: #00275E !important;
+}
+.center {
+
+    fill: #00275E !important;
+}
 body{
 	color: #00275E !important;
 }

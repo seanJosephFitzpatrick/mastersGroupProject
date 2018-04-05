@@ -8,36 +8,29 @@ var definitionVisualization = {};
     var topLevelItem = {label: "Top Ten Failures"};
 
     var subSubData = [
-        {colorIndex: 10, value: 3075, label: "Label 1"},
-        {colorIndex: 11, value: 6150, label: "Label 2"},
-        {colorIndex: 12, value: 6832, label: "Label 3"},
-        {colorIndex: 13, value: 7516, label: "Label 4"},
-        {colorIndex: 14, value: 6291, label: "Label 5"}
+        {colorIndex: 0, value: 3075, label: "Label 1"},
+        {colorIndex: 1, value: 6150, label: "Label 2"},
+        {colorIndex: 2, value: 6832, label: "Label 3"},
+        {colorIndex: 3, value: 7516, label: "Label 4"},
+        {colorIndex: 4, value: 6291, label: "Label 5"}
     ];
 
     var subData = [
-        {colorIndex: 5, value: 1000, label: "Region 1"},
-        {colorIndex: 6, value: 1000, label: "Region 2"},
-        {colorIndex: 7, value: 1000, label: "Region 3"},
-        {colorIndex: 8, value: 1000, label: "Region 4"},
-        {colorIndex: 9, value: 5000, childData: subSubData, label: "Region 5"}
+        {colorIndex: 0, value: 1000, label: "Region 1"},
+        {colorIndex: 1, value: 1000, label: "Region 2"},
+        {colorIndex: 2, value: 1000, label: "Region 3"},
+        {colorIndex: 3, value: 1000, label: "Region 4"},
+        {colorIndex: 4, value: 1200, childData: subSubData, label: "Region 5"}
     ];
     var data = [];
-    for(i=0;i<topTen.length;i++){
+    for(var i=0;i<topTen.length;i++){
     	data.push({ 
     		colorIndex: i, 
             value: topTen[i].count,
             childData: subData,
             label: topTen[i].country});
     }
-/*    var data = [
-                {colorIndex: 0, value: 25, childData: subData, label: "Call Center"},
-                {colorIndex: 1, value: 25, childData: subData, label: "Third Party"},
-                {colorIndex: 2, value: 16.66667, childData: subData, label: "Web"},
-                {colorIndex: 3, value: 16.66667, childData: subData, label: "Mobile"},
-                {colorIndex: 4, value: 16.66667, childData: subData, label: "In-Store"}
-            ];
-*/
+
     var dataOriginal = data.slice(0); //Keep a record around for book-keeping purposes
 
     var selectedPath = [];
@@ -55,11 +48,11 @@ var definitionVisualization = {};
 
     // Global Variables
 
-    var margin = {top: 50, right: 0, bottom: 10, left: 127.5};
-    var width = 555;
-    var height = 800;
+    var margin = {top: 100, right: 0, bottom: 10, left: 127.5};
+    var width = 1110;
+    var height = 1800;
 
-    var radius = 150;
+    var radius = 300;
 
     var transformAttrValue = function (adjustLeft) {
         var leftValue = margin.left + radius;
@@ -68,7 +61,7 @@ var definitionVisualization = {};
         }
         return "translate(" + leftValue + "," + (margin.top + radius) + ")";
     }
-    var colorRange = ["#ffb822","#00bf8c","#219ddb","#ad85cc","#f95275","#80B647","#11AEB4","#6791D4","#D36CA1","#FC803B"];
+    var colorRange = ["#ffb822","#00bf8c","#219ddb","#ad85cc","#f95275","#80B647","#11AEB4","#6791D4","#D36CA1","#FC803B","#52f0fe","#d02ae6","#096c9e","#6dfc99","#87d3eb"];
   
     var colors = d3.scale.ordinal().range(colorRange);
 
@@ -127,7 +120,7 @@ var definitionVisualization = {};
                     return arcSelect(d);
                 };
             })
-            .each("end", zoomInSweepEnded(d.data.childData))
+            .each("end", zoomInSweepEnded(d.data.childData));
 
     }
 
@@ -156,32 +149,47 @@ var definitionVisualization = {};
 
             selectedItem.on("click", null);
 
-            
-
+            path=chart.selectAll("path").data(pie(currentItem));
+            path.exit().remove();
             path
                 .transition()
                 .ease("back-in-out")
                 .duration(750)
+                .attr("d", arc)
                 .attr("transform", "scale(.5), rotate(-90)")
                 .style("opacity", 0)
                 .call(endall, function () {
 
-                	path=chart.selectAll("path")
+                	path
                         .attr("transform", "scale(1), rotate(0)")
-                        .style("opacity", 1)
-                        .data(pie(currentItem));
+                        .style("opacity", 1);
+                        
+                	 
                         path.enter().append("path") .style("fill", function (d) {
                             return colors(d.data.colorIndex);
                         })
                         .attr("d", arc)
-                        .on("click", zoomIn)
+                        .on("mouseover", function () {
+            //return false;
+            d3.select(this).transition()
+                .ease("in")
+                .duration(100)
+                .attr("d", arcOver);
+        }).on("mouseout", function () {
+            //return false;
+            d3.select(this).transition()
+                .ease("bounce")
+                .duration(500)
+                .attr("d", arc);
+        }).on("click", zoomIn)
                         .each(function (d, counter) {
                             this._current = d;
                         }); // store the initial angles
-                        path.exit().remove();
+                       
                     updatePieLabels();
+                    
 
-                })
+                });
                 zoomZeArc(selectedItem, true, function () {
 
                     var startAngle = clickedItem.startAngle;
@@ -195,10 +203,10 @@ var definitionVisualization = {};
                             return endAngle;
                         })
                         .innerRadius(function (i) {
-                            return radius - 20
+                            return radius - 20;
                         })
                         .outerRadius(function (o) {
-                            return radius * 1.1
+                            return radius * 1.1;
                         });
 
                     var arcFinal = d3.svg.arc()
@@ -240,40 +248,34 @@ var definitionVisualization = {};
     function zoomInSweepEnded(childData) {
     	console.log("before");
         return function () {
-        	path=chart.selectAll("path").data(pie(childData));
-        	path.exit().remove();
+        	
+        	
             chartSelectTertiary.attr("style", "display: none");
 
             var selectedItem = d3.select(this);
-            console.log(selectedItem);
 
            
 
         
           
          
-          console.log(childData);
 
-            path.enter().append("path").transition(d3.transition()
-            		  .duration(500)).attr("d", arc).attr("fill", function (d) {
-                    return colors(d.data.colorIndex);
-                })
+          path=chart.selectAll("path").data(pie(childData));
+          path.exit().remove();
+          path
+          .transition()
+          .attr("d", arc)
+          .ease("back-in-out")
+          .duration(750)
+          .attr("transform", "scale(1), rotate(0)")
+          .style("opacity", 1)
+          .call(function () {
+        	  
+          });
+         
 
-
-            console.log(path.data());
             updatePieLabels();
-            path
-            .attr("transform", "scale(0.5), rotate(-90)")
-            .style("opacity", 0);
-            path
-                .transition()
-                .ease("back-in-out")
-                .duration(750)
-                .attr("transform", "scale(1), rotate(0)")
-                .style("opacity", 1)
-                .call(function () {
-                    //Finished scaling
-                });
+ 
             
 
             d3.selectAll(".zoom-out")
@@ -296,7 +298,7 @@ var definitionVisualization = {};
 
             zoomZeArc(selectedItem, false);
 
-        }
+        };
     }
 
     function zoomZeArc(selectedItem, reverse, callback) {
@@ -335,7 +337,7 @@ var definitionVisualization = {};
                     curInnerRadius = iInner(tick);
                     curOuterRadius = origOuterRadius + ((curInnerRadius - origInnerRadius) / 1.75);
                     return arcZoom(selectedItem);
-                }
+                };
             })
             .each("end", function () {
                 if (callback) {
@@ -430,7 +432,7 @@ var definitionVisualization = {};
             currentDataLevel[i].value = currentDataLevel[i].value * getRandomNumberInRange(75, 125) / 100.0;
         }
 
-        path.data(pie(currentDataLevel))
+        path.data(pie(currentDataLevel));
 
         path.transition().duration(750).attrTween("d", function(a) {
             var i = d3.interpolate(this._current, a);
