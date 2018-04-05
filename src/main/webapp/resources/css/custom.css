@@ -44,6 +44,11 @@ input[type=password] {
 .center {
 
     fill: #00275E !important;
+    font-weight: bold;
+}
+.outer-label{
+	fill: #00275E !important;
+	font-weight: bold;
 }
 body{
 	color: #00275E !important;

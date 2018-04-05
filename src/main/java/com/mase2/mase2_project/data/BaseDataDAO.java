@@ -102,6 +102,13 @@ public class BaseDataDAO {
 				.setParameter(2, endDateParam.getDate());
         return query.setMaxResults(10).getResultList();
 	}
+	@SuppressWarnings("unchecked")
+	public List<Integer> getTotalNumberOfFailures() {
+
+		final Query query=entityManager.createQuery("SELECT count(*) FROM BaseData m");
+
+        return query.getResultList();
+	}
 
 	@SuppressWarnings("unchecked")
 	public List<IMSIObject> getAllImsiWithFailures(DateParam startDateParam, DateParam endDateParam) {
@@ -109,6 +116,7 @@ public class BaseDataDAO {
 		final Query query=entityManager.createQuery("SELECT distinct new com.mase2.mase2_project.util.IMSIObject(m.imsi) FROM BaseData m where m.dateTime between ?1 and ?2")
 				.setParameter(1, startDateParam.getDate())
 				.setParameter(2, endDateParam.getDate());
+		
         return query.getResultList();
 	}
 	

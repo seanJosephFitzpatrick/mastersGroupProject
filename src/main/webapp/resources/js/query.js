@@ -9,8 +9,9 @@ var rootUrlTop10Failures = "http://localhost:8080/mase2-project/rest/basedatas/n
 var rootUrlTop10IMSIs = "http://localhost:8080/mase2-project/rest/basedatas/nme/querytoptenimsi?StartDate=";
 var rootUrlUniqueIdAndCauseCodeForModel = "http://localhost:8080/mase2-project/rest/basedatas/nme/";
 var rootUrlUniqueCauseCodeForIMSI = "http://localhost:8080/mase2-project/rest/basedatas/csr/unique/";
+var rootCountFailures = "http://localhost:8080/mase2-project/rest/basedatas/nme/countfailures"
 
-var imsi;
+var numberOfFailures=0;
 var rootUrlIMSIForGivenFailureCauseClass = "http://localhost:8080/mase2-project/rest/basedatas/nme/querygivenfailurecauseclass/";
 
 $('document').ready(function() {
@@ -29,6 +30,26 @@ $(function() {
 	});
 
 });
+
+var countFailures = function(data2) {
+
+	$.ajax({
+		type : 'GET',
+		url : rootCountFailures,
+		dataType : "json",
+		headers : {
+			'Authorization' : 'Basic ' + sessionStorage.getItem("email") + ":"
+					+ sessionStorage.getItem("password")
+		},
+		success : function(data) {
+			numberOfFailures=data[0];
+		},
+		complete : function(){
+			drawGraph(data2);
+		}
+	});
+
+};
 
 // /////////////////////Tables /////////////////////
 var imsiDataRequest = function(imsi) {
@@ -245,7 +266,8 @@ var TopTenDataRequest = function(data1, data2) {
 				} ],
 				"order" : [ [ 3, "desc" ] ]
 			});
-			drawGraph(data);
+			countFailures(data);
+			
 		}
 	});
 };

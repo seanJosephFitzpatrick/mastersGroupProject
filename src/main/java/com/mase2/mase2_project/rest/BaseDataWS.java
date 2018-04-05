@@ -188,6 +188,18 @@ public class BaseDataWS {
 			return SecurityCheck.ACCESS_DENY;
 		}
 	}
+	@GET
+	@Path("/nme/countfailures")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response findCountFailures(@Context HttpHeaders httpHeaders) {
+		if (securityCheck.hasRole(httpHeaders, "admin")) {
+			final List<Integer> baseData = baseDataDAO.getTotalNumberOfFailures();
+			return Response.status(200).entity(baseData).build();
+		} else {
+			return SecurityCheck.ACCESS_DENY;
+		}
+	}
+
 
 	
 	@GET

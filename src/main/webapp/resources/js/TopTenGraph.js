@@ -5,7 +5,7 @@ var definitionVisualization = {};
 
     visualization.donut = {};
 
-    var topLevelItem = {label: "Top Ten Failures"};
+    var topLevelItem = {label: "% Failures Per Node"};
 
     var subSubData = [
         {colorIndex: 0, value: 3075, label: "Label 1"},
@@ -15,21 +15,89 @@ var definitionVisualization = {};
         {colorIndex: 4, value: 6291, label: "Label 5"}
     ];
 
-    var subData = [
+ /*   var subData = [
         {colorIndex: 0, value: 1000, label: "Region 1"},
         {colorIndex: 1, value: 1000, label: "Region 2"},
         {colorIndex: 2, value: 1000, label: "Region 3"},
         {colorIndex: 3, value: 1000, label: "Region 4"},
         {colorIndex: 4, value: 1200, childData: subSubData, label: "Region 5"}
-    ];
+    ];*/
+	var subData=[];
     var data = [];
+    data.push({ 
+		colorIndex: 0, 
+        value: 0,
+        label: "Other Failures"});
+    var found=false;
+    var countColour=1;
     for(var i=0;i<topTen.length;i++){
-    	data.push({ 
-    		colorIndex: i, 
-            value: topTen[i].count,
-            childData: subData,
-            label: topTen[i].country});
+    	found=false;
+    	for(var j=0;j<data.length;j++){
+    	if(data[j].label===topTen[i].cellId){
+    		data[j].value+=topTen[i].count;
+    		found=true;
+    	}
+    	}
+    	if(!found){
+    		data.push({ 
+        		colorIndex: countColour, 
+                value: topTen[i].count,
+                childData: subData,
+                label: topTen[i].cellId});
+    		countColour++;
+    	}
     }
+    var countTotal=0;
+    for(var i=1;i<data.length;i++){
+    	countTotal+=parseInt(data[i].value);
+    	data[i].value=parseFloat(data[i].value)/numberOfFailures*100;
+    	data[i].value=data[i].value.toFixed(2);
+    	console.log(data[i].value);
+    	if(i===data.length-1){
+    		console.log(countTotal);
+    		data[0].value=(numberOfFailures-countTotal)/numberOfFailures*100;
+    		data[0].value=data[0].value.toFixed(2);
+    	}
+    }
+    
+    for(var i=0;i<data.length;i++){
+    	var tempArray=[];
+    	for(var j=0;j<topTen.length;j++){
+    		if(topTen[j].cellId===data[i].label){
+    		if(tempArray.length===0){
+    			tempArray.push({ 
+        		colorIndex: j, 
+                value: topTen[j].count,
+                childData: subSubData,
+                label: topTen[j].country});
+        	}else{
+        		var found=true;
+        		for(var x=0;x<tempArray.length;x++){
+        			if(tempArray[x].label!==topTen[j].country){
+        				found=true;
+        				
+        			}
+        		}
+        		if(found){
+        			tempArray.push({ 
+    	        		colorIndex: j, 
+    	                value: topTen[j].count,
+    	                childData: subSubData,
+    	                label: topTen[j].country});
+        		}
+        		}
+    		}
+        	}
+    	if(tempArray.length!==0){
+    	subData[i]=tempArray;
+    	data[i].childData=subData[i];
+    	}
+    	
+
+    }
+    console.log(subData);
+    
+    
 
     var dataOriginal = data.slice(0); //Keep a record around for book-keeping purposes
 
@@ -522,20 +590,33 @@ var definitionVisualization = {};
         arcOver = d3.svg.arc()
             .outerRadius(radius * 1.1)
             .innerRadius(radius - 20);
+        
+        var tooltip = d3.select("body")
+    	.append("div")
+    	.style("position", "absolute")
+    	.style("z-index", "10")
+    	.style("visibility", "hidden")
+    	.text("a simple tooltip");
 
-        path.on("mouseover", function () {
+        path.on("mouseover", function (d) {
             //return false;
             d3.select(this).transition()
                 .ease("in")
                 .duration(100)
                 .attr("d", arcOver);
-        }).on("mouseout", function () {
+            tooltip.text(d.value+"%");
+            return tooltip.style("visibility", "visible");
+        }).on("mousemove", function(){return tooltip.style("top",(d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");})
+        .on("mouseout", function () {
             //return false;
             d3.select(this).transition()
                 .ease("bounce")
                 .duration(500)
                 .attr("d", arc);
-        }).on("click", zoomIn);
+            return tooltip.style("visibility", "hidden");
+        }).on("click",zoomIn
+        );
+        
 
     };
 
