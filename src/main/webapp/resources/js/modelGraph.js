@@ -1,5 +1,7 @@
-$(function() {
-  $.getJSON("", function(data) {
+var rootUrlGraph = "http://localhost:8080/mase2-project/rest/basedatas/mg/";
+
+var modelDataGraph = function() {
+  $.getJSON(rootUrlGraph + model, function(data) {
     console.log(data);
     Highcharts.chart('graph', {
       chart: {
@@ -46,4 +48,4 @@ $(function() {
 		}],
     });
   });
-});
+}

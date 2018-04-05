@@ -198,6 +198,15 @@ public class BaseDataWS {
 
 	}
 	
+	@GET
+	@Path("/mg/{model}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response findByUniqueModelGraphCombinations(@Context HttpHeaders httpHeaders,
+			@PathParam("model") final String model) {
+		final List<UniqueEventAndCauseObject> baseData = baseDataDAO.getUniqueEventIdAndCauseCodeForModel(model);
+		return Response.status(200).entity(baseData).build();
+	}
+	
 	@Path("/nme/querytoptenimsi")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response findTopTenIMSIsThatHadCallFailuresByDateTime(@Context HttpHeaders httpHeaders,

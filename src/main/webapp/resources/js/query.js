@@ -403,8 +403,10 @@ function retrieveIMSIAndDates() {
 }
 function retrieveModel() {
 	showLoading();
+	model = document.getElementById('model').value;
 	uniqueEventAndCauseDataRequest(document.getElementById('model').value);
 	showUniqueEventAndCauseTable();
+	modelDataGraph();
 }
 function retrieveDatesTopTenIMSIs() {
 	showLoading();
