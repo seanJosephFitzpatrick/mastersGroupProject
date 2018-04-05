@@ -17,6 +17,7 @@ import com.mase2.mase2_project.graph_model.NodeDataTime;
 import com.mase2.mase2_project.graph_model.NodeEventIdCouseCode;
 
 import com.mase2.mase2_project.model.BaseData;
+import com.mase2.mase2_project.model.DateAndDurationForIMSI;
 import com.mase2.mase2_project.model.EventCause;
 import com.mase2.mase2_project.util.DateParam;
 import com.mase2.mase2_project.util.DurationAndCountObject;
@@ -194,6 +195,19 @@ public class BaseDataDAO {
 		
 		return result;
 		
+	}
+
+	public List<DateAndDurationForIMSI> getDateAndDurationOfFailuresForIMSI(String imsi, DateParam startDateParam, DateParam endDateParam) {
+		Query query = entityManager.createQuery("SELECT m FROM BaseData as m WHERE m.imsi LIKE :imsi AND m.dateTime BETWEEN :startDataTime AND :endDataTime ORDER BY m.dateTime ");
+		query.setParameter("imsi", imsi);
+		query.setParameter("startDataTime", startDateParam.getDate());
+		query.setParameter("endDataTime", endDateParam.getDate());
+		List<BaseData> baseDatas = query.getResultList();
+		List<DateAndDurationForIMSI> result = new ArrayList<>();
+		for (BaseData baseData : baseDatas) {
+			result.add(new DateAndDurationForIMSI(baseData.getDuration(), baseData.getDateTime()));
+		}
+		return result;
 	}
 
 }

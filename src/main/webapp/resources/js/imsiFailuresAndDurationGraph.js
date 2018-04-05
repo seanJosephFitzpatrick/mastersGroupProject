@@ -1,3 +1,5 @@
+var rootUrlDurationFailures = "http://localhost:8080/mase2-project/rest/basedatas/graph/";
+
 var showSumAndCountGraph = function(data1, data2) {
 
 	var data_p = [];
@@ -24,112 +26,26 @@ var showSumAndCountGraph = function(data1, data2) {
 			console.log('total_count --' + totalCount)
 			console.log("data_p.length - " + data_p.length);
 
-			var totalVisitors = 883000;
-			var visitorsData = {
-				"New vs Returning Visitors" : [ {
-					click : visitorsChartDrilldownHandler,
-					cursor : "pointer",
-					explodeOnClick : false,
-					innerRadius : "55%",
-					legendMarkerType : "square",
-					name : "New vs Returning Visitors",
-					radius : "100%",
-					showInLegend : true,
-					startAngle : 90,
-					type : "doughnut",
-					dataPoints : data_p
-				} ],
-				"New Visitors" : [ {
-					color : "#E7823A",
-					name : "New Visitors",
-					type : "column",
-					dataPoints : [ {
-						x : new Date("1 Jan 2015"),
-						y : 33000
-					}, {
-						x : new Date("1 Feb 2015"),
-						y : 35960
-					}, {
-						x : new Date("1 Mar 2015"),
-						y : 42160
-					}, {
-						x : new Date("1 Apr 2015"),
-						y : 42240
-					}, {
-						x : new Date("1 May 2015"),
-						y : 43200
-					}, {
-						x : new Date("1 Jun 2015"),
-						y : 40600
-					}, {
-						x : new Date("1 Jul 2015"),
-						y : 42560
-					}, {
-						x : new Date("1 Aug 2015"),
-						y : 44280
-					}, {
-						x : new Date("1 Sep 2015"),
-						y : 44800
-					}, {
-						x : new Date("1 Oct 2015"),
-						y : 48720
-					}, {
-						x : new Date("1 Nov 2015"),
-						y : 50840
-					}, {
-						x : new Date("1 Dec 2015"),
-						y : 51600
-					} ]
-				} ],
-				"Returning Visitors" : [ {
-					color : "#546BC1",
-					name : "Returning Visitors",
-					type : "column",
-					dataPoints : [ {
-						x : new Date("1 Jan 2015"),
-						y : 22000
-					}, {
-						x : new Date("1 Feb 2015"),
-						y : 26040
-					}, {
-						x : new Date("1 Mar 2015"),
-						y : 25840
-					}, {
-						x : new Date("1 Apr 2015"),
-						y : 23760
-					}, {
-						x : new Date("1 May 2015"),
-						y : 28800
-					}, {
-						x : new Date("1 Jun 2015"),
-						y : 29400
-					}, {
-						x : new Date("1 Jul 2015"),
-						y : 33440
-					}, {
-						x : new Date("1 Aug 2015"),
-						y : 37720
-					}, {
-						x : new Date("1 Sep 2015"),
-						y : 35200
-					}, {
-						x : new Date("1 Oct 2015"),
-						y : 35280
-					}, {
-						x : new Date("1 Nov 2015"),
-						y : 31160
-					}, {
-						x : new Date("1 Dec 2015"),
-						y : 34400
-					} ]
-				} ]
-			};
+			var imsiFailureData = [ {
 
-			var newVSReturningVisitorsOptions = {
+				click : durationChartDrilldownHandler,
+				cursor : "pointer",
+				explodeOnClick : false,
+				innerRadius : "35%",
+				legendMarkerType : "square",
+				name : "New vs Returning Visitors",
+				radius : "100%",
+				showInLegend : true,
+				startAngle : 90,
+				type : "doughnut",
+				dataPoints : data_p
+			} ];
+
+			var imsiFailureChartOptions = {
 				animationEnabled : true,
 				theme : "light2",
 				title : {
-					text : "New VS Returning Visitors"
+					text : "IMSI Failures Number"
 				},
 				subtitles : [ {
 					text : "Click on Any Segment to Drilldown",
@@ -142,13 +58,13 @@ var showSumAndCountGraph = function(data1, data2) {
 					fontFamily : "calibri",
 					fontSize : 14,
 					itemTextFormatter : function(e) {
-						return e.dataPoint.name + ": "+ e.dataPoint.y +' ('+ Math.round(e.dataPoint.y / totalCount * 100) + "%)";
+						return e.dataPoint.name + ": " + e.dataPoint.y + ' (' + Math.round(e.dataPoint.y / totalCount * 100) + "%)";
 					}
 				},
 				data : []
 			};
 
-			var visitorsDrilldownedChartOptions = {
+			var durationDrilldownedChartOptions = {
 				animationEnabled : true,
 				theme : "light2",
 				axisX : {
@@ -165,28 +81,63 @@ var showSumAndCountGraph = function(data1, data2) {
 					lineThickness : 1
 				},
 				data : []
+
 			};
 
-			var chart = new CanvasJS.Chart("chartContainer", newVSReturningVisitorsOptions);
-			chart.options.data = visitorsData["New vs Returning Visitors"];
+			var chart = new CanvasJS.Chart("chartContainer", imsiFailureChartOptions);
+			chart.options.data = imsiFailureData;
 			chart.render();
 
-			function visitorsChartDrilldownHandler(e) {
-				chart = new CanvasJS.Chart("chartContainer", visitorsDrilldownedChartOptions);
-				chart.options.data = visitorsData[e.dataPoint.name];
-				chart.options.title = {
-					text : e.dataPoint.name
-				}
-				chart.render();
-				$("#backButton").toggleClass("invisible");
+			function durationChartDrilldownHandler(e) {
+				console.log("durationChartDrilldownHandler");
+
+				$.ajax({
+					type : 'GET',
+					url : rootUrlDurationFailures + e.dataPoint.name + "/" + data1 + "/" + data2,
+					dataType : "json",
+					headers : {
+						'Authorization' : 'Basic ' + sessionStorage.getItem("email") + ":" + sessionStorage.getItem("password")
+					},
+					success : function(data) {
+						console.log("hire with ");
+						var dataDuration =[];
+						for (var i = 0; i < data.length; i++) {
+							// console.log("huj" + data[i].imsi);
+//							dataDuration.push({y : parseInt(data[i].duration), label:i, tooltip: new Date(data[i].dateTime)});
+							dataDuration.push({y : parseInt(data[i].duration),label:i, label2: new Date(data[i].dateTime)});
+						}
+						console.log("hire with dataDuration " +dataDuration.length);
+						
+						var durationFailureData = [ {
+							color : "#546BC1",
+							name : "Returning Visitors",
+							type : "column",
+							
+							dataPoints: dataDuration,
+							
+						} ];
+						
+						chart = new CanvasJS.Chart("chartContainer", durationDrilldownedChartOptions);
+						chart.options.data = durationFailureData;
+						chart.options.toolTip = {             
+					        content: "My {label2}: {y}"
+					      },
+						chart.options.title = {
+							text : e.dataPoint.name
+						}
+						chart.render();
+						$("#backButton").toggleClass("invisible");
+					},
+				});
 			}
 
 			$("#backButton").click(function() {
 				$(this).toggleClass("invisible");
-				chart = new CanvasJS.Chart("chartContainer", newVSReturningVisitorsOptions);
-				chart.options.data = visitorsData["New vs Returning Visitors"];
+				chart = new CanvasJS.Chart("chartContainer", imsiFailureChartOptions);
+				chart.options.data = imsiFailureData;
 				chart.render();
 			});
 		}
 	});
 }
+
