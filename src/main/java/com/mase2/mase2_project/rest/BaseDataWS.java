@@ -198,6 +198,7 @@ public class BaseDataWS {
 
 	}
 	
+	@GET
 	@Path("/nme/querytoptenimsi")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response findTopTenIMSIsThatHadCallFailuresByDateTime(@Context HttpHeaders httpHeaders,
