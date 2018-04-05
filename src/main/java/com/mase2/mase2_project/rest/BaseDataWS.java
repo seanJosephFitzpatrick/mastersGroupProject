@@ -22,6 +22,7 @@ import com.mase2.mase2_project.data.BaseDataDAO;
 import com.mase2.mase2_project.graph_model.ImsiNode;
 import com.mase2.mase2_project.graph_model.NodeEventIdCouseCode;
 import com.mase2.mase2_project.model.BaseData;
+import com.mase2.mase2_project.model.DateAndDurationForIMSI;
 import com.mase2.mase2_project.util.DateParam;
 import com.mase2.mase2_project.util.DurationAndCountObject;
 import com.mase2.mase2_project.util.FailureCountObject;
@@ -41,7 +42,7 @@ public class BaseDataWS {
 	@EJB
 	private BaseDataDAO baseDataDAO;
 
-	@GET 
+	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response listAll(@Context HttpHeaders httpHeaders) {
 		if (securityCheck.hasRole(httpHeaders, "admin")) {
@@ -53,19 +54,19 @@ public class BaseDataWS {
 			return SecurityCheck.ACCESS_DENY;
 		}
 	}
-	
+
 	@GET
-	@Path("/aci/") 
+	@Path("/aci/")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response autoCopleteImsi(@Context HttpHeaders httpHeaders, @QueryParam("term") final String imsi) {	
+	public Response autoCopleteImsi(@Context HttpHeaders httpHeaders, @QueryParam("term") final String imsi) {
 		final List<String> baseData = baseDataDAO.getAllImsi(imsi);
 		return Response.status(200).entity(baseData).build();
 	}
-	
+
 	@GET
-	@Path("/acm/") 
+	@Path("/acm/")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response autoCopleteModel(@Context HttpHeaders httpHeaders, @QueryParam("term") final String model) {		
+	public Response autoCopleteModel(@Context HttpHeaders httpHeaders, @QueryParam("term") final String model) {
 		final List<String> baseData = baseDataDAO.getAllModels(model);
 		return Response.status(200).entity(baseData).build();
 	}
@@ -82,6 +83,7 @@ public class BaseDataWS {
 		}
 
 	}
+
 	@GET
 	@Path("/csr/unique/{imsi}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -98,9 +100,7 @@ public class BaseDataWS {
 	@GET
 	@Path("/se/QueryDates")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response findByAllImsiWithFailures(@Context HttpHeaders httpHeaders,
-			@QueryParam("StartDate") final DateParam startDateParam,
-			@QueryParam("EndDate") final DateParam endDateParam) {
+	public Response findByAllImsiWithFailures(@Context HttpHeaders httpHeaders, @QueryParam("StartDate") final DateParam startDateParam, @QueryParam("EndDate") final DateParam endDateParam) {
 		if (securityCheck.hasRole(httpHeaders, "admin")) {
 			final List<IMSIObject> baseData = baseDataDAO.getAllImsiWithFailures(startDateParam, endDateParam);
 			return Response.status(200).entity(baseData).build();
@@ -112,12 +112,10 @@ public class BaseDataWS {
 	@GET
 	@Path("/se/{model}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response findByCellIdAndDateTime(@Context HttpHeaders httpHeaders, @PathParam("model") final String model,
-			@QueryParam("StartDate") final DateParam startDateParam,
+	public Response findByCellIdAndDateTime(@Context HttpHeaders httpHeaders, @PathParam("model") final String model, @QueryParam("StartDate") final DateParam startDateParam,
 			@QueryParam("EndDate") final DateParam endDateParam) {
 		if (securityCheck.hasRole(httpHeaders, "admin")) {
-			final List<FailureCountObject> baseData = baseDataDAO.getCountForCellIdAndDate(model, startDateParam,
-					endDateParam);
+			final List<FailureCountObject> baseData = baseDataDAO.getCountForCellIdAndDate(model, startDateParam, endDateParam);
 			return Response.status(200).entity(baseData).build();
 		} else {
 			return SecurityCheck.ACCESS_DENY;
@@ -127,12 +125,10 @@ public class BaseDataWS {
 	@GET
 	@Path("/fc/{imsi}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response findByIMSIAndDateTime(@Context HttpHeaders httpHeaders, @PathParam("imsi") final String imsi,
-			@QueryParam("StartDate") final DateParam startDateParam,
+	public Response findByIMSIAndDateTime(@Context HttpHeaders httpHeaders, @PathParam("imsi") final String imsi, @QueryParam("StartDate") final DateParam startDateParam,
 			@QueryParam("EndDate") final DateParam endDateParam) {
 		if (securityCheck.hasRole(httpHeaders, "admin")) {
-			final List<FailureCountObject> baseData = baseDataDAO.getCountForIMSIAndDate(imsi, startDateParam,
-					endDateParam);
+			final List<FailureCountObject> baseData = baseDataDAO.getCountForIMSIAndDate(imsi, startDateParam, endDateParam);
 			return Response.status(200).entity(baseData).build();
 		} else {
 			return SecurityCheck.ACCESS_DENY;
@@ -142,12 +138,9 @@ public class BaseDataWS {
 	@GET
 	@Path("/nme/query")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response findByDateTime(@Context HttpHeaders httpHeaders,
-			@QueryParam("StartDate") final DateParam startDateParam,
-			@QueryParam("EndDate") final DateParam endDateParam) {
+	public Response findByDateTime(@Context HttpHeaders httpHeaders, @QueryParam("StartDate") final DateParam startDateParam, @QueryParam("EndDate") final DateParam endDateParam) {
 		if (securityCheck.hasRole(httpHeaders, "admin")) {
-			final List<DurationAndCountObject> baseData = baseDataDAO.getSumDurationAndCountForEachIMSI(startDateParam,
-					endDateParam);
+			final List<DurationAndCountObject> baseData = baseDataDAO.getSumDurationAndCountForEachIMSI(startDateParam, endDateParam);
 			return Response.status(200).entity(baseData).build();
 		} else {
 			return SecurityCheck.ACCESS_DENY;
@@ -157,8 +150,7 @@ public class BaseDataWS {
 	@GET
 	@Path("/nme/{model}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response findByUniqueModelCombinations(@Context HttpHeaders httpHeaders,
-			@PathParam("model") final String model) {
+	public Response findByUniqueModelCombinations(@Context HttpHeaders httpHeaders, @PathParam("model") final String model) {
 		if (securityCheck.hasRole(httpHeaders, "admin")) {
 			final List<UniqueEventAndCauseObject> baseData = baseDataDAO.getUniqueEventIdAndCauseCodeForModel(model);
 			return Response.status(200).entity(baseData).build();
@@ -170,9 +162,7 @@ public class BaseDataWS {
 	@GET
 	@Path("/nme/querytopten")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response findTopTenFailuresByDateTime(@Context HttpHeaders httpHeaders,
-			@QueryParam("StartDate") final DateParam startDateParam,
-			@QueryParam("EndDate") final DateParam endDateParam) {
+	public Response findTopTenFailuresByDateTime(@Context HttpHeaders httpHeaders, @QueryParam("StartDate") final DateParam startDateParam, @QueryParam("EndDate") final DateParam endDateParam) {
 		if (securityCheck.hasRole(httpHeaders, "admin")) {
 			final List<TopTenFailuresObject> baseData = baseDataDAO.getTopTenFailures(startDateParam, endDateParam);
 			return Response.status(200).entity(baseData).build();
@@ -180,28 +170,42 @@ public class BaseDataWS {
 			return SecurityCheck.ACCESS_DENY;
 		}
 	}
-	
+
 	@GET
 	@Path("/graph/{imsi}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response findByImsiGraph(@Context HttpHeaders httpHeaders, @PathParam("imsi") final String imsi) {
-		//if (securityCheck.hasRole(httpHeaders, "admin")) {
-			final List<NodeEventIdCouseCode> baseData = baseDataDAO.getBaseDataForIMSIGraph(imsi);
-			ImsiNode imsiNode = new ImsiNode();
-			imsiNode.setName(imsi);
-			imsiNode.setChildren(baseData);
-			
-			return Response.status(200).entity(imsiNode).build();
-//		} else {
-//			return SecurityCheck.ACCESS_DENY;
-//		}
+		// if (securityCheck.hasRole(httpHeaders, "admin")) {
+		final List<NodeEventIdCouseCode> baseData = baseDataDAO.getBaseDataForIMSIGraph(imsi);
+		ImsiNode imsiNode = new ImsiNode();
+		imsiNode.setName(imsi);
+		imsiNode.setChildren(baseData);
+
+		return Response.status(200).entity(imsiNode).build();
+		// } else {
+		// return SecurityCheck.ACCESS_DENY;
+		// }
 
 	}
-	
+
+	@GET
+	@Path("/graph/{imsi}/{StartDate}/{EndDate}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response findByIMSIStartDateAndEndDate(@Context HttpHeaders httpHeaders, @PathParam("imsi") final String imsi, @PathParam("StartDate") final DateParam startDateParam,
+			@PathParam("EndDate") final DateParam endDateParam) {
+
+		System.out.println("BaseDataWS.findByIMSIStartDateAndEndDate() **********");
+		if (securityCheck.hasRole(httpHeaders, "admin")) {
+			final List<DateAndDurationForIMSI> baseData = baseDataDAO.getDateAndDurationOfFailuresForIMSI(imsi, startDateParam, endDateParam);
+			return Response.status(200).entity(baseData).build();
+		} else {
+			return SecurityCheck.ACCESS_DENY;
+		}
+	}
+
 	@Path("/nme/querytoptenimsi")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response findTopTenIMSIsThatHadCallFailuresByDateTime(@Context HttpHeaders httpHeaders,
-			@QueryParam("StartDate") final DateParam startDateParam,
+	public Response findTopTenIMSIsThatHadCallFailuresByDateTime(@Context HttpHeaders httpHeaders, @QueryParam("StartDate") final DateParam startDateParam,
 			@QueryParam("EndDate") final DateParam endDateParam) {
 		if (securityCheck.hasRole(httpHeaders, "admin")) {
 			final List<TopTenIMSIsObject> baseData = baseDataDAO.getTopTenIMSIs(startDateParam, endDateParam);
@@ -210,12 +214,11 @@ public class BaseDataWS {
 			return SecurityCheck.ACCESS_DENY;
 		}
 	}
-	
+
 	@GET
 	@Path("/nme/querygivenfailurecauseclass/{failure}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response findIMSIForGivenFailureCauseClass(@Context HttpHeaders httpHeaders,
-			@PathParam("failure") final String failure) {
+	public Response findIMSIForGivenFailureCauseClass(@Context HttpHeaders httpHeaders, @PathParam("failure") final String failure) {
 		if (securityCheck.hasRole(httpHeaders, "admin")) {
 			final List<IMSIObject> baseData = baseDataDAO.getIMSIsForGivenFaiureCauseClass(failure);
 			return Response.status(200).entity(baseData).build();
