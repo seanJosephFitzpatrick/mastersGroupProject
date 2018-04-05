@@ -1,7 +1,7 @@
 $(function() {
   $.getJSON("", function(data) {
     console.log(data);
-    Highcharts.chart('container', {
+    Highcharts.chart('graph', {
       chart: {
         type: 'column'
       },
