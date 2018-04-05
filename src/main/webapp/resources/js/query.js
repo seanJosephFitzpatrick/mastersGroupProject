@@ -149,29 +149,29 @@ var countFailuresDataRequest = function(model, date1, date2) {
 		}
 	});
 };
-var countAndSumDataRequest = function(data1, data2) {
+var countAndSumDataRequest = function(data1, data2) { /////////////////////////////////////////////////
 	$.ajax({
 		type : 'GET',
 		url : rootUrlSumDurationAndCountFailures + data1 + "&EndDate=" + data2,
 		dataType : "json",
 		headers : {
-			'Authorization' : 'Basic ' + sessionStorage.getItem("email") + ":"
-					+ sessionStorage.getItem("password")
+			'Authorization' : 'Basic ' + sessionStorage.getItem("email") + ":" + sessionStorage.getItem("password")
 		},
 		success : function(data) {
 
-				$('#SumAndCountDataTable').DataTable({
-				responsive: true,
-				fixedHeader: true,
-				dom: 'Bfrtlip',
-				buttons: [
-				            'copy','excel','pdf','print'
-				            
-				            ],
-				"columnDefs": [
-				               { "width": "33%","targets": [0,1,2] }
+			$('#SumAndCountDataTable').DataTable({
+				responsive : true,
+				fixedHeader : true,
+				dom : 'Bfrtlip',
+				buttons : [ 'copy', 'excel', 'pdf', 'print'
 
-				             ],
+				],
+				"columnDefs" : [ {
+					"width" : "33%",
+					"targets" : [ 0, 1, 2 ]
+				}
+
+				],
 				data : data,
 				columns : [ {
 					data : "imsi"
@@ -373,12 +373,13 @@ function retrieveDates() {
 			document.getElementById('date_timepicker_end').value);
 	showDateDataTable();
 }
-function retrieveDatesNME() {
+function retrieveDatesNME() { ///////////////
 	showLoading();
-	countAndSumDataRequest(
-			document.getElementById('date_timepicker_start').value, document
-					.getElementById('date_timepicker_end').value);
+	var date1 = document.getElementById('date_timepicker_start').value;
+	var date2 = document.getElementById('date_timepicker_end').value;
+	countAndSumDataRequest(date1,date2);
 	showSumAndCountDataTable();
+	showSumAndCountGraph(date1, date2);
 }
 function retrieveDatesTopTen() {
 	showLoading();
@@ -503,13 +504,13 @@ function showUniqueIMSIModal(){
 	imsiautocomplete();
 }
 function showNMEModal(){
-	$("#exampleModalLongTitle").text("Sum Failure duration for IMSI");
+	$("#exampleModalLongTitle").text("Number of Failures and duration for IMSI");
 	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="dropdown">'
 			+'<div class="form-group centermargin">'
 			+ '<label for="date_timepicker_start">Start Date:</label>'
-			+ '<input type="text" class="form-control" id="date_timepicker_start" placeholder="Start Date">'
+			+ '<input type="text" class="form-control" id="date_timepicker_start" value="2012-01-01" placeholder="Start Date">'
 			+ '<label for="date_timepicker_end">End Date:</label>'
-			+ '<input type="text" class="form-control" id="date_timepicker_end" placeholder="End Date">'
+			+ '<input type="text" class="form-control" id="date_timepicker_end" value="2018-01-01" placeholder="End Date">'
 			+ '</div>'
 		+ '</div>');
 	$('#csrIMSIQueryModal').find('.modal-footer').html('<button type="button" class="btn btn-secondary"'
@@ -721,20 +722,22 @@ function showTopTenIMSIsDataTable() {
  + '			</tr>'
 							+ '		</tfoot>' + '	</table>' + '</div></div>');
 }
-function showSumAndCountDataTable() {
+function showSumAndCountDataTable() {// ///////////////
 	$('#wrapper')
-			.html(
-					'<div class="card-body"><div class="table-responsive">'
-							+ '	<table id="SumAndCountDataTable" class="table table-bordered display" cellspacing="0" width="100%">'
-							+ '		<thead id="tableHeader">' + '			<tr>' + ' 				<th>IMSI</th>'
-							+ ' 				<th>Number of Failures</th>'
-							+ ' 				<th>Sum Duration</th>' + ' 			</tr>'
-							+ ' 		</thead>'
+			.html(''
+				+ tab_panel_start
+				+ '<div class="card-body"><div class="table-responsive">'
+				+ '	<table id="SumAndCountDataTable" class="table table-bordered display" cellspacing="0" width="100%">'
+				+ '		<thead id="tableHeader">' + '			<tr>' + ' 				<th>IMSI</th>'
+				+ ' 				<th>Number of Failures</th>'
+				+ ' 				<th>Sum Duration</th>' + ' 			</tr>'
+				+ ' 		</thead>'
 							// +' <tbody> </tbody>'
-							+ '		<tfoot id="tableFooter">' + '			<tr>' + ' 				<th>IMSI</th>'
-							+ ' 				<th>Number of Failures</th>'
-							+ ' 				<th>Sum Duration</th>' + '			</tr>'
-							+ '		</tfoot>' + '	</table>' + '</div></div>');
+				+ '		<tfoot id="tableFooter">' + '			<tr>' + ' 				<th>IMSI</th>'
+				+ ' 				<th>Number of Failures</th>'
+				+ ' 				<th>Sum Duration</th>' + '			</tr>'
+				+ '		</tfoot>' + '	</table>' + '</div></div>'
+				+ tab_panel_end);
 }
 function showDateDataTable() {
 	$('#wrapper')
@@ -774,3 +777,48 @@ function showImsibyFailureClassTable() {
 							+ ' 				<th>IMSI</th>' + '			</tr>'
 							+ '		</tfoot>' + '	</table>' + '</div></div>');
 }
+
+var tab_panel_start =''
+	+ '	<ul class="nav nav-tabs nav-justified" role="tablist">'
+	+ '		<li class="nav-item">'
+	+ '			<a class="nav-link" data-toggle="tab" href="#panel_table" role="tab">Table</a>'
+	+ '		</li>'
+	+ '		<li class="nav-item">'
+	+ '			<a class="nav-link active" data-toggle="tab" href="#panel_graph" role="tab">Graph</a>'
+	+ '		</li>'
+	+ '	</ul>'
+	+ '		<div class="tab-content card">'
+	+ '			<!--Panel Tab-->'
+	+ '			<div class="tab-pane fade in show" id="panel_table" role="tabpanel">';
+var tab_panel_end = ''
+	+ '		<a class="scroll-to-top rounded" href="#page-top"><i class="fa fa-angle-up"></i></a>'
+	+ '		</div>'
+	+ '		<!--Panel Graph-->'
+	+ '		<div class="tab-pane fade in show active" id="panel_graph" role="tabpane2">'
+	+ '			<button class="btn invisible" id="backButton">< Back</button>'
+	+ '			<div id="chartContainer" style="height: 370px; width: 100%;"></div>'
+	+ '		<a class="scroll-to-top rounded" href="#page-top"><i class="fa fa-angle-up"></i></a>'
+	+ '		</div>'
+	+ '</div>';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
