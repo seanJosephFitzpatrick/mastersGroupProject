@@ -128,7 +128,7 @@
 
 					</ul></li>
 
-					<li class="nav-item" data-toggle="tooltip" data-placement="right"
+					<li id="nav_Files" class="nav-item" data-toggle="tooltip" data-placement="right"
 					title="Files available for import"><a
 					class="nav-link nav-link-collapse collapsed" data-toggle="collapse"
 					href="#collapseFiles" data-parent="#exampleAccordion" onclick="getFileNames()" id="Filestoggle"> <i
@@ -138,16 +138,6 @@
 						
 
 					</ul></li>
-
-
-
-				<li id="nav_ImportAll" class="nav-item" data-toggle="tooltip" data-placement="right"
-
-					title="Tables"><a class="nav-link" data-toggle="tooltip"
-					href="#navbarResponsive" data-parent="#exampleAccordion"
-					onclick="importTables()"> <i class="fa fa-file-excel-o"></i> <span
-						class="nav-link-text">Import Call Failures</span>
-				</a></li>
 
 				<li id="nav_userMgmt" class="nav-item" data-toggle="tooltip"
 					data-placement="right" title="User MAnagemenr"><a
@@ -174,14 +164,38 @@
 	<!-- END OF NAVIGATION -->
 
 	<div class="content-wrapper">
-		<div class="container-fluid" id="wrapper"></div>
+		<div class="container-fluid" id="wrapper">
+<!-- 			<ul class="nav nav-tabs nav-justified" role="tablist">
+				<li class="nav-item">
+					<a class="nav-link active" data-toggle="tab" href="#panel_table" role="tab">Table</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" data-toggle="tab" href="#panel_graph" role="tab">Graph</a>
+				</li>
 
-		<!-- Scroll to Top Button-->
-		<a class="scroll-to-top rounded" href="#page-top"> <i
-			class="fa fa-angle-up"></i>
-		</a>
+			</ul>
 
-<div id ="graph"></div>
+			<div class="tab-content card">
+				Panel Tab
+				<div class="tab-pane fade in show active" id="panel_table" role="tabpanel">
+					<br>
+					<p>Lorem ipsum</p>
+					<a class="scroll-to-top rounded" href="#page-top">
+						<i class="fa fa-angle-up"></i>
+					</a>
+				</div>
+				Panel Graph
+				<div class="tab-pane fade" id="panel_graph" role="tabpane2">
+					<br>
+					<p>Lorem ipsum huj</p>
+					<a class="scroll-to-top rounded" href="#page-top">
+						<i class="fa fa-angle-up"></i>
+					</a>
+				</div>
+			</div> -->
+		</div>
+
+		<div id ="graph"></div>
 		<!--Query Modal -->
 		<div class="modal fade" id="csrIMSIQueryModal" tabindex="-1"
 			role="dialog" aria-labelledby="exampleModalCenterTitle"
@@ -207,54 +221,41 @@
 			</div>
 		</div>
 	</div>
-	<footer class="sticky-footer">
+	<footer class="sticky-footer bg-dark">
 		<div class="container">
-			<div class="text-center">
+			<div class="text-center whitetext">
 				<small>Copyright © MASE2</small>
 			</div>
 		</div>
 	</footer>
 	<!-- Bootstrap core JavaScript-->
-	<script type="text/javascript"
-		src="./resources/vendor/jquery/jquery.min.js"></script>
-	<script type="text/javascript"
-		src="./resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script type="text/javascript" src="./resources/vendor/jquery/jquery.min.js"></script>
+
+	<script type="text/javascript" src="./resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<!-- Core plugin JavaScript-->
-	<script type="text/javascript"
-		src="./resources/vendor/jquery-easing/jquery.easing.min.js"></script>
+	<script type="text/javascript" src="./resources/vendor/jquery-easing/jquery.easing.min.js"></script>
 	<!-- Page level plugin JavaScript-->
-	<script type="text/javascript"
-		src="./resources/vendor/chart.js/Chart.min.js"></script>
-	<script type="text/javascript"
-		src="./resources/vendor/datatables/jquery.dataTables.js"></script>
-	<script type="text/javascript"
-		src="./resources/vendor/datatables/dataTables.bootstrap4.js"></script>
-	<script type="text/javascript"
-		src="./resources/vendor/datatables/dataTables.fixedHeader.min.js"></script>
-		<script type="text/javascript"
-		src="./resources/js/jquery-ui.js"></script>
-				<script type="text/javascript"
-		src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
-		<script type="text/javascript"
-		src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.flash.min.js"></script>
-		<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-		<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
-		<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
-		<script type="text/javascript"
-		src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
-		<script type="text/javascript"
-		src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.print.min.js"></script>
-		<script src="https://code.highcharts.com/highcharts.js"></script>
+	<script type="text/javascript" src="./resources/vendor/chart.js/Chart.min.js"></script>
+	<script type="text/javascript" src="./resources/vendor/datatables/jquery.dataTables.js"></script>
+	<script type="text/javascript" src="./resources/vendor/datatables/dataTables.bootstrap4.js"></script>
+	<script type="text/javascript" src="./resources/vendor/datatables/dataTables.fixedHeader.min.js"></script>
+	<script type="text/javascript" src="./resources/js/jquery-ui.js"></script>
+	<script type="text/javascript" src="./resources/js/canvasjs.min.js"></script>
+	<script type="text/javascript" src="./resources/js/md5.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.flash.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.print.min.js"></script>
+	<script src="https://code.highcharts.com/highcharts.js"></script>
+	
 	<!-- Custom scripts for all pages-->
 	<script type="text/javascript" src="./resources/js/sb-admin.js"></script>
-	<script type="text/javascript"
-		src="./resources/js/sb-admin-datatables.js"></script>
+	<script type="text/javascript" src="./resources/js/sb-admin-datatables.js"></script>
 	<script type="text/javascript" src="./resources/js/sb-admin-charts.js"></script>
-	<script type="text/javascript"
-		src="./resources/js/jquery.datetimepicker.full.min.js"></script>
+	<script type="text/javascript" src="./resources/js/jquery.datetimepicker.full.min.js"></script>
 	<script type="text/javascript" src="./resources/js/navigation.js"></script>
 	<script type="text/javascript" src="./resources/js/login.js"></script>
 	<script type="text/javascript" src="./resources/js/usersmanagement.js"></script>
@@ -263,14 +264,15 @@
 
 	<script type="text/javascript" src="./resources/js/jquery.validate.js"></script>
 	<script type="text/javascript" src="./resources/js/tables.js"></script>
-		<script type="text/javascript" src="./resources/js/query.js"></script>
+	<script type="text/javascript" src="./resources/js/query.js"></script>
 	<script type="text/javascript" src="./resources/js/importdata.js"></script>
-	<script type="text/javascript"
-		src="./resources/js/additional-methods.js"></script>
+	<script type="text/javascript" src="./resources/js/additional-methods.js"></script>
 	<script type="text/javascript" src="./resources/js/autocomplete.js"></script>
 	<script type="text/javascript" src="./resources/js/d3.v3.min.js"></script>
 	<script type="text/javascript" src="./resources/js/imsiGraph.js"></script>
-	<script src="./resources/js/modelGraph.js"></script>
-		
+	<script type="text/javascript" src="./resources/js/TopTenGraph.js"></script>
+	<script type="text/javascript" src="./resources/js/imsiFailuresAndDurationGraph.js"></script>
+    <script type="text/javascript" src="./resources/js/top10imsiGraph.js"></script>
+    <script src="./resources/js/modelGraph.js"></script>
 </body>
 </html>

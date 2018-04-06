@@ -19,10 +19,14 @@ function showTableEventcauses() {
 				responsive: true,
 				fixedHeader: true,
 				dom: 'Bfrtlip',
+				buttons:{
 				buttons: [
-				            'copy','excel','pdf','print'
+				            {extend: 'copy',className: 'btn btn-primary'},
+				            {extend: 'excel',className: 'btn btn-primary'},
+				            {extend: 'pdf',className: 'btn btn-primary'},
+				            {extend: 'print',className: 'btn btn-primary'}
 				            
-				            ],
+				            ]},
 				"columnDefs": [
 				               { "width": "33%","targets": [0,1,2] }
 
@@ -69,10 +73,14 @@ function showTabelUe() {
 				responsive: true,
 				fixedHeader: true,
 				dom: 'Bfrtlip',
-				buttons: [
-				            'copy','excel','pdf','print'
-				            
-				            ],
+				buttons:{
+					buttons: [
+					            {extend: 'copy',className: 'btn btn-primary'},
+					            {extend: 'excel',className: 'btn btn-primary'},
+					            {extend: 'pdf',className: 'btn btn-primary'},
+					            {extend: 'print',className: 'btn btn-primary'}
+					            
+					            ]},
 				data : data,
 				bAutoWidth: false ,
 				columns : [ {
@@ -134,10 +142,14 @@ function showTabelFailureClass() {
 				responsive: true,
 				fixedHeader: true,
 				dom: 'Bfrtlip',
-				buttons: [
-				            'copy','excel','pdf','print'
-				            
-				            ],
+				buttons:{
+					buttons: [
+					            {extend: 'copy',className: 'btn btn-primary'},
+					            {extend: 'excel',className: 'btn btn-primary'},
+					            {extend: 'pdf',className: 'btn btn-primary'},
+					            {extend: 'print',className: 'btn btn-primary'}
+					            
+					            ]},
 				"columnDefs": [
 				               { "width": "50%","targets": [0,1] }
 
@@ -179,10 +191,14 @@ function showTabelMcc_Mnc() {
 				responsive: true,
 				fixedHeader: true,
 				dom: 'Bfrtlip',
-				buttons: [
-				            'copy','excel','pdf','print'
-				            
-				            ],
+				buttons:{
+					buttons: [
+					            {extend: 'copy',className: 'btn btn-primary'},
+					            {extend: 'excel',className: 'btn btn-primary'},
+					            {extend: 'pdf',className: 'btn btn-primary'},
+					            {extend: 'print',className: 'btn btn-primary'}
+					            
+					            ]},
 				"columnDefs": [
 				               { "width": "25%","targets": [0,1,2,3] }
 
@@ -208,7 +224,7 @@ function showTableMccMnc() {
 	$('#wrapper').html(	''
 			+ '	<i class="fa fa-table"></i> <span id="tableTitle" >Mcc Mnc Table</span>'
 			+ '	<div class="table-responsive ">'
-			+ '		<table id="mccmnc_table" class="table table-bordered display" cellspacing="0" width="100%">'
+			+ '		<table id="mccmnc_table" class="table table-bordered display" cellspacing="0">'
 			+ '			<thead id="tableHeader"><th>Mcc</th><th>Mnc</th><th>Country</th><th>Operator</th></thead>'
 			+ '			<tfoot id="tableFooter"><th>Mcc</th><th>Mnc</th><th>Country</th><th>Operator</th></tfoot>'
 			+ '		</table>' 
