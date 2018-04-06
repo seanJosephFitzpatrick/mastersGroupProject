@@ -449,8 +449,10 @@ function retrieveIMSIAndDates() {
 }
 function retrieveModel() {
 	showLoading();
+	model = document.getElementById('model').value;
 	uniqueEventAndCauseDataRequest(document.getElementById('model').value);
 	showUniqueEventAndCauseTable(document.getElementById('model').value);
+	modelDataGraph();
 }
 function retrieveDatesTopTenIMSIs() {
 	showLoading();
@@ -760,6 +762,7 @@ function showUniqueEventAndCauseTable(model) {
 			.html('<div class="tabletitle"><div><h2>Unique Event IDs and Cause Codes for a given model</h2></div>'
 					+'<div><h3>Model: <i>'+model+'</i></h3></div>'
 					+'</div>'
+					+ tab_panel_start
 					+'<div class="card-body"><div class="table-responsive">'
 							+ '	<table id="UniqueEventAndCauseTable" class="table table-bordered display" cellspacing="0" width="100%">'
 							+ '		<thead id="tableHeader">' + '			<tr>'
@@ -772,7 +775,8 @@ function showUniqueEventAndCauseTable(model) {
 							+ ' 				<th>Event Id</th>'
 							+ ' 				<th>Cause Code</th>'
 							+ ' 				<th>Number of Occurences</th>' + '			</tr>'
-							+ '		</tfoot>' + '	</table>' + '</div></div>');
+							+ '		</tfoot>' + '	</table>' + '</div></div>'
+							+ tab_panel_end);
 }
 function showTopTenDataTable(startDate, endDate) {
 	$('#wrapper')
@@ -859,7 +863,9 @@ function showCountFailuresDataTable(imsi,startDate, endDate) {
 					+'<div><h4>'+startDate+' - '+endDate+'</h4></div>'
 					+'</div>'
 					+'<div class="card-body">'
-					+'<div><h4>Number of Failures: </h4>' + failureCount +'</div></div>');
+					+'<div style="text-align:center; padding:30px; border:1px solid black; border-radius:12px;"><h3>Number of Failures: </h3><div style="display: inline-block;"><h4>' 
+					+ failureCount 
+					+'</h4></div></div></div>');
 }
 function showCountFailuresModelDataTable(model,startDate, endDate) {
 	$('#wrapper')
@@ -868,7 +874,9 @@ function showCountFailuresModelDataTable(model,startDate, endDate) {
 			+'<div><h4><i>'+startDate+'</i> to <i>'+endDate+'</i></h4></div>'
 			+'</div>'
 			+'<div class="card-body">'
-			+'<div><h4>Number of Failures: </h4>' + failureCount +'</div></div>');
+			+'<div style="text-align:center; padding:30px; border:1px solid black; border-radius:12px;"><h3>Number of Failures: </h3><div style="display: inline-block;"><h4>' 
+			+ failureCount 
+			+'</h4></div></div></div>');
 }
 function showImsibyFailureClassTable(failureClass) {
 	$('#wrapper')
