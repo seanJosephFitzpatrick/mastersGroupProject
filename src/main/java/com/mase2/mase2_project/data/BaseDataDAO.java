@@ -160,7 +160,7 @@ public class BaseDataDAO {
 	
 	@SuppressWarnings("unchecked")
 	public List<IMSIObject> getIMSIsForGivenFaiureCauseClass(String failure) {
-		final Query query=entityManager.createQuery("SELECT new com.mase2.mase2_project.util.IMSIObject(m.imsi) FROM BaseData m where m.failureClassBean.failureClass like :failure ORDER BY m.imsi DESC")
+		final Query query=entityManager.createQuery("SELECT distinct new com.mase2.mase2_project.util.IMSIObject(m.imsi) FROM BaseData m where m.failureClassBean.failureClass like :failure ORDER BY m.imsi DESC")
 				.setParameter("failure", '%' +failure+'%' );
 		return query.getResultList();
 	}

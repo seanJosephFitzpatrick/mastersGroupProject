@@ -181,8 +181,8 @@ var definitionVisualization = {};
     // Global Variables
 
     var margin = {top: 100, right: 0, bottom: 10, left: 127.5};
-    var width = 1110;
-    var height = 1800;
+    var width = '100%';
+    var height = 800;
 
     var radius = 300;
     var tooltip = d3.select("body")
@@ -594,7 +594,7 @@ var definitionVisualization = {};
 
     visualization.donut.show = function () {
 
-        var svgContainer = d3.select("#graph");
+        var svgContainer = d3.select("#graphdiv");
         svgContainer.html("");
 
         data = dataOriginal.slice(0);
