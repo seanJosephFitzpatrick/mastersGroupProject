@@ -309,7 +309,6 @@ var TopTenIMSIsDataRequest = function(data1, data2) {
 				} ],
 				"order" : [ [ 1, "count" ] ]
 			});
-
 		}
 	});
 };
@@ -486,10 +485,18 @@ function retrieveModel() {
 }
 function retrieveDatesTopTenIMSIs() {
 	showLoading();
+	//need to change this back after testing 
+	var date1 = document.getElementById('date_timepicker_start').value;
+	var date2 = document.getElementById('date_timepicker_end').value;
+	TopTenIMSIsDataRequest(date1,date2);
+	showTopTenIMSIsDataTable();
+	showTop10IMSIsGraph(date1, date2);
+
 	TopTenIMSIsDataRequest(document.getElementById('date_timepicker_start').value,
 			document.getElementById('date_timepicker_end').value);
 	showTopTenIMSIsDataTable(document.getElementById('date_timepicker_start').value,
 			document.getElementById('date_timepicker_end').value);
+
 }
 function retrieveIMSIbyFailureClass() {
 	showLoading();
@@ -543,11 +550,11 @@ function showTopTenIMSIsModal(){
 	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="row">'
 			+'<div class="form-group centermargin col-md-6">'
 			+ '<label class="labelclass" for="date_timepicker_start">Start Date</label>'
-			+ '<input type="text" class="form-control" id="date_timepicker_start" placeholder="Start Date">'
+			+ '<input type="text" class="form-control" id="date_timepicker_start" value="2012-01-01" placeholder="Start Date">'
 			+'</div>'
 			+'<div class="form-group centermargin col-md-6">'
 			+ '<label class="labelclass" for="date_timepicker_end">End Date</label>'
-			+ '<input type="text" class="form-control" id="date_timepicker_end" placeholder="End Date">'
+			+ '<input type="text" class="form-control" id="date_timepicker_end" value="2018-01-01" placeholder="End Date">'
 			+ '</div>'
 		+ '</div>');
 	$('#csrIMSIQueryModal').find('.modal-footer').html('<button type="button" class="btn btn-secondary"'
@@ -816,10 +823,16 @@ function showTopTenDataTable(startDate, endDate) {
 }
 function showTopTenIMSIsDataTable(startDate, endDate) {
 	$('#wrapper')
-			.html('<div class="tabletitle"><div><h2>Top 10 IMSIs With Failures for a Given Time Period</h2></div>'
+
+			.html(''
+					+ tab_panel_start
+					+ '<div class="card-body"><div class="table-responsive">'
+
+			+'<div class="tabletitle"><div><h2>Top 10 IMSIs With Failures for a Given Time Period</h2></div>'
 					+'<div><h3>'+startDate+' - '+endDate+'</h3></div>'
 					+'</div>'
 					+'<div class="card-body"><div class="table-responsive">'
+
 							+ '	<table id="TopTenIMSIDataTable" class="table table-bordered display" cellspacing="0" width="100%">'
 							+ '		<thead id="tableHeader">' + '			<tr>' + ' 				<th>IMSI</th>'
 							+ ' 				<th>Number of Failures</th>'
@@ -829,7 +842,8 @@ function showTopTenIMSIsDataTable(startDate, endDate) {
 							+ '		<tfoot id="tableFooter">' + '			<tr>' + ' 				<th>IMSI</th>'
 							+ ' 				<th>Number of Failures</th>'
  + '			</tr>'
-							+ '		</tfoot>' + '	</table>' + '</div></div>');
+							+ '		</tfoot>' + '	</table>' + '</div></div>'
+							+ tab_panel_end);
 }
 
 function showSumAndCountDataTable(startDate, endDate) {
@@ -932,7 +946,7 @@ var tab_panel_end = ''
 	+ '		<!--Panel Graph-->'
 	+ '		<div class="tab-pane fade in show active" id="panel_graph" role="tabpane2">'
 	+ '			<button class="btn invisible" id="backButton">< Back</button>'
-	+ '			<div id="chartContainer" style="height: 370px; width: 100%;"></div>'
+	+ '			<div id="chartContainer" style="height: 600px; width: 100%;"></div>'
 	+ '		<a class="scroll-to-top rounded" href="#page-top"><i class="fa fa-angle-up"></i></a>'
 	+ '		</div>'
 	+ '</div>';
