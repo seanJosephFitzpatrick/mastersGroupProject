@@ -658,20 +658,22 @@ function showUniqueImsiDataTable() {
 							+ ' 				<th>Cause Code</th>' + '			</tr>'
 							+ '		</tfoot>' + '	</table>' + '</div></div>');
 }
-function showImsiDataTable() {
+function showImsiDataTable() {// 88888888888888
 	$('#wrapper')
-			.html(
-					'<div class="card-body"><div class="table-responsive">'
-							+ '	<table id="ImsiDataTable" class="table table-bordered display" cellspacing="0" width="100%">'
-							+ '		<thead id="tableHeader">' + '			<tr>'
-							+ ' 				<th>Event Id</th>'
-							+ ' 				<th>Cause Code</th>' + ' 			</tr>'
-							+ ' 		</thead>'
-							// +' <tbody> </tbody>'
-							+ '		<tfoot id="tableFooter">' + '			<tr>'
-							+ ' 				<th>Event Id</th>'
-							+ ' 				<th>Cause Code</th>' + '			</tr>'
-							+ '		</tfoot>' + '	</table>' + '</div></div>');
+			.html(''
+					+ tab_panel_start
+					+ ' <div class="card-body"><div class="table-responsive">'
+					+ '	<table id="ImsiDataTable" class="table table-bordered display" cellspacing="0" width="100%">'
+					+ '		<thead id="tableHeader">' + '			<tr>'
+					+ ' 				<th>Event Id</th>'
+					+ ' 				<th>Cause Code</th>' + ' 			</tr>'
+					+ ' 		</thead>'
+					// +' <tbody> </tbody>'
+					+ '		<tfoot id="tableFooter">' + '			<tr>'
+					+ ' 				<th>Event Id</th>'
+					+ ' 				<th>Cause Code</th>' + '			</tr>'
+					+ '		</tfoot>' + '	</table>' + '</div></div>'
+					+ tab_panel_3djs_end);
 }
 function showUniqueEventAndCauseTable() {
 	$('#wrapper')
@@ -800,7 +802,13 @@ var tab_panel_end = ''
 	+ '		<a class="scroll-to-top rounded" href="#page-top"><i class="fa fa-angle-up"></i></a>'
 	+ '		</div>'
 	+ '</div>';
-
+var tab_panel_3djs_end = ''
+	+ '		<a class="scroll-to-top rounded" href="#page-top"><i class="fa fa-angle-up"></i></a>'
+	+ '		</div>'
+	+ '		<div class="tab-pane fade in show active" id="panel_graph" role="tabpane2">'
+	+ '		<a class="scroll-to-top rounded" href="#page-top"><i class="fa fa-angle-up"></i></a>'
+	+ '		</div>'
+	+ '</div>';
 
 
 

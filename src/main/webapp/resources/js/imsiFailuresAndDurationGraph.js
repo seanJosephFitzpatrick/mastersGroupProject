@@ -100,29 +100,28 @@ var showSumAndCountGraph = function(data1, data2) {
 					},
 					success : function(data) {
 						console.log("hire with ");
-						var dataDuration =[];
+						var dataDuration = [];
 						for (var i = 0; i < data.length; i++) {
-							// console.log("huj" + data[i].imsi);
-//							dataDuration.push({y : parseInt(data[i].duration), label:i, tooltip: new Date(data[i].dateTime)});
-							dataDuration.push({y : parseInt(data[i].duration),label:i, label2: new Date(data[i].dateTime)});
+							dataDuration.push({
+								y : parseInt(data[i].duration),
+								label : i + 1,
+								label2 : new Date(data[i].dateTime)
+							});
 						}
-						console.log("hire with dataDuration " +dataDuration.length);
-						
+						console.log("hire with dataDuration " + dataDuration.length);
+
 						var durationFailureData = [ {
 							color : "#546BC1",
 							name : "Returning Visitors",
 							type : "column",
-							
-							dataPoints: dataDuration,
-							
+							dataPoints : dataDuration,
 						} ];
-						
+
 						chart = new CanvasJS.Chart("chartContainer", durationDrilldownedChartOptions);
 						chart.options.data = durationFailureData;
-						chart.options.toolTip = {             
-					        content: "My {label2}: {y}"
-					      },
-						chart.options.title = {
+						chart.options.toolTip = {
+							content : "My {label2}: {y}"
+						}, chart.options.title = {
 							text : e.dataPoint.name
 						}
 						chart.render();
@@ -140,4 +139,3 @@ var showSumAndCountGraph = function(data1, data2) {
 		}
 	});
 }
-
