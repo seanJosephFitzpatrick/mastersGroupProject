@@ -24,7 +24,7 @@ var imsiDataRequestGraph = function() {
 				return [ d.y, d.x ];
 			});
 
-			var svg = d3.select("#graph").append("svg").attr("width",
+			var svg = d3.select("#panel_graph").append("svg").attr("width",
 					width + margin.right + margin.left).attr("height",
 					height + margin.top + margin.bottom).append("g").attr(
 					"transform",

@@ -43,15 +43,15 @@ function showLoginForm() {
 			.html(
 					""
 							+ '<div id="loginForm" class="card card-login mx-auto mt-5">'
-							+ '<div class="card-header">Login</div>'
+							+ '<div class="card-header labelclass">Network Data Analytics</div>'
 							+ '<div class="card-body">'
 //							+ '  <form id="loginForm">'
 							+ '    <div class="form-group">'
-							+ '      <label for="inputEmail">Email address</label>'
+							+ '      <label for="inputEmail" class="labelclass">Email address</label>'
 							+ '      <input class="form-control" id="inputEmail" type="text" aria-describedby="emailHelp" placeholder="Enter email">'
 							+ '   </div>'
 							+ '   <div class="form-group">'
-							+ '      <label for="inputPass">Password</label>'
+							+ '      <label for="inputPass" class="labelclass">Password</label>'
 							+ '      <input class="form-control" id="inputPass" type="password" placeholder="Password">'
 							+ '    </div>'
 							+ '    <div class="form-group">'

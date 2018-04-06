@@ -16,9 +16,56 @@ $('document').ready(function() {
 	sessionStorage.setItem("role", "none");
 	showManiPage();
 	$('[data-toggle="modal"]').tooltip();
+	
 });
 
-
+jQuery(function($){
+	$('#nav_Tables').click(function(){
+		console.log("booo");
+		checkQueriesNav();
+		checkFilesNav();
+		checkUsersNav();
+	});
+	$('#nav_Queries').click(function(){
+		checkTablesNav();
+		checkFilesNav();
+		checkUsersNav();
+	});
+	$('#nav_Files').click(function(){
+		checkUsersNav();
+		checkQueriesNav();
+		checkTablesNav();
+	});
+	$('#nav_userMgmt').click(function(){
+		checkQueriesNav();
+		checkFilesNav();
+		checkTablesNav();
+	});
+});
+function checkTablesNav(){
+	if (!$('#nav_Tables > a').hasClass('collapsed')) {	
+		$('#nav_Tables > a').addClass('collapsed');
+		$('#nav_Tables > ul').removeClass('show');
+	}
+}
+function checkQueriesNav(){
+	if (!$('#nav_Queries > a').hasClass('collapsed')) {	
+		$('#nav_Queries > a').addClass('collapsed');
+		$('#nav_Queries > ul').removeClass('show');
+	}
+}
+function checkFilesNav(){
+	if (!$('#nav_Files > a').hasClass('collapsed')) {	
+		$('#nav_Files > a').addClass('collapsed');
+		$('#nav_Files > ul').removeClass('show');
+	}
+}
+function checkUsersNav(){
+	if (!$('#nav_userMgmt > a').hasClass('collapsed')) {	
+		$('#nav_userMgmt > a').addClass('collapsed');
+		$('#nav_userMgmt > ul').removeClass('show');
+	}
+}
 // ///////////////////// Import Tables /////////////////////
 function manualImportTables(id) {
 	showLoading();
