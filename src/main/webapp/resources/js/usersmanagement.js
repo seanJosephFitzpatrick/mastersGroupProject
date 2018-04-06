@@ -48,7 +48,7 @@ function updateUser(userId) {
 					+	'<strong>Error</strong> '+ message +'</div> ');
 		}
 	if(message == "") {
-		updateUserInDB(userId, emailValue, passworsValue, roleValue);
+		updateUserInDB(userId, emailValue, md5(passworsValue), roleValue);
 	} else {
 		$('#inputEmail').val(emailValue);
 		$('#selectRole').val(roleValue);
@@ -163,7 +163,7 @@ function registerNewUser() {
 				}
 			},
 			error : function() {
-				addUserToDB(emailValue, passworsValue, roleValue);
+				addUserToDB(emailValue, md5(passworsValue), roleValue);
 				
 			}
 		});
@@ -203,8 +203,6 @@ function addUserToDB(email, password, role){
 			);
 		}
 	});
-	console.log("WIELKI HUJ");
-	
 }
 
 
@@ -232,7 +230,7 @@ function showNewUserForm() {
 			+'    </div>'
 			+'    <div class="form-group">'
 			+'      <label for="inputEmail">Email address</label>'
-			+'      <input class="form-control" id="inputEmail" type="text" aria-describedby="emailHelp" placeholder="Enter email">'
+			+'      <input class="form-control" id="inputEmail" type="email" aria-describedby="emailHelp" placeholder="Enter email">'
 			+'    </div>'
 			+'    <div class="form-group">'
 			+'      <div class="form-row">'
