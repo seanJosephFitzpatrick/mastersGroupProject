@@ -3,6 +3,10 @@ var rootUrlGraph = "http://localhost:8080/mase2-project/rest/basedatas/mg/";
 var modelDataGraph = function() {
   $.getJSON(rootUrlGraph + model, function(data) {
     console.log(data);
+	if(!Object.keys(data).length > 0){
+		//$("#graph").replaceWith("<h1>No Data Available</h1>");
+	}
+	
     Highcharts.chart('graph', {
       chart: {
         type: 'column'
