@@ -9,8 +9,9 @@ var rootUrlTop10Failures = "http://localhost:8080/mase2-project/rest/basedatas/n
 var rootUrlTop10IMSIs = "http://localhost:8080/mase2-project/rest/basedatas/nme/querytoptenimsi?StartDate=";
 var rootUrlUniqueIdAndCauseCodeForModel = "http://localhost:8080/mase2-project/rest/basedatas/nme/";
 var rootUrlUniqueCauseCodeForIMSI = "http://localhost:8080/mase2-project/rest/basedatas/csr/unique/";
+var rootCountFailures = "http://localhost:8080/mase2-project/rest/basedatas/nme/countfailures"
 
-var imsi;
+var numberOfFailures=0;
 var rootUrlIMSIForGivenFailureCauseClass = "http://localhost:8080/mase2-project/rest/basedatas/nme/querygivenfailurecauseclass/";
 
 $('document').ready(function() {
@@ -30,6 +31,26 @@ $(function() {
 
 });
 
+var countFailures = function(data2) {
+
+	$.ajax({
+		type : 'GET',
+		url : rootCountFailures,
+		dataType : "json",
+		headers : {
+			'Authorization' : 'Basic ' + sessionStorage.getItem("email") + ":"
+					+ sessionStorage.getItem("password")
+		},
+		success : function(data) {
+			numberOfFailures=data[0];
+		},
+		complete : function(){
+			drawGraph(data2);
+		}
+	});
+
+};
+
 // /////////////////////Tables /////////////////////
 var imsiDataRequest = function(imsi) {
 	$.ajax({
@@ -45,10 +66,14 @@ var imsiDataRequest = function(imsi) {
 				responsive: true,
 				fixedHeader: true,
 				dom: 'Bfrtlip',
-				buttons: [
-				            'copy','excel','pdf','print'
-				            
-				            ],
+				buttons:{
+					buttons: [
+					            {extend: 'copy',className: 'btn btn-primary'},
+					            {extend: 'excel',className: 'btn btn-primary'},
+					            {extend: 'pdf',className: 'btn btn-primary'},
+					            {extend: 'print',className: 'btn btn-primary'}
+					            
+					            ]},
 				"columnDefs": [
 				               { "width": "50%","targets": [0,1] }
 
@@ -78,10 +103,14 @@ var uniqueImsiDataRequest = function(imsi) {
 				responsive: true,
 				fixedHeader: true,
 				dom: 'Bfrtlip',
-				buttons: [
-				            'copy','excel','pdf','print'
-				            
-				            ],
+				buttons:{
+					buttons: [
+					            {extend: 'copy',className: 'btn btn-primary'},
+					            {extend: 'excel',className: 'btn btn-primary'},
+					            {extend: 'pdf',className: 'btn btn-primary'},
+					            {extend: 'print',className: 'btn btn-primary'}
+					            
+					            ]},
 				data : data,
 				columns : [ {
 					data : "imsi"
@@ -106,10 +135,14 @@ var DateDataRequest = function(date1, date2) {
 				responsive: true,
 				fixedHeader: true,
 				dom: 'Bfrtlip',
-				buttons: [
-				            'copy','excel','pdf','print'
-				            
-				            ],
+				buttons:{
+					buttons: [
+					            {extend: 'copy',className: 'btn btn-primary'},
+					            {extend: 'excel',className: 'btn btn-primary'},
+					            {extend: 'pdf',className: 'btn btn-primary'},
+					            {extend: 'print',className: 'btn btn-primary'}
+					            
+					            ]},
 				data : data,
 				columns : [ {
 					data : "imsi"
@@ -135,10 +168,14 @@ var countFailuresDataRequest = function(model, date1, date2) {
 				responsive: true,
 				fixedHeader: true,
 				dom: 'Bfrtlip',
-				buttons: [
-				            'copy','excel','pdf','print'
-				            
-				            ],
+				buttons:{
+					buttons: [
+					            {extend: 'copy',className: 'btn btn-primary'},
+					            {extend: 'excel',className: 'btn btn-primary'},
+					            {extend: 'pdf',className: 'btn btn-primary'},
+					            {extend: 'print',className: 'btn btn-primary'}
+					            
+					            ]},
 				data : data,
 				columns : [ {
 					data : "failureCount"
@@ -159,11 +196,21 @@ var countAndSumDataRequest = function(data1, data2) { //////////////////////////
 		},
 		success : function(data) {
 
-			$('#SumAndCountDataTable').DataTable({
-				responsive : true,
-				fixedHeader : true,
-				dom : 'Bfrtlip',
-				buttons : [ 'copy', 'excel', 'pdf', 'print'
+
+				$('#SumAndCountDataTable').DataTable({
+				responsive: true,
+				fixedHeader: true,
+				dom: 'Bfrtlip',
+				buttons:{
+					buttons: [
+					            {extend: 'copy',className: 'btn btn-primary'},
+					            {extend: 'excel',className: 'btn btn-primary'},
+					            {extend: 'pdf',className: 'btn btn-primary'},
+					            {extend: 'print',className: 'btn btn-primary'}
+					            
+					            ]},
+				"columnDefs": [
+				               { "width": "33%","targets": [0,1,2] }
 
 				],
 				"columnDefs" : [ {
@@ -195,15 +242,20 @@ var TopTenDataRequest = function(data1, data2) {
 					+ sessionStorage.getItem("password")
 		},
 		success : function(data) {
+			
 
 			userTable = $('#TopTenDataTable').DataTable({
 				responsive: true,
 				fixedHeader: true,
 				dom: 'Bfrtlip',
-				buttons: [
-				            'copy','excel','pdf','print'
-				            
-				            ],
+				buttons:{
+					buttons: [
+					            {extend: 'copy',className: 'btn btn-primary'},
+					            {extend: 'excel',className: 'btn btn-primary'},
+					            {extend: 'pdf',className: 'btn btn-primary'},
+					            {extend: 'print',className: 'btn btn-primary'}
+					            
+					            ]},
 				"columnDefs": [
 				               { "width": "25%","targets": [0,1,2,3] }
 
@@ -220,7 +272,8 @@ var TopTenDataRequest = function(data1, data2) {
 				} ],
 				"order" : [ [ 3, "desc" ] ]
 			});
-
+			countFailures(data);
+			
 		}
 	});
 };
@@ -239,10 +292,14 @@ var TopTenIMSIsDataRequest = function(data1, data2) {
 				responsive: true,
 				fixedHeader: true,
 				dom: 'Bfrtlip',
-				buttons: [
-				            'copy','excel','pdf','print'
-				            
-				            ],
+				buttons:{
+					buttons: [
+					            {extend: 'copy',className: 'btn btn-primary'},
+					            {extend: 'excel',className: 'btn btn-primary'},
+					            {extend: 'pdf',className: 'btn btn-primary'},
+					            {extend: 'print',className: 'btn btn-primary'}
+					            
+					            ]},
 				
 				data : data,
 				columns : [ {
@@ -271,10 +328,14 @@ var countFailuresForIMSIDataRequest = function(imsi, date1, date2) {
 				responsive: true,
 				fixedHeader: true,
 				dom: 'Bfrtlip',
-				buttons: [
-				            'copy','excel','pdf','print'
-				            
-				            ],
+				buttons:{
+					buttons: [
+					            {extend: 'copy',className: 'btn btn-primary'},
+					            {extend: 'excel',className: 'btn btn-primary'},
+					            {extend: 'pdf',className: 'btn btn-primary'},
+					            {extend: 'print',className: 'btn btn-primary'}
+					            
+					            ]},
 				data : data,
 				columns : [ {
 					data : "failureCount"
@@ -300,10 +361,14 @@ var uniqueEventAndCauseDataRequest = function(model) {
 				responsive: true,
 				fixedHeader: true,
 				dom: 'Bfrtlip',
-				buttons: [
-				            'copy','excel','pdf','print'
-				            
-				            ],
+				buttons:{
+					buttons: [
+					            {extend: 'copy',className: 'btn btn-primary'},
+					            {extend: 'excel',className: 'btn btn-primary'},
+					            {extend: 'pdf',className: 'btn btn-primary'},
+					            {extend: 'print',className: 'btn btn-primary'}
+					            
+					            ]},
 				"columnDefs": [
 				               { "width": "33%","targets": [0,1,2] }
 
@@ -338,10 +403,14 @@ var imsiForFailureClassRequest = function(failure) {
 				responsive: true,
 				fixedHeader: true,
 				dom: 'Bfrtlip',
-				buttons: [
-				            'copy','excel','pdf','print'
-				            
-				            ],
+				buttons:{
+					buttons: [
+					            {extend: 'copy',className: 'btn btn-primary'},
+					            {extend: 'excel',className: 'btn btn-primary'},
+					            {extend: 'pdf',className: 'btn btn-primary'},
+					            {extend: 'print',className: 'btn btn-primary'}
+					            
+					            ]},
 				data : data,
 				columns : [ {
 					data : "imsi"
@@ -355,7 +424,7 @@ function retrieveIMSI() {
 	showLoading();
 	imsi = document.getElementById('imsi').value;
 	imsiDataRequest(document.getElementById('imsi').value);
-	showImsiDataTable();
+	showImsiDataTable(imsi);
 //	showImsiGraph();
 	imsiDataRequestGraph();
 	
@@ -364,34 +433,40 @@ function retrieveUniqueIMSI() {
 	
 	showLoading();
 	uniqueImsiDataRequest(document.getElementById('imsi').value);
-	showUniqueImsiDataTable();
+	showUniqueImsiDataTable(document.getElementById('imsi').value);
 }
 function retrieveDates() {
 	showLoading();
 	DateDataRequest(document.getElementById('date_timepicker_start').value,
 			document.getElementById('date_timepicker_end').value);
-	showDateDataTable();
+	showDateDataTable(document.getElementById('date_timepicker_start').value,
+			document.getElementById('date_timepicker_end').value);
 }
 function retrieveDatesNME() { ///////////////
 	showLoading();
+
 	var date1 = document.getElementById('date_timepicker_start').value;
 	var date2 = document.getElementById('date_timepicker_end').value;
 	countAndSumDataRequest(date1,date2);
-	showSumAndCountDataTable();
+	showSumAndCountDataTable(date1,date2);
 	showSumAndCountGraph(date1, date2);
+
 }
 function retrieveDatesTopTen() {
 	showLoading();
 	TopTenDataRequest(document.getElementById('date_timepicker_start').value,
 			document.getElementById('date_timepicker_end').value);
-	showTopTenDataTable();
+	showTopTenDataTable(document.getElementById('date_timepicker_start').value,
+			document.getElementById('date_timepicker_end').value);
 }
 function retrieveModelAndDates() {
 	showLoading();
 	countFailuresDataRequest(document.getElementById('model').value, document
 			.getElementById('date_timepicker_start').value, document
 			.getElementById('date_timepicker_end').value);
-	showCountFailuresDataTable();
+	showCountFailuresModelDataTable(document.getElementById('model').value, document
+			.getElementById('date_timepicker_start').value, document
+			.getElementById('date_timepicker_end').value);
 }
 
 function retrieveIMSIAndDates() {
@@ -399,12 +474,14 @@ function retrieveIMSIAndDates() {
 	countFailuresForIMSIDataRequest(document.getElementById('imsi').value,
 			document.getElementById('date_timepicker_start').value, document
 					.getElementById('date_timepicker_end').value);
-	showCountFailuresDataTable();
+	showCountFailuresDataTable(document.getElementById('imsi').value,
+			document.getElementById('date_timepicker_start').value, document
+			.getElementById('date_timepicker_end').value);
 }
 function retrieveModel() {
 	showLoading();
 	uniqueEventAndCauseDataRequest(document.getElementById('model').value);
-	showUniqueEventAndCauseTable();
+	showUniqueEventAndCauseTable(document.getElementById('model').value);
 }
 function retrieveDatesTopTenIMSIs() {
 	showLoading();
@@ -414,22 +491,34 @@ function retrieveDatesTopTenIMSIs() {
 	TopTenIMSIsDataRequest(date1,date2);
 	showTopTenIMSIsDataTable();
 	showTop10IMSIsGraph(date1, date2);
+
+	TopTenIMSIsDataRequest(document.getElementById('date_timepicker_start').value,
+			document.getElementById('date_timepicker_end').value);
+	showTopTenIMSIsDataTable(document.getElementById('date_timepicker_start').value,
+			document.getElementById('date_timepicker_end').value);
+
 }
 function retrieveIMSIbyFailureClass() {
 	showLoading();
 	imsiForFailureClassRequest(document.getElementById('failure').value);
-	showImsibyFailureClassTable();
+	showImsibyFailureClassTable(document.getElementById('failure').value);
 }
 
 function showModelModal(){
 	$("#exampleModalLongTitle").text("Failures for Model");
-	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="dropdown">'
-			+'<div class="form-group centermargin">'
-			+ '<label for="model">Model:</label>'
+	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="row">'
+			+'<div class="form-group centermargin col-lg-12">'
+			+ '<label for="model">Model</label>'
 			+ '<input type="text" class="form-control" id="model" placeholder="Model">'
-			+ '<label for="date_timepicker_start">Start Date:</label>'
+			+ '</div>'
+			+ '</div>'
+			+ '<div class="row">'
+			+'<div class="form-group centermargin col-md-6">'
+			+ '<label class="labelclass" for="date_timepicker_start">Start Date</label>'
 			+ '<input type="text" class="form-control" id="date_timepicker_start" placeholder="Start Date">'
-			+ '<label for="date_timepicker_end">End Date:</label>'
+			+'</div>'
+			+'<div class="form-group centermargin col-md-6">'
+			+ '<label class="labelclass" for="date_timepicker_end">End Date</label>'
 			+ '<input type="text" class="form-control" id="date_timepicker_end" placeholder="End Date">'
 			+ '</div>'
 		+'</div>');
@@ -443,9 +532,9 @@ function showModelModal(){
 }
 function showUniqueModelModal(){
 	$("#exampleModalLongTitle").text("Unique Event IDs - Cause Codes for model");
-	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="dropdown">'
-			+'<div class="form-group centermargin">'
-			+ '<label for="model">Model:</label>'
+	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="row">'
+			+'<div class="form-group centermargin col-lg-12">'
+			+ '<label for="model">Model</label>'
 			+ '<input type="text" class="form-control" id="model" placeholder="Model">'
 			+ '</div>'
 			+ '</div>');
@@ -477,8 +566,8 @@ function showTopTenIMSIsModal(){
 }
 function showIMSIModal(){
 	$("#exampleModalLongTitle").text("Event IDs - Cause Codes for IMSI");
-	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="dropdown">'
-		+'<div class="form-group centermargin">'
+	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="row">'
+		+'<div class="form-group centermargin col-lg-12">'
 		+ '<label for="imsi">IMSI:</label>'
 		+ '<input type="text" class="form-control" id="imsi" placeholder="IMSI">'
 		+ '</div>'
@@ -492,8 +581,8 @@ function showIMSIModal(){
 }
 function showUniqueIMSIModal(){
 	$("#exampleModalLongTitle").text("Unique Cause Codes for IMSI");
-	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="dropdown">'
-		+'<div class="form-group centermargin">'
+	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="row">'
+		+'<div class="form-group centermargin col-lg-12">'
 		+ '<label for="imsi">IMSI:</label>'
 		+ '<input type="text" class="form-control" id="imsi" placeholder="IMSI">'
 		+ '</div>'
@@ -506,13 +595,16 @@ function showUniqueIMSIModal(){
 	imsiautocomplete();
 }
 function showNMEModal(){
+
 	$("#exampleModalLongTitle").text("Number of Failures and duration for IMSI");
-	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="dropdown">'
-			+'<div class="form-group centermargin">'
-			+ '<label for="date_timepicker_start">Start Date:</label>'
-			+ '<input type="text" class="form-control" id="date_timepicker_start" value="2012-01-01" placeholder="Start Date">'
-			+ '<label for="date_timepicker_end">End Date:</label>'
-			+ '<input type="text" class="form-control" id="date_timepicker_end" value="2018-01-01" placeholder="End Date">'
+	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="row">'
+			+'<div class="form-group centermargin col-md-6">'
+			+ '<label class="labelclass" for="date_timepicker_start">Start Date</label>'
+			+ '<input type="text" class="form-control" id="date_timepicker_start" placeholder="Start Date">'
+			+'</div>'
+			+'<div class="form-group centermargin col-md-6">'
+			+ '<label class="labelclass" for="date_timepicker_end">End Date</label>'
+			+ '<input type="text" class="form-control" id="date_timepicker_end" placeholder="End Date">'
 			+ '</div>'
 		+ '</div>');
 	$('#csrIMSIQueryModal').find('.modal-footer').html('<button type="button" class="btn btn-secondary"'
@@ -526,11 +618,13 @@ function showNMEModal(){
 
 function showTopTenModal(){
 	$("#exampleModalLongTitle").text("Top 10 Market/Operator/Cell ID combinations with failures");
-	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="dropdown">'
-			+'<div class="form-group centermargin">'
-			+ '<label for="date_timepicker_start">Start Date:</label>'
+	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="row">'
+			+'<div class="form-group centermargin col-md-6">'
+			+ '<label class="labelclass" for="date_timepicker_start">Start Date</label>'
 			+ '<input type="text" class="form-control" id="date_timepicker_start" placeholder="Start Date">'
-			+ '<label for="date_timepicker_end">End Date:</label>'
+			+'</div>'
+			+'<div class="form-group centermargin col-md-6">'
+			+ '<label class="labelclass" for="date_timepicker_end">End Date</label>'
 			+ '<input type="text" class="form-control" id="date_timepicker_end" placeholder="End Date">'
 			+ '</div>'
 		+ '</div>');
@@ -544,13 +638,15 @@ function showTopTenModal(){
 
 function showDateModal(){
 	$("#exampleModalLongTitle").text("IMSI failures during given period");
-	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="dropdown">'
-	    +'<div class="form-group centermargin">'
-        +'<label for="date_timepicker_start">Start Date:</label>'
-        +'<input type="text" class="form-control" id="date_timepicker_start" placeholder="Start Date">'
-        +'<label for="date_timepicker_end">End Date:</label>'
-        +'<input type="text" class="form-control" id="date_timepicker_end" placeholder="End Date">'
-		+ '</div>'
+	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="row">'
+			+'<div class="form-group centermargin col-md-6">'
+			+ '<label class="labelclass" for="date_timepicker_start">Start Date</label>'
+			+ '<input type="text" class="form-control" id="date_timepicker_start" placeholder="Start Date">'
+			+'</div>'
+			+'<div class="form-group centermargin col-md-6">'
+			+ '<label class="labelclass" for="date_timepicker_end">End Date</label>'
+			+ '<input type="text" class="form-control" id="date_timepicker_end" placeholder="End Date">'
+			+ '</div>'
 		+ '</div>');
 	$('#csrIMSIQueryModal').find('.modal-footer').html('<button type="button" class="btn btn-secondary"'
 		+ 'data-dismiss="modal">Close</button>'
@@ -563,15 +659,21 @@ function showDateModal(){
 
 function showIMSIFailureModalGivenTimePeriod(){
 	$("#exampleModalLongTitle").text("Count of failures for IMSI");
-	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="dropdown">'		
-		+'<div class="form-group centermargin">'
-		+ '<label for="imsi">IMSI</label>'
-		+ '<input type="text" class="form-control" id="imsi" placeholder="IMSI">'
-		+ '<label for="date_timepicker_start">Start Date:</label>'
-		+ '<input type="text" class="form-control" id="date_timepicker_start" placeholder="Start Date">'
-		+ '<label for="date_timepicker_end">End Date:</label>'
-		+ '<input type="text" class="form-control" id="date_timepicker_end" placeholder="End Date">'
-		+ '</div>'
+	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="row">'		
+			+'<div class="form-group centermargin col-lg-12">'
+			+ '<label for="model">IMSI</label>'
+			+ '<input type="text" class="form-control" id="imsi" placeholder="IMSI">'
+			+ '</div>'
+			+ '</div>'
+			+ '<div class="row">'
+			+'<div class="form-group centermargin col-md-6">'
+			+ '<label class="labelclass" for="date_timepicker_start">Start Date</label>'
+			+ '<input type="text" class="form-control" id="date_timepicker_start" placeholder="Start Date">'
+			+'</div>'
+			+'<div class="form-group centermargin col-md-6">'
+			+ '<label class="labelclass" for="date_timepicker_end">End Date</label>'
+			+ '<input type="text" class="form-control" id="date_timepicker_end" placeholder="End Date">'
+			+ '</div>'
 		+ '</div>');
 	$('#csrIMSIQueryModal').find('.modal-footer').html('<button type="button" class="btn btn-secondary"'
 		+ 'data-dismiss="modal">Close</button>'
@@ -584,8 +686,8 @@ function showIMSIFailureModalGivenTimePeriod(){
 
 function showIMSIsForFailureClassModal(){
 	$("#exampleModalLongTitle").text("IMSI Affected by given Failure Class");
-	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="dropdown">'
-		+'<div class="form-group centermargin">'
+	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="row">'
+		+'<div class="form-group centermargin col-lg-12">'
 		+ '<label for="failure">Failure Cause:</label>'
 		+ '<input type="number" class="form-control" id="failure" min="0" max="4" placeholder="0-4">'
 		+ '</div>'
@@ -595,6 +697,7 @@ function showIMSIsForFailureClassModal(){
 		+'<button type="button" class="btn btn-primary"'
 		+'onclick="retrieveIMSIbyFailureClass()" id="submitquery" data-dismiss="modal">Submit</button>');
 	$('#csrIMSIQueryModal').modal('show'); 
+	failureclassautocomplete();
 	
 }
 function initializeDatePicker() {
@@ -647,10 +750,12 @@ function clearElement(id) {
 }
 
 // //////////////////////////
-function showUniqueImsiDataTable() {
+function showUniqueImsiDataTable(imsi) {
 	$('#wrapper')
-			.html(
-					'<div class="card-body"><div class="table-responsive">'
+			.html(  '<div class="tabletitle"><div><h2>All Unique Cause Codes for a given IMSI</h2></div>'
+					+'<div><h3>IMSI: '+imsi+'</h3></div>'
+					+'</div>'
+					+'<div class="card-body"><div class="table-responsive">'
 							+ '	<table id="uniqueImsiDataTable" class="table table-bordered display" cellspacing="0" width="100%">'
 							+ '		<thead id="tableHeader">' + '			<tr>'
 							+ ' 				<th>Cause Code</th>' + ' 			</tr>'
@@ -660,10 +765,13 @@ function showUniqueImsiDataTable() {
 							+ ' 				<th>Cause Code</th>' + '			</tr>'
 							+ '		</tfoot>' + '	</table>' + '</div></div>');
 }
-function showImsiDataTable() {
+function showImsiDataTable(imsi) {
 	$('#wrapper')
 			.html(
-					'<div class="card-body"><div class="table-responsive">'
+					'<div class="tabletitle"><div><h2>All Event IDs and Cause Codes for a given IMSI</h2></div>'
+					+'<div><h3>IMSI: '+imsi+'</h3></div>'
+					+'</div>'
+					+'<div class="card-body"><div class="table-responsive">'
 							+ '	<table id="ImsiDataTable" class="table table-bordered display" cellspacing="0" width="100%">'
 							+ '		<thead id="tableHeader">' + '			<tr>'
 							+ ' 				<th>Event Id</th>'
@@ -675,10 +783,12 @@ function showImsiDataTable() {
 							+ ' 				<th>Cause Code</th>' + '			</tr>'
 							+ '		</tfoot>' + '	</table>' + '</div></div>');
 }
-function showUniqueEventAndCauseTable() {
+function showUniqueEventAndCauseTable(model) {
 	$('#wrapper')
-			.html(
-					'<div class="card-body"><div class="table-responsive">'
+			.html('<div class="tabletitle"><div><h2>All Unique Event IDs and Cause Codes for a given Model</h2></div>'
+					+'<div><h3>Model: '+model+'</h3></div>'
+					+'</div>'
+					+'<div class="card-body"><div class="table-responsive">'
 							+ '	<table id="UniqueEventAndCauseTable" class="table table-bordered display" cellspacing="0" width="100%">'
 							+ '		<thead id="tableHeader">' + '			<tr>'
 							+ ' 				<th>Event Id</th>'
@@ -692,10 +802,12 @@ function showUniqueEventAndCauseTable() {
 							+ ' 				<th>Number of Occurences</th>' + '			</tr>'
 							+ '		</tfoot>' + '	</table>' + '</div></div>');
 }
-function showTopTenDataTable() {
+function showTopTenDataTable(startDate, endDate) {
 	$('#wrapper')
-			.html(
-					'<div class="card-body"><div class="table-responsive">'
+			.html('<div class="tabletitle"><div><h2>Top 10 Market/Operator/Cell ID Combinations With Failures for a Given Time Period</h2></div>'
+					+'<div><h3>'+startDate+' - '+endDate+'</h3></div>'
+					+'</div>'
+					+'<div class="card-body"><div class="table-responsive">'
 							+ '	<table id="TopTenDataTable" class="table table-bordered display" cellspacing="0" width="100%">'
 							+ '		<thead id="tableHeader">' + '			<tr>' + ' 				<th>Market</th>'
 							+ ' 				<th>Operator</th>'
@@ -709,11 +821,18 @@ function showTopTenDataTable() {
 							+ ' 				<th>Number of Failures</th>' + '			</tr>'
 							+ '		</tfoot>' + '	</table>' + '</div></div>');
 }
-function showTopTenIMSIsDataTable() {
+function showTopTenIMSIsDataTable(startDate, endDate) {
 	$('#wrapper')
+
 			.html(''
 					+ tab_panel_start
 					+ '<div class="card-body"><div class="table-responsive">'
+
+			+'<div class="tabletitle"><div><h2>Top 10 IMSIs With Failures for a Given Time Period</h2></div>'
+					+'<div><h3>'+startDate+' - '+endDate+'</h3></div>'
+					+'</div>'
+					+'<div class="card-body"><div class="table-responsive">'
+
 							+ '	<table id="TopTenIMSIDataTable" class="table table-bordered display" cellspacing="0" width="100%">'
 							+ '		<thead id="tableHeader">' + '			<tr>' + ' 				<th>IMSI</th>'
 							+ ' 				<th>Number of Failures</th>'
@@ -726,9 +845,13 @@ function showTopTenIMSIsDataTable() {
 							+ '		</tfoot>' + '	</table>' + '</div></div>'
 							+ tab_panel_end);
 }
-function showSumAndCountDataTable() {// ///////////////
+
+function showSumAndCountDataTable(startDate, endDate) {
+
 	$('#wrapper')
-			.html(''
+			.html('<div class="tabletitle"><div><h2>Number of Failures and Their Duration for a Given Time Period</h2></div>'
+					+'<div><h3>'+startDate+' - '+endDate+'</h3></div>'
+					+'</div>'
 				+ tab_panel_start
 				+ '<div class="card-body"><div class="table-responsive">'
 				+ '	<table id="SumAndCountDataTable" class="table table-bordered display" cellspacing="0" width="100%">'
@@ -743,10 +866,12 @@ function showSumAndCountDataTable() {// ///////////////
 				+ '		</tfoot>' + '	</table>' + '</div></div>'
 				+ tab_panel_end);
 }
-function showDateDataTable() {
+function showDateDataTable(startDate, endDate) {
 	$('#wrapper')
-			.html(
-					'<div class="card-body"><div class="table-responsive">'
+			.html('<div class="tabletitle"><div><h2>All IMSIs with Failures for a Given Time Period</h2></div>'
+					+'<div><h3>'+startDate+' - '+endDate+'</h3></div>'
+					+'</div>'
+					+'<div class="card-body"><div class="table-responsive">'
 							+ '	<table id="DateDataTable" class="table table-bordered display" cellspacing="0" width="100%">'
 							+ '		<thead id="tableHeader">' + '			<tr>' + ' 				<th>IMSI</th>'
 							+ ' 			</tr>' + ' 		</thead>'
@@ -755,10 +880,13 @@ function showDateDataTable() {
 							+ '			</tr>' + '		</tfoot>' + '	</table>'
 							+ '</div></div>');
 }
-function showCountFailuresDataTable() {
+function showCountFailuresDataTable(imsi,startDate, endDate) {
 	$('#wrapper')
-			.html(
-					'<div class="card-body"><div class="table-responsive">'
+			.html('<div class="tabletitle"><div><h2>Number of Failures for a Given IMSI and Time Period</h2></div>'
+					+'<div><h3>IMSI: '+imsi+'</h3></div>'
+					+'<div><h4>'+startDate+' - '+endDate+'</h4></div>'
+					+'</div>'
+					+'<div class="card-body"><div class="table-responsive">'
 							+ '	<table id="CountFailuresDataTable" class="table table-bordered display" cellspacing="0" width="100%">'
 							+ '		<thead id="tableHeader">' + '			<tr>'
 							+ ' 				<th>Number of Failures</th>' + ' 			</tr>'
@@ -768,11 +896,29 @@ function showCountFailuresDataTable() {
 							+ ' 				<th>Number of Failures</th>' + '			</tr>'
 							+ '		</tfoot>' + '	</table>' + '</div></div>');
 }
-function showImsibyFailureClassTable() {
+function showCountFailuresModelDataTable(model,startDate, endDate) {
 	$('#wrapper')
-			.html(
-					'<div class="card-body"><div class="table-responsive">'
-							+ '	<table id="ImsibyFailureClassDataTable" class="table table-bordered display" cellspacing="0" width="100%">'
+			.html('<div class="tabletitle"><div><h2>Number of Failures for a Given Model and Time Period</h2></div>'
+					+'<div><h3>Model: '+model+'</h3></div>'
+					+'<div><h4>'+startDate+' - '+endDate+'</h4></div>'
+					+'</div>'
+					+'<div class="card-body"><div class="table-responsive">'
+							+ '	<table id="CountFailuresDataTable" class="table table-bordered display" cellspacing="0" width="100%">'
+							+ '		<thead id="tableHeader">' + '			<tr>'
+							+ ' 				<th>Number of Failures</th>' + ' 			</tr>'
+							+ ' 		</thead>'
+							// +' <tbody> </tbody>'
+							+ '		<tfoot id="tableFooter">' + '			<tr>'
+							+ ' 				<th>Number of Failures</th>' + '			</tr>'
+							+ '		</tfoot>' + '	</table>' + '</div></div>');
+}
+function showImsibyFailureClassTable(failureClass) {
+	$('#wrapper')
+			.html('<div class="tabletitle"><div><h2>All IMSIs Affected by a Given Failure Cause Class</h2></div>'
+					+'<div><h3>Failure Class: '+failureClass+'</h3></div>'
+					+'</div>'
+					+'<div class="card-body"><div class="table-responsive">'
+							+ '	<table id="ImsibyFailureClassDataTable" class="table table-bordered display" cellspacing="0">'
 							+ '		<thead id="tableHeader">' + '			<tr>'
 							+ ' 				<th>IMSI</th>' + ' 			</tr>'
 							+ ' 		</thead>'

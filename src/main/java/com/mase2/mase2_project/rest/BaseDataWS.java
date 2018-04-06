@@ -22,7 +22,11 @@ import com.mase2.mase2_project.data.BaseDataDAO;
 import com.mase2.mase2_project.graph_model.ImsiNode;
 import com.mase2.mase2_project.graph_model.NodeEventIdCouseCode;
 import com.mase2.mase2_project.model.BaseData;
+
+import com.mase2.mase2_project.util.AutoComObject;
+
 import com.mase2.mase2_project.model.DateAndDurationForIMSI;
+
 import com.mase2.mase2_project.util.DateParam;
 import com.mase2.mase2_project.util.DurationAndCountObject;
 import com.mase2.mase2_project.util.FailureCountObject;
@@ -68,6 +72,13 @@ public class BaseDataWS {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response autoCopleteModel(@Context HttpHeaders httpHeaders, @QueryParam("term") final String model) {
 		final List<String> baseData = baseDataDAO.getAllModels(model);
+		return Response.status(200).entity(baseData).build();
+	}
+	@GET
+	@Path("/afc/") 
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response autoCopleteFailureClass(@Context HttpHeaders httpHeaders, @QueryParam("term") final String failureClass) {		
+		final List<AutoComObject> baseData = baseDataDAO.getAllFailureClasses(failureClass);
 		return Response.status(200).entity(baseData).build();
 	}
 
@@ -170,6 +181,23 @@ public class BaseDataWS {
 			return SecurityCheck.ACCESS_DENY;
 		}
 	}
+
+	@GET
+	@Path("/nme/countfailures")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response findCountFailures(@Context HttpHeaders httpHeaders) {
+		if (securityCheck.hasRole(httpHeaders, "admin")) {
+			final List<Integer> baseData = baseDataDAO.getTotalNumberOfFailures();
+			return Response.status(200).entity(baseData).build();
+		} else {
+			return SecurityCheck.ACCESS_DENY;
+		}
+	}
+
+
+	
+
+
 
 	@GET
 	@Path("/graph/{imsi}")
