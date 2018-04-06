@@ -857,7 +857,7 @@ function showCountFailuresDataTable(imsi,startDate, endDate) {
 					+'<div><h4>'+startDate+' - '+endDate+'</h4></div>'
 					+'</div>'
 					+'<div class="card-body">'
-					+'<div><h4>Number of Failures: </h4>' + failureCount +'</div></div>');
+					+'<div style="text-align:center; padding:30px; border"><h3>Number of Failures: </h3><div style="display: inline-block;"><h4>' + failureCount +'</h4></div></div></div>');
 }
 function showCountFailuresModelDataTable(model,startDate, endDate) {
 	$('#wrapper')
@@ -866,7 +866,11 @@ function showCountFailuresModelDataTable(model,startDate, endDate) {
 			+'<div><h4>'+startDate+' - '+endDate+'</h4></div>'
 			+'</div>'
 			+'<div class="card-body">'
-			+'<div><h4>Number of Failures: </h4>' + failureCount +'</div></div>');
+			+'<div style="display: table;">'
+			+'<div style="display:table-row;">'
+			+'<div style="display:table-cell;">Number of Failures:'
+			+'<div style="display:table-cell;">' +failureCount
+			+ '</div></div></div></div></div>');
 }
 function showImsibyFailureClassTable(failureClass) {
 	$('#wrapper')
