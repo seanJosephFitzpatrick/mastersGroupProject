@@ -7,7 +7,7 @@ var modelDataGraph = function() {
 		//$("#graph").replaceWith("<h1>No Data Available</h1>");
 	}
 	
-    Highcharts.chart('graph', {
+    Highcharts.chart('panel_graph', {
       chart: {
         type: 'column'
       },

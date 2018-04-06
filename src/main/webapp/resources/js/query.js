@@ -759,6 +759,7 @@ function showUniqueEventAndCauseTable(model) {
 			.html('<div class="tabletitle"><div><h2>All Unique Event IDs and Cause Codes for a given Model</h2></div>'
 					+'<div><h3>Model: '+model+'</h3></div>'
 					+'</div>'
+					+ tab_panel_start
 					+'<div class="card-body"><div class="table-responsive">'
 							+ '	<table id="UniqueEventAndCauseTable" class="table table-bordered display" cellspacing="0" width="100%">'
 							+ '		<thead id="tableHeader">' + '			<tr>'
@@ -771,7 +772,8 @@ function showUniqueEventAndCauseTable(model) {
 							+ ' 				<th>Event Id</th>'
 							+ ' 				<th>Cause Code</th>'
 							+ ' 				<th>Number of Occurences</th>' + '			</tr>'
-							+ '		</tfoot>' + '	</table>' + '</div></div>');
+							+ '		</tfoot>' + '	</table>' + '</div></div>'
+							+ tab_panel_end);
 }
 function showTopTenDataTable(startDate, endDate) {
 	$('#wrapper')
