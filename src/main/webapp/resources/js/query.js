@@ -14,6 +14,7 @@ var rootCountFailures = "http://localhost:8080/mase2-project/rest/basedatas/nme/
 var numberOfFailures=0;
 var rootUrlIMSIForGivenFailureCauseClass = "http://localhost:8080/mase2-project/rest/basedatas/nme/querygivenfailurecauseclass/";
 
+var failureCount;
 $('document').ready(function() {
 	$('.card-header').html("Network Data Analytics");
 
@@ -163,26 +164,9 @@ var countFailuresDataRequest = function(model, date1, date2) {
 					+ sessionStorage.getItem("password")
 		},
 		success : function(data) {
-
-			userTable = $('#CountFailuresDataTable').DataTable({
-				responsive: true,
-				fixedHeader: true,
-				dom: 'Bfrtlip',
-				buttons:{
-					buttons: [
-					            {extend: 'copy',className: 'btn btn-primary'},
-					            {extend: 'excel',className: 'btn btn-primary'},
-					            {extend: 'pdf',className: 'btn btn-primary'},
-					            {extend: 'print',className: 'btn btn-primary'}
-					            
-					            ]},
-				data : data,
-				columns : [ {
-					data : "failureCount"
-				} ]
-
-			});
-
+			failureCount= data[0].failureCount;
+			console.log("Setting failure count to " + failureCount);
+			showCountFailuresModelDataTable(model,date1, date2);
 		}
 	});
 };
@@ -324,25 +308,9 @@ var countFailuresForIMSIDataRequest = function(imsi, date1, date2) {
 		},
 		success : function(data) {
 
-			userTable = $('#CountFailuresDataTable').DataTable({
-				responsive: true,
-				fixedHeader: true,
-				dom: 'Bfrtlip',
-				buttons:{
-					buttons: [
-					            {extend: 'copy',className: 'btn btn-primary'},
-					            {extend: 'excel',className: 'btn btn-primary'},
-					            {extend: 'pdf',className: 'btn btn-primary'},
-					            {extend: 'print',className: 'btn btn-primary'}
-					            
-					            ]},
-				data : data,
-				columns : [ {
-					data : "failureCount"
-				} ]
-
-			});
-
+			failureCount= data[0].failureCount;
+			console.log("Setting failure count to " + failureCount);
+			showCountFailuresDataTable(imsi,date1, date2);
 		}
 	});
 };
@@ -474,14 +442,17 @@ function retrieveIMSIAndDates() {
 	countFailuresForIMSIDataRequest(document.getElementById('imsi').value,
 			document.getElementById('date_timepicker_start').value, document
 					.getElementById('date_timepicker_end').value);
+	console.log("FailureCount is" +failureCount);
 	showCountFailuresDataTable(document.getElementById('imsi').value,
 			document.getElementById('date_timepicker_start').value, document
 			.getElementById('date_timepicker_end').value);
 }
 function retrieveModel() {
 	showLoading();
+	model = document.getElementById('model').value;
 	uniqueEventAndCauseDataRequest(document.getElementById('model').value);
 	showUniqueEventAndCauseTable(document.getElementById('model').value);
+	modelDataGraph();
 }
 function retrieveDatesTopTenIMSIs() {
 	showLoading();
@@ -783,6 +754,7 @@ function showUniqueEventAndCauseTable(model) {
 			.html('<div class="tabletitle"><div><h2>All Unique Event IDs and Cause Codes for a given Model</h2></div>'
 					+'<div><h3>Model: '+model+'</h3></div>'
 					+'</div>'
+					+ tab_panel_start
 					+'<div class="card-body"><div class="table-responsive">'
 							+ '	<table id="UniqueEventAndCauseTable" class="table table-bordered display" cellspacing="0" width="100%">'
 							+ '		<thead id="tableHeader">' + '			<tr>'
@@ -795,7 +767,8 @@ function showUniqueEventAndCauseTable(model) {
 							+ ' 				<th>Event Id</th>'
 							+ ' 				<th>Cause Code</th>'
 							+ ' 				<th>Number of Occurences</th>' + '			</tr>'
-							+ '		</tfoot>' + '	</table>' + '</div></div>');
+							+ '		</tfoot>' + '	</table>' + '</div></div>'
+							+ tab_panel_end);
 }
 function showTopTenDataTable(startDate, endDate) {
 	$('#wrapper')
@@ -882,36 +855,27 @@ function showDateDataTable(startDate, endDate) {
 							+ '</div></div>');
 }
 function showCountFailuresDataTable(imsi,startDate, endDate) {
+	console.log("Failure count is::" + failureCount);
 	$('#wrapper')
 			.html('<div class="tabletitle"><div><h2>Number of Failures for a Given IMSI and Time Period</h2></div>'
 					+'<div><h3>IMSI: '+imsi+'</h3></div>'
 					+'<div><h4>'+startDate+' - '+endDate+'</h4></div>'
 					+'</div>'
-					+'<div class="card-body"><div class="table-responsive">'
-							+ '	<table id="CountFailuresDataTable" class="table table-bordered display" cellspacing="0" width="100%">'
-							+ '		<thead id="tableHeader">' + '			<tr>'
-							+ ' 				<th>Number of Failures</th>' + ' 			</tr>'
-							+ ' 		</thead>'
-							// +' <tbody> </tbody>'
-							+ '		<tfoot id="tableFooter">' + '			<tr>'
-							+ ' 				<th>Number of Failures</th>' + '			</tr>'
-							+ '		</tfoot>' + '	</table>' + '</div></div>');
+					+'<div class="card-body">'
+					+'<div style="text-align:center; padding:30px; border:1px solid black; border-radius:12px;"><h3>Number of Failures: </h3><div style="display: inline-block;"><h4>' 
+					+ failureCount 
+					+'</h4></div></div></div>');
 }
 function showCountFailuresModelDataTable(model,startDate, endDate) {
 	$('#wrapper')
-			.html('<div class="tabletitle"><div><h2>Number of Failures for a Given Model and Time Period</h2></div>'
-					+'<div><h3>Model: '+model+'</h3></div>'
-					+'<div><h4>'+startDate+' - '+endDate+'</h4></div>'
-					+'</div>'
-					+'<div class="card-body"><div class="table-responsive">'
-							+ '	<table id="CountFailuresDataTable" class="table table-bordered display" cellspacing="0" width="100%">'
-							+ '		<thead id="tableHeader">' + '			<tr>'
-							+ ' 				<th>Number of Failures</th>' + ' 			</tr>'
-							+ ' 		</thead>'
-							// +' <tbody> </tbody>'
-							+ '		<tfoot id="tableFooter">' + '			<tr>'
-							+ ' 				<th>Number of Failures</th>' + '			</tr>'
-							+ '		</tfoot>' + '	</table>' + '</div></div>');
+	.html('<div class="tabletitle"><div><h2>Number of Failures for a Given Model and Time Period</h2></div>'
+			+'<div><h3>Model: '+model+'</h3></div>'
+			+'<div><h4>'+startDate+' - '+endDate+'</h4></div>'
+			+'</div>'
+			+'<div class="card-body">'
+			+'<div style="text-align:center; padding:30px; border:1px solid black; border-radius:12px;"><h3>Number of Failures: </h3><div style="display: inline-block;"><h4>' 
+			+ failureCount 
+			+'</h4></div></div></div>');
 }
 function showImsibyFailureClassTable(failureClass) {
 	$('#wrapper')
