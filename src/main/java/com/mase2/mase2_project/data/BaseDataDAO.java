@@ -12,13 +12,16 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 
+
+
+
 import com.mase2.mase2_project.graph_model.LastNode;
 import com.mase2.mase2_project.graph_model.NodeDataTime;
 import com.mase2.mase2_project.graph_model.NodeEventIdCouseCode;
-
 import com.mase2.mase2_project.model.BaseData;
 import com.mase2.mase2_project.model.DateAndDurationForIMSI;
 import com.mase2.mase2_project.model.EventCause;
+import com.mase2.mase2_project.util.AutoComObject;
 import com.mase2.mase2_project.util.DateParam;
 import com.mase2.mase2_project.util.DurationAndCountObject;
 import com.mase2.mase2_project.util.FailureCountObject;
@@ -100,6 +103,13 @@ public class BaseDataDAO {
 				.setParameter(2, endDateParam.getDate());
         return query.setMaxResults(10).getResultList();
 	}
+	@SuppressWarnings("unchecked")
+	public List<Integer> getTotalNumberOfFailures() {
+
+		final Query query=entityManager.createQuery("SELECT count(*) FROM BaseData m");
+
+        return query.getResultList();
+	}
 
 	@SuppressWarnings("unchecked")
 	public List<IMSIObject> getAllImsiWithFailures(DateParam startDateParam, DateParam endDateParam) {
@@ -107,6 +117,7 @@ public class BaseDataDAO {
 		final Query query=entityManager.createQuery("SELECT distinct new com.mase2.mase2_project.util.IMSIObject(m.imsi) FROM BaseData m where m.dateTime between ?1 and ?2")
 				.setParameter(1, startDateParam.getDate())
 				.setParameter(2, endDateParam.getDate());
+		
         return query.getResultList();
 	}
 	
@@ -121,9 +132,14 @@ public class BaseDataDAO {
 	@SuppressWarnings("unchecked")
 	public List<String> getAllModels(String model) {
 		
-		final Query query=entityManager.createQuery("SELECT distinct m.model FROM Ue m WHERE m.model LIKE :model")
+		final Query query=entityManager.createQuery("SELECT distinct m.ue.model FROM BaseData m WHERE m.ue.model LIKE :model")
 		.setParameter("model", '%' +model+'%' );
 		return query.setMaxResults(5).getResultList();
+	}
+	public List<AutoComObject> getAllFailureClasses(String failureClass) {
+		final Query query=entityManager.createQuery("SELECT distinct new com.mase2.mase2_project.util.AutoComObject(m.description,m.failureClass) FROM FailureClass m WHERE m.description LIKE :failureClass")
+				.setParameter("failureClass", '%' +failureClass+'%' );
+				return query.setMaxResults(5).getResultList();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -197,6 +213,7 @@ public class BaseDataDAO {
 		
 	}
 
+
 	public List<DateAndDurationForIMSI> getDateAndDurationOfFailuresForIMSI(String imsi, DateParam startDateParam, DateParam endDateParam) {
 		Query query = entityManager.createQuery("SELECT m FROM BaseData as m WHERE m.imsi LIKE :imsi AND m.dateTime BETWEEN :startDataTime AND :endDataTime ORDER BY m.dateTime ");
 		query.setParameter("imsi", imsi);
@@ -209,5 +226,6 @@ public class BaseDataDAO {
 		}
 		return result;
 	}
+
 
 }
