@@ -489,13 +489,8 @@ function retrieveDatesTopTenIMSIs() {
 	var date1 = document.getElementById('date_timepicker_start').value;
 	var date2 = document.getElementById('date_timepicker_end').value;
 	TopTenIMSIsDataRequest(date1,date2);
-	showTopTenIMSIsDataTable();
+	showTopTenIMSIsDataTable(date1.date2);
 	showTop10IMSIsGraph(date1, date2);
-
-	TopTenIMSIsDataRequest(document.getElementById('date_timepicker_start').value,
-			document.getElementById('date_timepicker_end').value);
-	showTopTenIMSIsDataTable(document.getElementById('date_timepicker_start').value,
-			document.getElementById('date_timepicker_end').value);
 
 }
 function retrieveIMSIbyFailureClass() {
@@ -807,6 +802,7 @@ function showTopTenDataTable(startDate, endDate) {
 			.html('<div class="tabletitle"><div><h2>Top 10 Market/Operator/Cell ID Combinations With Failures for a Given Time Period</h2></div>'
 					+'<div><h3>'+startDate+' - '+endDate+'</h3></div>'
 					+'</div>'
+					+ tab_panel_start
 					+'<div class="card-body"><div class="table-responsive">'
 							+ '	<table id="TopTenDataTable" class="table table-bordered display" cellspacing="0" width="100%">'
 							+ '		<thead id="tableHeader">' + '			<tr>' + ' 				<th>Market</th>'
@@ -819,7 +815,11 @@ function showTopTenDataTable(startDate, endDate) {
 							+ ' 				<th>Operator</th>'
 							+ ' 				<th>Cell ID</th>'
 							+ ' 				<th>Number of Failures</th>' + '			</tr>'
-							+ '		</tfoot>' + '	</table>' + '</div></div>');
+							+ '		</tfoot>' + '	</table>' + '</div></div>'
+							+ tab_panel_end);
+	$('#panel_graph')
+
+	.html('<div id="graphdiv"></div>');
 }
 function showTopTenIMSIsDataTable(startDate, endDate) {
 	$('#wrapper')
@@ -844,6 +844,7 @@ function showTopTenIMSIsDataTable(startDate, endDate) {
  + '			</tr>'
 							+ '		</tfoot>' + '	</table>' + '</div></div>'
 							+ tab_panel_end);
+	
 }
 
 function showSumAndCountDataTable(startDate, endDate) {
