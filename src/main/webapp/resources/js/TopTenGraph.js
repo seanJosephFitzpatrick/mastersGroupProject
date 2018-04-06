@@ -7,13 +7,13 @@ var definitionVisualization = {};
 
     var topLevelItem = {label: "% Failures Per Node"};
 
-    var subSubData = [
+/*    var subSubData = [
         {colorIndex: 0, value: 3075, label: "Label 1"},
         {colorIndex: 1, value: 6150, label: "Label 2"},
         {colorIndex: 2, value: 6832, label: "Label 3"},
         {colorIndex: 3, value: 7516, label: "Label 4"},
         {colorIndex: 4, value: 6291, label: "Label 5"}
-    ];
+    ];*/
 
  /*   var subData = [
         {colorIndex: 0, value: 1000, label: "Region 1"},
@@ -22,6 +22,7 @@ var definitionVisualization = {};
         {colorIndex: 3, value: 1000, label: "Region 4"},
         {colorIndex: 4, value: 1200, childData: subSubData, label: "Region 5"}
     ];*/
+    var subSubData =[];
 	var subData=[];
     var data = [];
     data.push({ 
@@ -61,44 +62,107 @@ var definitionVisualization = {};
     }
     
     for(var i=0;i<data.length;i++){
+    	countColour=0;
     	var tempArray=[];
+    	
+    	tempArray.push({ 
+    		colorIndex: countColour, 
+            value: 0,
+            label: "Other Failures"});
+    	countColour++;
+    	
+    	
     	for(var j=0;j<topTen.length;j++){
     		if(topTen[j].cellId===data[i].label){
-    		if(tempArray.length===0){
+
     			tempArray.push({ 
-        		colorIndex: j, 
+        		colorIndex: countColour, 
                 value: topTen[j].count,
                 childData: subSubData,
                 label: topTen[j].country});
-        	}else{
-        		var found=true;
-        		for(var x=0;x<tempArray.length;x++){
-        			if(tempArray[x].label!==topTen[j].country){
-        				found=true;
-        				
-        			}
-        		}
-        		if(found){
-        			tempArray.push({ 
-    	        		colorIndex: j, 
-    	                value: topTen[j].count,
-    	                childData: subSubData,
-    	                label: topTen[j].country});
-        		}
-        		}
+    			countColour++;
+
     		}
         	}
-    	if(tempArray.length!==0){
-    	subData[i]=tempArray;
-    	data[i].childData=subData[i];
+    	console.log(data[i].label);
+    	if(data[i].label !== "Other Failures"){
+    		console.log("test");
+    	subData.push(tempArray);
+    	data[i].childData=subData[i-1];
     	}
-    	
 
     }
-    console.log(subData);
     
-    
-
+    for(var i=0;i<subData.length;i++){
+    	countTotal=0;
+    	for(var j=1;j<subData[i].length;j++){
+    	countTotal+=parseInt(subData[i][j].value);
+    	subData[i][j].value=parseFloat(subData[i][j].value)/numberOfFailures*100;
+    	subData[i][j].value=subData[i][j].value.toFixed(2);
+    	console.log(data[i].value);
+    	if(j===subData[i].length-1){
+    		console.log(countTotal);
+    		subData[i][0].value=(numberOfFailures-countTotal)/numberOfFailures*100;
+    		subData[i][0].value=subData[i][0].value.toFixed(2);
+    	}
+    	}
+    }
+    for(var i=0;i<subData.length;i++){
+    	var tempArray=[];
+    	for(var j=0;j<subData[i].length;j++){
+    		var tempArray2 = [];
+    		
+    		countColour=0;  	      	
+        	tempArray2.push({ 
+        		colorIndex: countColour, 
+                value: 2000,
+                label: "Other Failures"});
+        	countColour++;
+    		for(var x=0;x<topTen.length;x++){
+        		if(topTen[x].country===subData[i][j].label){
+        			if(tempArray2.length===0){
+        			tempArray2.push({ 
+            		colorIndex: countColour, 
+                    value: topTen[x].count,
+                    label: topTen[x].operator});
+        			countColour++;
+        			}else{
+        				var flag=false;
+        				for(var z=0;z<tempArray2.length;z++){
+        					if(topTen[x].operator===tempArray2[z].label){
+        						tempArray2[z].value+=topTen[x].count;
+        						flag=true;
+        						break;
+        					}
+        				}
+        				if(!flag){
+        					tempArray2.push({ 
+        	            		colorIndex: countColour, 
+        	                    value: topTen[x].count,
+        	                    label: topTen[x].operator});
+        	        			countColour++;
+        				}
+        			}
+        		}
+            	}
+    		if(subData[i][j].label !== "Other Failures"){
+        		console.log("test");
+        		tempArray.push(tempArray2);
+        	}
+    }
+    	subSubData.push(tempArray);
+    	
+    }
+    console.log(subSubData);
+    for(var i=0;i<subData.length;i++){
+    	for(var j=0;j<subData[i].length;j++){
+    		if(subData[i][j].label !== "Other Failures"){
+    			subData[i][j].childData=subSubData[i][j-1];
+    			console.log(subData[i][j].childData);
+        	}
+    	}
+    }
+    console.log(subSubData);
     var dataOriginal = data.slice(0); //Keep a record around for book-keeping purposes
 
     var selectedPath = [];
@@ -121,6 +185,12 @@ var definitionVisualization = {};
     var height = 1800;
 
     var radius = 300;
+    var tooltip = d3.select("body")
+	.append("div")
+	.style("position", "absolute")
+	.style("z-index", "10")
+	.style("visibility", "hidden")
+	.text("a simple tooltip");
 
     var transformAttrValue = function (adjustLeft) {
         var leftValue = margin.left + radius;
@@ -243,12 +313,22 @@ var definitionVisualization = {};
                 .ease("in")
                 .duration(100)
                 .attr("d", arcOver);
-        }).on("mouseout", function () {
+        }).on("mouseover", function (d) {
+            //return false;
+            d3.select(this).transition()
+                .ease("in")
+                .duration(100)
+                .attr("d", arcOver);
+            tooltip.text(d.value+"%");
+            return tooltip.style("visibility", "visible");
+        }).on("mousemove", function(){return tooltip.style("top",(d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");})
+        .on("mouseout", function () {
             //return false;
             d3.select(this).transition()
                 .ease("bounce")
                 .duration(500)
                 .attr("d", arc);
+            return tooltip.style("visibility", "hidden");
         }).on("click", zoomIn)
                         .each(function (d, counter) {
                             this._current = d;
@@ -591,12 +671,7 @@ var definitionVisualization = {};
             .outerRadius(radius * 1.1)
             .innerRadius(radius - 20);
         
-        var tooltip = d3.select("body")
-    	.append("div")
-    	.style("position", "absolute")
-    	.style("z-index", "10")
-    	.style("visibility", "hidden")
-    	.text("a simple tooltip");
+        
 
         path.on("mouseover", function (d) {
             //return false;
