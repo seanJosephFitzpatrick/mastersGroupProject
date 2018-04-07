@@ -357,8 +357,12 @@ var showTop10IMSIsGraph = function(data1, data2) {
 						sub = '';
 						if(e.dataPoint.name.length == 15){
 							sub = e.dataPoint.name.substring(9,15);
-						}else{
+						}else if(e.dataPoint.name.length == 14){
 							sub = e.dataPoint.name.substring(8,14);
+						}else if(e.dataPoint.name.length == 16){
+							sub = e.dataPoint.name.substring(10,17);
+						}else if(e.dataPoint.name.length == 17){
+							sub = e.dataPoint.name.substring(9,17);
 						}
 						return 'Failure Range: '+ (sub) + ": " + 'IMSIs: ' + e.dataPoint.y;
 					}
