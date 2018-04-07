@@ -1,4 +1,4 @@
-@import "compass/css3";
+
 #loading_gif {
 	margin: auto;
 	display: block;	
@@ -52,14 +52,33 @@ input[type=email] {
 .chartLabel{
 	color: #00275E !important;
 }
+#graphtitle{
+	margin-top:20px;
+	text-align:center;
+}
 .center {
 
     fill: #00275E !important;
     font-weight: bold;
+    font-size: 26px !important;
+}
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active{
+	color: #FFFFFF !important;
+	background-color: #00275E !important;
+}
+#mainNav.navbar-dark .navbar-collapse .navbar-sidenav{
+	background: #00275E !important;
+}
+#mainNav.navbar-dark .navbar-collapse .navbar-sidenav > .nav-item .sidenav-second-level, #mainNav.navbar-dark .navbar-collapse .navbar-sidenav > .nav-item .sidenav-third-level{
+	background: #00275E !important;
+}
+.bg-dark{
+	background-color: #00275E !important;
 }
 .outer-label{
 	fill: #00275E !important;
 	font-weight: bold;
+	font-size: 20px !important;
 }
 body{
 	color: #00275E !important;

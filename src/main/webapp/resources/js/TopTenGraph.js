@@ -5,7 +5,7 @@ var definitionVisualization = {};
 
     visualization.donut = {};
 
-    var topLevelItem = {label: "% Failures Per Node"};
+    var topLevelItem = {label: "Failures Per Node"};
 
 /*    var subSubData = [
         {colorIndex: 0, value: 3075, label: "Label 1"},
@@ -197,13 +197,14 @@ var definitionVisualization = {};
 
     // Global Variables
 
-    var margin = {top: 150, right: 150, bottom: 0, left: 500};
+    var margin = {top: 125, right: 150, bottom: 0, left: 500};
     var width = '100%';
     var height = 600;
 
     var radius = 300;
     var tooltip = d3.select("body")
 	.append("div")
+	.attr("id","graphtooltip")
 	.style("position", "absolute")
 	.style("z-index", "10")
 	.style("visibility", "hidden")
@@ -336,7 +337,8 @@ var definitionVisualization = {};
                 .ease("in")
                 .duration(100)
                 .attr("d", arcOver);
-            tooltip.text(d.value);
+            var percentageValue=(parseFloat(d.value)/numberOfFailures*100).toFixed(2);
+            tooltip.text("Count: "+d.value+" | Percentage: "+percentageValue+"%");
             return tooltip.style("visibility", "visible");
         }).on("mousemove", function(){return tooltip.style("top",(d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");})
         .on("mouseout", function () {
@@ -622,7 +624,7 @@ var definitionVisualization = {};
     	var outerWidth  = 1600,
         outerHeight = 900;
         var svgContainer = d3.select("#panel_graph");
-        svgContainer.html("");
+
         data = dataOriginal.slice(0);
         selectedPath = [];
 
@@ -709,7 +711,8 @@ var definitionVisualization = {};
                 .ease("in")
                 .duration(100)
                 .attr("d", arcOver);
-            tooltip.text(d.value);
+            var percentageValue=(parseFloat(d.value)/numberOfFailures*100).toFixed(2);
+            tooltip.text("Count: "+d.value+" | Percentage: "+percentageValue+"%");
             return tooltip.style("visibility", "visible");
         }).on("mousemove", function(){return tooltip.style("top",(d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");})
         .on("mouseout", function () {

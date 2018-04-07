@@ -68,6 +68,7 @@ function checkUsersNav(){
 }
 // ///////////////////// Import Tables /////////////////////
 function manualImportTables(id) {
+	$('#graphtabs').hide();
 	showLoading();
 	manualImport(id);
 }
@@ -108,8 +109,8 @@ function addFileNames(fileNames){
 
 
 function showLoading(){
-	$('#wrapper').html(''
-			+ '	<div calss="text-center" id="loding">'
+	$('#tabletitle').html(''
+			+ '	<div class="text-center" id="loding">'
 			+ '		<img src="./resources/css/loading_icon.gif" alt="loading" id="loading_gif">'
 			+ '	</div>'
 	);
@@ -125,6 +126,7 @@ function showManiPage() {
 }
 
 function showDashboard() {
+	$('#graphtabs').hide();
 	$('#wrapper').html('<img src="./resources/css/blahblahblah.jpg"  id="EricssonLogo">');
 
 }

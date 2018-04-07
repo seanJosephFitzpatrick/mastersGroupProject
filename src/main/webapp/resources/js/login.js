@@ -42,6 +42,7 @@ var postLoginAction = function(data) {
 };
 
 function logoutAction() {
+	$('#graphtabs').hide();
 	sessionStorage.setItem("role", "none");
 	showManiPage();
 }

@@ -45,10 +45,11 @@ function showTableEventcauses() {
 }
 
 function showEventcausesTable() {
+	$('#graphtabs').hide();
 	$('#wrapper').html(	''
 			+ '	<i class="fa fa-table"></i> <span id="tableTitle">All Event Causes Table</span>'
 			+ '	<div class="table-responsive ">'
-			+ '		<table id="eventcauses_table" class="table table-bordered table-fixed-header" cellspacing="0" width="100%">'
+			+ '		<table id="eventcauses_table" class="table table-bordered display" cellspacing="0" width="100%">'
 			+ '			<thead>'
 			+ '				<th>Event Code</th><th>Event ID</th><th>Description</th>'     
 			+ '			</thead>'
@@ -114,6 +115,7 @@ function showTabelUe() {
 // + '</td><td>' + ue.ueType + '</td><td>' + ue.os + '</td><td>' + ue.inputType
 
 function showUeTable() {
+	$('#graphtabs').hide();
 	$('#wrapper').html(	''
 			+ '	<i class="fa fa-table"></i> <span id="tableTitle">All Ue Table</span>'
 			+ '	<div class="table-responsive ">'
@@ -167,6 +169,7 @@ function showTabelFailureClass() {
 }
 
 function showTableFailureClass() {
+	$('#graphtabs').hide();
 	$('#wrapper').html(	''
 			+ '	<i class="fa fa-table"></i> <span id="tableTitle" >Failure Class Table</span>'
 			+ '	<div class="table-responsive ">'
@@ -221,6 +224,7 @@ function showTabelMcc_Mnc() {
 }
 
 function showTableMccMnc() {
+	$('#graphtabs').hide();
 	$('#wrapper').html(	''
 			+ '	<i class="fa fa-table"></i> <span id="tableTitle" >Mcc Mnc Table</span>'
 			+ '	<div class="table-responsive ">'

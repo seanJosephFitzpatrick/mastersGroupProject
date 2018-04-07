@@ -9,9 +9,10 @@ var rootUrlTop10Failures = "http://localhost:8080/mase2-project/rest/basedatas/n
 var rootUrlTop10IMSIs = "http://localhost:8080/mase2-project/rest/basedatas/nme/querytoptenimsi?StartDate=";
 var rootUrlUniqueIdAndCauseCodeForModel = "http://localhost:8080/mase2-project/rest/basedatas/nme/";
 var rootUrlUniqueCauseCodeForIMSI = "http://localhost:8080/mase2-project/rest/basedatas/csr/unique/";
-var rootCountFailures = "http://localhost:8080/mase2-project/rest/basedatas/nme/countfailures"
+var rootCountFailures = "http://localhost:8080/mase2-project/rest/basedatas/nme/countfailures";
 
 var numberOfFailures=0;
+var TopTenGraphData=[];
 var rootUrlIMSIForGivenFailureCauseClass = "http://localhost:8080/mase2-project/rest/basedatas/nme/querygivenfailurecauseclass/";
 
 var failureCount;
@@ -45,9 +46,7 @@ var countFailures = function(data2) {
 		success : function(data) {
 			numberOfFailures=data[0];
 		},
-		complete : function(){
-			drawGraph(data2);
-		}
+		
 	});
 
 };
@@ -257,6 +256,7 @@ var TopTenDataRequest = function(data1, data2) {
 				"order" : [ [ 3, "desc" ] ]
 			});
 			countFailures(data);
+			TopTenGraphData=data;
 			
 		}
 	});
@@ -717,6 +717,7 @@ function clearElement(id) {
 
 // //////////////////////////
 function showUniqueImsiDataTable(imsi) {
+	$('#graphtabs').hide();
 	$('#wrapper')
 			.html(  '<div class="tabletitle"><div><h2>Unique Cause Codes for a given IMSI</h2></div>'
 					+'<div><h3>IMSI: <i>'+imsi+'</i></h3></div>'
@@ -774,12 +775,13 @@ function showUniqueEventAndCauseTable(model) {
 							+ tab_panel_end);
 }
 function showTopTenDataTable(startDate, endDate) {
+	$('#graphtabs').show();
 	$('#wrapper')
 			.html('<div class="tabletitle"><div><h2>Top 10 Market/Operator/Cell ID combinations with failures for a given time period</h2></div>'
 					+'<div><h3><i>'+startDate+'</i> to <i>'+endDate+'</i></h3></div>'
-					+'</div>'
-					+ tab_panel_start
-					+'<div class="card-body"><div class="table-responsive">'
+					+'</div>');
+	$('#panel_table')
+	.html('<div class="card-body"><div class="table-responsive">'
 							+ '	<table id="TopTenDataTable" class="table table-bordered display" cellspacing="0" width="100%">'
 							+ '		<thead id="tableHeader">' + '			<tr>' + ' 				<th>Market</th>'
 							+ ' 				<th>Operator</th>'
@@ -791,10 +793,15 @@ function showTopTenDataTable(startDate, endDate) {
 							+ ' 				<th>Operator</th>'
 							+ ' 				<th>Cell ID</th>'
 							+ ' 				<th>Number of Failures</th>' + '			</tr>'
-							+ '		</tfoot>' + '	</table>' + '</div></div>'
-							+ tab_panel_end);
+							+ '		</tfoot>' + '	</table>' + '</div></div>');
 
 }
+$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+	if($(e.target).attr("href") == "#panel_graph"){
+		$('#panel_graph').html('<div id="graphtitle"><h3>Number of failures and percentage of all failures</h3></div>');
+		drawGraph(TopTenGraphData);
+	}
+});
 function showTopTenIMSIsDataTable(startDate, endDate) {
 	$('#wrapper')
 
@@ -821,7 +828,7 @@ function showTopTenIMSIsDataTable(startDate, endDate) {
 }
 
 function showSumAndCountDataTable(startDate, endDate) {
-
+	$('#graphtabs').hide();
 	$('#wrapper')
 			.html('<div class="tabletitle"><div><h2>Number of failures and duration for a given time period</h2></div>'
 					+'<div><h3><i>'+startDate+'</i> to <i>'+endDate+'</i></h3></div>'
@@ -841,6 +848,7 @@ function showSumAndCountDataTable(startDate, endDate) {
 				+ tab_panel_end);
 }
 function showDateDataTable(startDate, endDate) {
+	$('#graphtabs').hide();
 	$('#wrapper')
 			.html('<div class="tabletitle"><div><h2>IMSIs with failures for a given time period</h2></div>'
 					+'<div><h3> <i>'+startDate+'</i> to <i>'+endDate+'</i></h3></div>'
@@ -855,7 +863,7 @@ function showDateDataTable(startDate, endDate) {
 							+ '</div></div>');
 }
 function showCountFailuresDataTable(imsi,startDate, endDate) {
-	console.log("Failure count is::" + failureCount);
+	$('#graphtabs').hide();
 	$('#wrapper')
 			.html('<div class="tabletitle"><div><h2>Number of failures for a given IMSI and time period</h2></div>'
 					+'<div><h3>IMSI: <i>'+imsi+'</i></h3></div>'
@@ -867,6 +875,7 @@ function showCountFailuresDataTable(imsi,startDate, endDate) {
 					+'</h4></div></div></div>');
 }
 function showCountFailuresModelDataTable(model,startDate, endDate) {
+	$('#graphtabs').hide();
 	$('#wrapper')
 	.html('<div class="tabletitle"><div><h2>Number of failures for a given model and time period</h2></div>'
 			+'<div><h3>Model: <i>'+model+'</i></h3></div>'
@@ -878,6 +887,7 @@ function showCountFailuresModelDataTable(model,startDate, endDate) {
 			+'</h4></div></div></div>');
 }
 function showImsibyFailureClassTable(failureClass) {
+	$('#graphtabs').hide();
 	$('#wrapper')
 			.html('<div class="tabletitle"><div><h2>IMSIs affected by a given failure class</h2></div>'
 					+'<div><h3>Failure Class: <i>'+failureClass+'</i></h3></div>'
@@ -909,7 +919,7 @@ var tab_panel_end = ''
 	+ '		<a class="scroll-to-top rounded" href="#page-top"><i class="fa fa-angle-up"></i></a>'
 	+ '		</div>'
 	+ '		<!--Panel Graph-->'
-	+ '		<div class="tab-pane fade in show active" id="panel_graph" role="tabpane2">'
+	+ '		<div class="tab-pane fade in show active" id="panel_graph" role="tabpanel">'
 	+ '			<button class="btn invisible" id="backButton">< Back</button>'
 	+ '			<div id="chartContainer" style="height: 500px; width: 100%;"></div>'
 	+ '		<a class="scroll-to-top rounded" href="#page-top"><i class="fa fa-angle-up"></i></a>'
@@ -920,7 +930,7 @@ var tab_panel_end_3djs = ''
 	+ '		<a class="scroll-to-top rounded" href="#page-top"><i class="fa fa-angle-up"></i></a>'
 	+ '		</div>'
 	+ '		<!--Panel Graph-->'
-	+ '		<div class="tab-pane fade in show active" id="panel_graph" role="tabpane2">'
+	+ '		<div class="tab-pane fade in show active" id="panel_graph" role="tabpanel">'
 	+ '		<a class="scroll-to-top rounded" href="#page-top"><i class="fa fa-angle-up"></i></a>'
 	+ '		</div>'
 	+ '</div>';
