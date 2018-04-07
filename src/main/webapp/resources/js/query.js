@@ -459,9 +459,15 @@ function retrieveDatesTopTenIMSIs() {
 	//need to change this back after testing 
 	var date1 = document.getElementById('date_timepicker_start').value;
 	var date2 = document.getElementById('date_timepicker_end').value;
-	TopTenIMSIsDataRequest(date1,date2);
-	showTopTenIMSIsDataTable(date1.date2);
-	showTop10IMSIsGraph(date1, date2);
+	//TopTenIMSIsDataRequest(date1,date2);
+	//showTopTenIMSIsDataTable(date1.date2);
+	
+	
+	TopTenIMSIsDataRequest(document.getElementById('date_timepicker_start').value,
+			document.getElementById('date_timepicker_end').value);
+	showTopTenIMSIsDataTable(document.getElementById('date_timepicker_start').value,
+			document.getElementById('date_timepicker_end').value);
+	showTop10IMSIsGraph(document.getElementById('date_timepicker_start').value, document.getElementById('date_timepicker_end').value);
 
 }
 function retrieveIMSIbyFailureClass() {
@@ -898,20 +904,20 @@ function showImsibyFailureClassTable(failureClass) {
 var tab_panel_start =''
 	+ '	<ul class="nav nav-tabs nav-justified" role="tablist">'
 	+ '		<li class="nav-item">'
-	+ '			<a class="nav-link" data-toggle="tab" href="#panel_table" role="tab">Table</a>'
+	+ '			<a class="nav-link active" data-toggle="tab" href="#panel_table" role="tab">Table</a>'
 	+ '		</li>'
 	+ '		<li class="nav-item">'
-	+ '			<a class="nav-link active" data-toggle="tab" href="#panel_graph" role="tab">Graph</a>'
+	+ '			<a class="nav-link " data-toggle="tab" href="#panel_graph" role="tab">Graph</a>'
 	+ '		</li>'
 	+ '	</ul>'
 	+ '		<div class="tab-content card">'
 	+ '			<!--Panel Tab-->'
-	+ '			<div class="tab-pane fade in show" id="panel_table" role="tabpanel">';
+	+ '			<div class="tab-pane fade in show active" id="panel_table" role="tabpanel">';
 var tab_panel_end = ''
 	+ '		<a class="scroll-to-top rounded" href="#page-top"><i class="fa fa-angle-up"></i></a>'
 	+ '		</div>'
 	+ '		<!--Panel Graph-->'
-	+ '		<div class="tab-pane fade in show active" id="panel_graph" role="tabpane2">'
+	+ '		<div class="tab-pane fade in show " id="panel_graph" role="tabpane2">'
 	+ '			<button class="btn invisible" id="backButton">< Back</button>'
 	+ '			<div id="chartContainer" style="height: 500px; width: 100%;"></div>'
 	+ '		<a class="scroll-to-top rounded" href="#page-top"><i class="fa fa-angle-up"></i></a>'

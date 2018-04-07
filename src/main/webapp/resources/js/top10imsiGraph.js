@@ -37,7 +37,7 @@ var showTop10IMSIsGraph = function(data1, data2) {
 				totalCount += data[i].count
 			}
 
-			average = totalCount / numRanges;
+			average = totalCount / data.length;
 			rangeLength = Math.ceil(average / data.length);
 			console.log("average " + average);
 			console.log("range length " + Math.ceil(rangeLength));
@@ -89,7 +89,10 @@ var showTop10IMSIsGraph = function(data1, data2) {
 			var yValue10 = 0;
 
 			for (i = 0; i < data.length; i++) {
-				if (data[i].count <= rangeLength) {
+				if(data[i].count == 0){
+					
+				}
+				else if (data[i].count <= rangeLength) {
 					console.log('in loop - range <= ' + rangeLength);
 					++yValue1;
 					subModel1.push({
@@ -376,66 +379,66 @@ var showTop10IMSIsGraph = function(data1, data2) {
 				var str = e.dataPoint.name;
 				console.log('label length: ' + str.length);
 				
-				//if Range 10
-				if(str.length == 15){
+				
+				
 				var rangeStr = str.substring(0,8);
-				}//all other ranges
-				else if(str.length == 14){
-					var rangeStr = str.substring(0,6);
-				}
+				console.log('label range: ' + rangeStr);
+
+					
+				
 				
 				chart = new CanvasJS.Chart("chartContainer",
 						visitorsDrilldownedChartOptions);
 				for (i = 0; i < data.length; i++) {
-						if (rangeStr === "Range 1") {
+						if (rangeStr == "Range 1:") {
 						console.log(e.dataPoint.name);
 						console.log(rangeStr);
 						console.log(" in faildrilldown1 - " + data[i].count);
 						chart.options.data = failureDrillDownData1;
 
-					} else if (rangeStr === "Range 2") {
+					} else if (rangeStr == "Range 2:") {
 						console.log(e.dataPoint.name);
 						console.log(rangeStr);
 						console.log(" in faildrilldown2 - " + data[i].count);
 						chart.options.data = failureDrillDownData2;
 
-					} else if (rangeStr === "Range 3") {
+					} else if (rangeStr === "Range 3:") {
 						console.log(e.dataPoint.name);
 						console.log(rangeStr);
 						console.log(" in faildrilldown3 - " + data[i].count);
 						chart.options.data = failureDrillDownData3;
 
-					} else if (rangeStr === "Range 4") {
+					} else if (rangeStr === "Range 4:") {
 						console.log(e.dataPoint.name);
 						console.log(rangeStr);
 						console.log(" in faildrilldown4 - " + data[i].count);
 						chart.options.data = failureDrillDownData4;
 
-					} else if (rangeStr === "Range 5") {
+					} else if (rangeStr === "Range 5:") {
 						console.log(e.dataPoint.name);
 						console.log(rangeStr);
 						console.log(" in faildrilldown5 - " + data[i].count);
 						chart.options.data = failureDrillDownData5;
 
-					} else if (rangeStr === "Range 6") {
+					} else if (rangeStr === "Range 6:") {
 						console.log(e.dataPoint.name);
 						console.log(rangeStr);
 						console.log(" in faildrilldown6 - " + data[i].count);
 						chart.options.data = failureDrillDownData6;
 
-					} else if (rangeStr === "Range 7") {
+					} else if (rangeStr === "Range 7:") {
 						console.log(e.dataPoint.name);
 						console.log(rangeStr);
 						console.log(" in faildrilldown7 - " + data[i].count);
 						chart.options.data = failureDrillDownData7;
 
-					} else if (rangeStr === "Range 8") {
+					} else if (rangeStr == "Range 8:") {
 						console.log(e.dataPoint.name);
 						console.log(rangeStr);
 						console.log(" in faildrilldown8 - " + data[i].count);
 						chart.options.data = failureDrillDownData8;
 
-					} else if (rangeStr === "Range 9") {
+					} else if (rangeStr === "Range 9:") {
 						console.log(e.dataPoint.name);
 						console.log(rangeStr);
 						console.log(" in faildrilldown9 - " + data[i].count);
