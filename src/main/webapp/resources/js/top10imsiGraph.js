@@ -20,7 +20,7 @@ var showTop10IMSIsGraph = function(data1, data2) {
 					+ sessionStorage.getItem("password")
 		},
 		success : function(data) {
-			console.log("showSumAndCountGraph getJSON" + data[0]);
+			console.log("showTopIMSIsGraph getJSON" + data[0]);
 
 			var subModel1 = [];
 			var subModel2 = [];
@@ -33,12 +33,15 @@ var showTop10IMSIsGraph = function(data1, data2) {
 			var subModel9 = [];
 			var subModel10 = [];
 
+			var max = data[0].count;
+			
 			for (var i = 0; i < data.length; i++) {
 				totalCount += data[i].count
 			}
+			
 
 			average = totalCount / data.length;
-			rangeLength = Math.ceil(average / data.length);
+			rangeLength = Math.ceil(max / data.length);
 			console.log("average " + average);
 			console.log("range length " + Math.ceil(rangeLength));
 			console.log('total_count --' + totalCount);
@@ -64,19 +67,6 @@ var showTop10IMSIsGraph = function(data1, data2) {
 			var label10 = 'Range 10: '+(rangeLength * 9 + 1 + '-' + rangeLength * 10);
 			console.log(label10);
 			
-//			var label1 = '1 - ' + rangeLength;
-//			console.log(label1);
-//			var label2 = rangeLength + 1 + '-' + rangeLength * 2;
-//			console.log(label2);
-//			var label3 = rangeLength * 2 + 1 + '-' + rangeLength * 3;
-//			var label4 = rangeLength * 3 + 1 + '-' + rangeLength * 4;
-//			var label5 = rangeLength * 4 + 1 + '-' + rangeLength * 5;
-//			var label6 = rangeLength * 5 + 1 + '-' + rangeLength * 6;
-//			var label7 = rangeLength * 6 + 1 + '-' + rangeLength * 7;
-//			var label8 = rangeLength * 7 + 1 + '-' + rangeLength * 8;
-//			var label9 = rangeLength * 8 + 1 + '-' + rangeLength * 9;
-//			var label10 = rangeLength * 9 + 1 + '-' + rangeLength * 10;
-			
 			var yValue1 = 0;
 			var yValue2 = 0;
 			var yValue3 = 0;
@@ -93,152 +83,172 @@ var showTop10IMSIsGraph = function(data1, data2) {
 					
 				}
 				else if (data[i].count <= rangeLength) {
-					console.log('in loop - range <= ' + rangeLength);
 					++yValue1;
 					subModel1.push({
-						//range : 'Range 1: ',
 						label : data[i].imsi,
 						y : data[i].count
 					});
 
 				} else if (data[i].count <= rangeLength * 2) {
-					console.log('in loop - range <= ' + rangeLength * 2)
 					++yValue2;
 					subModel2.push({
-						//range : 'Range 2: ',
 						label : data[i].imsi,
 						y : data[i].count
 					});
 
 				} else if (data[i].count <= rangeLength * 3) {
-					console.log('in loop - range <= ' + rangeLength * 3)
 					++yValue3;
 					subModel3.push({
-						//range : 'Range 3: ',
 						label : data[i].imsi,
 						y : data[i].count
 					});
 
 				} else if (data[i].count <= rangeLength * 4) {
-					console.log('in loop - range <= ' + rangeLength * 4)
 					++yValue4;
 					subModel4.push({
-						//range : 'Range 4: ',
 						label : data[i].imsi,
 						y : data[i].count
 					});
 
 				} else if (data[i].count <= rangeLength * 5) {
-					console.log('in loop - range <= ' + rangeLength * 5)
 					++yValue5;
 					subModel5.push({
-						//range : 'Range 5: ',
 						label : data[i].imsi,
 						y : data[i].count
 					});
 
 				} else if (data[i].count <= rangeLength * 6) {
-					console.log('in loop - range <= ' + rangeLength * 6)
 					++yValue6;
 					subModel6.push({
-						//range : 'Range 6: ',
 						label : data[i].imsi,
 						y : data[i].count
 					});
 
 				} else if (data[i].count <= rangeLength * 7) {
-					console.log('in loop - range <= ' + rangeLength * 7)
 					++yValue7;
 					subModel7.push({
-						//range : 'Range 7: ',
 						label : data[i].imsi,
 						y : data[i].count
 					});
 
 				} else if (data[i].count <= rangeLength * 8) {
-					console.log('in loop - range <= ' + rangeLength * 8)
 					++yValue8;
 					subModel8.push({
-						//range : 'Range 8: ',
 						label : data[i].imsi,
 						y : data[i].count
 					});
 
 				} else if (data[i].count <= rangeLength * 9) {
-					console.log('in loop - range <= ' + rangeLength * 9)
 					++yValue9;
 					subModel9.push({
-						//range : 'Range 9: ',
 						label : data[i].imsi,
 						y : data[i].count
 					});
 
 				} else if (data[i].count <= rangeLength * 10) {
-					console.log('in loop - range <= ' + rangeLength * 10)
 					++yValue10;
 					subModel10.push({
-						//range : 'Range 10: ',
 						label : data[i].imsi,
 						y : data[i].count
 					});
 
 				}
 			}
-
+			
+			var rangeNum = 0;
+			if(yValue1 > 0){
+				rangeNum++;
 			data_p.push({
+				range : 'Range '+rangeNum +':',
 				name : label1,
 				y : yValue1
 			});
+			}
 
+			if(yValue2 > 0){
+				rangeNum++;
 			data_p.push({
+				range : 'Range '+rangeNum +':',
 				name : label2,
 				y : yValue2
 			});
+			}
 
+			if(yValue3 > 0){
+				rangeNum++;
 			data_p.push({
+				range : 'Range '+rangeNum +':',
 				name : label3,
 				y : yValue3
 			});
+			}
 
+			if(yValue4 > 0){
+				rangeNum++;
 			data_p.push({
+				range : 'Range '+rangeNum +':',
 				name : label4,
 				y : yValue4
 			});
+			}
 
+			if(yValue5 > 0){
+				rangeNum++;
 			data_p.push({
+				range : 'Range '+rangeNum +':',
 				name : label5,
 				y : yValue5
 			});
+			}
 
+			if(yValue6 > 0){
+				rangeNum++;
 			data_p.push({
+				range : 'Range '+rangeNum +':',
 				name : label6,
 				y : yValue6
 			});
+			}
 
+			if(yValue7 > 0){
+				rangeNum++;
 			data_p.push({
-				name : label7,
+				range : 'Range '+rangeNum +':',
+				name :  label7,
 				y : yValue7
 			});
+			}
 
+			if(yValue8 > 0){
+				rangeNum++;
 			data_p.push({
+				range : 'Range '+rangeNum +':',
 				name : label8,
 				y : yValue8
 			});
+			}
 
+			if(yValue9 > 0){
+				rangeNum++;
 			data_p.push({
+				range : 'Range '+rangeNum +':',
 				name : label9,
 				y : yValue9
 			});
+			}
 
+			if(yValue10 > 0){
+				rangeNum++;
 			data_p.push({
+				range : 'Range '+rangeNum +':',
 				name : label10,
 				y : yValue10
 			});
+			}
 
-			// ten of these
 			var failureDrillDownData1 = [ {
 				color : "#E7823A",
-				name : "New Visitors",
+				name : "IMSI Failures",
 				type : "column",
 				dataPoints : subModel1
 
@@ -246,63 +256,63 @@ var showTop10IMSIsGraph = function(data1, data2) {
 
 			var failureDrillDownData2 = [ {
 				color : "#E7823A",
-				name : "New Visitors",
+				name : "IMSI Failures",
 				type : "column",
 				dataPoints : subModel2
 			} ]
 			
 			var failureDrillDownData3 = [ {
 				color : "#E7823A",
-				name : "New Visitors",
+				name : "IMSI Failures",
 				type : "column",
 				dataPoints : subModel3
 			} ]
 			
 			var failureDrillDownData4 = [ {
 				color : "#E7823A",
-				name : "New Visitors",
+				name : "IMSI Failures",
 				type : "column",
 				dataPoints : subModel4
 			} ]
 			
 			var failureDrillDownData5 = [ {
 				color : "#E7823A",
-				name : "New Visitors",
+				name : "IMSI Failures",
 				type : "column",
 				dataPoints : subModel5
 			} ]
 			
 			var failureDrillDownData6 = [ {
 				color : "#E7823A",
-				name : "New Visitors",
+				name : "IMSI Failures",
 				type : "column",
 				dataPoints : subModel6
 			} ]
 			
 			var failureDrillDownData7 = [ {
 				color : "#E7823A",
-				name : "New Visitors",
+				name : "IMSI Failures",
 				type : "column",
 				dataPoints : subModel7
 			} ]
 			
 			var failureDrillDownData8 = [ {
 				color : "#E7823A",
-				name : "New Visitors",
+				name : "IMSI Failures",
 				type : "column",
 				dataPoints : subModel8
 			} ]
 			
 			var failureDrillDownData9 = [ {
 				color : "#E7823A",
-				name : "New Visitors",
+				name : "IMSI Failures",
 				type : "column",
 				dataPoints : subModel9
 			} ]
 			
 			var failureDrillDownData10 = [ {
 				color : "#E7823A",
-				name : "New Visitors",
+				name : "IMSI Failures",
 				type : "column",
 				dataPoints : subModel10
 			} ]
@@ -316,23 +326,22 @@ var showTop10IMSIsGraph = function(data1, data2) {
 				explodeOnClick : false,
 				innerRadius : "35%",
 				legendMarkerType : "square",
-				name : "New vs Returning Visitors",
+				name : "Top 10 IMSI Failures",
 				radius : "100%",
+				
 				showInLegend : true,
 				startAngle : 90,
 				type : "doughnut",
 				dataPoints : data_p
-
 			} ];
 
-			var newVSReturningVisitorsOptions = {
+			var IMSIFailureOptions = {
 				animationEnabled : true,
 				theme : "light2",
 				title : {
-					text : "New VS Returning Visitors"
+					text : "Top 10 IMSI Failures"
 				},
 				subtitles : [ {
-					text : "Click on Any Segment to Drilldown",
 					backgroundColor : "#2eacd1",
 					fontSize : 16,
 					fontColor : "white",
@@ -342,21 +351,42 @@ var showTop10IMSIsGraph = function(data1, data2) {
 					fontFamily : "calibri",
 					fontSize : 14,
 					itemTextFormatter : function(e) {
-						return e.dataPoint.name + ": " + e.dataPoint.y;
+						console.log('name' + e.dataPoint.name);
+						console.log('y' + e.dataPoint.y);
+						console.log('length' + e.dataPoint.name.length);
+						sub = '';
+						if(e.dataPoint.name.length == 15){
+							sub = e.dataPoint.name.substring(9,15);
+						}else{
+							sub = e.dataPoint.name.substring(8,14);
+						}
+						return 'Failure Range: '+ (sub) + ": " + 'IMSIs: ' + e.dataPoint.y;
 					}
 				},
 				data : []
 			};
 
-			var visitorsDrilldownedChartOptions = {
+			var top10IMSIChartOptions = {
 				animationEnabled : true,
 				theme : "light2",
 				axisX : {
+					 title: 'IMSI',
+					    titlefont: {
+					      family: 'Courier New, monospace',
+					      size: 15,
+					      color: '#7f7f7f'
+					    },
 					labelFontColor : "#717171",
 					lineColor : "#a2a2a2",
 					tickColor : "#a2a2a2"
 				},
 				axisY : {
+					 title: 'Number of Failures',
+					    titlefont: {
+					      family: 'Courier New, monospace',
+					      size: 15,
+					      color: '#7f7f7f'
+					    },
 					gridThickness : 0,
 					includeZero : false,
 					labelFontColor : "#717171",
@@ -368,7 +398,7 @@ var showTop10IMSIsGraph = function(data1, data2) {
 			};
 
 			var chart = new CanvasJS.Chart("chartContainer",
-					newVSReturningVisitorsOptions);
+					IMSIFailureOptions);
 			chart.options.data = failureData;
 			chart.render();
 			
@@ -388,9 +418,11 @@ var showTop10IMSIsGraph = function(data1, data2) {
 				
 				
 				chart = new CanvasJS.Chart("chartContainer",
-						visitorsDrilldownedChartOptions);
+						top10IMSIChartOptions);
+				titleBarChart = '';
 				for (i = 0; i < data.length; i++) {
 						if (rangeStr == "Range 1:") {
+							titleBarChart = '';
 						console.log(e.dataPoint.name);
 						console.log(rangeStr);
 						console.log(" in faildrilldown1 - " + data[i].count);
@@ -452,19 +484,31 @@ var showTop10IMSIsGraph = function(data1, data2) {
 					}
 				}
 
-				chart.options.title = {
-					text : e.dataPoint.name
+				sub1 = '';
+				if(e.dataPoint.name.length == 15){
+					sub1 = e.dataPoint.name.substring(9,15);
+				}else{
+					sub1 = e.dataPoint.name.substring(8,14);
+				}
+				
+				chart.options.title = {	
+				    text : 'Failure Range: ' + sub1,
+					fontFamily : "calibri",
+					fontSize : 24,
+					itemTextFormatter : function(e) {
+						console.log(e.dataPoint.range + ": "+ e.dataPoint.y);
+						return e.dataPoint.range + ": "+ e.dataPoint.y;
+					}
 				}
 				chart.render();
 				$("#backButton").toggleClass("invisible");
-
 			}
 
 			$("#backButton").click(
 					function() {
 						$(this).toggleClass("invisible");
 						chart = new CanvasJS.Chart("chartContainer",
-								newVSReturningVisitorsOptions);
+								IMSIFailureOptions);
 						chart.options.data = failureData;
 						chart.render();
 					});
