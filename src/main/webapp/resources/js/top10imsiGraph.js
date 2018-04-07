@@ -336,6 +336,7 @@ var showTop10IMSIsGraph = function(data1, data2) {
 			} ];
 
 			var IMSIFailureOptions = {
+					
 				animationEnabled : true,
 				theme : "light2",
 				title : {
@@ -367,14 +368,22 @@ var showTop10IMSIsGraph = function(data1, data2) {
 						return 'Failure Range: '+ (sub) + ": " + 'IMSIs: ' + e.dataPoint.y;
 					}
 				},
+				
+				toolTip:{
+						
+						content: "Number of IMSIs: {y}",
+					},
+					
+		
 				data : []
 			};
 
 			var top10IMSIChartOptions = {
+					
 				animationEnabled : true,
 				theme : "light2",
 				axisX : {
-					 title: 'IMSI',
+					 title: 'IMSIs',
 					    titlefont: {
 					      family: 'Courier New, monospace',
 					      size: 15,
@@ -401,8 +410,7 @@ var showTop10IMSIsGraph = function(data1, data2) {
 				data : []
 			};
 
-			var chart = new CanvasJS.Chart("chartContainer",
-					IMSIFailureOptions);
+			var chart = new CanvasJS.Chart("chartContainer",IMSIFailureOptions);
 			chart.options.data = failureData;
 			chart.render();
 			
@@ -491,8 +499,12 @@ var showTop10IMSIsGraph = function(data1, data2) {
 				sub1 = '';
 				if(e.dataPoint.name.length == 15){
 					sub1 = e.dataPoint.name.substring(9,15);
-				}else{
+				}else if(e.dataPoint.name.length == 14){
 					sub1 = e.dataPoint.name.substring(8,14);
+				}else if(e.dataPoint.name.length == 16){
+					sub1 = e.dataPoint.name.substring(10,17);
+				}else if(e.dataPoint.name.length == 17){
+					sub1 = e.dataPoint.name.substring(9,17);
 				}
 				
 				chart.options.title = {	
@@ -501,7 +513,7 @@ var showTop10IMSIsGraph = function(data1, data2) {
 					fontSize : 24,
 					itemTextFormatter : function(e) {
 						console.log(e.dataPoint.range + ": "+ e.dataPoint.y);
-						return e.dataPoint.range + ": "+ e.dataPoint.y;
+						return 'Here' + e.dataPoint.range + ": "+ e.dataPoint.y;
 					}
 				}
 				chart.render();
