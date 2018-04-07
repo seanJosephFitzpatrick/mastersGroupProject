@@ -456,13 +456,7 @@ function retrieveModel() {
 }
 function retrieveDatesTopTenIMSIs() {
 	showLoading();
-	//need to change this back after testing 
-	var date1 = document.getElementById('date_timepicker_start').value;
-	var date2 = document.getElementById('date_timepicker_end').value;
-	//TopTenIMSIsDataRequest(date1,date2);
-	//showTopTenIMSIsDataTable(date1.date2);
-	
-	
+
 	TopTenIMSIsDataRequest(document.getElementById('date_timepicker_start').value,
 			document.getElementById('date_timepicker_end').value);
 	showTopTenIMSIsDataTable(document.getElementById('date_timepicker_start').value,
