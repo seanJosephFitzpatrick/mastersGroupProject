@@ -793,9 +793,7 @@ function showTopTenDataTable(startDate, endDate) {
 							+ ' 				<th>Number of Failures</th>' + '			</tr>'
 							+ '		</tfoot>' + '	</table>' + '</div></div>'
 							+ tab_panel_end);
-	$('#panel_graph')
 
-	.html('<div id="graphdiv"></div>');
 }
 function showTopTenIMSIsDataTable(startDate, endDate) {
 	$('#wrapper')
@@ -898,10 +896,10 @@ function showImsibyFailureClassTable(failureClass) {
 var tab_panel_start =''
 	+ '	<ul class="nav nav-tabs nav-justified" role="tablist">'
 	+ '		<li class="nav-item">'
-	+ '			<a class="nav-link" data-toggle="tab" href="#panel_table" role="tab">Table</a>'
+	+ '			<a class="nav-link active" data-toggle="tab" href="#panel_table" role="tab">Table</a>'
 	+ '		</li>'
 	+ '		<li class="nav-item">'
-	+ '			<a class="nav-link active" data-toggle="tab" href="#panel_graph" role="tab">Graph</a>'
+	+ '			<a class="nav-link" data-toggle="tab" href="#panel_graph" role="tab">Graph</a>'
 	+ '		</li>'
 	+ '	</ul>'
 	+ '		<div class="tab-content card">'

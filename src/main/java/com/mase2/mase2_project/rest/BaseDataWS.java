@@ -19,11 +19,9 @@ import com.mase2.mase2_project.data.BaseDataDAO;
 import com.mase2.mase2_project.graph_model.ImsiNode;
 import com.mase2.mase2_project.graph_model.NodeEventIdCouseCode;
 import com.mase2.mase2_project.model.BaseData;
-
+import com.mase2.mase2_project.model.EventCause;
 import com.mase2.mase2_project.util.AutoComObject;
-
 import com.mase2.mase2_project.model.DateAndDurationForIMSI;
-
 import com.mase2.mase2_project.util.DateParam;
 import com.mase2.mase2_project.util.DurationAndCountObject;
 import com.mase2.mase2_project.util.FailureCountObject;
@@ -84,7 +82,7 @@ public class BaseDataWS {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response findByImsi(@Context HttpHeaders httpHeaders, @PathParam("imsi") final String imsi) {
 		if (securityCheck.hasRole(httpHeaders, "admin")) {
-			final List<BaseData> baseData = baseDataDAO.getBaseDataForIMSI(imsi);
+			final List<EventCause> baseData = baseDataDAO.getBaseDataForIMSI(imsi);
 			return Response.status(200).entity(baseData).build();
 		} else {
 			return SecurityCheck.ACCESS_DENY;
@@ -219,7 +217,7 @@ public class BaseDataWS {
 	public Response findByIMSIStartDateAndEndDate(@Context HttpHeaders httpHeaders, @PathParam("imsi") final String imsi, @PathParam("StartDate") final DateParam startDateParam,
 			@PathParam("EndDate") final DateParam endDateParam) {
 
-		System.out.println("BaseDataWS.findByIMSIStartDateAndEndDate() **********");
+		
 		if (securityCheck.hasRole(httpHeaders, "admin")) {
 			final List<DateAndDurationForIMSI> baseData = baseDataDAO.getDateAndDurationOfFailuresForIMSI(imsi, startDateParam, endDateParam);
 			return Response.status(200).entity(baseData).build();

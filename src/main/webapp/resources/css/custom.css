@@ -29,11 +29,18 @@ input[type=text] {
     border-bottom: 2px solid #00275E;
     outline:0;
 }
-svg {
-    display: block;
-    margin: 0 auto;
+#panel_graph{
+	width: 100%;
+  display: block;
+  margin: auto;
 }
 input[type=password] {
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid #00275E;
+    outline:0;
+}
+input[type=email] {
     background: transparent;
     border: none;
     border-bottom: 2px solid #00275E;

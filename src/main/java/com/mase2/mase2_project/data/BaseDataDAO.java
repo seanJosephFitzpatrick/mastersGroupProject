@@ -15,6 +15,7 @@ import javax.persistence.Query;
 
 
 
+
 import com.mase2.mase2_project.graph_model.LastNode;
 import com.mase2.mase2_project.graph_model.NodeDataTime;
 import com.mase2.mase2_project.graph_model.NodeEventIdCouseCode;
@@ -22,6 +23,7 @@ import com.mase2.mase2_project.model.BaseData;
 import com.mase2.mase2_project.model.DateAndDurationForIMSI;
 import com.mase2.mase2_project.model.EventCause;
 import com.mase2.mase2_project.util.AutoComObject;
+import com.mase2.mase2_project.util.DateDurObject;
 import com.mase2.mase2_project.util.DateParam;
 import com.mase2.mase2_project.util.DurationAndCountObject;
 import com.mase2.mase2_project.util.FailureCountObject;
@@ -52,8 +54,8 @@ public class BaseDataDAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<BaseData> getBaseDataForIMSI(String imsi) {
-		final Query query=entityManager.createQuery("SELECT m.eventCause FROM BaseData m where m.imsi like ?1")
+	public List<EventCause> getBaseDataForIMSI(String imsi) {
+		final Query query=entityManager.createQuery("SELECT distinct m.eventCause FROM BaseData m where m.imsi like ?1")
 				.setParameter(1, imsi);
         return query.getResultList();
 	}
@@ -188,7 +190,7 @@ public class BaseDataDAO {
 			query.setParameter(3, eventCause.getId().getEventId());
 			
 			List<BaseData> baseDataForImsiAndEvenCause = query.getResultList();
-			System.out.println("baseDataForImsiAndEvenCaouse " +baseDataForImsiAndEvenCause.size());
+			
 			nodeEventIdCouseCode = new NodeEventIdCouseCode();
 			for (BaseData baseData : baseDataForImsiAndEvenCause) {
 				nodeDataTime = new NodeDataTime(baseData.getDateTime().toString());
@@ -207,7 +209,7 @@ public class BaseDataDAO {
 			
 
 		}
-		System.out.println("BaseDataDAO.getBaseDataForIMSIGraph()result.size "  + result.size());
+		
 		
 		return result;
 		
@@ -215,13 +217,13 @@ public class BaseDataDAO {
 
 
 	public List<DateAndDurationForIMSI> getDateAndDurationOfFailuresForIMSI(String imsi, DateParam startDateParam, DateParam endDateParam) {
-		Query query = entityManager.createQuery("SELECT m FROM BaseData as m WHERE m.imsi LIKE :imsi AND m.dateTime BETWEEN :startDataTime AND :endDataTime ORDER BY m.dateTime ");
+		Query query = entityManager.createQuery("SELECT new com.mase2.mase2_project.util.DateDurObject(m.duration,m.dateTime) FROM BaseData as m WHERE m.imsi LIKE :imsi AND m.dateTime BETWEEN :startDataTime AND :endDataTime ORDER BY m.dateTime ");
 		query.setParameter("imsi", imsi);
 		query.setParameter("startDataTime", startDateParam.getDate());
 		query.setParameter("endDataTime", endDateParam.getDate());
-		List<BaseData> baseDatas = query.getResultList();
+		List<DateDurObject> baseDatas = query.getResultList();
 		List<DateAndDurationForIMSI> result = new ArrayList<>();
-		for (BaseData baseData : baseDatas) {
+		for (DateDurObject baseData : baseDatas) {
 			result.add(new DateAndDurationForIMSI(baseData.getDuration(), baseData.getDateTime()));
 		}
 		return result;
