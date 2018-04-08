@@ -274,7 +274,7 @@ var showSumAndCountGraph = function(data) {
 					axisX : {
 						labelFontColor : "#00275E",
 						titleFontColor : "#00275E",
-						title: "ISMIs in the range",
+						title: "IMSIs in the range",
 						lineColor : "#00275E",
 						tickColor : "#00275E"
 					},

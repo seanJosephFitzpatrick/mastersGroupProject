@@ -26,7 +26,8 @@ function loginFunction() {
 	var passworsValue = document.getElementById("inputPass").value;
 	var emailValue = document.getElementById("inputEmail").value;
 	
-	passworsValue = md5("passworsValue");
+	//passworsValue = md5("passworsValue");
+	passworsValue = md5(passworsValue);
 	
 	console.log(passworsValue + " " + emailValue);
 	loginRequest(emailValue, passworsValue);
