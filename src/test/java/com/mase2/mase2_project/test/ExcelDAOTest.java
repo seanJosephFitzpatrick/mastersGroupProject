@@ -1,12 +1,10 @@
 package com.mase2.mase2_project.test;
 
-import static org.junit.Assert.assertEquals;
-
-import java.util.List;
+import java.io.File;
 
 import javax.ejb.EJB;
-import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.Response;
+
+import static org.junit.Assert.assertEquals;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -58,13 +56,11 @@ import com.mase2.mase2_project.util.TopTenFailuresObject;
 import com.mase2.mase2_project.util.UniqueEventAndCauseObject;
 import com.mase2.mase2_project.util.Validator;
 
-//    @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @RunWith(Arquillian.class)
-public class ImportWSTest {
-
+public class ExcelDAOTest {
 	@Deployment
 	public static Archive<?> createTestArchive() {
-		return ShrinkWrap.create(JavaArchive.class, "TestExcelReader.jar")
+		return ShrinkWrap.create(JavaArchive.class, "TestEventCauseWS.jar")
 				.addClasses(FileNameDAO.class,FileSystemMonitor.class,MccMncDAO.class, MccMnc.class, MccMncPK.class, JaxRsActivator.class, MccMncWS.class,
 						UtilsDAO.class, FailureClassDAO.class, BaseData.class, BaseDataDAO.class, BaseDataWS.class,
 						UeWS.class, EventCause.class,TopTenFailuresObject.class,FailureCountObject.class, EventCausePK.class, EventCauseDAO.class, FailureClassWS.class,
@@ -76,6 +72,9 @@ public class ImportWSTest {
 				.addPackage(EventCauseWS.class.getPackage())
 				.addPackage(ImsiNode.class.getPackage())
 				.addPackage(AutoComObject.class.getPackage())
+				// .addPackage(EventCause.class.getPackage())
+				// .addPackage(EventCauseDAO.class.getPackage())
+				// this line will pick up the production db
 				.addPackages(true, jxl.Sheet.class.getPackage()).addPackages(true, jxl.Workbook.class.getPackage())
 				.addPackages(true, jxl.Cell.class.getPackage())
 				.addPackages(true, jxl.biff.BaseCellFeatures.class.getPackage())
@@ -90,59 +89,42 @@ public class ImportWSTest {
 				.addPackages(true, jxl.read.biff.BaseSharedFormulaRecord.class.getPackage())
 				.addPackages(true, common.Logger.class.getPackage())
 				.addPackages(true, common.log.SimpleLogger.class.getPackage())
-
-				// this line will pick up the production db
 				.addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
 				.addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
 
 	}
-
+	
+	
 	@EJB
-	private UtilsDAO utilsDAO;
-
+	ExcelDAO excelDAO;
 	@EJB
-	private UeDAO ueDAO;
-	@EJB
-	private ImportWS importWS;
-	@EJB
-	private ExcelDAO excelDAO;
-	@EJB
-	private BaseDataDAO baseDataDao;
-	@EJB
-	private FailureClassDAO failureClassDAO;
-	@EJB
-	private EventCauseDAO eventCauseDAO;
-	@EJB
-	private MccMncDAO mcc_mncDAO;
-	private HttpHeaders httpHeaders;
-
+	UtilsDAO utilsDAO;
+	
+	
 	@Before
 	public void setup() {
-		httpHeaders = utilsDAO.getHttpHeaders();
+		
 		
 	}
 
 	@Test
-	public void testImportAllData() {
-		importWS.importAllData(httpHeaders);
-		final List<Ue> ueList = ueDAO.getAllUes();
-		assertEquals("Data fetch = data persisted", ueList.size(), 99);
-		final List<BaseData> baseDataList = baseDataDao.getAllBaseData();
-		assertEquals("Data fetch = data persisted", baseDataList.size(), 800);
-		final List<FailureClass> failureClassList = failureClassDAO.getAllFailureClasses();
-		assertEquals("Data fetch = data persisted", failureClassList.size(), 5);
-		final List<EventCause> eventCauseList = eventCauseDAO.getAllEventCauses();
-		assertEquals("Data fetch = data persisted", eventCauseList.size(), 80);
-		final List<MccMnc> mccMncList = mcc_mncDAO.getAllMcc_Mncs();
-		assertEquals("Data fetch = data persisted", mccMncList.size(), 41);
+	public void testManualImport(){
+		int[] validAndInvalid=excelDAO.manualImport("test.xls");
+		assertEquals(validAndInvalid[0],800);
+		assertEquals(validAndInvalid[1],200);
+	}
+	@Test
+	public void testAutoImport(){
+		final File excelFile = new File(".\\DataFiles\\imports\\test.xls");
+		int[] validAndInvalid=excelDAO.autoImportBaseDataExcelData(excelFile);
+		assertEquals(validAndInvalid[0],800);
+		assertEquals(validAndInvalid[1],200);
+		utilsDAO.deleteTableBaseData();
+		utilsDAO.deleteTableFailureClass();
+		validAndInvalid=excelDAO.autoImportBaseDataExcelData(excelFile);
+		assertEquals(validAndInvalid.length,2);
+		
 	}
 
-	 @Test
-	 public void testgetFileNames() {
-	 Response response=importWS.getFileNames();
-	 final List<String> filenames = (List<String>) response.getEntity();
-	 assertEquals("Data fetch = data persisted", filenames.size(), 0);
-	
-	 }
 
 }
