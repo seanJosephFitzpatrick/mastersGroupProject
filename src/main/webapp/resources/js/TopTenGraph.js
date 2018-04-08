@@ -624,7 +624,7 @@ var definitionVisualization = {};
     	var outerWidth  = 1600,
         outerHeight = 900;
         var svgContainer = d3.select("#panel_graph");
-
+        svgContainer.html('');
         data = dataOriginal.slice(0);
         selectedPath = [];
 

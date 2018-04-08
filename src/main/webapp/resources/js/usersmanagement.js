@@ -207,7 +207,6 @@ function addUserToDB(email, password, role){
 
 
 function showNewUserForm() {
-	$('#graphtabs').hide();
 	$('#wrapper').html(
 		'	<div class="card card-register mx-auto mt-5">'
 			+'      <div class="card-header">Register an Account</div>'
@@ -256,7 +255,6 @@ function showNewUserForm() {
 
 }
 function showUsersTable() {
-	$('#graphtabs').hide();
 	$('#wrapper').html(
 		'<div id="message"></div>'
 		+'<div class="table-responsive">'

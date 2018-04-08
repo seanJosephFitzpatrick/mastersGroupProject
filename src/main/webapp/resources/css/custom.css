@@ -46,6 +46,12 @@ input[type=email] {
     border-bottom: 2px solid #00275E;
     outline:0;
 }
+input[type=number] {
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid #00275E;
+    outline:0;
+}
 .labelclass{
 	color: #00275E;
 }

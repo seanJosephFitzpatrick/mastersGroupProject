@@ -7,7 +7,6 @@ function showNavigation() {
 	// hide all elements
 	$('.bg-dark').css("cssText","background-color: #FFFFFF !important;");
 	$('footer').hide();
-	$('#graphtabs').hide();
 	$('#mainNav').hide();
 	$('#nav_logout').hide();
 	$('#nav_Tables').hide();
