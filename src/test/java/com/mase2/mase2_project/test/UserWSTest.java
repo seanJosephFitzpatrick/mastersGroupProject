@@ -143,7 +143,7 @@ public class UserWSTest {
 	public void testCreateUsersWS() {
 		User userTest = new User();
 		userTest.setEmail("admin2@mase2.ie");
-		userTest.setPassword("5777f605aff3362ca976c1ca0dffffe4");
+		userTest.setPassword("202cb962ac59075b964b07152d234b70");
 		userTest.setRole("admin");
 		final Response response = userWS.create(httpHeaders, userTest);
 //		List<User> userList = (List<User>) response.getEntity();
@@ -169,7 +169,7 @@ public class UserWSTest {
 		final User userTest = userList.get(0);
 		assertEquals("admin@mase2.ie", userTest.getEmail());
 		
-		assertEquals("5777f605aff3362ca976c1ca0dffffe4", userTest.getPassword());
+		assertEquals("202cb962ac59075b964b07152d234b70", userTest.getPassword());
 		assertEquals("admin", userTest.getRole());
 
 	}
