@@ -19,18 +19,52 @@ var modelDataGraph = function() {
 	        type: 'column'
 	      },
 	      title: {
-	        text: chartTitle
+	          style: {
+	              color: '#00275E',
+	              fontWeight: 'bold',
+	              fontSize:'24px'
+	          },
+	          text: chartTitle
 	      },
 	      xAxis: {
+	    	gridLineWidth: 0,
 	        type: 'category',
+            labels: {
+                style: {
+                    color: '#00275E',
+                    fontSize:'15px'
+                }
+            },
+            lineColor: '#00275E',
+            lineWidth: 1,
+	        title: {
+	            style: {
+	                color: '#00275E',
+	                fontSize:'24px'
+	            },
+		        text: "Event ID"
+		    },
 	        categories: data.map(function(x) {
 	          return x.eventCause.id.eventId;
 	        })
 	      },
 	      yAxis: {
+	    	  gridLineWidth: 0,
+	    	  labels: {
+			    style: {
+			        color: '#00275E',
+			        fontSize:'15px'
+			    }
+			},
+            lineColor: '#00275E',
+            lineWidth: 1,
 	        title: {
-	          text: 'Number of Occurrences'
-	        }
+	            style: {
+	                color: '#00275E',
+	                fontSize:'24px'
+	            },
+	            text: 'Occurrences'
+	        },
 	      },
 	      legend: {
 	        enabled: false

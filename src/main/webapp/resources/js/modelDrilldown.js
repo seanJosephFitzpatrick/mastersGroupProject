@@ -7,18 +7,52 @@ function drilldown(data, eId){
         type: 'column'
       },
       title: {
-        text: 'Unique Cause Codes for Event ID ' + eId
+          style: {
+              color: '#00275E',
+              fontWeight: 'bold',
+              fontSize:'24px'
+          },
+          text: 'Unique Cause Codes for Event ID ' + eId
       },
       xAxis: {
-        type: 'category',
-        categories: data.map(function(x) {
-          return x.eventCause.id.eventCode;
-        }),
+    	  	type: 'category',
+    	  	gridLineWidth: 0,
+			labels: {
+			    style: {
+			        color: '#00275E',
+			        fontSize:'15px'
+			    }
+			},
+            lineColor: '#00275E',
+            lineWidth: 1,
+	        title: {
+	            style: {
+	                color: '#00275E',
+	                fontSize:'24px'
+	            },
+		        text: "Cause Code"
+		    },
+	        categories: data.map(function(x) {
+	          return x.eventCause.id.eventCode;
+	        }),
       },
       yAxis: {
-        title: {
-          text: 'Number of Occurrences'
-        }
+    	  	gridLineWidth: 0,
+			labels: {
+			    style: {
+			        color: '#00275E',
+			        fontSize:'15px'
+			    }
+			},
+            lineColor: '#00275E',
+            lineWidth: 1,
+			title: {
+				style: {
+				    color: '#00275E',
+				    fontSize:'24px'
+				},
+				text: 'Occurrences'
+			}
       },
       legend: {
         enabled: false
