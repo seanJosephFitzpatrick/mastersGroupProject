@@ -22,7 +22,7 @@ public class TableSeleniumTest {
 		options.addArguments("--start-maximized");
 		driver = new ChromeDriver(options);
 		driver.get(webURL);
-		driver.findElement(By.id("inputEmail")).sendKeys("michal");
+		driver.findElement(By.id("inputEmail")).sendKeys("admin@mase2.ie");
 		driver.findElement(By.id("inputPass")).sendKeys("123");
 		driver.findElement(By.id("loginbutton")).click();
 		driver.findElement(By.id("nav_Tables")).click();

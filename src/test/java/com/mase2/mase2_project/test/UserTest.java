@@ -24,6 +24,7 @@ import com.mase2.mase2_project.data.FileNameDAO;
 import com.mase2.mase2_project.data.MccMncDAO;
 import com.mase2.mase2_project.data.UeDAO;
 import com.mase2.mase2_project.data.UserDAO;
+import com.mase2.mase2_project.graph_model.ImsiNode;
 import com.mase2.mase2_project.model.BaseData;
 import com.mase2.mase2_project.model.EventCause;
 import com.mase2.mase2_project.model.EventCausePK;
@@ -41,6 +42,7 @@ import com.mase2.mase2_project.rest.MccMncWS;
 import com.mase2.mase2_project.rest.UeWS;
 import com.mase2.mase2_project.rest.UserWS;
 import com.mase2.mase2_project.test.utils.UtilsDAO;
+import com.mase2.mase2_project.util.AutoComObject;
 import com.mase2.mase2_project.util.DateParam;
 import com.mase2.mase2_project.util.DurationAndCountObject;
 import com.mase2.mase2_project.util.FailureCountObject;
@@ -67,9 +69,11 @@ import com.mase2.mase2_project.util.Validator;
 								EventCauseWS.class, User.class,UserWS.class, DateParam.class, FailureClass.class, ExcelDAO.class, InvalidEntity.class,
 								FileLogger.class,UniqueEventAndCauseObject.class, Validator.class,DurationAndCountObject.class,IMSIObject.class, UserDAO.class, SecurityCheck.class, Ue.class, UeDAO.class, ImportWS.class, TableClearer.class,
 								java.util.Date.class)
-					//	.addPackage(FailureClass.class.getPackage())
-					//	.addPackage(FailureClassDAO.class.getPackage())
-								//this line will pick up the production db
+				.addPackage(EventCause.class.getPackage())
+				.addPackage(EventCauseDAO.class.getPackage())
+				.addPackage(EventCauseWS.class.getPackage())
+				.addPackage(ImsiNode.class.getPackage())
+				.addPackage(AutoComObject.class.getPackage())
 						.addPackages(true, jxl.Sheet.class.getPackage()).addPackages(true, jxl.Workbook.class.getPackage())
 						.addPackages(true, jxl.Cell.class.getPackage())
 						.addPackages(true, jxl.biff.BaseCellFeatures.class.getPackage())
@@ -104,8 +108,8 @@ import com.mase2.mase2_project.util.Validator;
 				//it should be possible to test with an in memory db for efficiency
 				utilsDAO.deleteUserTable();
 				user = new User();
-				user.setEmail("michal");
-				user.setPassword("pass");
+				user.setEmail("admin@mase2.ie");
+				user.setPassword("5777f605aff3362ca976c1ca0dffffe4");
 				user.setRole("admin");
 				userDAO.save(user);
 	
@@ -124,16 +128,18 @@ import com.mase2.mase2_project.util.Validator;
 			
 			@Test
 			public void testGeUsersByEmail() {
-				final List<User> userList = userDAO.findByEmail("michal");
+				final List<User> userList = userDAO.findByEmail("admin@mase2.ie");
 				assertEquals("Data fetch = data persisted", userList.size(), 1);
 			}
 			
 			@Test
 			public void testGeUsersByID() {
-				user.setEmail("michal2");
+				user.setEmail("admi2@mase2.ie");
 				userDAO.update(user);
-				final List<User> userList = userDAO.findByEmail("michal2");
+				final List<User> userList = userDAO.findByEmail("admi2@mase2.ie");
 				assertEquals("Data fetch = data persisted", userList.size(), 1);
-				assertEquals("Data fetch = data persisted", userList.get(0).getEmail(), "michal2");
+				assertEquals("Data fetch = data persisted", userList.get(0).getEmail(), "admi2@mase2.ie");
+				user.setEmail("admin@mase2.ie");
+				userDAO.update(user);
 			}
 }

@@ -3,9 +3,11 @@ package com.mase2.mase2_project.test;
 import static org.junit.Assert.assertEquals;
 
 import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
+
 import org.apache.commons.httpclient.HttpStatus;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -25,6 +27,7 @@ import com.mase2.mase2_project.data.FileNameDAO;
 import com.mase2.mase2_project.data.MccMncDAO;
 import com.mase2.mase2_project.data.UeDAO;
 import com.mase2.mase2_project.data.UserDAO;
+import com.mase2.mase2_project.graph_model.ImsiNode;
 import com.mase2.mase2_project.model.BaseData;
 import com.mase2.mase2_project.model.EventCause;
 import com.mase2.mase2_project.model.EventCausePK;
@@ -42,6 +45,7 @@ import com.mase2.mase2_project.rest.MccMncWS;
 import com.mase2.mase2_project.rest.UeWS;
 import com.mase2.mase2_project.rest.UserWS;
 import com.mase2.mase2_project.test.utils.UtilsDAO;
+import com.mase2.mase2_project.util.AutoComObject;
 import com.mase2.mase2_project.util.DateParam;
 import com.mase2.mase2_project.util.DurationAndCountObject;
 import com.mase2.mase2_project.util.FailureCountObject;
@@ -70,9 +74,11 @@ import com.mase2.mase2_project.util.Validator;
         						EventCauseWS.class, User.class,UserWS.class, DateParam.class, FailureClass.class, ExcelDAO.class, InvalidEntity.class,
         						FileLogger.class,UniqueEventAndCauseObject.class, Validator.class,DurationAndCountObject.class,IMSIObject.class, UserDAO.class, SecurityCheck.class, Ue.class, UeDAO.class, ImportWS.class, TableClearer.class,
         						java.util.Date.class)
-                    //    .addPackage(EventCause.class.getPackage())
-                    //    .addPackage(EventCauseDAO.class.getPackage())
-                // this line will pick up the production db.addPackages(true, jxl.Sheet.class.getPackage()).addPackages(true, jxl.Workbook.class.getPackage())
+                  .addPackage(EventCause.class.getPackage())
+				.addPackage(EventCauseDAO.class.getPackage())
+				.addPackage(EventCauseWS.class.getPackage())
+				.addPackage(ImsiNode.class.getPackage())
+				.addPackage(AutoComObject.class.getPackage())
         				.addPackages(true, jxl.Cell.class.getPackage())
         				.addPackages(true, jxl.biff.BaseCellFeatures.class.getPackage())
         				.addPackages(true, jxl.HeaderFooter.Contents.class.getPackage())
