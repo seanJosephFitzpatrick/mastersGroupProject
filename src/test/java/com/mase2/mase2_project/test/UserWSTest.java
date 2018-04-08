@@ -114,7 +114,7 @@ public class UserWSTest {
 		utilsDAO.deleteUserTable();
 		user = new User();
 		user.setEmail("admin@mase2.ie");
-		user.setPassword("5777f605aff3362ca976c1ca0dffffe4");
+		user.setPassword("202cb962ac59075b964b07152d234b70");
 		user.setRole("admin");
 		userDAO.save(user);
 		httpHeaders = utilsDAO.getHttpHeaders();
