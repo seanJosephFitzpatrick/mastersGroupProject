@@ -9,8 +9,9 @@ var modelDataGraph = function() {
 		  }
 	});
 	$.getJSON(rootUrlGraph + model, function(data) {
+		var chartTitle = 'Unique Event ID';
 		if(!Object.keys(data).length > 0){
-			$("#panel_graph").append("<label>No Data Available</label>");
+			chartTitle = 'No Data Available';
 		}
 		
 	    Highcharts.chart('panel_graph', {
@@ -18,7 +19,7 @@ var modelDataGraph = function() {
 	        type: 'column'
 	      },
 	      title: {
-	        text: 'Unique Event ID'
+	        text: chartTitle
 	      },
 	      xAxis: {
 	        type: 'category',
@@ -55,18 +56,17 @@ var modelDataGraph = function() {
 	        }
 	      },
 	      tooltip: {
-	          formatter: function () {
-	              return 'Event ID: <b>' + this.x + ',' +
-	                  '</b> Number of Occurrences: <b>' + this.y + '</b>';
-	          }
-	        //pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.0f}</b> Occurrences<br/>'
-	      },
-	      series: [{
-	        colorByPoint: true,
-	        data: data.map(function(x) {
-	          return x.count * 1;
-	        })
+		          formatter: function () {
+		              return 'Event ID: <b>' + this.x + ',' +
+		                  '</b> Number of Occurrences: <b>' + this.y + '</b>';
+		          }
+	      	},
+	      	series: [{
+		        colorByPoint: true,
+		        data: data.map(function(x) {
+		          return x.count * 1;
+		        })
 			}],
-    });
-  });
+	    });
+	});
 }

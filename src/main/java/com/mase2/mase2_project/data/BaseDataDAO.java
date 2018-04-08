@@ -242,6 +242,5 @@ public class BaseDataDAO {
 		
           return query.getResultList();
 	}
-	
 
 }
