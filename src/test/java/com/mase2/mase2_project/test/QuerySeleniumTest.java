@@ -23,15 +23,17 @@ public class QuerySeleniumTest {
 		options.addArguments("--start-maximized");
 		driver = new ChromeDriver(options);
 		driver.get(webURL);
-		driver.findElement(By.id("inputEmail")).sendKeys("michal");
+		driver.findElement(By.id("inputEmail")).sendKeys("admin@mase2.ie");
 		driver.findElement(By.id("inputPass")).sendKeys("123");
 		driver.findElement(By.id("loginbutton")).click();
-		driver.findElement(By.id("nav_Queries")).click();
+		
 		
 	}
 	
 	@Test
 	public void dateQueryTest() throws InterruptedException{
+		driver.findElement(By.id("nav_seQueries")).click();
+		Thread.sleep(500);
 		driver.findElement(By.id("dateQuery")).click();
 		Thread.sleep(1000);
 		driver.findElement(By.id("date_timepicker_start")).sendKeys("2011-02-01");
@@ -49,6 +51,7 @@ public class QuerySeleniumTest {
 	}
 	@Test
 	public void imsiQueryTest() throws InterruptedException{
+		driver.findElement(By.id("nav_csrQueries")).click();
 		Thread.sleep(500);
 		driver.findElement(By.id("imsiQuery")).click();
 		Thread.sleep(1000);
@@ -61,6 +64,7 @@ public class QuerySeleniumTest {
 	}
 	@Test
 	public void modelQueryTest() throws InterruptedException{
+		driver.findElement(By.id("nav_seQueries")).click();
 		Thread.sleep(500);
 		driver.findElement(By.id("countFailuresQuery")).click();
 		Thread.sleep(1000);
@@ -74,11 +78,12 @@ public class QuerySeleniumTest {
 		driver.findElement(By.id("date_timepicker_end")).click();
 		driver.findElement(By.id("submitquery")).click();
 		Thread.sleep(500);
-		assertNotNull(driver.findElement(By.id("CountFailuresDataTable")));
+		assertEquals(driver.findElement(By.tagName("h3")).getText(),"Model: Alcatel 9100 Type 9109 HC 500");
 		
 	}
 	@Test
 	public void durationQueryTest() throws InterruptedException{
+		driver.findElement(By.id("nav_nmeQueries")).click();
 		Thread.sleep(500);
 		driver.findElement(By.id("sumDurationQuery")).click();
 		Thread.sleep(1000);
@@ -96,6 +101,7 @@ public class QuerySeleniumTest {
 	}
 	@Test
 	public void topTenQueryTest() throws InterruptedException{
+		driver.findElement(By.id("nav_nmeQueries")).click();
 		Thread.sleep(500);
 		driver.findElement(By.id("topTenQuery")).click();
 		Thread.sleep(1000);
@@ -113,6 +119,7 @@ public class QuerySeleniumTest {
 	}
 	@Test
 	public void IMSIFailuresQueryTest() throws InterruptedException{
+		driver.findElement(By.id("nav_csrQueries")).click();
 		Thread.sleep(500);
 		driver.findElement(By.id("showIMSIFailuresQuery")).click();
 		Thread.sleep(1000);
@@ -126,11 +133,12 @@ public class QuerySeleniumTest {
 		driver.findElement(By.id("date_timepicker_end")).click();
 		driver.findElement(By.id("submitquery")).click();
 		Thread.sleep(500);
-		assertNotNull(driver.findElement(By.id("CountFailuresDataTable")));
+		assertEquals(driver.findElement(By.tagName("h3")).getText(),"IMSI: 191911000599586");
 		
 	}
 	@Test
 	public void uniqueQueryTest() throws InterruptedException{
+		driver.findElement(By.id("nav_nmeQueries")).click();
 		Thread.sleep(500);
 		driver.findElement(By.id("uniqueIdAndCodeQuery")).click();
 		Thread.sleep(1000);
@@ -143,7 +151,8 @@ public class QuerySeleniumTest {
 	
 	@Test
 	public void topTenIMSIsQueryTest() throws InterruptedException{
-		
+		driver.findElement(By.id("nav_nmeQueries")).click();
+		Thread.sleep(500);
 		driver.findElement(By.id("topTenIMSIQuery")).click();
 		Thread.sleep(1000);
 		driver.findElement(By.id("date_timepicker_start")).sendKeys("2011-02-01");
@@ -161,7 +170,8 @@ public class QuerySeleniumTest {
 
 	@Test
 	public void failuresForGivenIMSI() throws InterruptedException{
-		
+		driver.findElement(By.id("nav_seQueries")).click();
+		Thread.sleep(500);
 		driver.findElement(By.id("IMSIsforGivenFailureClass")).click();
 		Thread.sleep(1000);
 		driver.findElement(By.id("failure")).sendKeys("1");
