@@ -263,4 +263,13 @@ public class BaseDataWS {
 		return Response.status(200).entity(baseData).build();
 	}
 	
+	@GET
+	@Path("/mgd/{model}/{eventId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response findByUniqueModelGraphDrilldownCombinations(@Context HttpHeaders httpHeaders,
+			@PathParam("model") final String model, @PathParam("eventId") final String eventId) {
+		final List<UniqueEventAndCauseObject> baseData = baseDataDAO.getUniqueEventIdAndCauseCodeForModelGraphDrilldown(model, eventId);
+		return Response.status(200).entity(baseData).build();
+	}
+	
 }

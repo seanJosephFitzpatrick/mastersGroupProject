@@ -235,5 +235,13 @@ public class BaseDataDAO {
         return query.getResultList();
 	}
 	
+	@SuppressWarnings("unchecked")
+	public List<UniqueEventAndCauseObject> getUniqueEventIdAndCauseCodeForModelGraphDrilldown(String model, String eventId) {
+		final Query query=entityManager.createQuery("SELECT new com.mase2.mase2_project.util.UniqueEventAndCauseObject(m.eventCause,count(m)) FROM BaseData m where m.ue.model like ?1 and m.eventCause.id.eventId like ?2 group by m.eventCause.id.eventCode")
+				.setParameter(1, model).setParameter(2, eventId);
+		
+          return query.getResultList();
+	}
+	
 
 }
