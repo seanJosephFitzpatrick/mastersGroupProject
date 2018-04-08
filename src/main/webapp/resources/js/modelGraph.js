@@ -1,10 +1,11 @@
 var rootUrlGraph = "http://localhost:8080/mase2-project/rest/basedatas/mg/";
+var rootUrlDrilldown = "http://localhost:8080/mase2-project/rest/basedatas/mgd/";
 
 var modelDataGraph = function() {
   $.getJSON(rootUrlGraph + model, function(data) {
     console.log(data);
 	if(!Object.keys(data).length > 0){
-		//$("#graph").replaceWith("<h1>No Data Available</h1>");
+		//$("#graph").append("<button onclick="goBack()">Go Back</button>");
 	}
 	
     Highcharts.chart('panel_graph', {
@@ -12,15 +13,12 @@ var modelDataGraph = function() {
         type: 'column'
       },
       title: {
-        text: 'Model Codes'
-      },
-      subtitle: {
-        text: 'Unique Cause Code and Event Id Failures'
+        text: 'Unique Event ID'
       },
       xAxis: {
         type: 'category',
         categories: data.map(function(x) {
-          return x.eventCause.description;
+          return x.eventCause.id.eventId;
         })
       },
       yAxis: {
@@ -34,6 +32,17 @@ var modelDataGraph = function() {
       plotOptions: {
         series: {
           borderWidth: 0,
+          cursor: 'pointer',
+          point: {
+              events: {
+                  click: function () {
+						$.getJSON(rootUrlDrilldown + model + '/' + this.category, function(data) {
+							var eId = this.category;
+							drilldown(data);
+						});	
+                  }
+              }
+          },
           dataLabels: {
             enabled: true,
             format: '{point.y:.0f}'
