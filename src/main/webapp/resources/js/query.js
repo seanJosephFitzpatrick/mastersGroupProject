@@ -13,6 +13,7 @@ var rootCountFailures = "http://localhost:8080/mase2-project/rest/basedatas/nme/
 
 var numberOfFailures=0;
 var TopTenGraphData=[];
+var TopTenImsiGraphData=[];
 var rootUrlIMSIForGivenFailureCauseClass = "http://localhost:8080/mase2-project/rest/basedatas/nme/querygivenfailurecauseclass/";
 
 var failureCount;
@@ -293,6 +294,7 @@ var TopTenIMSIsDataRequest = function(data1, data2) {
 				} ],
 				"order" : [ [ 1, "count" ] ]
 			});
+			TopTenImsiGraphData=data;
 		}
 	});
 };
@@ -461,8 +463,6 @@ function retrieveDatesTopTenIMSIs() {
 			document.getElementById('date_timepicker_end').value);
 	showTopTenIMSIsDataTable(document.getElementById('date_timepicker_start').value,
 			document.getElementById('date_timepicker_end').value);
-	showTop10IMSIsGraph(document.getElementById('date_timepicker_start').value, document.getElementById('date_timepicker_end').value);
-
 }
 function retrieveIMSIbyFailureClass() {
 	showLoading();
@@ -794,25 +794,29 @@ function showTopTenDataTable(startDate, endDate) {
 							+ ' 				<th>Cell ID</th>'
 							+ ' 				<th>Number of Failures</th>' + '			</tr>'
 							+ '		</tfoot>' + '	</table>' + '</div></div>');
+	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+		if($(e.target).attr("href") == "#panel_graph"){
+			$('#panel_graph').html('<div id="graphtitle"><h3>Number of failures and percentage of all failures</h3></div>');
+			drawGraph(TopTenGraphData);
+		}
+	});
 
 }
-$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-	if($(e.target).attr("href") == "#panel_graph"){
-		$('#panel_graph').html('<div id="graphtitle"><h3>Number of failures and percentage of all failures</h3></div>');
-		drawGraph(TopTenGraphData);
-	}
-});
+
 function showTopTenIMSIsDataTable(startDate, endDate) {
+	$('#panel_graph').html(''
+	+ '			<button class="btn invisible" id="backButton">< Back</button>'
+	+ '			<div id="chartContainer" style="height: 500px; width: 100%;"></div>');
+	
 	$('#wrapper')
 
 			.html(''
-					+ '<div class="card-body"><div class="table-responsive">'
-
-			+'<div class="tabletitle"><div><h2>Top 10 IMSIs with failures for a given time period</h2></div>'
+					+'<div class="tabletitle"><div><h2>Top 10 IMSIs with failures for a given time period</h2></div>'
 					+'<div><h3><i>'+startDate+'</i> to <i>'+endDate+'</i></h3></div>'
-					+'</div>'
-					+ tab_panel_start
-					+'<div class="card-body"><div class="table-responsive">'
+					+'</div>');
+					
+	$('#panel_table')
+	.html('<div class="card-body"><div class="table-responsive">'
 					+ '	<table id="TopTenIMSIDataTable" class="table table-bordered display" cellspacing="0" width="100%">'
 					+ '		<thead id="tableHeader">' + '			<tr>' + ' 				<th>IMSI</th>'
 					+ ' 				<th>Number of Failures</th>'
@@ -823,7 +827,13 @@ function showTopTenIMSIsDataTable(startDate, endDate) {
 							+ ' 				<th>Number of Failures</th>'
  + '			</tr>'
 							+ '		</tfoot>' + '	</table>' + '</div></div>'
-							+ tab_panel_end);
+							);
+	$('#graphtabs').show();
+	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+		if($(e.target).attr("href") == "#panel_graph"){
+			showTop10IMSIsGraph(TopTenImsiGraphData);
+		}
+	});
 	
 }
 
