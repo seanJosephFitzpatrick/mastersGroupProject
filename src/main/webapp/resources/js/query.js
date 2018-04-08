@@ -9,9 +9,12 @@ var rootUrlTop10Failures = "http://localhost:8080/mase2-project/rest/basedatas/n
 var rootUrlTop10IMSIs = "http://localhost:8080/mase2-project/rest/basedatas/nme/querytoptenimsi?StartDate=";
 var rootUrlUniqueIdAndCauseCodeForModel = "http://localhost:8080/mase2-project/rest/basedatas/nme/";
 var rootUrlUniqueCauseCodeForIMSI = "http://localhost:8080/mase2-project/rest/basedatas/csr/unique/";
-var rootCountFailures = "http://localhost:8080/mase2-project/rest/basedatas/nme/countfailures"
+var rootCountFailures = "http://localhost:8080/mase2-project/rest/basedatas/nme/countfailures";
 
 var numberOfFailures=0;
+var TopTenGraphData=[];
+var TopTenImsiGraphData=[];
+var SumAndDurGraphData=[];
 var rootUrlIMSIForGivenFailureCauseClass = "http://localhost:8080/mase2-project/rest/basedatas/nme/querygivenfailurecauseclass/";
 
 var failureCount;
@@ -45,9 +48,7 @@ var countFailures = function(data2) {
 		success : function(data) {
 			numberOfFailures=data[0];
 		},
-		complete : function(){
-			drawGraph(data2);
-		}
+		
 	});
 
 };
@@ -212,7 +213,7 @@ var countAndSumDataRequest = function(data1, data2) { //////////////////////////
 					data : "sum"
 				} ]
 			});
-
+				SumAndDurGraphData=data;
 		}
 	});
 };
@@ -257,6 +258,7 @@ var TopTenDataRequest = function(data1, data2) {
 				"order" : [ [ 3, "desc" ] ]
 			});
 			countFailures(data);
+			TopTenGraphData=data;
 			
 		}
 	});
@@ -293,6 +295,7 @@ var TopTenIMSIsDataRequest = function(data1, data2) {
 				} ],
 				"order" : [ [ 1, "count" ] ]
 			});
+			TopTenImsiGraphData=data;
 		}
 	});
 };
@@ -394,7 +397,7 @@ function retrieveIMSI() {
 	imsiDataRequest(document.getElementById('imsi').value);
 	showImsiDataTable(imsi);
 //	showImsiGraph();
-	imsiDataRequestGraph();
+
 	
 }
 function retrieveUniqueIMSI() {
@@ -417,7 +420,7 @@ function retrieveDatesNME() { ///////////////
 	var date2 = document.getElementById('date_timepicker_end').value;
 	countAndSumDataRequest(date1,date2);
 	showSumAndCountDataTable(date1,date2);
-	showSumAndCountGraph(date1, date2);
+	
 
 }
 function retrieveDatesTopTen() {
@@ -452,7 +455,7 @@ function retrieveModel() {
 	model = document.getElementById('model').value;
 	uniqueEventAndCauseDataRequest(document.getElementById('model').value);
 	showUniqueEventAndCauseTable(document.getElementById('model').value);
-	modelDataGraph();
+	
 }
 function retrieveDatesTopTenIMSIs() {
 	showLoading();
@@ -461,8 +464,6 @@ function retrieveDatesTopTenIMSIs() {
 			document.getElementById('date_timepicker_end').value);
 	showTopTenIMSIsDataTable(document.getElementById('date_timepicker_start').value,
 			document.getElementById('date_timepicker_end').value);
-	showTop10IMSIsGraph(document.getElementById('date_timepicker_start').value, document.getElementById('date_timepicker_end').value);
-
 }
 function retrieveIMSIbyFailureClass() {
 	showLoading();
@@ -516,11 +517,11 @@ function showTopTenIMSIsModal(){
 	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="row">'
 			+'<div class="form-group centermargin col-md-6">'
 			+ '<label class="labelclass" for="date_timepicker_start">Start Date</label>'
-			+ '<input type="text" class="form-control" id="date_timepicker_start" value="2012-01-01" placeholder="Start Date">'
+			+ '<input type="text" class="form-control" id="date_timepicker_start"  placeholder="Start Date">'
 			+'</div>'
 			+'<div class="form-group centermargin col-md-6">'
 			+ '<label class="labelclass" for="date_timepicker_end">End Date</label>'
-			+ '<input type="text" class="form-control" id="date_timepicker_end" value="2018-01-01" placeholder="End Date">'
+			+ '<input type="text" class="form-control" id="date_timepicker_end"  placeholder="End Date">'
 			+ '</div>'
 		+ '</div>');
 	$('#csrIMSIQueryModal').find('.modal-footer').html('<button type="button" class="btn btn-secondary"'
@@ -566,11 +567,11 @@ function showNMEModal(){
 	$('#csrIMSIQueryModal').find('.modal-body').html('<div class="row">'
 			+'<div class="form-group centermargin col-md-6">'
 			+ '<label class="labelclass" for="date_timepicker_start">Start Date</label>'
-			+ '<input type="text" class="form-control" id="date_timepicker_start" value="2011-01-01" placeholder="Start Date">'
+			+ '<input type="text" class="form-control" id="date_timepicker_start"  placeholder="Start Date">'
 			+'</div>'
 			+'<div class="form-group centermargin col-md-6">'
 			+ '<label class="labelclass" for="date_timepicker_end">End Date</label>'
-			+ '<input type="text" class="form-control" id="date_timepicker_end" value="2018-01-01" placeholder="End Date">'
+			+ '<input type="text" class="form-control" id="date_timepicker_end"  placeholder="End Date">'
 			+ '</div>'
 		+ '</div>');
 	$('#csrIMSIQueryModal').find('.modal-footer').html('<button type="button" class="btn btn-secondary"'
@@ -751,6 +752,18 @@ function showImsiDataTable(imsi) { //*******************************************
 							+ ' 				<th>Cause Code</th>' + '			</tr>'
 							+ '		</tfoot>' + '	</table>' + '</div></div>'
 							+ tab_panel_end_3djs);
+	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+		if($(e.target).attr("href") == "#panel_graph"){
+			imsiDataRequestGraph();
+		}
+	});
+	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+		if($(e.target).attr("href") == "#panel_table"){
+			$('#panel_graph').html('');
+			
+		}
+	});
+	
 }
 function showUniqueEventAndCauseTable(model) {
 	$('#wrapper')
@@ -771,42 +784,69 @@ function showUniqueEventAndCauseTable(model) {
 							+ ' 				<th>Cause Code</th>'
 							+ ' 				<th>Number of Occurences</th>' + '			</tr>'
 							+ '		</tfoot>' + '	</table>' + '</div></div>'
-							+ tab_panel_end);
+							+ tab_panel_end_3djs);
+	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+		if($(e.target).attr("href") == "#panel_graph"){
+			$('#panel_graph').html('<button class="btn invisible" id="backButton">< Back</button>'
+			+ '			<div id="chartContainer" style="height: 500px; width: 100%;"></div>'
+			+ '		<a class="scroll-to-top rounded" href="#page-top"><i class="fa fa-angle-up"></i></a>');
+			modelDataGraph();
+		}
+	});
+	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+		if($(e.target).attr("href") == "#panel_table"){
+			$('#panel_graph').html('');
+			
+		}
+	});
 }
 function showTopTenDataTable(startDate, endDate) {
+
 	$('#wrapper')
 			.html('<div class="tabletitle"><div><h2>Top 10 Market/Operator/Cell ID combinations with failures for a given time period</h2></div>'
 					+'<div><h3><i>'+startDate+'</i> to <i>'+endDate+'</i></h3></div>'
 					+'</div>'
-					+ tab_panel_start
+					+tab_panel_start
 					+'<div class="card-body"><div class="table-responsive">'
-							+ '	<table id="TopTenDataTable" class="table table-bordered display" cellspacing="0" width="100%">'
-							+ '		<thead id="tableHeader">' + '			<tr>' + ' 				<th>Market</th>'
-							+ ' 				<th>Operator</th>'
-							+ ' 				<th>Cell ID</th>'
-							+ ' 				<th>Number of Failures</th>' + ' 			</tr>'
-							+ ' 		</thead>'
-							// +' <tbody> </tbody>'
-							+ '		<tfoot id="tableFooter">' + '			<tr>' + ' 				<th>Market</th>'
-							+ ' 				<th>Operator</th>'
-							+ ' 				<th>Cell ID</th>'
-							+ ' 				<th>Number of Failures</th>' + '			</tr>'
-							+ '		</tfoot>' + '	</table>' + '</div></div>'
-							+ tab_panel_end);
-	$('#panel_graph')
+					+ '	<table id="TopTenDataTable" class="table table-bordered display" cellspacing="0" width="100%">'
+					+ '		<thead id="tableHeader">' + '			<tr>' + ' 				<th>Market</th>'
+					+ ' 				<th>Operator</th>'
+					+ ' 				<th>Cell ID</th>'
+					+ ' 				<th>Number of Failures</th>' + ' 			</tr>'
+					+ ' 		</thead>'
+					// +' <tbody> </tbody>'
+					+ '		<tfoot id="tableFooter">' + '			<tr>' + ' 				<th>Market</th>'
+					+ ' 				<th>Operator</th>'
+					+ ' 				<th>Cell ID</th>'
+					+ ' 				<th>Number of Failures</th>' + '			</tr>'
+					+ '		</tfoot>' + '	</table>' + '</div></div>'
+					+tab_panel_end_3djs);
+	
+	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+		if($(e.target).attr("href") == "#panel_graph"){
+			drawGraph(TopTenGraphData);
+			$('#panel_graph').prepend('<div id="graphtitle"><h3>Number of failures and percentage of all failures</h3></div>');
+			
+		}
+	});
+	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+		if($(e.target).attr("href") == "#panel_table"){
+			$('#panel_graph').html('');
+			
+		}
+	});
 
-	.html('<div id="graphdiv"></div>');
 }
+
 function showTopTenIMSIsDataTable(startDate, endDate) {
+	
 	$('#wrapper')
 
 			.html(''
-					+ '<div class="card-body"><div class="table-responsive">'
-
-			+'<div class="tabletitle"><div><h2>Top 10 IMSIs with failures for a given time period</h2></div>'
+					+'<div class="tabletitle"><div><h2>Top 10 IMSIs with failures for a given time period</h2></div>'
 					+'<div><h3><i>'+startDate+'</i> to <i>'+endDate+'</i></h3></div>'
 					+'</div>'
-					+ tab_panel_start
+					+tab_panel_start
 					+'<div class="card-body"><div class="table-responsive">'
 					+ '	<table id="TopTenIMSIDataTable" class="table table-bordered display" cellspacing="0" width="100%">'
 					+ '		<thead id="tableHeader">' + '			<tr>' + ' 				<th>IMSI</th>'
@@ -818,12 +858,26 @@ function showTopTenIMSIsDataTable(startDate, endDate) {
 							+ ' 				<th>Number of Failures</th>'
  + '			</tr>'
 							+ '		</tfoot>' + '	</table>' + '</div></div>'
-							+ tab_panel_end);
+							+tab_panel_end_3djs);
+	
+	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+		if($(e.target).attr("href") == "#panel_graph"){
+			$('#panel_graph').html('<button class="btn invisible btn-primary" id="backButton">< Back</button>'
+			+ '			<div id="chartContainer" style="height: 500px; width: 100%;"></div>'
+			+ '		<a class="scroll-to-top rounded" href="#page-top"><i class="fa fa-angle-up"></i></a>');
+			showTop10IMSIsGraph(TopTenImsiGraphData);
+		}
+	});
+	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+		if($(e.target).attr("href") == "#panel_table"){
+			$('#panel_graph').html('');
+			
+		}
+	});
 	
 }
 
 function showSumAndCountDataTable(startDate, endDate) {
-
 	$('#wrapper')
 			.html('<div class="tabletitle"><div><h2>Number of failures and duration for a given time period</h2></div>'
 					+'<div><h3><i>'+startDate+'</i> to <i>'+endDate+'</i></h3></div>'
@@ -840,7 +894,22 @@ function showSumAndCountDataTable(startDate, endDate) {
 				+ ' 				<th>Number of Failures</th>'
 				+ ' 				<th>Sum Duration</th>' + '			</tr>'
 				+ '		</tfoot>' + '	</table>' + '</div></div>'
-				+ tab_panel_end);
+				+ tab_panel_end_3djs);
+	
+	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+		if($(e.target).attr("href") == "#panel_graph"){
+			$('#panel_graph').html('<button class="btn invisible btn-primary" id="backButton">< Back</button>'
+			+ '			<div id="chartContainer" style="height: 500px; width: 100%;"></div>'
+			+ '		<a class="scroll-to-top rounded" href="#page-top"><i class="fa fa-angle-up"></i></a>');
+			showSumAndCountGraph(SumAndDurGraphData);
+		}
+	});
+	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+		if($(e.target).attr("href") == "#panel_table"){
+			$('#panel_graph').html('');
+			
+		}
+	});
 }
 function showDateDataTable(startDate, endDate) {
 	$('#wrapper')
@@ -857,7 +926,6 @@ function showDateDataTable(startDate, endDate) {
 							+ '</div></div>');
 }
 function showCountFailuresDataTable(imsi,startDate, endDate) {
-	console.log("Failure count is::" + failureCount);
 	$('#wrapper')
 			.html('<div class="tabletitle"><div><h2>Number of failures for a given IMSI and time period</h2></div>'
 					+'<div><h3>IMSI: <i>'+imsi+'</i></h3></div>'
@@ -901,17 +969,20 @@ var tab_panel_start =''
 	+ '			<a class="nav-link active" data-toggle="tab" href="#panel_table" role="tab">Table</a>'
 	+ '		</li>'
 	+ '		<li class="nav-item">'
+
 	+ '			<a class="nav-link " data-toggle="tab" href="#panel_graph" role="tab">Graph</a>'
+
 	+ '		</li>'
 	+ '	</ul>'
 	+ '		<div class="tab-content card">'
 	+ '			<!--Panel Tab-->'
-	+ '			<div class="tab-pane fade in show active" id="panel_table" role="tabpanel">';
+	+ '			<div class="tab-pane fade in active show" id="panel_table" role="tabpanel">';
 var tab_panel_end = ''
 	+ '		<a class="scroll-to-top rounded" href="#page-top"><i class="fa fa-angle-up"></i></a>'
 	+ '		</div>'
 	+ '		<!--Panel Graph-->'
-	+ '		<div class="tab-pane fade in show " id="panel_graph" role="tabpane2">'
+
+	+ '		<div class="tab-pane fade in" id="panel_graph" role="tabpanel">'
 	+ '			<button class="btn invisible" id="backButton">< Back</button>'
 	+ '			<div id="chartContainer" style="height: 450px; width: 100%;"></div>'
 	+ '		<a class="scroll-to-top rounded" href="#page-top"><i class="fa fa-angle-up"></i></a>'
@@ -922,7 +993,7 @@ var tab_panel_end_3djs = ''
 	+ '		<a class="scroll-to-top rounded" href="#page-top"><i class="fa fa-angle-up"></i></a>'
 	+ '		</div>'
 	+ '		<!--Panel Graph-->'
-	+ '		<div class="tab-pane fade in show active" id="panel_graph" role="tabpane2">'
+	+ '		<div class="tab-pane fade in" id="panel_graph" role="tabpanel">'
 	+ '		<a class="scroll-to-top rounded" href="#page-top"><i class="fa fa-angle-up"></i></a>'
 	+ '		</div>'
 	+ '</div>';

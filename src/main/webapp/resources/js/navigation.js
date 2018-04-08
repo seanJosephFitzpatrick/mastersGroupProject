@@ -11,8 +11,10 @@ function showNavigation() {
 	$('#nav_logout').hide();
 	$('#nav_Tables').hide();
 	$('#nav_NDA').hide();
-	$('#nav_Queries').hide();
+	$('#nav_nmeQueries').hide();
+	$('#nav_seQueries').hide();
 	$('#nav_ImportAll').hide();
+	$('#nav_csrQueries').hide();
 	$('#nav_ImportAllData').hide();
 	$('#nav_userMgmt').hide();
 	$('#dateQuery').hide();
@@ -27,19 +29,20 @@ function showNavigation() {
 
 	
 	if(role == "admin" || role == "manager" || role == "support" || role == "customer") {
-		$('.bg-dark').css("cssText","background-color: #343a40 !important;");
+		$('.bg-dark').css("cssText","background-color: #00275E !important;");
 		$('footer').show();
 		$('#mainNav').show();
 		showDashboard();
 		$('#nav_NDA').show();
 		$('#nav_logout').show();
-		$('#nav_Queries').show();	
+		$('#nav_csrQueries').show();
 	}
 	
 	if(role == "admin" || role == "manager" || role == "support") {
 		$('#dateQuery').show();
 		$('#countFailuresQuery').show();
 		$('#IMSIsforGivenFailureClass').show();
+		$('#nav_seQueries').show();
 	}	
 	
 	if(role == "admin" || role == "manager") {
@@ -47,6 +50,7 @@ function showNavigation() {
 		$('#sumDurationQuery').show();
 		$('#topTenQuery').show();
 		$('#topTenIMSIQuery').show();
+		$('#nav_nmeQueries').show();
 		
 	}	
 	if(sessionStorage.getItem("role") == "admin") {

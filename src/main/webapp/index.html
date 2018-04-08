@@ -50,40 +50,45 @@
 						<li><a href="#" id="ueTable" onclick="showTabelUe()">Ue</a></li>
 						<li><a href="#" id="eventTable" onclick="showTableEventcauses()">Event Cause</a></li>
 					</ul></li>
-
-				<li id="nav_Queries" class="nav-item" data-toggle="tooltip" data-placement="right" title="Queries"><a class="nav-link nav-link-collapse collapsed" data-toggle="collapse"
-					href="#collapseQueries" data-parent="#exampleAccordion"> <i class="fa fa-search" aria-hidden="true"></i> <span class="nav-link-text">Queries</span>
+				<li id="nav_csrQueries" class="nav-item" data-toggle="tooltip" data-placement="right" title="Queries"><a class="nav-link nav-link-collapse collapsed" data-toggle="collapse"
+					href="#collapseCsrQueries" data-parent="#exampleAccordion"> <i class="fa fa-search" aria-hidden="true"></i> <span class="nav-link-text">Customer Service Representative Queries</span>
 				</a>
-
-					<ul class="sidenav-second-level collapse" id="collapseQueries">
+				<ul class="sidenav-second-level collapse" id="collapseCsrQueries">
 						<li id="imsiQuery"><a href="baseDataModal.html" data-placement="top" title="Display all Event IDs and Cause Codes for a given IMSI" data-toggle="modal" onclick="showIMSIModal()">IMSI
 								Event Causes</a></li>
+						<li id="showIMSIFailuresQuery"><a href="baseDataModal.html" data-placement="top" title="Display number of failures for a given IMSI and a given time period" data-toggle="modal"
+							onclick="showIMSIFailureModalGivenTimePeriod()">IMSI Dates and Failures</a></li>
 						<li id="uniqueImsiQuery"><a href="baseDataModal.html" data-placement="top" title="Display all Unique Cause Codes for a given IMSI" data-toggle="modal" onclick="showUniqueIMSIModal()">IMSI
 								Cause Codes</a></li>
 
-						<li id="dateQuery"><a href="baseDataModal.html" data-placement="top" title="Display all failures during a given time period" data-toggle="modal" onclick="showDateModal()">Date Failures</a>
+					</ul></li>
+					<li id="nav_seQueries" class="nav-item" data-toggle="tooltip" data-placement="right" title="Queries"><a class="nav-link nav-link-collapse collapsed" data-toggle="collapse"
+					href="#collapseSeQueries" data-parent="#exampleAccordion"> <i class="fa fa-search" aria-hidden="true"></i> <span class="nav-link-text">Support Engineer Queries</span>
+				</a>
+				<ul class="sidenav-second-level collapse" id="collapseSeQueries">
+					<li id="dateQuery"><a href="baseDataModal.html" data-placement="top" title="Display all failures during a given time period" data-toggle="modal" onclick="showDateModal()">Date Failures</a>
 						</li>
-
-						<li id="countFailuresQuery"><a href="baseDataModal.html" data-placement="top" title="Display number of failures for a Model during a given time period" data-toggle="modal"
+					<li id="countFailuresQuery"><a href="baseDataModal.html" data-placement="top" title="Display number of failures for a Model during a given time period" data-toggle="modal"
 							onclick="showModelModal()">Model Failures</a></li>
-
-						<li id="sumDurationQuery"><a href="baseDataModal.html" data-placement="top" title="Display number of failures and duration for a given time period" data-toggle="modal"
-							onclick="showNMEModal()">IMSI Failures and Duration</a></li>
-
-						<li id="topTenQuery"><a href="baseDataModal.html" data-placement="top" title="Display top 10 Market/Operator/Cell ID combinations with failures for a given time period" data-toggle="modal"
-							onclick="showTopTenModal()">Top 10 Failures</a></li>
-
-						<li id="showIMSIFailuresQuery"><a href="baseDataModal.html" data-placement="top" title="Display number of failures for a given IMSI and a given time period" data-toggle="modal"
-							onclick="showIMSIFailureModalGivenTimePeriod()">IMSI Dates and Failures</a></li>
-
-						<li id="uniqueIdAndCodeQuery"><a href="baseDataModal.html" data-placement="top" title="Display unique Event IDs and Cause Codes for a given model" data-toggle="modal"
-							onclick="showUniqueModelModal()">Model Codes</a></li>
-						<li id="topTenIMSIQuery"><a href="baseDataModal.html" data-placement="top" title="Display top 10 IMSIs with failures for a given time period" data-toggle="modal"
-							onclick="showTopTenIMSIsModal()">Top 10 IMSI Failures</a></li>
-						<li id="IMSIsforGivenFailureClass"><a href="baseDataModal.html" data-placement="top" title="Display IMSIs affected by Failure Cause Class" data-toggle="modal"
-							onclick="showIMSIsForFailureClassModal()">IMSIs affected by Failure Cause Class</a></li>
+					<li id="IMSIsforGivenFailureClass"><a href="baseDataModal.html" data-placement="top" title="Display IMSIs affected by Failure Cause Class" data-toggle="modal"
+							onclick="showIMSIsForFailureClassModal()">IMSIs by Failure Class</a></li>
 
 					</ul></li>
+					<li id="nav_nmeQueries" class="nav-item" data-toggle="tooltip" data-placement="right" title="Queries"><a class="nav-link nav-link-collapse collapsed" data-toggle="collapse"
+					href="#collapseNmeQueries" data-parent="#exampleAccordion"> <i class="fa fa-search" aria-hidden="true"></i> <span class="nav-link-text">Network Management Engineer Queries</span>
+				</a>
+				<ul class="sidenav-second-level collapse" id="collapseNmeQueries">
+					<li id="sumDurationQuery"><a href="baseDataModal.html" data-placement="top" title="Display number of failures and duration for a given time period" data-toggle="modal"
+							onclick="showNMEModal()">IMSI Failures and Duration</a></li>
+					<li id="uniqueIdAndCodeQuery"><a href="baseDataModal.html" data-placement="top" title="Display unique Event IDs and Cause Codes for a given model" data-toggle="modal"
+							onclick="showUniqueModelModal()">Model Codes</a></li>
+					<li id="topTenQuery"><a href="baseDataModal.html" data-placement="top" title="Display top 10 Market/Operator/Cell ID combinations with failures for a given time period" data-toggle="modal"
+							onclick="showTopTenModal()">Top 10 Failures</a></li>
+					<li id="topTenIMSIQuery"><a href="baseDataModal.html" data-placement="top" title="Display top 10 IMSIs with failures for a given time period" data-toggle="modal"
+							onclick="showTopTenIMSIsModal()">Top 10 IMSI Failures</a></li>
+
+					</ul></li>
+
 
 				<li id="nav_Files" class="nav-item" data-toggle="tooltip" data-placement="right" title="Files available for import"><a class="nav-link nav-link-collapse collapsed" data-toggle="collapse"
 					href="#collapseFiles" data-parent="#exampleAccordion" onclick="getFileNames()" id="Filestoggle"> <i class="fa fa-file-excel-o"></i> <span class="nav-link-text">Import Call Failures</span>
@@ -112,37 +117,10 @@
 
 	<div class="content-wrapper">
 		<div class="container-fluid" id="wrapper">
-			<!-- 			<ul class="nav nav-tabs nav-justified" role="tablist">
-				<li class="nav-item">
-					<a class="nav-link active" data-toggle="tab" href="#panel_table" role="tab">Table</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" data-toggle="tab" href="#panel_graph" role="tab">Graph</a>
-				</li>
 
-			</ul>
-
-			<div class="tab-content card">
-				Panel Tab
-				<div class="tab-pane fade in show active" id="panel_table" role="tabpanel">
-					<br>
-					<p>Lorem ipsum</p>
-					<a class="scroll-to-top rounded" href="#page-top">
-						<i class="fa fa-angle-up"></i>
-					</a>
-				</div>
-				Panel Graph
-				<div class="tab-pane fade" id="panel_graph" role="tabpane2">
-					<br>
-					<p>Lorem ipsum huj</p>
-					<a class="scroll-to-top rounded" href="#page-top">
-						<i class="fa fa-angle-up"></i>
-					</a>
-				</div>
-			</div> -->
 		</div>
-
-		<div id="graph"></div>
+		
+		
 		<!--Query Modal -->
 		<div class="modal fade" id="csrIMSIQueryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered" role="document">

@@ -18,4 +18,5 @@ function failureclassautocomplete(){
 	$("#failure").autocomplete({
 		source: rootUrlFailureClassAutoQuery + document.getElementById('failure').value
 	});
+
 }

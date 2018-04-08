@@ -69,4 +69,5 @@ var modelDataGraph = function() {
 			}],
 	    });
 	});
+
 }

@@ -1,4 +1,4 @@
-@import "compass/css3";
+
 #loading_gif {
 	margin: auto;
 	display: block;	
@@ -29,11 +29,24 @@ input[type=text] {
     border-bottom: 2px solid #00275E;
     outline:0;
 }
-svg {
-    display: block;
-    margin: 0 auto;
+#panel_graph{
+	width: 100%;
+  display: block;
+  margin: auto;
 }
 input[type=password] {
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid #00275E;
+    outline:0;
+}
+input[type=email] {
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid #00275E;
+    outline:0;
+}
+input[type=number] {
     background: transparent;
     border: none;
     border-bottom: 2px solid #00275E;
@@ -45,14 +58,35 @@ input[type=password] {
 .chartLabel{
 	color: #00275E !important;
 }
-.center {
+#graphtitle{
+	margin-top:20px;
+	text-align:center;
+	font-weight: bold;
+    font-size: 26px !important
+}
+.chartLabel {
 
     fill: #00275E !important;
     font-weight: bold;
+    font-size: 26px !important;
+}
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active{
+	color: #FFFFFF !important;
+	background-color: #00275E !important;
+}
+#mainNav.navbar-dark .navbar-collapse .navbar-sidenav{
+	background: #00275E !important;
+}
+#mainNav.navbar-dark .navbar-collapse .navbar-sidenav > .nav-item .sidenav-second-level, #mainNav.navbar-dark .navbar-collapse .navbar-sidenav > .nav-item .sidenav-third-level{
+	background: #00275E !important;
+}
+.bg-dark{
+	background-color: #00275E !important;
 }
 .outer-label{
 	fill: #00275E !important;
 	font-weight: bold;
+	font-size: 20px !important;
 }
 body{
 	color: #00275E !important;
@@ -118,6 +152,12 @@ button.dt-button, div.dt-button, a.dt-button{
 }
 .tabletitle{
 	text-align: center;
+}
+#graphtooltip{
+	color:white; !important;
+	border:2px solid #00275E !important;
+	border-radius: 5px !important;
+	background-color: #00275E !important;
 }
 .form-control:focus {
   border-color: #00275E;

@@ -5,7 +5,7 @@ var definitionVisualization = {};
 
     visualization.donut = {};
 
-    var topLevelItem = {label: "% Failures Per Node"};
+    var topLevelItem = {label: "Failures Per Node"};
 
 /*    var subSubData = [
         {colorIndex: 0, value: 3075, label: "Label 1"},
@@ -27,7 +27,7 @@ var definitionVisualization = {};
     var data = [];
     data.push({ 
 		colorIndex: 0, 
-        value: 0,
+        value: numberOfFailures,
         label: "Other Failures"});
     var found=false;
     var countColour=1;
@@ -51,13 +51,12 @@ var definitionVisualization = {};
     var countTotal=0;
     for(var i=1;i<data.length;i++){
     	countTotal+=parseInt(data[i].value);
-    	data[i].value=parseFloat(data[i].value)/numberOfFailures*100;
-    	data[i].value=data[i].value.toFixed(2);
-    	console.log(data[i].value);
+//    	data[i].value=parseFloat(data[i].value)/numberOfFailures*100;
+//    	data[i].value=data[i].value.toFixed(2);
+//    	console.log(data[i].value);
     	if(i===data.length-1){
     		console.log(countTotal);
-    		data[0].value=(numberOfFailures-countTotal)/numberOfFailures*100;
-    		data[0].value=data[0].value.toFixed(2);
+    		data[0].value=(numberOfFailures-countTotal);
     	}
     }
     
@@ -67,7 +66,7 @@ var definitionVisualization = {};
     	
     	tempArray.push({ 
     		colorIndex: countColour, 
-            value: 0,
+            value: 15000,
             label: "Other Failures"});
     	countColour++;
     	
@@ -79,7 +78,8 @@ var definitionVisualization = {};
         		colorIndex: countColour, 
                 value: topTen[j].count,
                 childData: subSubData,
-                label: topTen[j].country});
+                label: topTen[j].country,
+    			cellId: topTen[j].cellId});
     			countColour++;
 
     		}
@@ -97,13 +97,13 @@ var definitionVisualization = {};
     	countTotal=0;
     	for(var j=1;j<subData[i].length;j++){
     	countTotal+=parseInt(subData[i][j].value);
-    	subData[i][j].value=parseFloat(subData[i][j].value)/numberOfFailures*100;
-    	subData[i][j].value=subData[i][j].value.toFixed(2);
-    	console.log(data[i].value);
+//    	subData[i][j].value=parseFloat(subData[i][j].value)/numberOfFailures*100;
+//    	subData[i][j].value=subData[i][j].value.toFixed(2);
+//    	console.log(data[i].value);
     	if(j===subData[i].length-1){
     		console.log(countTotal);
-    		subData[i][0].value=(numberOfFailures-countTotal)/numberOfFailures*100;
-    		subData[i][0].value=subData[i][0].value.toFixed(2);
+    		subData[i][0].value=numberOfFailures-countTotal;
+//    		subData[i][0].value=subData[i][0].value.toFixed(2);
     	}
     	}
     }
@@ -115,11 +115,12 @@ var definitionVisualization = {};
     		countColour=0;  	      	
         	tempArray2.push({ 
         		colorIndex: countColour, 
-                value: 2000,
+                value: 5000,
                 label: "Other Failures"});
         	countColour++;
+        	 
     		for(var x=0;x<topTen.length;x++){
-        		if(topTen[x].country===subData[i][j].label){
+        		if(topTen[x].country===subData[i][j].label&&topTen[x].cellId===subData[i][j].cellId){
         			if(tempArray2.length===0){
         			tempArray2.push({ 
             		colorIndex: countColour, 
@@ -130,7 +131,7 @@ var definitionVisualization = {};
         				var flag=false;
         				for(var z=0;z<tempArray2.length;z++){
         					if(topTen[x].operator===tempArray2[z].label){
-        						tempArray2[z].value+=topTen[x].count;
+        						
         						flag=true;
         						break;
         					}
@@ -143,8 +144,9 @@ var definitionVisualization = {};
         	        			countColour++;
         				}
         			}
-        		}
+        		
             	}
+        	 }
     		if(subData[i][j].label !== "Other Failures"){
         		console.log("test");
         		tempArray.push(tempArray2);
@@ -153,16 +155,31 @@ var definitionVisualization = {};
     	subSubData.push(tempArray);
     	
     }
+    for(var i=0;i<subSubData.length;i++){
+    	countTotal=0;
+    	for(var j=0;j<subSubData[i].length;j++){
+    		for(var z=1;z<subSubData[i][j].length;z++){
+    	countTotal+=parseInt(subSubData[i][j][z].value);
+//    	subSubData[i][j][z].value=parseFloat(subSubData[i][j][z].value)/numberOfFailures*100;
+//    	subSubData[i][j][z].value=subSubData[i][j][z].value.toFixed(2);
+    	if(z===subSubData[i][j].length-1){
+    		console.log(countTotal);
+    		subSubData[i][j][0].value=numberOfFailures-countTotal;
+//    		subSubData[i][j][0].value=subSubData[i][j][0].value.toFixed(2);
+    	}
+    		}
+    	}
+    }
     console.log(subSubData);
     for(var i=0;i<subData.length;i++){
     	for(var j=0;j<subData[i].length;j++){
     		if(subData[i][j].label !== "Other Failures"){
     			subData[i][j].childData=subSubData[i][j-1];
-    			console.log(subData[i][j].childData);
-        	}
+    			console.log(subData[i][j].label+", "+subData[i][j].value+" : ");
+    			console.log(subData[i][j].childData);}
     	}
     }
-    console.log(subSubData);
+    
     var dataOriginal = data.slice(0); //Keep a record around for book-keeping purposes
 
     var selectedPath = [];
@@ -180,13 +197,14 @@ var definitionVisualization = {};
 
     // Global Variables
 
-    var margin = {top: 100, right: 0, bottom: 10, left: 127.5};
+    var margin = {top: 125, right: 150, bottom: 0, left: 500};
     var width = '100%';
-    var height = 800;
+    var height = 600;
 
     var radius = 300;
     var tooltip = d3.select("body")
 	.append("div")
+	.attr("id","graphtooltip")
 	.style("position", "absolute")
 	.style("z-index", "10")
 	.style("visibility", "hidden")
@@ -214,7 +232,7 @@ var definitionVisualization = {};
         }
 
         var sel = d3.select(this);
-        console.log(sel);
+        console.log(sel[0][0]);
         //Search the current path to see the counter where it was selected. (Also update selected path)
 
         for (var i = 0; i < path[0].length; i++) {
@@ -237,7 +255,7 @@ var definitionVisualization = {};
                 return endAngle;
             })
             .innerRadius(function (i) {
-                return radius - 20
+                return radius - 30
             })
             .outerRadius(function (o) {
                 return radius * 1.1
@@ -270,7 +288,7 @@ var definitionVisualization = {};
 
             var currentItem = getCurrentItemData(1);
             selectedPath.pop(); //Update the path
-
+            console.log(currentItem);
             //If we have another parent we need to show the zoom further out arc.
 
             if (selectedPath.length > 0) {
@@ -319,7 +337,8 @@ var definitionVisualization = {};
                 .ease("in")
                 .duration(100)
                 .attr("d", arcOver);
-            tooltip.text(d.value+"%");
+            var percentageValue=(parseFloat(d.value)/numberOfFailures*100).toFixed(2);
+            tooltip.text("Count: "+d.value+" | Percentage: "+percentageValue+"%");
             return tooltip.style("visibility", "visible");
         }).on("mousemove", function(){return tooltip.style("top",(d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");})
         .on("mouseout", function () {
@@ -351,7 +370,7 @@ var definitionVisualization = {};
                             return endAngle;
                         })
                         .innerRadius(function (i) {
-                            return radius - 20;
+                            return radius - 30;
                         })
                         .outerRadius(function (o) {
                             return radius * 1.1;
@@ -365,7 +384,7 @@ var definitionVisualization = {};
                             return endAngle;
                         })
                         .outerRadius(radius)
-                        .innerRadius(radius - 20);
+                        .innerRadius(radius - 30);
 
                     selectedItem.transition()
                         .duration(750)
@@ -454,7 +473,7 @@ var definitionVisualization = {};
         var zoomScale = 1.25;
 
         var origOuterRadius = radius * 1.1;
-        var origInnerRadius = radius - 20;
+        var origInnerRadius = radius - 30;
 
         var finalInnerRadius = radius * zoomScale;
 
@@ -557,8 +576,17 @@ var definitionVisualization = {};
     function getCurrentItemData(startIndex) {
         startIndex = startIndex | 0;
         var currentItem = data;
-        for (var i = startIndex; i < selectedPath.length; i++) {
-            currentItem = currentItem[selectedPath[i]].childData;
+        if(startIndex==1){
+        	for (var i = startIndex; i < selectedPath.length; i++) {
+        		console.log(selectedPath);
+            	currentItem = currentItem[selectedPath[i-1]].childData;
+        	}
+        	
+        }else{
+        	for (var i = startIndex; i < selectedPath.length; i++) {
+        		console.log(selectedPath);
+            	currentItem = currentItem[selectedPath[i]].childData;
+        	}
         }
         return currentItem;
     }
@@ -593,12 +621,13 @@ var definitionVisualization = {};
     };
 
     visualization.donut.show = function () {
-
-        var svgContainer = d3.select("#graphdiv");
-        svgContainer.html("");
-
+    	var outerWidth  = 1600,
+        outerHeight = 900;
+        var svgContainer = d3.select("#panel_graph");
+        
         data = dataOriginal.slice(0);
         selectedPath = [];
+        
 
         // Primary Chart
         chart = svgContainer
@@ -606,9 +635,13 @@ var definitionVisualization = {};
             .attr("id", "svg-container")
             .attr("width", width)
             .attr("height", height)
+            .attr("viewBox", "0 0 " + outerWidth + " " + outerHeight)
             .append("g")
             .attr("class", "primary")
             .attr("transform", transformAttrValue());
+        
+        
+        
 
         chartLabelsGroup = d3.select("#svg-container")
             .append("g")
@@ -628,7 +661,7 @@ var definitionVisualization = {};
 
         arc = d3.svg.arc()
             .outerRadius(radius)
-            .innerRadius(radius - 20);
+            .innerRadius(radius - 30);
 
         arcSmall = d3.svg.arc()
             .outerRadius(radius - 40)
@@ -669,7 +702,7 @@ var definitionVisualization = {};
         // Arc Interaction Sizing
         arcOver = d3.svg.arc()
             .outerRadius(radius * 1.1)
-            .innerRadius(radius - 20);
+            .innerRadius(radius - 30);
         
         
 
@@ -679,7 +712,8 @@ var definitionVisualization = {};
                 .ease("in")
                 .duration(100)
                 .attr("d", arcOver);
-            tooltip.text(d.value+"%");
+            var percentageValue=(parseFloat(d.value)/numberOfFailures*100).toFixed(2);
+            tooltip.text("Count: "+d.value+" | Percentage: "+percentageValue+"%");
             return tooltip.style("visibility", "visible");
         }).on("mousemove", function(){return tooltip.style("top",(d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");})
         .on("mouseout", function () {

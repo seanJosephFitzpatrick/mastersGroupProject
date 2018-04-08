@@ -1,6 +1,6 @@
 var rootUrlDurationFailures = "http://localhost:8080/mase2-project/rest/basedatas/graph/";
 
-var showSumAndCountGraph = function(data1, data2) {
+var showSumAndCountGraph = function(data) {
 
 	var data_p = [];
 	var totalCount = 0;
@@ -15,14 +15,7 @@ var showSumAndCountGraph = function(data1, data2) {
 	var range9_data = [];
 	var range10_data = [];
 
-	$.ajax({
-		type : 'GET',
-		url : rootUrlSumDurationAndCountFailures + data1 + "&EndDate=" + data2,
-		dataType : "json",
-		headers : {
-			'Authorization' : 'Basic ' + sessionStorage.getItem("email") + ":" + sessionStorage.getItem("password")
-		},
-		success : function(data) {
+	
 			var maxOfDuration = 0;
 			for (var i = 0; i < data.length; i++) {
 				if (data[i].sum / data[i].count > maxOfDuration) {
@@ -189,7 +182,7 @@ var showSumAndCountGraph = function(data1, data2) {
 				explodeOnClick : false,
 				innerRadius : "35%",
 				legendMarkerType : "square",
-				name : "Gouped IMSI by failure duration",
+				name : "Grouped IMSI by failure duration",
 				radius : "100%",
 				showInLegend : true,
 				startAngle : 90,
@@ -202,7 +195,7 @@ var showSumAndCountGraph = function(data1, data2) {
 					theme : "light2",
 					title : {
 						fontColor : '#00275E',
-						text : "IMSIs gouped by failure duration"
+						text : "IMSIs grouped by failure duration"
 					},
 					legend : {
 						fontFamily : "calibri",
@@ -319,8 +312,7 @@ var showSumAndCountGraph = function(data1, data2) {
 				chart.render();
 				
 			}
-		}
-	});
+		
 }
 
 

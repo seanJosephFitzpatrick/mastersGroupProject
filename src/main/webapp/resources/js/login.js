@@ -42,6 +42,7 @@ var postLoginAction = function(data) {
 };
 
 function logoutAction() {
+	$('#graphtabs').hide();
 	sessionStorage.setItem("role", "none");
 	showManiPage();
 }
@@ -53,14 +54,14 @@ function showLoginForm() {
 			+ '		<div class="card-body">'
 			+ '			<div class="form-group">' 
 			+ '      		<label for="inputEmail" class="labelclass">Email address</label>'
-			+ '      		<input class="form-control" id="inputEmail" type="emial" aria-describedby="emailHelp" placeholder="Enter email">' 
+			+ '      		<input class="form-control" id="inputEmail" type="email" aria-describedby="emailHelp" placeholder="Enter email">' 
 			+ '			</div>' 
 			+ '			<div class="form-group">'
 			+ '				<label for="inputPass" class="labelclass">Password</label>' 
 			+ '      		<input class="form-control" id="inputPass" type="password" placeholder="Password">' 
 			+ '			</div>'
 			+ '			<div id="login_error" class="alert alert-danger">'
-			+ '				<strong>Error!</strong> Login or emial incorrect .'
+			+ '				<strong>Error!</strong> Incorrect Credentials.'
 			+ '			</div>' 
 			+ '			<button type="button" class="btn btn-primary btn-block" id="loginbutton" onclick="loginFunction()">Login</button>'
 			+ ' 	</div>' 

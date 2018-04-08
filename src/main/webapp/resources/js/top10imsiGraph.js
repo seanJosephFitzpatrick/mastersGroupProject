@@ -1,4 +1,4 @@
-var showTop10IMSIsGraph = function(data1, data2) {
+var showTop10IMSIsGraph = function(data) {
 
 	var data_p = [];
 	var imsiCount = 0;
@@ -11,14 +11,8 @@ var showTop10IMSIsGraph = function(data1, data2) {
 
 	var value = 0;
 
-	$.ajax({
-		type : 'GET',
-		url : rootUrlTop10IMSIs + data1 + "&EndDate=" + data2,
-		dataType : "json",
-		headers : {
-			'Authorization' : 'Basic ' + sessionStorage.getItem("email") + ":" + sessionStorage.getItem("password")
-		},
-		success : function(data) {
+
+	
 			console.log("showTopIMSIsGraph getJSON" + data[0]);
 
 			var subModel1 = [];
@@ -504,12 +498,13 @@ var showTop10IMSIsGraph = function(data1, data2) {
 				$("#backButton").toggleClass("invisible");
 			}
 
+
 			$("#backButton").click(function() {
 				$(this).toggleClass("invisible");
 				chart = new CanvasJS.Chart("chartContainer", IMSIFailureOptions);
 				chart.options.data = failureData;
 				chart.render();
 			});
-		}
-	});
-}
+
+
+};
