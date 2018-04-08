@@ -68,7 +68,7 @@ public class UtilsDAO {
 			@Override
 			public List<String> getRequestHeader(String arg0) {
 				List<String> request = new ArrayList<>();
-				request.add("Basic admin@mase2.ie:5777f605aff3362ca976c1ca0dffffe4");
+				request.add("Basic admin@mase2.ie:202cb962ac59075b964b07152d234b70");
 				return request;
 			}
 			
