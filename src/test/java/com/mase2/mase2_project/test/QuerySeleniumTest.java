@@ -16,7 +16,7 @@ public class QuerySeleniumTest {
 	WebDriver driver;
 	
 	@Before
-	public void setUp(){
+	public void setUp() throws InterruptedException{
 		webURL="http://localhost:8080/mase2-project/";
 		System.setProperty("webdriver.chrome.driver", "chromedriver\\chromedriver.exe");
 		ChromeOptions options = new ChromeOptions();
@@ -26,7 +26,7 @@ public class QuerySeleniumTest {
 		driver.findElement(By.id("inputEmail")).sendKeys("admin@mase2.ie");
 		driver.findElement(By.id("inputPass")).sendKeys("123");
 		driver.findElement(By.id("loginbutton")).click();
-		
+		Thread.sleep(500);
 		
 	}
 	
