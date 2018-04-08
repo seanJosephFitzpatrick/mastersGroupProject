@@ -109,7 +109,7 @@ var userListRequest = function (){
 		            {
 		                className: "center",
 		                render: function(data, type, row) {
-		                	return "<button onClick=\"editUser(" +row.id+ ",'"+ row.email +"', '"+ row.password +"', '"+ row.role +"');\" value=\"Edit\">Edit</button>";
+		                	return "<button class=\"btn btn-primary\" onClick=\"editUser(" +row.id+ ",'"+ row.email +"', '"+ row.password +"', '"+ row.role +"');\" value=\"Edit\">Edit</button>";
 		                },
 		            }
 		         ]

@@ -21,37 +21,71 @@ $('document').ready(function() {
 
 jQuery(function($){
 	$('#nav_Tables').click(function(){
-		console.log("booo");
-		checkQueriesNav();
 		checkFilesNav();
 		checkUsersNav();
+		checkCsrQueriesNav();
+		checkSeQueriesNav();
+		checkNmeQueriesNav();
 	});
-	$('#nav_Queries').click(function(){
+	$('#nav_csrQueries').click(function(){
 		checkTablesNav();
 		checkFilesNav();
 		checkUsersNav();
+		checkSeQueriesNav();
+		checkNmeQueriesNav();
+		
+	});
+	$('#nav_seQueries').click(function(){
+		checkTablesNav();
+		checkFilesNav();
+		checkUsersNav();
+		checkCsrQueriesNav();
+		checkNmeQueriesNav();
+	});
+	$('#nav_nmeQueries').click(function(){
+		checkTablesNav();
+		checkFilesNav();
+		checkUsersNav();
+		checkCsrQueriesNav();
+		checkSeQueriesNav();
 	});
 	$('#nav_Files').click(function(){
 		checkUsersNav();
-		checkQueriesNav();
 		checkTablesNav();
+		checkCsrQueriesNav();
+		checkSeQueriesNav();
+		checkNmeQueriesNav();
 	});
 	$('#nav_userMgmt').click(function(){
-		checkQueriesNav();
 		checkFilesNav();
 		checkTablesNav();
+		checkCsrQueriesNav();
+		checkSeQueriesNav();
+		checkNmeQueriesNav();
 	});
 });
+function checkNmeQueriesNav(){
+	if (!$('#nav_nmeQueries > a').hasClass('collapsed')) {	
+		$('#nav_nmeQueries > a').addClass('collapsed');
+		$('#nav_nmeQueries > ul').removeClass('show');
+	}
+}
+function checkSeQueriesNav(){
+	if (!$('#nav_seQueries > a').hasClass('collapsed')) {	
+		$('#nav_seQueries > a').addClass('collapsed');
+		$('#nav_seQueries > ul').removeClass('show');
+	}
+}
+function checkCsrQueriesNav(){
+	if (!$('#nav_csrQueries > a').hasClass('collapsed')) {	
+		$('#nav_csrQueries > a').addClass('collapsed');
+		$('#nav_csrQueries > ul').removeClass('show');
+	}
+}
 function checkTablesNav(){
 	if (!$('#nav_Tables > a').hasClass('collapsed')) {	
 		$('#nav_Tables > a').addClass('collapsed');
 		$('#nav_Tables > ul').removeClass('show');
-	}
-}
-function checkQueriesNav(){
-	if (!$('#nav_Queries > a').hasClass('collapsed')) {	
-		$('#nav_Queries > a').addClass('collapsed');
-		$('#nav_Queries > ul').removeClass('show');
 	}
 }
 function checkFilesNav(){

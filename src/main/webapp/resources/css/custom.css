@@ -64,7 +64,7 @@ input[type=number] {
 	font-weight: bold;
     font-size: 26px !important
 }
-.center {
+.chartLabel {
 
     fill: #00275E !important;
     font-weight: bold;
