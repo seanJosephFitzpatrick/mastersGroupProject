@@ -29,6 +29,7 @@ import com.mase2.mase2_project.data.FileNameDAO;
 import com.mase2.mase2_project.data.MccMncDAO;
 import com.mase2.mase2_project.data.UeDAO;
 import com.mase2.mase2_project.data.UserDAO;
+import com.mase2.mase2_project.graph_model.ImsiNode;
 import com.mase2.mase2_project.model.BaseData;
 import com.mase2.mase2_project.model.EventCause;
 import com.mase2.mase2_project.model.EventCausePK;
@@ -46,6 +47,7 @@ import com.mase2.mase2_project.rest.MccMncWS;
 import com.mase2.mase2_project.rest.UeWS;
 import com.mase2.mase2_project.rest.UserWS;
 import com.mase2.mase2_project.test.utils.UtilsDAO;
+import com.mase2.mase2_project.util.AutoComObject;
 import com.mase2.mase2_project.util.DateParam;
 import com.mase2.mase2_project.util.DurationAndCountObject;
 import com.mase2.mase2_project.util.FailureCountObject;
@@ -72,6 +74,11 @@ public class EventCauseWSTest {
 						EventCauseWS.class, User.class,UserWS.class, DateParam.class, FailureClass.class, ExcelDAO.class, InvalidEntity.class,
 						FileLogger.class,UniqueEventAndCauseObject.class, Validator.class,DurationAndCountObject.class,IMSIObject.class, UserDAO.class, SecurityCheck.class, Ue.class, UeDAO.class, ImportWS.class, TableClearer.class,
 						java.util.Date.class)
+						.addPackage(EventCause.class.getPackage())
+				.addPackage(EventCauseDAO.class.getPackage())
+				.addPackage(EventCauseWS.class.getPackage())
+				.addPackage(ImsiNode.class.getPackage())
+				.addPackage(AutoComObject.class.getPackage())
 				// .addPackage(EventCause.class.getPackage())
 				// .addPackage(EventCauseDAO.class.getPackage())
 				// this line will pick up the production db
