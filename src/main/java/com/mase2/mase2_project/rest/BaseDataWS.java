@@ -259,8 +259,12 @@ public class BaseDataWS {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response findByUniqueModelGraphCombinations(@Context HttpHeaders httpHeaders,
 			@PathParam("model") final String model) {
-		final List<UniqueEventAndCauseObject> baseData = baseDataDAO.getUniqueEventIdAndCauseCodeForModelGraph(model);
-		return Response.status(200).entity(baseData).build();
+		if (securityCheck.hasRole(httpHeaders, "admin")) {
+			final List<UniqueEventAndCauseObject> baseData = baseDataDAO.getUniqueEventIdAndCauseCodeForModelGraph(model);
+			return Response.status(200).entity(baseData).build();
+		} else {
+			return SecurityCheck.ACCESS_DENY;
+		}
 	}
 	
 	@GET
@@ -268,8 +272,12 @@ public class BaseDataWS {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response findByUniqueModelGraphDrilldownCombinations(@Context HttpHeaders httpHeaders,
 			@PathParam("model") final String model, @PathParam("eventId") final String eventId) {
-		final List<UniqueEventAndCauseObject> baseData = baseDataDAO.getUniqueEventIdAndCauseCodeForModelGraphDrilldown(model, eventId);
-		return Response.status(200).entity(baseData).build();
+		if (securityCheck.hasRole(httpHeaders, "admin")) {
+			final List<UniqueEventAndCauseObject> baseData = baseDataDAO.getUniqueEventIdAndCauseCodeForModelGraphDrilldown(model, eventId);
+			return Response.status(200).entity(baseData).build();
+		} else {
+			return SecurityCheck.ACCESS_DENY;
+		}
 	}
 	
 }

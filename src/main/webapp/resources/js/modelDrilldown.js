@@ -1,4 +1,4 @@
-function drilldown(data){
+function drilldown(data, eId){
 	$( document ).ready(function() {
 		$("#panel_graph").append("<button class='ui-button ui-widget ui-corner-all' onclick='goBack()'>< back</button>");
 	});
@@ -7,7 +7,7 @@ function drilldown(data){
         type: 'column'
       },
       title: {
-        text: 'Unique Cause Codes'
+        text: 'Unique Cause Codes for Event ID ' + eId
       },
       xAxis: {
         type: 'category',
@@ -33,7 +33,10 @@ function drilldown(data){
         }
       },
       tooltip: {
-        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.0f}</b> Occurrences<br/>'
+          formatter: function () {
+              return 'Cause Code: <b>' + this.x + ',' +
+                  '</b> Number of Occurrences: <b>' + this.y + '</b>';
+          }
       },
       series: [{
         colorByPoint: true,
