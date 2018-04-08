@@ -396,7 +396,7 @@ function retrieveIMSI() {
 	imsiDataRequest(document.getElementById('imsi').value);
 	showImsiDataTable(imsi);
 //	showImsiGraph();
-	imsiDataRequestGraph();
+
 	
 }
 function retrieveUniqueIMSI() {
@@ -454,7 +454,7 @@ function retrieveModel() {
 	model = document.getElementById('model').value;
 	uniqueEventAndCauseDataRequest(document.getElementById('model').value);
 	showUniqueEventAndCauseTable(document.getElementById('model').value);
-	modelDataGraph();
+	
 }
 function retrieveDatesTopTenIMSIs() {
 	showLoading();
@@ -751,6 +751,18 @@ function showImsiDataTable(imsi) { //*******************************************
 							+ ' 				<th>Cause Code</th>' + '			</tr>'
 							+ '		</tfoot>' + '	</table>' + '</div></div>'
 							+ tab_panel_end_3djs);
+	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+		if($(e.target).attr("href") == "#panel_graph"){
+			imsiDataRequestGraph();
+		}
+	});
+	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+		if($(e.target).attr("href") == "#panel_table"){
+			$('#panel_graph').html('');
+			
+		}
+	});
+	
 }
 function showUniqueEventAndCauseTable(model) {
 	$('#wrapper')
@@ -771,7 +783,21 @@ function showUniqueEventAndCauseTable(model) {
 							+ ' 				<th>Cause Code</th>'
 							+ ' 				<th>Number of Occurences</th>' + '			</tr>'
 							+ '		</tfoot>' + '	</table>' + '</div></div>'
-							+ tab_panel_end);
+							+ tab_panel_end_3djs);
+	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+		if($(e.target).attr("href") == "#panel_graph"){
+			$('#panel_graph').html('<button class="btn invisible" id="backButton">< Back</button>'
+			+ '			<div id="chartContainer" style="height: 500px; width: 100%;"></div>'
+			+ '		<a class="scroll-to-top rounded" href="#page-top"><i class="fa fa-angle-up"></i></a>');
+			modelDataGraph();
+		}
+	});
+	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+		if($(e.target).attr("href") == "#panel_table"){
+			$('#panel_graph').html('');
+			
+		}
+	});
 }
 function showTopTenDataTable(startDate, endDate) {
 
@@ -797,8 +823,9 @@ function showTopTenDataTable(startDate, endDate) {
 	
 	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 		if($(e.target).attr("href") == "#panel_graph"){
-			$('#panel_graph').append('<div id="graphtitle"><h3>Number of failures and percentage of all failures</h3></div>');
 			drawGraph(TopTenGraphData);
+			$('#panel_graph').prepend('<div id="graphtitle"><h3>Number of failures and percentage of all failures</h3></div>');
+			
 		}
 	});
 	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
@@ -811,6 +838,7 @@ function showTopTenDataTable(startDate, endDate) {
 }
 
 function showTopTenIMSIsDataTable(startDate, endDate) {
+	
 	$('#wrapper')
 
 			.html(''
@@ -829,10 +857,13 @@ function showTopTenIMSIsDataTable(startDate, endDate) {
 							+ ' 				<th>Number of Failures</th>'
  + '			</tr>'
 							+ '		</tfoot>' + '	</table>' + '</div></div>'
-							+tab_panel_end);
+							+tab_panel_end_3djs);
 	
 	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 		if($(e.target).attr("href") == "#panel_graph"){
+			$('#panel_graph').html('<button class="btn invisible" id="backButton">< Back</button>'
+			+ '			<div id="chartContainer" style="height: 500px; width: 100%;"></div>'
+			+ '		<a class="scroll-to-top rounded" href="#page-top"><i class="fa fa-angle-up"></i></a>');
 			showTop10IMSIsGraph(TopTenImsiGraphData);
 		}
 	});
@@ -935,7 +966,7 @@ var tab_panel_end = ''
 	+ '		</div>'
 	+ '		<!--Panel Graph-->'
 
-	+ '		<div class="tab-pane fade in" id="panel_graph" role="tabpane2">'
+	+ '		<div class="tab-pane fade in" id="panel_graph" role="tabpanel">'
 	+ '			<button class="btn invisible" id="backButton">< Back</button>'
 	+ '			<div id="chartContainer" style="height: 500px; width: 100%;"></div>'
 	+ '		<a class="scroll-to-top rounded" href="#page-top"><i class="fa fa-angle-up"></i></a>'

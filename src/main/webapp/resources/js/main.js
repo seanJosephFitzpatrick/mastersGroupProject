@@ -68,7 +68,6 @@ function checkUsersNav(){
 }
 // ///////////////////// Import Tables /////////////////////
 function manualImportTables(id) {
-	$('#graphtabs').hide();
 	showLoading();
 	manualImport(id);
 }
@@ -126,7 +125,6 @@ function showManiPage() {
 }
 
 function showDashboard() {
-	$('#graphtabs').hide();
 	$('#wrapper').html('<img src="./resources/css/blahblahblah.jpg"  id="EricssonLogo">');
 
 }

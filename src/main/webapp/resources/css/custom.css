@@ -61,6 +61,8 @@ input[type=number] {
 #graphtitle{
 	margin-top:20px;
 	text-align:center;
+	font-weight: bold;
+    font-size: 26px !important
 }
 .center {
 
@@ -150,6 +152,12 @@ button.dt-button, div.dt-button, a.dt-button{
 }
 .tabletitle{
 	text-align: center;
+}
+#graphtooltip{
+	color:white; !important;
+	border:2px solid #00275E !important;
+	border-radius: 5px !important;
+	background-color: #00275E !important;
 }
 .form-control:focus {
   border-color: #00275E;
