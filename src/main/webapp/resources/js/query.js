@@ -861,7 +861,7 @@ function showCountFailuresDataTable(imsi,startDate, endDate) {
 	$('#wrapper')
 			.html('<div class="tabletitle"><div><h2>Number of failures for a given IMSI and time period</h2></div>'
 					+'<div><h3>IMSI: <i>'+imsi+'</i></h3></div>'
-					+'<div><h4>'+startDate+' - '+endDate+'</h4></div>'
+					+'<div><h4><i>'+startDate+'</i> to <i>'+endDate+'</i></h4></div>'
 					+'</div>'
 					+'<div class="card-body">'
 					+'<div style="text-align:center; padding:30px; border:1px solid black; border-radius:12px;"><h3>Number of Failures: </h3><div style="display: inline-block;"><h4>' 
