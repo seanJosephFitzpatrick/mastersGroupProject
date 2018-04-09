@@ -173,4 +173,25 @@ public class UserWSTest {
 		assertEquals("admin", userTest.getRole());
 
 	}
+	@Test
+	public void testFindById() {
+		final Response response = userWS.listAll(httpHeaders);
+		@SuppressWarnings("unchecked")
+		List<User> userList = (List<User>) response.getEntity();
+		assertEquals(HttpStatus.SC_OK, response.getStatus());
+		User user = userList.get(0);
+		
+		final Response response2 = userWS.findById(httpHeaders, user.getId());
+		
+		User newUser = (User)response2.getEntity();
+		
+		assertEquals("Data fetch = data persisted", userList.size(), 1);
+		final User userTest = userList.get(0);
+		assertEquals(user.getEmail(), newUser.getEmail());
+		
+		assertEquals(user.getPassword(), newUser.getPassword());
+		assertEquals(user.getRole(), newUser.getRole());
+
+	}
+
 }

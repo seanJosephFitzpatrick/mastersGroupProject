@@ -348,5 +348,76 @@ public class BaseDataWSTest {
 		assertEquals(HttpStatus.SC_OK, response.getStatus());
 		assertEquals("Data fetch = data persisted", 1, baseDataList.size());
 	}
+	
+	@Test
+	public void testFindByUniqueModelGraphDrilldownCombinations() {
+		
+		final Response response = baseDataEndpoint.findByUniqueModelGraphDrilldownCombinations(httpHeaders, "Apple", "4097");
+		assertEquals(HttpStatus.SC_OK, response.getStatus());
+	}
+	
+	@Test
+	public void testFindByUniqueModelGraphCombinations() {
+		
+		final Response response = baseDataEndpoint.findByUniqueModelGraphCombinations(httpHeaders, "Apple");
+		assertEquals(HttpStatus.SC_OK, response.getStatus());
+	}
+	
+	@Test
+	public void testFindIMSIForGivenFailureCauseClass() {
+		
+		final Response response = baseDataEndpoint.findIMSIForGivenFailureCauseClass(httpHeaders, "2");
+		assertEquals(HttpStatus.SC_OK, response.getStatus());
+	}
+	
+	@Test
+	public void testFindByIMSIStartDateAndEndDate() {
+		
+		final Response response = baseDataEndpoint.findByIMSIStartDateAndEndDate(httpHeaders, "344930011", new DateParam("2010-03-07"), new DateParam("2018-05-07") );
+		assertEquals(HttpStatus.SC_OK, response.getStatus());
+	}
 
+	@Test
+	public void testfindByImsiGraph() {
+		
+		final Response response = baseDataEndpoint.findByImsiGraph(httpHeaders, "344930011" );
+		assertEquals(HttpStatus.SC_OK, response.getStatus());
+	}
+	
+	@Test
+	public void testfindCountFailures() {
+		
+		final Response response = baseDataEndpoint.findCountFailures(httpHeaders);
+		assertEquals(HttpStatus.SC_OK, response.getStatus());
+	}
+	
+	@Test
+	public void testfindUniqueCodesByImsi() {
+		
+		final Response response = baseDataEndpoint.findUniqueCodesByImsi(httpHeaders, "344930011" );
+		assertEquals(HttpStatus.SC_OK, response.getStatus());
+	}
+	
+	@Test
+	public void testAutoCopleteFailureClass() {
+		
+		final Response response = baseDataEndpoint.autoCopleteFailureClass(httpHeaders, "2" );
+		assertEquals(HttpStatus.SC_OK, response.getStatus());
+	}
+	
+	@Test
+	public void testAutoCopleteModel() {
+		
+		final Response response = baseDataEndpoint.autoCopleteModel(httpHeaders, "Apple" );
+		assertEquals(HttpStatus.SC_OK, response.getStatus());
+	}
+	
+	@Test
+	public void testAutoCopleteImsi() {
+		
+		final Response response = baseDataEndpoint.autoCopleteImsi(httpHeaders, "344930011" );
+		assertEquals(HttpStatus.SC_OK, response.getStatus());
+	}
+
+	
 }
