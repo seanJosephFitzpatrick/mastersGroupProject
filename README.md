@@ -1,6 +1,8 @@
-# Applied Software Engineering group project
+# Network Data Analytics
 
+This is a 5th year Applied Software Engineering group project. The project queries data that is imported manually/automatically from csv files. The queried data is then displayed in table/graph format. Only certain queries are available depending on the access permission of the user.
 
+![image2](https://user-images.githubusercontent.com/9217947/41171514-1ec34cbc-6b51-11e8-8795-9481f8a31ed6.png)
 
 ## Getting Started
 
