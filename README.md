@@ -22,10 +22,6 @@ Video tutorial of How to Install Java JDK/JRE here [Install Java](https://www.yo
 Install Eclipse             
 Video tutorial of How to Install Eclipse Neon on Windows 10 here [Install Eclipse](https://www.youtube.com/watch?v=WIzzHeWukUU)         
 
-## Deployment
-
-Add additional notes about how to deploy this on a live system
-
 ## Built With
 
 * [Java 7](http://www.oracle.com/technetwork/java/javase/downloads/java-archive-downloads-javase7-521261.html) - JDK
