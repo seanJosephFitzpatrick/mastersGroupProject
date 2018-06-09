@@ -1,6 +1,23 @@
 # Network Data Analytics
 
-This is a 5th year Applied Software Engineering group project. The project queries data that is imported manually/automatically from csv files. The queried data is then displayed in table/graph format. Only certain queries are available depending on the access permission of the user.
+This is a 5th year Applied Software Engineering group project. The project queries data that is imported manually/automatically from csv files. The queried data is then displayed in table/graph format. Only certain queries are available depending on the access permission of the user.      
+
+5th year Applied Software Engineering group project. The Project involved the collection and consistency checking of a sequence of Datasets containing telecommunications network “events”, and the organization and storage of these data in a form which supports simple and complex queries, data analysis, and graphing.
+
+The Project was undertaken using an Agile Development approach:
+•	Working in teams, appointing a Scrum Master, all members contributing to the technical activities (Design, Code and Test)
+•	Elaborating requirements, breaking down User Stories, adding detail
+•	Breaking work into Sprints of fixed duration (3 weeks per Sprint)
+•	Goal, Backlog, Definition of Done
+•	Defining and tracking team Velocity using Story Points and Burndown charts - Jira
+•	Conducting daily Stand Up meetings to review progress
+•	What did you do yesterday, what will you do today, and are there any impediments in your way?
+•	Demonstrating working software at the end of each Sprint
+•	Conducting Sprint retrospectives
+•	What went well, what went bad, and how can we improve?
+
+Languages, Technologies and Implementation Architecture used for this project:
+Java, JavaScript, Eclipse, (JSON over HTTP), JBoss, JAX-RS, EJB, JPA, AJAX, Arquillian, Junit, Selenium, MySQL, BitBucket, Git, Maven, Jira, Jenkins, Bootstrap, HTML/CSS.
 
 ![image2](https://user-images.githubusercontent.com/9217947/41171514-1ec34cbc-6b51-11e8-8795-9481f8a31ed6.png)
 
