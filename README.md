@@ -1,5 +1,7 @@
 # Network Data Analytics
 
+![image2](https://user-images.githubusercontent.com/9217947/41171514-1ec34cbc-6b51-11e8-8795-9481f8a31ed6.png)
+
 5th year Applied Software Engineering group project. The Project involved the collection and consistency checking of a sequence of Datasets containing telecommunications network “events”, and the organization and storage of these data in a form which supports simple and complex queries, data analysis, and graphing.
 
 The Project was undertaken using an Agile Development approach:
@@ -17,7 +19,7 @@ The Project was undertaken using an Agile Development approach:
 Languages, Technologies and Implementation Architecture used for this project:
 Java, JavaScript, Eclipse, (JSON over HTTP), JBoss, JAX-RS, EJB, JPA, AJAX, Arquillian, Junit, Selenium, MySQL, BitBucket, Git, Maven, Jira, Jenkins, Bootstrap, HTML/CSS.
 
-![image2](https://user-images.githubusercontent.com/9217947/41171514-1ec34cbc-6b51-11e8-8795-9481f8a31ed6.png)
+
 
 ## Getting Started
 
