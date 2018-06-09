@@ -3,6 +3,11 @@
 ![image2](https://user-images.githubusercontent.com/9217947/41171514-1ec34cbc-6b51-11e8-8795-9481f8a31ed6.png)
 
 ## Quick links to code      
+* [Java Web Service classes](https://github.com/seanJosephFitzpatrick/mastersGroupProject/tree/development/src/main/java/com/mase2/mase2_project/rest)
+* [Java Data Access Object classes](https://github.com/seanJosephFitzpatrick/mastersGroupProject/tree/development/src/main/java/com/mase2/mase2_project/data)
+* [Java Entity classes](https://github.com/seanJosephFitzpatrick/mastersGroupProject/tree/development/src/main/java/com/mase2/mase2_project/model)
+* [Java Util](https://github.com/seanJosephFitzpatrick/mastersGroupProject/tree/development/src/main/java/com/mase2/mase2_project/util)
+* [Java tests](https://github.com/seanJosephFitzpatrick/mastersGroupProject/tree/development/src/test/java/com/mase2/mase2_project/test)
 * [JavaScript](https://github.com/seanJosephFitzpatrick/mastersGroupProject/tree/development/src/main/webapp/resources/js)
 
 5th year Applied Software Engineering group project. The Project involved the collection and consistency checking of a sequence of Datasets containing telecommunications network “events”, and the organization and storage of these data in a form which supports simple and complex queries, data analysis, and graphing.
